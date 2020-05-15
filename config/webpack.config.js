@@ -515,14 +515,6 @@ module.exports = function(webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
-            meta: {
-              ...(env.raw.NODE_ENV === 'development' && {
-                'Content-Security-Policy': {
-                  'http-equiv': 'Content-Security-Policy',
-                  'content': "script-src 'self'"
-                }
-              }),
-            },
           },
           isEnvProduction
             ? {
@@ -539,7 +531,14 @@ module.exports = function(webpackEnv) {
                   minifyURLs: true,
                 },
               }
-            : undefined
+            : {
+                meta: {
+                  'Content-Security-Policy': {
+                    'http-equiv': 'Content-Security-Policy',
+                    'content': "script-src 'self'"
+                  }
+                },
+              },
         )
       ),
       // Inlines the webpack runtime script. This script is too small to warrant
