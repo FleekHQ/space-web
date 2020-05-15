@@ -3,18 +3,50 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.0.0-beta.44",
+    "@apollo/react-hooks": "^3.1.5",
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/pro-light-svg-icons": "^5.13.0",
+    "@fortawesome/pro-regular-svg-icons": "^5.13.0",
+    "@fortawesome/pro-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "apollo-boost": "^0.4.8",
+    "apollo-link": "^1.2.14",
+    "apollo-link-error": "^1.1.13",
+    "apollo-link-persisted-queries": "^0.2.2",
+    "apollo-link-ws": "^1.0.20",
+    "apollo-utilities": "^1.3.4",
+    "aws-appsync": "^3.0.3",
+    "aws-appsync-auth-link": "^2.0.2",
+    "aws-appsync-subscription-link": "^2.1.0",
+    "aws-sdk": "^2.675.0",
+    "gql": "^1.1.2",
+    "graphql": "^15.0.0",
+    "i18next": "^19.4.4",
+    "lodash": "^4.17.15",
+    "moment": "^2.25.3",
+    "moment-timezone": "^0.5.28",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-i18next": "^11.4.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +62,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/preset-create-react-app": "^2.1.2",
+    "@storybook/react": "^5.3.18"
   }
 }
