@@ -1,4 +1,5 @@
-const os = require('os');
+require('dotenv').config()
+
 const path = require('path');
 const electron = require('electron');
 const isDev = require('electron-is-dev');
@@ -24,16 +25,14 @@ const createWindow = () => {
 
   if (isDev) {
     // Add ReactDevTools
-    BrowserWindow.addDevToolsExtension(path.join(
-      os.homedir(),
-      '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0'
-    ));
+    if (process.env.REACT_EXTENSION_PATH) {
+      BrowserWindow.addDevToolsExtension(process.env.REACT_EXTENSION_PATH);
+    }
 
     // Add ReduxDevTools
-    BrowserWindow.addDevToolsExtension(path.join(
-      os.homedir(),
-      '/Library/Application Support/Google/Chrome/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.17.0_0'
-    ));
+    if (process.env.REDUX_EXTENSION_PATH) {
+      BrowserWindow.addDevToolsExtension(process.env.REDUX_EXTENSION_PATH);
+    }
 
     mainWindow.webContents.openDevTools();
   }
