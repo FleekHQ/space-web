@@ -4,6 +4,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `yarn electron:dev`
+Run the electron project on dev mode
+
+### `yarn clean`
+Delete build and dist folders
+
+### `yarn electron-pack [--mac, --linux, --win, --all]`
+Build electron app to prod dist `yarn electron-pack --mac`
+
 ### `yarn start`
 
 Runs the app in the development mode.<br />
