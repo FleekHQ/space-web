@@ -13,7 +13,7 @@
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
     "preelectron-pack": "npm run clean && npm run build",
     "clean": "rimraf build dist",
-    "storybook": "start-storybook -p 9009 -s public",
+    "storybook": "start-storybook -p 9001 -c .storybook -s public",
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.13.0",
     "@fortawesome/pro-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
+    "@material-ui/core": "^4.9.14",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -109,9 +110,8 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addons": "^5.3.18",
-    "@storybook/preset-create-react-app": "^2.1.2",
     "@storybook/react": "^5.3.18",
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
@@ -174,7 +174,8 @@
     "modulePaths": [],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^@ui(.*)$": "<rootDir>/src/UI$1"
     },
     "moduleFileExtensions": [
       "web.js",
