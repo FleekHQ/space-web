@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
-import { faGhost } from '@fortawesome/pro-regular-svg-icons/faGhost';
+import { faPlanetRinged } from '@fortawesome/pro-regular-svg-icons/faPlanetRinged';
 import useStyles from '../../styles';
 
 
@@ -11,7 +11,7 @@ const Default = () => {
   return (
     <div className={classnames(classes.container, classes.default)}>
       <FontAwesomeIcon
-        icon={faGhost}
+        icon={faPlanetRinged}
       />
     </div>
   )};
