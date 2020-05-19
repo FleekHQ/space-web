@@ -41,7 +41,9 @@ storiesOf(categoryName, module).add('FileIcon', () => {
     <div >
       {icons.map(icon => (
         <div style={{ margin: 5 }}>
-          <FileIcon {...icon} />
+          <div style={{ display: 'inline-block', height: 50, width: 50 }}>
+            <FileIcon {...icon} />
+          </div>
         </div>
       ))}
     </div>
