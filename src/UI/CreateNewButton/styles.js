@@ -19,5 +19,9 @@ export default makeStyles((theme) => ({
     height: 24,
     borderRadius: 4,
     marginLeft: 12,
+    '&& svg': {
+      height: 14,
+      width: 14,
+    },
   },
 }));
