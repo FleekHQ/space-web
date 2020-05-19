@@ -1,13 +1,16 @@
-const input = {
-  paddingRight: 16,
-  paddingLeft: 16,
+import palette from '../palette/palette';
+
+const MuiOutlinedInput = {
+  input: {
+    height: 'auto',
+    padding: '8px 15px 10px',
+  },
+  notchedOutline: {
+    borderColor: palette.disabled,
+    '$root$focused &': {
+      borderWidth: 1,
+    },
+  },
 };
 
-const adornedEnd = {
-  paddingRight: 0,
-};
-
-export default {
-  input,
-  adornedEnd,
-};
+export default MuiOutlinedInput;

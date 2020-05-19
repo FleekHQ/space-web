@@ -5,6 +5,9 @@ import MuiMenuItem from './MuiMenuItem';
 import MuiInputBase from './MuiInputBase';
 import MuiIconButton from './MuiIconButton';
 import MuiOutlinedInput from './MuiOutlinedInput';
+import MuiFilledInput from './MuiFilledInput';
+import MuiInputLabel from './MuiInputLabel';
+import MuiInputAdornment from './MuiInputAdornment';
 
 const createOverrides = {
   MuiTypography,
@@ -14,6 +17,9 @@ const createOverrides = {
   MuiInputBase,
   MuiIconButton,
   MuiOutlinedInput,
+  MuiFilledInput,
+  MuiInputLabel,
+  MuiInputAdornment,
 };
 
 export default createOverrides;
