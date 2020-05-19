@@ -1,4 +1,5 @@
 import palette from '../palette/palette';
+import Color from 'color';
 
 const muiButton = {
   root: {
@@ -20,6 +21,9 @@ const muiButton = {
     color: palette.accent,
   },
   containedSecondary: {
+    '&:hover': {
+      backgroundColor: `${Color(palette.accent).lighten(0.2)}`,
+    },
     color: palette.backgroundPrimary,
     backgroundColor: palette.accent,
   },
