@@ -1,18 +1,16 @@
 import React from 'react';
-import IconFA from '@ui/IconFA';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
+import { faVolume } from '@fortawesome/pro-regular-svg-icons/faVolume';
 import useStyles from '../../styles';
-
 
 const Audio = () => {
   const classes = useStyles();
 
   return (
     <div className={classnames(classes.container, classes.audio)}>
-      <IconFA
-        icon={['far', 'volume']}
-        fontSize="inherit"
-        iconColor="inherit"
+      <FontAwesomeIcon
+        icon={faVolume}
       />
     </div>
   )};

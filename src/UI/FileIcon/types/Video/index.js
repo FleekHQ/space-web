@@ -1,6 +1,7 @@
 import React from 'react';
-import IconFA from '@ui/IconFA';
 import classnames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVideo } from '@fortawesome/pro-regular-svg-icons/faVideo';
 import useStyles from '../../styles';
 
 
@@ -9,10 +10,8 @@ const Video = () => {
 
   return (
     <div className={classnames(classes.container, classes.video)}>
-      <IconFA
-        icon={['far', 'video']}
-        fontSize="inherit"
-        iconColor="inherit"
+      <FontAwesomeIcon
+        icon={faVideo}
       />
     </div>
   )};

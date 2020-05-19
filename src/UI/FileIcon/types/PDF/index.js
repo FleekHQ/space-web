@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@ui/Typography';
 import useStyles from '../../styles';
 
 const PDF = () => {

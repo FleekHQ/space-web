@@ -1,6 +1,7 @@
 import React from 'react';
-import IconFA from '@ui/IconFA';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
+import { faGhost } from '@fortawesome/pro-regular-svg-icons/faGhost';
 import useStyles from '../../styles';
 
 
@@ -9,10 +10,8 @@ const Default = () => {
 
   return (
     <div className={classnames(classes.container, classes.default)}>
-      <IconFA
-        icon={['far', 'ghost']}
-        fontSize="inherit"
-        iconColor="inherit"
+      <FontAwesomeIcon
+        icon={faGhost}
       />
     </div>
   )};

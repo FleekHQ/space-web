@@ -1,5 +1,5 @@
-export { default as Folder } from './Folder';
 export { default as PDF } from './PDF';
+export { default as Folder } from './Folder';
 export { default as Zip } from './Zip';
 export { default as Powerpoint } from './Powerpoint';
 export { default as Word } from './Word';

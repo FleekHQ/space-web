@@ -1,6 +1,7 @@
 import React from 'react';
-import IconFA from '@ui/IconFA';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
+import { faPresentation } from '@fortawesome/pro-solid-svg-icons/faPresentation';
 import useStyles from '../../styles';
 
 
@@ -9,10 +10,8 @@ const Powerpoint = () => {
 
   return (
     <div className={classnames(classes.container, classes.powerpoint)}>
-      <IconFA
-        icon={['fas', 'presentation']}
-        fontSize="inherit"
-        iconColor="inherit"
+      <FontAwesomeIcon
+        icon={faPresentation}
       />
     </div>
   )};

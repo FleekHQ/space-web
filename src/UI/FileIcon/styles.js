@@ -10,37 +10,43 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
   },
   folder: {
-    fontSize: 19,
-    color: theme.palette.palette.babyBlue,
+    '& svg': {
+      height: 19,
+    },
+    color: theme.palette.icons.babyBlue,
   },
   default: {
-    fontSize: 8,
-    backgroundColor: theme.palette.palette.secondary,
+    '& svg': {
+      height: 8,
+    },
+    backgroundColor: theme.palette.icons.grey,
     color: 'white',
   },
   pdf: {
-    backgroundColor: theme.palette.palette.red
+    backgroundColor: theme.palette.icons.red
   },
   zip: {
-    backgroundColor: theme.palette.palette.black
+    backgroundColor: theme.palette.icons.black
   },
   powerpoint: {
-    fontSize: 10,
-    backgroundColor: theme.palette.palette.yellow,
+    '& svg': {
+      height: 10,
+    },
+    backgroundColor: theme.palette.icons.yellow,
     color: 'white',
   },
   word: {
-    fontSize: 9,
-    backgroundColor: theme.palette.palette.blue,
+    '& svg': {
+      height: 9,
+    },
+    backgroundColor: theme.palette.icons.blue,
     color: 'white',
   },
   text: {
-    fontSize: '6px !important',
+    fontSize: '6px',
     color: 'white',
     fontWeight: 'bold',
     userSelect: 'none',
-    position: 'relative',
-    top: 1,
   },
   imageContainer: {
     overflow: 'hidden',
@@ -52,13 +58,17 @@ export default makeStyles((theme) => ({
     transform: 'scale(2.5)'
   },
   audio: {
-    fontSize: 10,
-    backgroundColor: theme.palette.palette.green,
+    '& svg': {
+      height: 10,
+    },
+    backgroundColor: theme.palette.icons.green,
     color: 'white',
   },
   video: {
-    fontSize: 10,
-    backgroundColor: theme.palette.palette.purple,
+    '& svg': {
+      height: 10,
+    },
+    backgroundColor: theme.palette.icons.purple,
     color: 'white',
   },
 }));

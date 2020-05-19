@@ -1,6 +1,7 @@
 import React from 'react';
-import IconFA from '@ui/IconFA';
 import classnames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolder  } from '@fortawesome/pro-solid-svg-icons/faFolder';
 import useStyles from '../../styles';
 
 
@@ -9,10 +10,8 @@ const Folder = () => {
 
   return (
     <div className={classnames(classes.container, classes.folder)}>
-      <IconFA
-        icon={['fas', 'folder']}
-        fontSize="inherit"
-        iconColor="inherit"
+      <FontAwesomeIcon
+        icon={faFolder}
       />
     </div>
   )};
