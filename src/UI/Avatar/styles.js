@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const DEFAULT_SIZE = 38;
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -10,6 +10,8 @@ export default makeStyles({
     overflow: 'hidden',
     borderRadius: '100%',
     backgroundColor: 'white',
+    padding: 5,
+    boxSizing: 'border-box',
     width: ({ size }) => size || DEFAULT_SIZE,
     height: ({ size }) => size || DEFAULT_SIZE,
     '& > *': {
@@ -17,7 +19,8 @@ export default makeStyles({
       height: 'inherit',
     },
     '& > img': {
+      margin: '0 -5px',
       objectFit: 'cover'
     },
   },
-});
+}));
