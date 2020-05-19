@@ -10,6 +10,13 @@ const danger = '#ef6a6e';
 const disabled = '#c4c4c4';
 const hover = '#d6d6d6';
 const borderLight = '#f2f3f7';
+const babyBlue = '#92cfff';
+const red = '#ff5b57';
+const yellow = '#ffc000';
+const blue = '#5892ff';
+const black = '#171717';
+const green = '#05B300';
+const purple = '#9300B3';
 
 const palette = {
   primary,
@@ -24,6 +31,13 @@ const palette = {
   accentLighter,
   accentLightest,
   danger,
+  babyBlue,
+  red,
+  yellow,
+  blue,
+  black,
+  green,
+  purple,
 };
 
 export default palette;

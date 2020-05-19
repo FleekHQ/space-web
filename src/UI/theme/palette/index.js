@@ -6,6 +6,7 @@ import secondary from './secondary';
 import palette from './palette';
 import shadows from './shadows';
 import common from './common';
+import icons from './icons';
 
 const paletteOptions = {
   common,
@@ -16,6 +17,7 @@ const paletteOptions = {
   shadows,
   primary,
   secondary,
+  icons,
 };
 
 export default paletteOptions;
