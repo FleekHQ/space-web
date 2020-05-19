@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import App from './App';
+import initConfig from './locales';
+
 import * as serviceWorker from './serviceWorker';
+
+i18n.use(initReactI18next).init(initConfig);
 
 ReactDOM.render(
   <React.StrictMode>
