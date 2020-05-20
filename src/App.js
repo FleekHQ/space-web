@@ -6,14 +6,18 @@ import FleekTypography from '@ui/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import createFleekTheme from '@ui/theme';
+import { useTranslation } from 'react-i18next';
 
 const theme = createFleekTheme();
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <>
       <CssBaseline />
       <ThemeProvider theme={theme}>
+        <Typography>{t('test')}</Typography>
         <Typography variant="h6">Variant h6</Typography>
         <Typography variant="body1" color="primary">Variant body1</Typography>
         <Typography variant="body2" color="secondary">Variant body2</Typography>
