@@ -1,35 +1,77 @@
 import palette from '../palette/palette';
-import Color from 'color';
 
 const muiButton = {
   root: {
-    padding: '8px 20px',
+    display: 'flex',
+    height: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
     whiteSpace: 'nowrap',
+    minWidth: undefined,
+    transition: 'opacity ease 0.2s',
+    '&:hover': {
+      opacity: 0.75,
+      backgroundColor: undefined,
+    },
+  },
+  text: {
+    color: palette.black,
+    padding: undefined,
+  },
+  contained: {
+    color: palette.white,
+    backgroundColor: palette.black,
+    '-webkit-font-smoothing': 'antialiased',
+    '-moz-osx-font-smoothing': 'grayscale',
+    '&:hover': {
+      backgroundColor: undefined,
+    },
+    '&$disabled': {
+      backgroundColor: palette.gray7,
+      color: palette.gray6,
+    },
+  },
+  outlined: {
+    color: palette.black,
+    padding: undefined,
+    '&&, &&:hover': {
+      border: 'solid 1px currentColor',
+      backgroundColor: 'transparent',
+    },
   },
   textPrimary: {
-    color: palette.primary,
+    color: palette.blue1,
+    '&:hover': {
+      backgroundColor: undefined,
+    },
   },
   containedPrimary: {
-    color: palette.backgroundPrimary,
-    backgroundColor: palette.primary,
+    color: palette.white,
+    backgroundColor: palette.blue1,
+    '&:hover': {
+      backgroundColor: undefined,
+    },
   },
   outlinedPrimary: {
-    color: palette.primary,
-    border: `solid 1px ${palette.primary}`,
+    color: palette.blue1,
   },
   textSecondary: {
-    color: palette.accent,
+    color: palette.gray1,
+    '&:hover': {
+      backgroundColor: undefined,
+    },
   },
   containedSecondary: {
+    color: palette.white,
     '&:hover': {
-      backgroundColor: `${Color(palette.accent).lighten(0.2)}`,
+      backgroundColor: undefined,
     },
-    color: palette.backgroundPrimary,
-    backgroundColor: palette.accent,
   },
   outlinedSecondary: {
-    color: palette.accent,
-    border: `solid 1px ${palette.accent}`,
+    color: palette.gray1,
+    '&&, &&:hover': {
+      border: `solid 1px ${palette.gray2}`,
+    },
   },
 };
 

@@ -15,7 +15,7 @@ const CreateNewButton = ({
   return (
     <Button
       variant="contained"
-      color="secondary"
+      color="primary"
       className={classes.container}
       {...rest}
     >

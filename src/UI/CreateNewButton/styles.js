@@ -14,7 +14,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.palette.accentLight,
+    backgroundColor: `${theme.palette.palette.blue2} !important`,
     width: 24,
     height: 24,
     borderRadius: 4,
