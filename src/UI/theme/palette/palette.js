@@ -1,6 +1,8 @@
 const black = '#171717';
 const gray1 = '#666666';
+const gray6 = '#7b7b7b';
 const gray2 = '#c4c4c4';
+const gray7 = '#cbcbcb';
 const gray3 = '#d6d6d6';
 const gray4 = '#f2f3f7';
 const gray5 = '#F6F8FC';
@@ -18,6 +20,8 @@ const palette = {
   gray3,
   gray4,
   gray5,
+  gray6,
+  gray7,
   white,
   blue1,
   blue2,

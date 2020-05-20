@@ -41,9 +41,10 @@ const typographyOptions = {
     color: text.primary,
     fontWeight: fontWeightRegular,
     fontStyle: 'normal',
-    fontSize: pxToRem(12),
-    lineHeight: 1.25,
+    fontSize: pxToRem(14),
+    lineHeight: 1.2,
     letterSpacing: 'normal',
+    textTransform: 'capitalize',
   },
   caption: {
     color: text.primary,
