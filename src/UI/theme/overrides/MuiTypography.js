@@ -2,13 +2,13 @@ import palette from '../palette/palette';
 
 const muiTypography = {
   colorPrimary: {
-    color: palette.primary,
+    color: palette.black,
   },
   colorSecondary: {
-    color: palette.secondary,
+    color: palette.gray1,
   },
   colorTextSecondary: {
-    color: palette.accent,
+    color: palette.blue1,
   },
 };
 

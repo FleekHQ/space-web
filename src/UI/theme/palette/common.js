@@ -1,6 +1,6 @@
 import palette from './palette';
 
 export default {
-  primary: palette.primary,
-  secondary: palette.backgroundPrimary,
+  primary: palette.black,
+  secondary: palette.white,
 };

@@ -10,7 +10,7 @@ storiesOf(categoryName, module).add('Typography', () => {
 
   const defaultProps = {
     weight: select('weight', [undefined, 'medium'], undefined),
-    color: select('color', ['primary', 'secondary', 'accent', 'error'], 'primary'),
+    color: select('color', ['primary', 'secondary', 'textSecondary', 'error'], 'primary'),
   };
 
   return <Typography {...defaultProps}>Some text</Typography>;

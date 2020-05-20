@@ -6,26 +6,26 @@ const muiButton = {
     whiteSpace: 'nowrap',
   },
   textPrimary: {
-    color: palette.primary,
+    color: palette.black,
   },
   containedPrimary: {
-    color: palette.backgroundPrimary,
-    backgroundColor: palette.primary,
+    color: palette.white,
+    backgroundColor: palette.black,
   },
   outlinedPrimary: {
-    color: palette.primary,
-    border: `solid 1px ${palette.primary}`,
+    color: palette.black,
+    border: `solid 1px ${palette.black}`,
   },
   textSecondary: {
-    color: palette.accent,
+    color: palette.blue1,
   },
   containedSecondary: {
-    color: palette.backgroundPrimary,
-    backgroundColor: palette.accent,
+    color: palette.white,
+    backgroundColor: palette.blue1,
   },
   outlinedSecondary: {
-    color: palette.accent,
-    border: `solid 1px ${palette.accent}`,
+    color: palette.blue1,
+    border: `solid 1px ${palette.blue1}`,
   },
 };
 
