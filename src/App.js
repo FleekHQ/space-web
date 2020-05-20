@@ -1,5 +1,4 @@
 import React from 'react';
-// import { remote } from 'electron';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
