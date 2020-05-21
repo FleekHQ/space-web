@@ -1,26 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { faPlus } from '@fortawesome/pro-regular-svg-icons/faPlus';
+import { useTranslation } from 'react-i18next';
 import useStyles from './styles';
 
-const CreateNewButton = ({
-  i18n,
-  ...rest
-}) => {
+const CreateNewButton = (props) => {
   const classes = useStyles();
-
+  const { t } = useTranslation();
+  
   return (
     <Button
       variant="contained"
       color="primary"
       className={classes.container}
-      {...rest}
+      {...props}
     >
       <Typography className={classes.text}>
-        {i18n.buttonText}
+        {t('createNew')}
       </Typography>
       <div className={classes.plusContainer}>
         <FontAwesomeIcon
@@ -29,12 +27,6 @@ const CreateNewButton = ({
       </div>
     </Button>
   );
-};
-
-CreateNewButton.propTypes = {
-  i18n: PropTypes.shape({
-    buttonText: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default CreateNewButton;
