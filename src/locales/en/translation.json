@@ -1,3 +1,15 @@
 {
-  "test": "Translate me!"
+  "test": "Translate me!",
+  "contextMenu": {
+    "open": "Open",
+    "openWith": "Open With",
+    "star": "Star",
+    "share": "Share...",
+    "copyLink": "Copy Link",
+    "duplicate": "Duplicate",
+    "rename": "Rename",
+    "copy": "Copy",
+    "delete": "Delete",
+    "viewInFolder": "View in Finder"
+  }
 }
