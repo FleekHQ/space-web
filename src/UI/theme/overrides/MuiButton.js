@@ -2,10 +2,8 @@ import palette from '../palette/palette';
 
 const muiButton = {
   root: {
-    display: 'flex',
-    height: 32,
+    padding: '8px 20px',
     justifyContent: 'center',
-    alignItems: 'center',
     whiteSpace: 'nowrap',
     minWidth: undefined,
     transition: 'opacity ease 0.2s',
