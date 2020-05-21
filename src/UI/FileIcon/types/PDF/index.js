@@ -1,16 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
-import Typography from '@ui/Typography';
+import PDFIcon from '../../svgs/PDF.svg';
 import useStyles from '../../styles';
 
 const PDF = () => {
   const classes = useStyles();
 
   return (
-    <div className={classnames(classes.container, classes.pdf)}>
-      <Typography className={classes.text}>
-        PDF
-      </Typography>
+    <div className={classnames(classes.container)}>
+      <img src={PDFIcon} alt="pdf-icon" className={classes.iconImg}/>
     </div>
   )};
 

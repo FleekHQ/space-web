@@ -1,7 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
-import { faPresentation } from '@fortawesome/pro-solid-svg-icons/faPresentation';
+import PresentationIcon from '../../svgs/Presentation.svg';
 import useStyles from '../../styles';
 
 
@@ -9,10 +8,8 @@ const Powerpoint = () => {
   const classes = useStyles();
 
   return (
-    <div className={classnames(classes.container, classes.powerpoint)}>
-      <FontAwesomeIcon
-        icon={faPresentation}
-      />
+    <div className={classnames(classes.container)}>
+      <img src={PresentationIcon} alt="presentation-icon" className={classes.iconImg}/>
     </div>
   )};
 

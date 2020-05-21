@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignLeft } from '@fortawesome/pro-solid-svg-icons/faAlignLeft';
+import DocIcon from '../../svgs/TextDoc.svg';
 import useStyles from '../../styles';
 
 
@@ -9,10 +8,8 @@ const Word = () => {
   const classes = useStyles();
 
   return (
-    <div className={classnames(classes.container, classes.word)}>
-      <FontAwesomeIcon
-        icon={faAlignLeft}
-      />
+    <div className={classnames(classes.container)}>
+      <img src={DocIcon} alt="doc-icon" className={classes.iconImg}/>
     </div>
   )};
 
