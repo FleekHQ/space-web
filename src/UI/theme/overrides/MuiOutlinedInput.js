@@ -6,7 +6,7 @@ const MuiOutlinedInput = {
     padding: '8px 15px 10px',
   },
   notchedOutline: {
-    borderColor: palette.disabled,
+    borderColor: palette.gray2,
     '$root$focused &': {
       borderWidth: 1,
     },

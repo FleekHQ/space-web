@@ -1,5 +1,5 @@
 import palette from './palette';
 
 export default {
-  hover: palette.hover,
+  hover: palette.gray3,
 };
