@@ -46,3 +46,6 @@ IconFile.propTypes = {
 }
 
 export default IconFile;
+export {
+  FILE_TYPES,
+};
