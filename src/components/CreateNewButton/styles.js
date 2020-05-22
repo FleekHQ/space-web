@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
   },
   text: {
     fontSize: 14,
-    color: 'white',
+    color: theme.palette.palette.white,
     paddingLeft: 8,
   },
   plusContainer: {
