@@ -12,5 +12,17 @@
     "copy": "Copy",
     "delete": "Delete",
     "viewInFolder": "View in Finder"
+  },
+  "modules": {
+    "storage": {
+      "fileTable": {
+        "head": {
+          "name": "Name",
+          "members": "Members",
+          "lastModified": "Last Modified",
+          "size": "Size"
+        }
+      }
+    }
   }
 }

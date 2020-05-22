@@ -29,7 +29,7 @@ const Table = (props) => {
     }));
 
   return (
-    <MuiTable>
+    <MuiTable {...restProps}>
       <TableHead>
         {renderHead({
           rows,
