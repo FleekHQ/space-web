@@ -1,5 +1,6 @@
 {
   "test": "Translate me!",
+  "createNew": "Create New",
   "contextMenu": {
     "open": "Open",
     "openWith": "Open With",
