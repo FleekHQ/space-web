@@ -20,5 +20,17 @@
   "teamSelector": {
     "membersNumber": "{{count}} Member",
     "membersNumber_plural": "{{count}} Members"
+  },
+  "modules": {
+    "storage": {
+      "fileTable": {
+        "head": {
+          "name": "Name",
+          "members": "Members",
+          "lastModified": "Last Modified",
+          "size": "Size"
+        }
+      }
+    }
   }
 }
