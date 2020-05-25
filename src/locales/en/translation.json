@@ -16,5 +16,9 @@
   "detailsPanel": {
     "title": "Details Panel",
     "message": "Select a file or folder to see a detailed breakdown."
+  },
+  "teamSelector": {
+    "membersNumber": "{{count}} Member",
+    "membersNumber_plural": "{{count}} Members"
   }
 }
