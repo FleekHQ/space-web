@@ -20,11 +20,12 @@ export default makeStyles((theme) => ({
     overflow: 'hidden',
   },
   image: {
-    borderRadius: 2,
-    height: '100%',
     width: '100%',
+    height: '100%',
+    borderRadius: 2,
+    objectFit: 'cover',
   },
-  iconImg:{ 
+  iconImg:{
     width: '100%',
   },
 }));

@@ -9,5 +9,7 @@ export default makeStyles({
     width: 18,
     height: 18,
     marginRight: 8,
+    borderRadius: 3,
+    overflow: 'hidden',
   },
 });
