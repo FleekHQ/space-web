@@ -9,6 +9,7 @@ const muiButton = {
     transition: 'opacity ease 0.2s',
     '&:hover': {
       opacity: 0.75,
+      cursor: 'pointer',
       backgroundColor: undefined,
     },
   },
