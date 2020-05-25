@@ -25,7 +25,7 @@ const App = () => (
         <Route path="/storage">
           <Storage />
         </Route>
-        <Redirect to="/auth/signup" />
+        <Redirect to="/storage" />
       </Switch>
     </Router>
   </ThemeProvider>
