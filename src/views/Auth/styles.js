@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles({
   root: {
     minHeight: '100vh',
     minWidth: '100vw',
@@ -11,4 +11,4 @@ export default makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundImage: 'url(/assets/images/auth_background.svg)',
   },
-}));
+});
