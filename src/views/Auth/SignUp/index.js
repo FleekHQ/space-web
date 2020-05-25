@@ -29,6 +29,24 @@ const SignUp = () => {
     tfUsername: '',
   });
 
+  const tfClasses = {
+    root: classes.textFieldRoot,
+  };
+
+  const InputProps = {
+    classes: {
+      root: classes.inputPropsRoot,
+      input: classes.inputPropsInput,
+    }
+  };
+
+  const InputLabelProps = {
+    classes: {
+      root: classes.inputLabelPropsRoot,
+      shrink: classes.inputLabelPropsShrink,
+    }
+  };
+
   return (
     <div className={classes.root}>
       <img src="/assets/images/auth_logo.svg" alt="space app logo"/>
@@ -36,46 +54,22 @@ const SignUp = () => {
         <TextField
           id="tfUsername"
           variant="outlined"
-          label={t('modules.signup.username')}
           value={state.tfUsername}
+          label={t('modules.signup.username')}
+          classes={tfClasses}
+          InputProps={InputProps}
+          InputLabelProps={InputLabelProps}
           onChange={handleInputChange({ setState })}
-          classes={{
-            root: classes.textFieldRoot,
-          }}
-          InputProps={{
-            classes: {
-              root: classes.inputPropsRoot,
-              input: classes.inputPropsInput,
-            }
-          }}
-          InputLabelProps={{
-            classes: {
-              root: classes.inputLabelPropsRoot,
-              shrink: classes.inputLabelPropsShrink,
-            }
-          }}
         />
         <TextField
           id="tfEmail"
           variant="outlined"
-          label={t('modules.signup.email')}
           value={state.tfEmail}
+          label={t('modules.signup.email')}
+          classes={tfClasses}
+          InputProps={InputProps}
+          InputLabelProps={InputLabelProps}
           onChange={handleInputChange({ setState })}
-          classes={{
-            root: classes.textFieldRoot,
-          }}
-          InputProps={{
-            classes: {
-              root: classes.inputPropsRoot,
-              input: classes.inputPropsInput,
-            }
-          }}
-          InputLabelProps={{
-            classes: {
-              root: classes.inputLabelPropsRoot,
-              shrink: classes.inputLabelPropsShrink,
-            }
-          }}
         />
         <Button
           fullWidth
