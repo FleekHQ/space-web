@@ -9,7 +9,10 @@ export default makeStyles((theme) => ({
     userSelect: 'none',
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: theme.palette.palette.gray4,
+      color: theme.palette.palette.blue1,
+      '& p': {
+        color: theme.palette.palette.blue1,
+      }
     },
     '&:first-child': {
       borderTopRightRadius: 4,
