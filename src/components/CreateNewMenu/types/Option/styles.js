@@ -24,11 +24,12 @@ export default makeStyles((theme) => ({
     },
   },
   iconLabelContainer: {
-    display: 'inline-block',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
     fontSize: 14,
-    marginRight: 6,
   },
   label: {
     fontSize: 12,
@@ -36,5 +37,12 @@ export default makeStyles((theme) => ({
   },
   angleRightIcon: {
     alignSelf: 'flex-end',
+  },
+  iconContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 15,
+    marginRight: 6,
   },
 }));

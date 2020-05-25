@@ -42,10 +42,12 @@ const Option = ({
         onClick={itemAction}
       >
         <div className={classes.iconLabelContainer}>
-          <FontAwesomeIcon
-            className={classes.icon}
-            icon={icon}
-          />
+          <div className={classes.iconContainer}>
+            <FontAwesomeIcon
+              className={classes.icon}
+              icon={icon}
+            />
+          </div>
           <Typography className={classes.label}>
             {label}
           </Typography>

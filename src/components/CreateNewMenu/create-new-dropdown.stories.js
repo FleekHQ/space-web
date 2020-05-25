@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { number } from '@storybook/addon-knobs';
-import { faUpload } from '@fortawesome/pro-regular-svg-icons/faUpload';
+import { faFilePlus } from '@fortawesome/pro-regular-svg-icons/faFilePlus';
 import { faFolderPlus } from '@fortawesome/pro-regular-svg-icons/faFolderPlus';
 import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
 
@@ -20,7 +20,7 @@ storiesOf(categoryName, module).add('CreateNewMenu', () => {
         id: 'file-upload',
         label: 'File Upload',
         type: ITEM_TYPES.OPTION,
-        icon: faUpload,
+        icon: faFilePlus,
       },
       {
         id: 'folder-upload',
@@ -40,7 +40,7 @@ storiesOf(categoryName, module).add('CreateNewMenu', () => {
           { 
             id: 'submenu-item',
             type: ITEM_TYPES.OPTION,
-            icon: faUpload,
+            icon: faFilePlus,
           }
         ]
       },
