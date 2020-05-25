@@ -36,7 +36,7 @@ const SignUp = () => {
         <TextField
           id="tfUsername"
           variant="outlined"
-          label={t('auth.signup.username')}
+          label={t('modules.signup.username')}
           value={state.tfUsername}
           onChange={handleInputChange({ setState })}
           classes={{
@@ -58,7 +58,7 @@ const SignUp = () => {
         <TextField
           id="tfEmail"
           variant="outlined"
-          label={t('auth.signup.email')}
+          label={t('modules.signup.email')}
           value={state.tfEmail}
           onChange={handleInputChange({ setState })}
           classes={{
@@ -87,7 +87,7 @@ const SignUp = () => {
             root: classes.buttonRoot,
           }}
         >
-          {t('auth.signup.explore')}
+          {t('modules.signup.explore')}
         </Button>
       </form>
     </div>

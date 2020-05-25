@@ -21,7 +21,17 @@
     "membersNumber": "{{count}} Member",
     "membersNumber_plural": "{{count}} Members"
   },
-  "auth": {
+  "modules": {
+    "storage": {
+      "fileTable": {
+        "head": {
+          "name": "Name",
+          "members": "Members",
+          "lastModified": "Last Modified",
+          "size": "Size"
+        }
+      }
+    },
     "signup": {
       "explore": "Explore Space",
       "username": "Pick a username",
