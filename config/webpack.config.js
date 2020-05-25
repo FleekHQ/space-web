@@ -294,6 +294,7 @@ module.exports = function(webpackEnv) {
         'react-native': 'react-native-web',
         // Allows for better profiling with ReactDevTools
         '@ui': path.resolve(process.cwd(), 'src', 'UI'),
+        '@shared': path.resolve(process.cwd(), 'src', 'shared'),
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
