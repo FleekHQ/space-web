@@ -12,5 +12,9 @@
     "copy": "Copy",
     "delete": "Delete",
     "viewInFolder": "View in Finder"
+  },
+  "detailsPanel": {
+    "title": "Details Panel",
+    "message": "Select a file or folder to see a detailed breakdown."
   }
 }
