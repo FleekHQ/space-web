@@ -20,5 +20,12 @@
   "teamSelector": {
     "membersNumber": "{{count}} Member",
     "membersNumber_plural": "{{count}} Members"
+  },
+  "auth": {
+    "signup": {
+      "explore": "Explore Space",
+      "username": "Pick a username",
+      "email": "Email (Optional)"
+    }
   }
 }

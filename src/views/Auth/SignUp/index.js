@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 
 import TextField from '@material-ui/core/TextField';
@@ -22,6 +23,7 @@ const handleSubmit = ({ state }) => (event) => {
 
 const SignUp = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const [state, setState] = React.useState({
     tfEmail: '',
     tfUsername: '',
@@ -34,7 +36,7 @@ const SignUp = () => {
         <TextField
           id="tfUsername"
           variant="outlined"
-          label="Pick a username"
+          label={t('auth.signup.username')}
           value={state.tfUsername}
           onChange={handleInputChange({ setState })}
           classes={{
@@ -56,7 +58,7 @@ const SignUp = () => {
         <TextField
           id="tfEmail"
           variant="outlined"
-          label="Email (Optional)"
+          label={t('auth.signup.email')}
           value={state.tfEmail}
           onChange={handleInputChange({ setState })}
           classes={{
@@ -85,7 +87,7 @@ const SignUp = () => {
             root: classes.buttonRoot,
           }}
         >
-          Explore Space
+          {t('auth.signup.explore')}
         </Button>
       </form>
     </div>
