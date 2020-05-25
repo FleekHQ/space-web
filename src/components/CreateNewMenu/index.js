@@ -18,14 +18,14 @@ const Dropdown = ({
     return null;
   }
 
+  const componentMapping = {
+    [ITEM_TYPES.OPTION]: Option,
+    [ITEM_TYPES.DIVIDER]: Divider,
+  };
+
   return (
     <div className={classes.container}>
       {items.map((item, index) => {
-        const componentMapping = {
-          [ITEM_TYPES.OPTION]: Option,
-          [ITEM_TYPES.DIVIDER]: Divider,
-        };
-
         const TypeComponent = componentMapping[item.type] || Option;
         const action = actions[item.id] || (() => {});
           

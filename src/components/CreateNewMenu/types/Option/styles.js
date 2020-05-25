@@ -27,11 +27,11 @@ export default makeStyles((theme) => ({
     display: 'inline-block',
   },
   icon: {
-    fontSize: 15,
+    fontSize: 14,
     marginRight: 6,
   },
   label: {
-    fontSize: 14,
+    fontSize: 12,
     display: 'inline-block',
   },
   angleRightIcon: {
