@@ -16,11 +16,11 @@ const Dropdown = ({
 
   return (
     <div className={classes.container}>
-      {items.map(({ component: Component, id, ...restProps }) => (
+      {items.map(({ component: Component, id, ...itemProps }) => (
           <Component
             key={id}
             setParentOpen={setOpen}
-            {...restProps}
+            {...itemProps}
           />
         ))}
     </div>
