@@ -21,12 +21,14 @@ storiesOf(categoryName, module).add('CreateNewMenu', () => {
         label: 'File Upload',
         type: ITEM_TYPES.OPTION,
         icon: faFilePlus,
+        onClick: () => console.log('upload file'),
       },
       {
         id: 'folder-upload',
         label: 'Folder Upload',
         type: ITEM_TYPES.OPTION,
         icon: faFolderPlus,
+        onClick: () => console.log('upload folder'),
       },
       {
         type: ITEM_TYPES.DIVIDER,
@@ -41,15 +43,11 @@ storiesOf(categoryName, module).add('CreateNewMenu', () => {
             id: 'submenu-item',
             type: ITEM_TYPES.OPTION,
             icon: faFilePlus,
+            onClick: () => console.log('submenu action'),
           }
         ]
       },
     ],
-    actions: {
-      'file-upload': () => console.log('upload file'),
-      'folder-upload': () => console.log('upload folder'),
-      'submenu-item': () => console.log('submenu item'),
-    }
   }
 
   return (

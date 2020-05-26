@@ -27,12 +27,10 @@ const Dropdown = ({
     <div className={classes.container}>
       {items.map((item, index) => {
         const TypeComponent = componentMapping[item.type] || Option;
-        const action = actions[item.id] || (() => {});
           
         return (
           <TypeComponent
             key={index}
-            onClick={action}
             setParentOpen={setOpen}
             {...item}
           />
