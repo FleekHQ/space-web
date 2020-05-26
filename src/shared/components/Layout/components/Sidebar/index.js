@@ -8,6 +8,13 @@ import TeamSelector from '../TeamSelector';
 import useStyles from './styles';
 import { useNavigations } from './hooks';
 
+const accountsList = [{
+  id: '2',
+  name: 'Team Name',
+  membersNumber: 2,
+  photoUrl: '',
+}];
+
 const activeLinkProps = {
   weight: 'medium',
   color: 'textSecondary',
@@ -20,7 +27,7 @@ const Sidebar = () => {
   return (
     <div className={classes.root}>
       <div className={classes.trafficLightsSpot}></div>
-      <TeamSelector accountsList={[]} selectedAccountId="" />
+      <TeamSelector accountsList={accountsList} selectedAccountId="2" />
       <div className={classes.navWrapper}>
         <div className={`${classes.navColumn} ${classes.generalNav}`}>
           <IconsNavigation options={generalNav} />
