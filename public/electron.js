@@ -15,7 +15,7 @@ const createWindow = () => {
     : `file://${path.join(__dirname, '../build/index.html')}`;
 
   mainWindow = new BrowserWindow({
-    width: 900,
+    width: 1200,
     height: 680,
     minWidth: 680,
     minHeight: 500,
