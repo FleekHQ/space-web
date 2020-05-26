@@ -182,7 +182,8 @@
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
       "^@ui(.*)$": "<rootDir>/src/UI$1",
-      "^@shared(.*)$": "<rootDir>/src/shared$1"
+      "^@shared(.*)$": "<rootDir>/src/shared$1",
+      "^@events(.*)$": "<rootDir>/src/events$1"
     },
     "moduleFileExtensions": [
       "web.js",

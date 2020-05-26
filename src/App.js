@@ -1,4 +1,5 @@
 import React from 'react';
+import registerEvents from '@events';
 import { Provider } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import createFleekTheme from '@ui/theme';
@@ -15,6 +16,7 @@ import store from './store';
 import Auth from './views/Auth';
 import Storage from './views/Storage';
 
+registerEvents();
 const theme = createFleekTheme();
 
 const App = () => (
