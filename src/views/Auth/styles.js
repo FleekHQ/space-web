@@ -10,5 +10,8 @@ export default makeStyles({
     flexDirection: 'column',
     backgroundSize: 'cover',
     backgroundImage: 'url(/assets/images/auth_background.svg)',
+    '& > img': {
+      marginBottom: 10,
+    }
   },
 });
