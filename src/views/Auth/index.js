@@ -6,21 +6,24 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import NonAuthorizedWrapper from '@shared/components/NonAuthorizedWrapper';
-import SignUp from './containers/SignUp';
+import SignUp from './SignUp';
+
+import useStyles from './styles';
 
 const Auth = () => {
   const match = useRouteMatch();
+  const classes = useStyles();
 
   return (
-    <NonAuthorizedWrapper>
+    <div className={classes.root}>
+      <img src="/assets/images/auth_logo.svg" alt="space app logo"/>
       <Switch>
         <Route path={`${match.path}/signup`}>
           <SignUp />
         </Route>
         <Redirect to={`${match.path}/signup`} />
       </Switch>
-    </NonAuthorizedWrapper>
+    </div>
   );
 };
 
