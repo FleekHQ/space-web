@@ -5,14 +5,13 @@ import createFleekTheme from '@ui/theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import store from './store';
-
 import {
   Route,
   Switch,
   Redirect,
   HashRouter as Router,
 } from 'react-router-dom';
+import store from './store';
 import Auth from './views/Auth';
 import Storage from './views/Storage';
 
