@@ -34,7 +34,7 @@
     },
     "signup": {
       "explore": "Explore Space",
-      "username": "Pick a username",
+      "username": "Username",
       "email": "Email (Optional)"
     }
   }
