@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useStyles from './styles';
 import { ITEM_TYPES } from './constants';
-import Option from './types/Option';
-import Divider from './types/Divider';
+import Divider from '@material-ui/core/Divider';
+import Option from './components/Option';
 
 const Dropdown = ({
   open,
   items,
-  actions,
   setOpen,
   ...restProps
 }) => {
@@ -25,9 +24,9 @@ const Dropdown = ({
 
   return (
     <div className={classes.container}>
-      {items.map((item, index) => {
+      {items.map((item) => {
         const TypeComponent = componentMapping[item.type] || Option;
-          
+
         return (
           <TypeComponent
             key={item.id}
