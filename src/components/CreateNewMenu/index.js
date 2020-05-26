@@ -30,7 +30,7 @@ const Dropdown = ({
           
         return (
           <TypeComponent
-            key={index}
+            key={item.id}
             setParentOpen={setOpen}
             {...item}
           />
