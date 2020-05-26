@@ -13,7 +13,6 @@ export default makeStyles((theme) => ({
   },
   title: {
     margin: '11px 18px 1px',
-    fontWeight: 500,
   },
   tableWrapper: {
     padding: 6,
