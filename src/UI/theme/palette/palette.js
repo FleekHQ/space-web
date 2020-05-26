@@ -12,6 +12,7 @@ const blue1 = '#006EFF';
 const blue2 = '#4a97ff';
 const blue3 = '#79b3ff';
 const blue4 = '#b2d3ff';
+const blue5 = '#e9e8f9';
 const red = '#ef6a6e';
 
 const palette = {
@@ -29,6 +30,7 @@ const palette = {
   blue2,
   blue3,
   blue4,
+  blue5,
   red,
 };
 
