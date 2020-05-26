@@ -1,6 +1,9 @@
 {
   "test": "Translate me!",
   "createNew": "Create New",
+  "common": {
+    "search": "Search"
+  },
   "contextMenu": {
     "open": "Open",
     "openWith": "Open With",

@@ -12,7 +12,7 @@ storiesOf(categoryName, module).add('TextField', () => {
     variant: select('variant', ['outlined', 'filled'], 'outlined'),
     InputProps: boolean('with adornment', false) ? {
       startAdornment: (
-        <InputAdornment hiddenLabel position="start">
+        <InputAdornment position="start">
           <span style={{ margin: 0, fontSize: 13 }} role="img" aria-label="Floppy Disk Emoji">💾</span>
         </InputAdornment>
       )

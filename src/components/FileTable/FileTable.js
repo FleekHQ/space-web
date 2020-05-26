@@ -55,17 +55,17 @@ const FileTable = (props) => {
       }}
     >
       <FileCell ext={row.ext} src={row.src}>
-        <Typography variant="body1">
+        <Typography variant="body1" noWrap>
           {row.name}
         </Typography>
       </FileCell>
       <TableCell>
-        <Typography variant="body1" color="secondary">
+        <Typography variant="body1" color="secondary" noWrap>
           Only you
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="body1" color="secondary">
+        <Typography variant="body1" color="secondary" noWrap>
           {row.lastModified}
         </Typography>
       </TableCell>

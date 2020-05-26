@@ -11,5 +11,6 @@ export default makeStyles({
     marginRight: 8,
     borderRadius: 3,
     overflow: 'hidden',
+    flexShrink: 0,
   },
 });

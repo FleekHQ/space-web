@@ -26,7 +26,7 @@ const typographyOptions = {
     fontWeight: fontWeightRegular,
     fontStyle: 'normal',
     fontSize: pxToRem(14),
-    lineHeight: 1.07,
+    lineHeight: 1.2,
     letterSpacing: 'normal',
   },
   body2: {

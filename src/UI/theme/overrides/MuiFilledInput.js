@@ -21,6 +21,7 @@ const MuiFilledInput = {
     '&::placeholder': {
       color: palette.palette.gray1,
       opacity: 1,
+      '-webkit-font-smoothing': 'antialiased',
     },
   },
   underline: {
