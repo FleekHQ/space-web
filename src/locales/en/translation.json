@@ -21,6 +21,10 @@
     "membersNumber": "{{count}} Member",
     "membersNumber_plural": "{{count}} Members"
   },
+  "navigation": {
+    "storage": "Storage",
+    "files": "Files"
+  },
   "modules": {
     "storage": {
       "fileTable": {

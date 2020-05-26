@@ -6,21 +6,21 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import SidebarsWrapper from '@shared/components/SidebarsWrapper';
+import Layout from '@shared/components/Layout';
 import Files from './containers/Files';
 
 const Storage = () => {
   const match = useRouteMatch();
 
   return (
-    <SidebarsWrapper>
+    <Layout>
       <Switch>
         <Route path={`${match.path}/files`}>
           <Files />
         </Route>
         <Redirect to={`${match.path}/files`} />
       </Switch>
-    </SidebarsWrapper>
+    </Layout>
   );
 };
 

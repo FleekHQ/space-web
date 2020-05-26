@@ -18,8 +18,8 @@ const IconsNavigation = ({ options, WrapperComponent }) => {
 
   return (
     <div className={classes.root}>
-      {options.map(({ active, icon, ...restProps }) => (
-        <WrapperComponent {...restProps}>
+      {options.map(({ active, icon, to, key }) => (
+        <WrapperComponent to={to} key={key}>
           <Button
             color={active ? 'primary' : 'default'}
             variant={active ? 'contained' : 'text'}
@@ -39,7 +39,7 @@ IconsNavigation.defaultProps = {
 };
 
 IconsNavigation.propTypes = {
-  option: PropTypes.arrayOf(PropTypes.shape({
+  options: PropTypes.arrayOf(PropTypes.shape({
     icon: PropTypes.oneOf(Object.keys(mapNameToIcon)).isRequired,
     active: PropTypes.bool,
   })).isRequired,

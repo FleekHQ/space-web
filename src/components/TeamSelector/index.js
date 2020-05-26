@@ -53,7 +53,7 @@ TeamSelector.propTypes = {
     name: PropTypes.string.isRequired,
     membersNumber: PropTypes.number.isRequired,
     photoUrl: PropTypes.string,
-  })),
+  })).isRequired,
   selectedAccountId: PropTypes.string.isRequired,
 }
 
