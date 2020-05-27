@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import TextField from '@ui/TextField';
+import { fetchObjects } from '@events';
+import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
+import FolderNavButton from '@ui/FolderNavButton';
+import FileTable from '@shared/components/FileTable';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import Typography from '@ui/Typography';
-import FolderNavButton from '@ui/FolderNavButton';
-import TextField from '@ui/TextField';
-import FileTable from '@shared/components/FileTable';
+
 import useStyles from './styles';
 
 const defaultRows = [
@@ -80,6 +82,10 @@ const defaultRows = [
 const StorageMainView = ({ rows }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    fetchObjects();
+  }, []);
 
   return (
     <div className={classes.root}>

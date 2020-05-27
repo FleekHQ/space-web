@@ -1,4 +1,5 @@
 import { ipcRenderer } from 'electron';
+import { objectPresenter } from '@utils';
 import {
   STORE_OBJECTS,
   SET_ERROR_STATE,
@@ -14,8 +15,10 @@ const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 
 const registerObjectsEvents = () => {
   ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
+    const objects = payload.map((obj) => objectPresenter(obj));
+
     store.dispatch({
-      payload,
+      payload: objects,
       type: STORE_OBJECTS,
     });
   });
