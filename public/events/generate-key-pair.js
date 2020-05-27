@@ -16,7 +16,6 @@ const registerGenerateKeyPairEvents = (mainWindow) => {
     });
   });
 
-
   ipcMain.on(`${EVENT_PREFIX}${FORCE}:fetch`, (event, payload) => {
     client.GenerateKeyPairWithForce(payload, (err, res) => {
       if (err) {
