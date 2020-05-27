@@ -4,8 +4,9 @@ import { number } from '@storybook/addon-knobs';
 import { faFilePlus } from '@fortawesome/pro-regular-svg-icons/faFilePlus';
 import { faFolderPlus } from '@fortawesome/pro-regular-svg-icons/faFolderPlus';
 import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
+import Divider from '@material-ui/core/Divider';
 
-import { ITEM_TYPES } from './constants';
+import Option from './components/Option';
 import CreateNewMenu from './index';
 
 const categoryName = 'ElementalComponents';
@@ -19,29 +20,29 @@ storiesOf(categoryName, module).add('CreateNewMenu', () => {
       {
         id: 'file-upload',
         label: 'File Upload',
-        type: ITEM_TYPES.OPTION,
+        component: Option,
         icon: faFilePlus,
         onClick: () => console.log('upload file'),
       },
       {
         id: 'folder-upload',
         label: 'Folder Upload',
-        type: ITEM_TYPES.OPTION,
+        component: Option,
         icon: faFolderPlus,
         onClick: () => console.log('upload folder'),
       },
       {
-        type: ITEM_TYPES.DIVIDER,
+        component: Divider,
       },
       {
         id: 'option-with-submenu',
         label: 'Text Doc',
-        type: ITEM_TYPES.OPTION,
+        component: Option,
         icon: faFileAlt,
         subItems: [
           { 
             id: 'submenu-item',
-            type: ITEM_TYPES.OPTION,
+            component: Option,
             icon: faFilePlus,
             onClick: () => console.log('submenu action'),
           }

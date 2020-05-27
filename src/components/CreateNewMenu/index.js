@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useStyles from './styles';
-import { ITEM_TYPES } from './constants';
-import Option from './types/Option';
-import Divider from './types/Divider';
 
 const Dropdown = ({
   open,
   items,
-  actions,
   setOpen,
   ...restProps
 }) => {
@@ -18,24 +14,15 @@ const Dropdown = ({
     return null;
   }
 
-  const componentMapping = {
-    [ITEM_TYPES.OPTION]: Option,
-    [ITEM_TYPES.DIVIDER]: Divider,
-  };
-
   return (
     <div className={classes.container}>
-      {items.map((item, index) => {
-        const TypeComponent = componentMapping[item.type] || Option;
-          
-        return (
-          <TypeComponent
-            key={item.id}
+      {items.map(({ component: Component, id, ...itemProps }) => (
+          <Component
+            key={id}
             setParentOpen={setOpen}
-            {...item}
+            {...itemProps}
           />
-        );
-      })}
+        ))}
     </div>
   );
 };

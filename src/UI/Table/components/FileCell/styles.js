@@ -6,8 +6,8 @@ export default makeStyles({
     alignItems: 'center',
   },
   iconContainer: {
-    width: 18,
-    height: 18,
+    width: 22,
+    height: 22,
     marginRight: 8,
     borderRadius: 3,
     overflow: 'hidden',

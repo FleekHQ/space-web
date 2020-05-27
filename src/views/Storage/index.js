@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Layout from '@shared/components/Layout';
-import Files from './containers/Files';
+import Files from './Files';
 
 const Storage = () => {
   const match = useRouteMatch();

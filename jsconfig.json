@@ -3,7 +3,8 @@
     "baseUrl": "./",
     "paths": {
       "@ui": ["src/UI"],
-      "@shared": ["src/shared"]
+      "@shared": ["src/shared"],
+      "@events": ["src/events"]
     }
   },
   "exclude": ["node_modules"]

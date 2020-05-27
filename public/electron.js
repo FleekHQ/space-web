@@ -4,6 +4,8 @@ const path = require('path');
 const electron = require('electron');
 const isDev = require('electron-is-dev');
 
+const registerEvents = require('./events');
+
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
@@ -20,6 +22,7 @@ const createWindow = () => {
     minWidth: 680,
     minHeight: 500,
     webPreferences: {
+      nodeIntegration: true,
       preload: `${__dirname}/preload.js`
     }
   });
@@ -41,6 +44,8 @@ const createWindow = () => {
   }
 
   mainWindow.on('closed', () => (mainWindow = null));
+
+  registerEvents(mainWindow);
 };
 
 app.on('ready', createWindow);
