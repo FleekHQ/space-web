@@ -6,6 +6,7 @@ export default makeStyles((theme) => ({
     height: '100%',
     padding: '13px 20px',
     boxSizing: 'border-box',
+    backgroundColor: theme.palette.palette.white,
   },
   title: {
     marginBottom: 10,
