@@ -183,7 +183,8 @@
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
       "^@ui(.*)$": "<rootDir>/src/UI$1",
       "^@shared(.*)$": "<rootDir>/src/shared$1",
-      "^@events(.*)$": "<rootDir>/src/events$1"
+      "^@events(.*)$": "<rootDir>/src/events$1",
+      "^@reducers(.*)$": "<rootDir>/src/reducers$1"
     },
     "moduleFileExtensions": [
       "web.js",

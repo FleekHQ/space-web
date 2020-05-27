@@ -11,8 +11,8 @@ import SignUp from './SignUp';
 import useStyles from './styles';
 
 const Auth = () => {
-  const match = useRouteMatch();
   const classes = useStyles();
+  const match = useRouteMatch();
 
   return (
     <div className={classes.root}>
