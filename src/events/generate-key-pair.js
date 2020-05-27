@@ -1,4 +1,4 @@
-const { ipcRenderer } = window.require('electron');
+import { ipcRenderer } from 'electron';
 
 const EVENT_PREFIX = 'generateKeyPair';
 const EVENT_FORCE_PREFIX = `${EVENT_PREFIX}WithForce`;
