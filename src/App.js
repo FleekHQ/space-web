@@ -1,11 +1,10 @@
 import React from 'react';
+import registerEvents from '@events';
 import { Provider } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import createFleekTheme from '@ui/theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-
-import store from './store';
 
 import {
   Route,
@@ -13,9 +12,11 @@ import {
   Redirect,
   HashRouter as Router,
 } from 'react-router-dom';
+import store from './store';
 import Auth from './views/Auth';
 import Storage from './views/Storage';
 
+registerEvents();
 const theme = createFleekTheme();
 
 const App = () => (
