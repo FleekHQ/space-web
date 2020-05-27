@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import IconsNavigation from '@ui/IconsNavigation';
 import Typography from '@ui/Typography';
 import Avatar from '@ui/Avatar';
@@ -15,12 +16,20 @@ const activeLinkProps = {
 
 const Sidebar = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const { generalNav, specificNav } = useNavigations();
 
   return (
     <div className={classes.root}>
       <div className={classes.trafficLightsSpot}></div>
-      <TeamSelector accountsList={[]} selectedAccountId="" />
+      <TeamSelector
+        accountsList={[{
+          id: user.username,
+          name: user.username,
+          membersNumber: 0,
+        }]}
+        selectedAccountId={user.username}
+      />
       <div className={classes.navWrapper}>
         <div className={`${classes.navColumn} ${classes.generalNav}`}>
           <IconsNavigation options={generalNav} />
