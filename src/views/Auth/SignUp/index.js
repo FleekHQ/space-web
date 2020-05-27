@@ -8,8 +8,9 @@ import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+import { USER_ACTION_TYPES } from '@reducers/user';
+
 import useStyles from './styles';
-import { USER_ACTION_TYPES } from '../../../reducers/user';
 
 const handleInputChange = ({ setState }) => (event) => {
   const { id, value } = event.target;

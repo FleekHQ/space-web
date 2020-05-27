@@ -4,7 +4,8 @@
     "paths": {
       "@ui": ["src/UI"],
       "@shared": ["src/shared"],
-      "@events": ["src/events"]
+      "@events": ["src/events"],
+      "@reducers": ["src/reducers"]
     }
   },
   "exclude": ["node_modules"]
