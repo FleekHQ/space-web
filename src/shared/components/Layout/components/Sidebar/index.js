@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import IconsNavigation from '@ui/IconsNavigation';
 import Typography from '@ui/Typography';
 import Avatar from '@ui/Avatar';
@@ -8,13 +9,6 @@ import TeamSelector from '../TeamSelector';
 import useStyles from './styles';
 import { useNavigations } from './hooks';
 
-const accountsList = [{
-  id: '2',
-  name: 'Team Name',
-  membersNumber: 2,
-  photoUrl: '',
-}];
-
 const activeLinkProps = {
   weight: 'medium',
   color: 'textSecondary',
@@ -22,12 +16,20 @@ const activeLinkProps = {
 
 const Sidebar = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const { generalNav, specificNav } = useNavigations();
 
   return (
     <div className={classes.root}>
       <div className={classes.trafficLightsSpot}></div>
-      <TeamSelector accountsList={accountsList} selectedAccountId="2" />
+      <TeamSelector
+        accountsList={[{
+          id: user.username,
+          name: user.username,
+          membersNumber: 0,
+        }]}
+        selectedAccountId={user.username}
+      />
       <div className={classes.navWrapper}>
         <div className={`${classes.navColumn} ${classes.generalNav}`}>
           <IconsNavigation options={generalNav} />

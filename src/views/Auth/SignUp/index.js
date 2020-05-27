@@ -1,8 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Button from '@material-ui/core/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+
+import { USER_ACTION_TYPES } from '@reducers/user';
 
 import useStyles from './styles';
 
@@ -15,16 +21,33 @@ const handleInputChange = ({ setState }) => (event) => {
   }));
 };
 
-const handleSubmit = ({ state }) => (event) => {
+const handleSubmit = ({
+  state,
+  history,
+  dispatch,
+}) => (event) => {
   event.preventDefault();
 
-  console.log('TODO: Signup integration', state);
+  dispatch({
+    type: USER_ACTION_TYPES.ON_USER_SIGNUP,
+    user: {
+      email: state.tfEmail,
+      username: state.tfUsername,
+    },
+  });
+ 
+  history.push('/storage');
 };
 
 const SignUp = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const [state, setState] = React.useState({
+    error: null,
+    loading: false,
     tfEmail: '',
     tfUsername: '',
   });
@@ -32,14 +55,12 @@ const SignUp = () => {
   const tfClasses = {
     root: classes.textFieldRoot,
   };
-
   const InputProps = {
     classes: {
       root: classes.inputPropsRoot,
       input: classes.inputPropsInput,
     }
   };
-
   const InputLabelProps = {
     classes: {
       root: classes.inputLabelPropsRoot,
@@ -47,8 +68,14 @@ const SignUp = () => {
     }
   };
 
+  React.useEffect(() => {
+    if (state.error) {
+      console.error(`Signup error: ${state.error}`);
+    }
+  }, [state.error]);
+
   return (
-    <form className={classes.form} onSubmit={handleSubmit({ state })} autoComplete="off">
+    <form className={classes.form} onSubmit={handleSubmit({ state, history, dispatch })} autoComplete="off">
       <TextField
         id="tfUsername"
         variant="outlined"
@@ -61,6 +88,7 @@ const SignUp = () => {
       />
       <TextField
         id="tfEmail"
+        type="email"
         variant="outlined"
         value={state.tfEmail}
         label={t('modules.signup.email')}
@@ -74,12 +102,16 @@ const SignUp = () => {
         type="submit"
         color="primary"
         variant="contained"
-        disabled={!state.tfUsername.length}
+        disabled={!state.tfUsername.length || state.loading}
         classes={{
           root: classes.buttonRoot,
         }}
       >
-        {t('modules.signup.explore')}
+        {
+          state.loading ? (
+            <FontAwesomeIcon spin icon={faSpinner} size="lg" />
+          ) : t('modules.signup.explore')
+        }
       </Button>
     </form>
   );

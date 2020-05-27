@@ -15,6 +15,7 @@ import {
 import store from './store';
 import Auth from './views/Auth';
 import Storage from './views/Storage';
+import PrivateRoute from './shared/components/PrivateRoute';
 
 registerEvents();
 const theme = createFleekTheme();
@@ -29,9 +30,9 @@ const App = () => (
             <Route path="/auth">
               <Auth />
             </Route>
-            <Route path="/storage">
+            <PrivateRoute path="/storage">
               <Storage />
-            </Route>
+            </PrivateRoute>
             <Redirect to="/storage" />
           </Switch>
         </Router>
