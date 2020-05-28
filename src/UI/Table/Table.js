@@ -25,10 +25,11 @@ const Table = (props) => {
       renderRow,
       renderHead,
       renderLoadingRows,
-      ...restProps
+      ...restProps,
     }));
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <MuiTable {...restProps}>
       <TableHead>
         {renderHead({
@@ -38,7 +39,7 @@ const Table = (props) => {
           renderRow,
           renderHead,
           renderLoadingRows,
-          ...restProps
+          ...restProps,
         })}
       </TableHead>
       <TableBody>
@@ -58,7 +59,9 @@ Table.defaultProps = {
 };
 
 Table.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   head: PropTypes.any,
+  // eslint-disable-next-line react/forbid-prop-types
   rows: PropTypes.array,
   loading: PropTypes.bool,
   renderRow: PropTypes.func,

@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.palette.white,
     '& > *:not(:last-child)': {
       borderBottom: `solid 1px ${theme.palette.palette.gray4}`,
-    }
+    },
   },
   trafficLightsSpot: {
     height: 27,

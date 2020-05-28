@@ -1,0 +1,5 @@
+.storybook/
+config/
+public/
+scripts/
+*.stories.js

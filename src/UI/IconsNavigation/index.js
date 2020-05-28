@@ -10,7 +10,7 @@ import useStyles from './styles';
 const mapNameToIcon = {
   files: faCopy,
   settings: faCog,
-  comments: faComment
+  comments: faComment,
 };
 
 const IconsNavigation = ({ options, WrapperComponent }) => {
@@ -18,7 +18,9 @@ const IconsNavigation = ({ options, WrapperComponent }) => {
 
   return (
     <div className={classes.root}>
-      {options.map(({ active, icon, to, key }) => (
+      {options.map(({
+        active, icon, to, key,
+      }) => (
         <WrapperComponent to={to} key={key}>
           <Button
             color={active ? 'primary' : 'default'}
@@ -35,7 +37,7 @@ const IconsNavigation = ({ options, WrapperComponent }) => {
 };
 
 IconsNavigation.defaultProps = {
-  WrapperComponent: 'a'
+  WrapperComponent: 'a',
 };
 
 IconsNavigation.propTypes = {

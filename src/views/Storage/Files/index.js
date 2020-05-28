@@ -79,6 +79,7 @@ const defaultRows = [
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 const StorageMainView = ({ rows }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -119,8 +120,13 @@ const StorageMainView = ({ rows }) => {
   );
 };
 
+StorageMainView.defaultProps = {
+  rows: [],
+};
+
 StorageMainView.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   rows: PropTypes.array,
-}
+};
 
 export default StorageMainView;

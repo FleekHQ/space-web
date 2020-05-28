@@ -25,7 +25,7 @@ export default makeStyles((theme) => ({
     borderRadius: 2,
     objectFit: 'cover',
   },
-  iconImg:{
+  iconImg: {
     width: '100%',
   },
 }));

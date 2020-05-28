@@ -35,7 +35,7 @@ const handleSubmit = ({
       username: state.tfUsername,
     },
   });
- 
+
   history.push('/storage');
 };
 
@@ -59,13 +59,13 @@ const SignUp = () => {
     classes: {
       root: classes.inputPropsRoot,
       input: classes.inputPropsInput,
-    }
+    },
   };
   const InputLabelProps = {
     classes: {
       root: classes.inputLabelPropsRoot,
       shrink: classes.inputLabelPropsShrink,
-    }
+    },
   };
 
   React.useEffect(() => {

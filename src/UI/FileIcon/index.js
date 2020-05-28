@@ -22,8 +22,8 @@ const IconFile = ({
   type,
 }) => {
   const iconTypeMapping = {
-    [FILE_TYPES.FOLDER]: <Folder  />,
-    [FILE_TYPES.IMAGE]: <Image src={src}/>,
+    [FILE_TYPES.FOLDER]: <Folder />,
+    [FILE_TYPES.IMAGE]: <Image src={src} />,
     [FILE_TYPES.PDF]: <SimpleIcon iconSrc={PDFIcon} />,
     [FILE_TYPES.ZIP]: <SimpleIcon iconSrc={ZIPIcon} />,
     [FILE_TYPES.WORD]: <SimpleIcon iconSrc={DocIcon} />,
@@ -47,7 +47,7 @@ IconFile.defaultProps = {
 IconFile.propTypes = {
   type: PropTypes.string.isRequired,
   src: PropTypes.string,
-}
+};
 
 export default IconFile;
 

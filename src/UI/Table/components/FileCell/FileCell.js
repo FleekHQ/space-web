@@ -17,6 +17,7 @@ const FileCell = (props) => {
   const classes = useStyles();
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <TableCell {...tableCellProps}>
       <div className={classes.container}>
         <div className={classes.iconContainer}>

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  container:{
+  container: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
       color: theme.palette.palette.blue1,
       '& p': {
         color: theme.palette.palette.blue1,
-      }
+      },
     },
     '&:first-child': {
       borderTopRightRadius: 4,

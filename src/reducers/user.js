@@ -7,13 +7,13 @@ export const USER_ACTION_TYPES = {
 
 try {
   user = JSON.parse(window.localStorage.getItem(USER_KEY));
-} catch (error){
+} catch (error) {
   user = null;
 }
 
 export default (state = user, action) => {
-  switch(action.type) {
-    case USER_ACTION_TYPES.ON_USER_SIGNUP:{
+  switch (action.type) {
+    case USER_ACTION_TYPES.ON_USER_SIGNUP: {
       window.localStorage.setItem(USER_KEY, JSON.stringify(action.user));
 
       return {

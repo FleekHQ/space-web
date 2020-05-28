@@ -12,6 +12,6 @@ export default makeStyles({
     backgroundImage: 'url(/assets/images/auth_background.svg)',
     '& > img': {
       marginBottom: 10,
-    }
+    },
   },
 });
