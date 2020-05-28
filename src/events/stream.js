@@ -4,6 +4,7 @@ const EVENT_PREFIX = 'eventStream';
 const DATA_EVENT = `${EVENT_PREFIX}:data`;
 const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 
+/* eslint-disable no-console */
 const registerEventStream = () => {
   ipcRenderer.on(DATA_EVENT, (event, payload) => {
     // DO Something with the response (dispatch to redux)

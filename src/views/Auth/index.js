@@ -10,13 +10,15 @@ import SignUp from './SignUp';
 
 import useStyles from './styles';
 
+const { PUBLIC_URL } = process.env;
+
 const Auth = () => {
   const classes = useStyles();
   const match = useRouteMatch();
 
   return (
     <div className={classes.root}>
-      <img src="/assets/images/auth_logo.svg" alt="space app logo" />
+      <img src={`${PUBLIC_URL}/assets/images/auth_logo.svg`} alt="space app logo" />
       <Switch>
         <Route path={`${match.path}/signup`}>
           <SignUp />
