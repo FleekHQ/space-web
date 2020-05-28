@@ -3,6 +3,7 @@ import {
   fontFamily,
   fontWeightMedium,
   fontWeightRegular,
+  fontWeightSemiBold,
 } from '../settings';
 
 import text from '../palette/text';
@@ -13,6 +14,7 @@ const typographyOptions = {
   fontFamily,
   fontWeightRegular,
   fontWeightMedium,
+  fontWeightSemiBold,
   h6: {
     color: text.primary,
     fontWeight: fontWeightRegular,
