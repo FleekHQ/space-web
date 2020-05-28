@@ -69,6 +69,7 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
+    "glob": "^7.1.6",
     "gql": "^1.1.2",
     "graphql": "^15.0.0",
     "grpc": "^1.24.2",
@@ -184,7 +185,8 @@
       "^@ui(.*)$": "<rootDir>/src/UI$1",
       "^@shared(.*)$": "<rootDir>/src/shared$1",
       "^@events(.*)$": "<rootDir>/src/events$1",
-      "^@reducers(.*)$": "<rootDir>/src/reducers$1"
+      "^@reducers(.*)$": "<rootDir>/src/reducers$1",
+      "^@utils(.*)$": "<rootDir>/src/utils$1"
     },
     "moduleFileExtensions": [
       "web.js",

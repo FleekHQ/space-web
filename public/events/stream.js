@@ -12,6 +12,8 @@ const registerEventStream = (mainWindow) => {
   eventStream.on('error', (error) => {
     mainWindow.webContents.send(`${EVENT_PREFIX}:error`, error);
   });
+
+  return eventStream;
 };
 
 module.exports = registerEventStream;

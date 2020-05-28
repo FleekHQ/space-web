@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import createFleekTheme from '@ui/theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
+import SetUpWD from '@shared/components/SetUpWD';
 
 import {
   Route,
@@ -20,10 +21,13 @@ import PrivateRoute from './shared/components/PrivateRoute';
 registerEvents();
 const theme = createFleekTheme();
 
+/* TODO: Remove SetUpWD from Final Version */
+
 const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SetUpWD />
       <Box height="100vh">
         <Router>
           <Switch>
