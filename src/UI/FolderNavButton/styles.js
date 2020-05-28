@@ -9,5 +9,5 @@ export default makeStyles((theme) => ({
   },
   disabledIcon: {
     color: theme.palette.palette.gray2,
-  }
+  },
 }));

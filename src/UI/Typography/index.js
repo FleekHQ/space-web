@@ -5,15 +5,17 @@ import Box from '@material-ui/core/Box';
 
 const getFontWeight = (weight) => (
   `fontWeight${weight.charAt(0).toUpperCase()}${weight.substring(1)}`
-)
+);
 
 const FleekTypography = ({ weight, children, ...restProps }) => (
   <Typography
-    children={weight
-      ? <Box fontWeight={getFontWeight(weight)} component="span">{children}</Box>
-      : children}
+    // eslint-disable-next-line react/jsx-props-no-spreading
     {...restProps}
-  />
+  >
+    {
+      weight ? <Box fontWeight={getFontWeight(weight)} component="span">{children}</Box> : children
+    }
+  </Typography>
 );
 
 FleekTypography.defaultProps = {

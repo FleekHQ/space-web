@@ -10,6 +10,7 @@ const TableCell = (props) => {
     <MuiTableCell
       padding="none"
       classes={classes}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
   );

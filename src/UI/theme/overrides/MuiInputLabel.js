@@ -6,7 +6,7 @@ const MuiOutlinedInput = {
     transform: 'translate(14px, 9px) scale(1)',
     '&$shrink': {
       color: palette.black,
-    }
+    },
   },
 };
 

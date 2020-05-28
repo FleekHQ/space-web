@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
     '& > *': {
       margin: '12px 0',
-    }
+    },
   },
   buttonRoot: {
     height: 39,
@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
     '& label.MuiFormLabel-filled + .MuiOutlinedInput-root': {
       '& fieldset, &:hover fieldset': {
         borderColor: theme.palette.palette.white,
-      }
+      },
     },
   },
   inputPropsRoot: {

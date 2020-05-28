@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -16,4 +16,4 @@ export default makeStyles((theme) => ({
     marginLeft: 14,
     minWidth: 0,
   },
-}));
+});

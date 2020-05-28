@@ -9,12 +9,13 @@ import useStyles from './styles';
 const CreateNewButton = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  
+
   return (
     <Button
       variant="contained"
       color="primary"
       className={classes.container}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
       <Typography className={classes.text}>

@@ -1,5 +1,6 @@
 import { FILE_TYPES } from '../../../FileIcon';
 
+// eslint-disable-next-line import/prefer-default-export
 export const EXT_ICON = {
   pdf: FILE_TYPES.PDF,
   zip: FILE_TYPES.ZIP,

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  container:{
+  container: {
     textTransform: 'none',
     padding: 4,
   },

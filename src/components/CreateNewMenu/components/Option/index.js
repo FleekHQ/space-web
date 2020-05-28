@@ -1,3 +1,6 @@
+// disable eslint for <div className={classes.container} onClick={itemAction} >
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -26,14 +29,14 @@ const Option = ({
     }
   };
 
-  const onMouseLeave = () => setPopperOpen(false)
+  const onMouseLeave = () => setPopperOpen(false);
 
   const itemAction = (e) => {
     if (!hasSubItems) {
       onClick(e);
       setParentOpen(false);
     }
-  }
+  };
 
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
@@ -81,9 +84,11 @@ Option.defaultProps = {
 };
 
 Option.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   icon: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  // eslint-disable-next-line react/forbid-prop-types
   subItems: PropTypes.array,
   id: PropTypes.string.isRequired,
   setParentOpen: PropTypes.func.isRequired,

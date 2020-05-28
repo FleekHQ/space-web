@@ -16,7 +16,7 @@ const Auth = () => {
 
   return (
     <div className={classes.root}>
-      <img src="/assets/images/auth_logo.svg" alt="space app logo"/>
+      <img src="/assets/images/auth_logo.svg" alt="space app logo" />
       <Switch>
         <Route path={`${match.path}/signup`}>
           <SignUp />

@@ -9,6 +9,7 @@ const TableRow = (props) => {
   return (
     <MuiTableRow
       classes={classes}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
   );

@@ -13,7 +13,7 @@ const MuiFilledInput = {
     '&$focused': {
       backgroundColor: undefined,
       borderColor: palette.palette.blue1,
-    }
+    },
   },
   input: {
     height: 'auto',
