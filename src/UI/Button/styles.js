@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles({
   root: {
-    width: (props) => props.fixedWidth || '100%'
+    width: (props) => props.fixedWidth || '100%',
   },
-}));
+});

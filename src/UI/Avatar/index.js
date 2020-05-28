@@ -3,19 +3,16 @@ import PropTypes from 'prop-types';
 
 import useStyles from './styles';
 
-const getContent = ({
-  id,
-  alt,
-  imgUrl,
-}) => {
+// eslint-disable-next-line react/prop-types
+const getContent = ({ id, alt, imgUrl }) => {
   if (imgUrl) {
     return (
-      <img src={imgUrl} alt={alt}/>
+      <img src={imgUrl} alt={alt} />
     );
   }
 
   return (
-    <svg  data-jdenticon-value={id}/>
+    <svg data-jdenticon-value={id} />
   );
 };
 
@@ -29,7 +26,7 @@ const Avatar = ({
   const content = getContent({ id, alt, imgUrl });
 
   return (
-    <div  className={classes.root} >
+    <div className={classes.root}>
       {content}
     </div>
   );

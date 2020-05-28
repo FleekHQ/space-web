@@ -8,7 +8,7 @@ const Icon = ({
   const classes = useStyles();
 
   return (
-    <img src={iconSrc} alt="icon" className={classes.iconImg}/>
+    <img src={iconSrc} alt="icon" className={classes.iconImg} />
   );
 };
 

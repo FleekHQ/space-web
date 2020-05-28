@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/styles';
 
+const { PUBLIC_URL } = process.env;
+
 export default makeStyles({
   root: {
     minHeight: '100vh',
@@ -9,9 +11,9 @@ export default makeStyles({
     justifyContent: 'center',
     flexDirection: 'column',
     backgroundSize: 'cover',
-    backgroundImage: 'url(/assets/images/auth_background.svg)',
+    backgroundImage: `url(${PUBLIC_URL}/assets/images/auth_background.svg)`,
     '& > img': {
       marginBottom: 10,
-    }
+    },
   },
 });

@@ -17,12 +17,13 @@ const Dropdown = ({
   return (
     <div className={classes.container}>
       {items.map(({ component: Component, id, ...itemProps }) => (
-          <Component
-            key={id}
-            setParentOpen={setOpen}
-            {...itemProps}
-          />
-        ))}
+        <Component
+          key={id}
+          setParentOpen={setOpen}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...itemProps}
+        />
+      ))}
     </div>
   );
 };
@@ -36,7 +37,7 @@ Dropdown.propTypes = {
   left: PropTypes.number.isRequired,
   bottom: PropTypes.number.isRequired,
   setOpen: PropTypes.func,
-}
+  items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
 
 export default Dropdown;
-

@@ -23,12 +23,13 @@ const FileTable = (props) => {
     t('modules.storage.fileTable.head.name'),
     t('modules.storage.fileTable.head.members'),
     t('modules.storage.fileTable.head.lastModified'),
-    ''
+    '',
   ];
 
-  const renderHead = ({ head = [] }) => (
+  /* eslint-disable react/prop-types */
+  const renderHead = ({ _head = [] }) => (
     <TableRow>
-      {head.map((label) => (
+      {_head.map((label) => (
         <TableCell key={label} className={classes.headerCell}>
           <Typography variant="body2">
             {label}
@@ -80,6 +81,7 @@ const FileTable = (props) => {
       </TableCell>
     </TableRow>
   );
+  /* eslint-enable react/prop-types */
 
   return (
     <Table
@@ -105,7 +107,7 @@ FileTable.propTypes = {
     name: PropTypes.string,
     selected: PropTypes.bool,
     lastModified: PropTypes.instanceOf(Date),
-  }))
+  })),
 };
 
 export default FileTable;

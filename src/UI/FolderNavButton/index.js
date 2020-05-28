@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft  } from '@fortawesome/pro-regular-svg-icons/faArrowLeft';
+import { faArrowLeft } from '@fortawesome/pro-regular-svg-icons/faArrowLeft';
 import Button from '@material-ui/core/Button';
 import useStyles from './styles';
 
@@ -13,6 +13,7 @@ const FolderNavButton = ({ direction, className, ...restProps }) => {
     <Button
       className={classnames(classes.root, className)}
       disableRipple
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...restProps}
     >
       <FontAwesomeIcon

@@ -13,7 +13,6 @@ const registerEvents = () => {
 };
 
 export default registerEvents;
-export * from './stream';
 export * from './objects';
 export * from './path-info';
 export * from './generate-key-pair';

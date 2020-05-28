@@ -13,9 +13,10 @@ const getDefaultConfig = (location) => ([
         to: '/storage/files',
       },
     ],
-  }
+  },
 ]);
 
+// eslint-disable-next-line import/prefer-default-export
 export const useNavigations = () => {
   const location = useLocation();
   const { t } = useTranslation();

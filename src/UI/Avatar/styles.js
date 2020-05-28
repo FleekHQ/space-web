@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const DEFAULT_SIZE = 38;
 
-export default makeStyles((theme) => ({
+export default makeStyles({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
     },
     '& > img': {
       margin: '0 -5px',
-      objectFit: 'cover'
+      objectFit: 'cover',
     },
   },
-}));
+});

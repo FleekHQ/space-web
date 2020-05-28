@@ -5,13 +5,11 @@ import palette from './palette';
 import overrides from './overrides';
 import typography from './typography';
 
-const createFleekTheme = () => {
-  return createMuiTheme({
-    props,
-    palette,
-    overrides,
-    typography,
-  });
-};
+const createFleekTheme = () => createMuiTheme({
+  props,
+  palette,
+  overrides,
+  typography,
+});
 
 export default createFleekTheme;

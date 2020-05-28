@@ -17,7 +17,7 @@ const TeamSelector = ({ accountsList, selectedAccountId }) => {
   const { t } = useTranslation();
 
   const selectedAccountDetails = accountsList.find(
-    option => option.id === selectedAccountId,
+    (option) => option.id === selectedAccountId,
   ) || defaultAccountData;
 
   return (
@@ -44,7 +44,7 @@ const TeamSelector = ({ accountsList, selectedAccountId }) => {
         </Typography>
       </div>
     </div>
-  )
+  );
 };
 
 TeamSelector.propTypes = {
@@ -55,6 +55,6 @@ TeamSelector.propTypes = {
     photoUrl: PropTypes.string,
   })).isRequired,
   selectedAccountId: PropTypes.string.isRequired,
-}
+};
 
 export default TeamSelector;

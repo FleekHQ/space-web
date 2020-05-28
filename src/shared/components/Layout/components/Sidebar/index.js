@@ -21,7 +21,7 @@ const Sidebar = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.trafficLightsSpot}></div>
+      <div className={classes.trafficLightsSpot} />
       <TeamSelector
         accountsList={[{
           id: user.username,
@@ -54,6 +54,7 @@ const Sidebar = () => {
               <Typography
                 color="secondary"
                 variant="body1"
+                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...navLink.active && activeLinkProps}
               >
                 {navLink.text}
@@ -67,6 +68,6 @@ const Sidebar = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

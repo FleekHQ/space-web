@@ -34,7 +34,7 @@ const StorageMainView = () => {
       '',
       path.join(wd, prefix),
       '/',
-    )
+    );
   });
 
   useEffect(() => {

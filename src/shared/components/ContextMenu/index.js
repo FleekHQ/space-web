@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 const contextMenuConfig = ({
   t,
@@ -19,13 +19,13 @@ const contextMenuConfig = ({
     label: t('contextMenu.open'), click: openOnClick,
   },
   ...(
-    !showOpenWith 
-    ? []
-    : [
+    !showOpenWith
+      ? []
+      : [
         {
           label: t('contextMenu.openWith'),
-          click: openWithOnClick
-        }
+          click: openWithOnClick,
+        },
       ]
   ),
   {
@@ -64,9 +64,8 @@ const contextMenuConfig = ({
 ]);
 
 
-
 const ContextMenu = () => {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   const menuItems = contextMenuConfig({ t });
 
   const { ContextMenuArea } = window;
