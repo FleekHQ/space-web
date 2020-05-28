@@ -1,14 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const { ipcMain } = require('electron');
+const { ipcMain, shell } = require('electron');
 
 const EVENT_PREFIX = 'objects';
 const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
 const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
+const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 
 const registerObjectsEvents = (mainWindow) => {
+  ipcMain.on(OPEN_EVENT, (event, payload) => {
+    shell.openItem(payload);
+  });
+
   ipcMain.on(FETCH_EVENT, (event, payload) => {
     // TODO: replace with call to gRPC method
     mainWindow

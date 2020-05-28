@@ -23,6 +23,7 @@ const createWindow = () => {
     minWidth: 680,
     minHeight: 500,
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: true,
       preload: `${__dirname}/preload.js`
     }
