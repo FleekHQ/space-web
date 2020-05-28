@@ -70,6 +70,7 @@ const SignUp = () => {
 
   React.useEffect(() => {
     if (state.error) {
+      /* eslint-disable-next-line no-console */
       console.error(`Signup error: ${state.error}`);
     }
   }, [state.error]);
