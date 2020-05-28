@@ -22,6 +22,5 @@ jobs:
         node-version: '10.x'
     - name: Install dependencies
       run: yarn install --ignore-scripts
-      if: steps['cache-step'].outputs['cache-hit'] == 'false'
     - name: Run lint
       run: yarn lint
