@@ -6,6 +6,7 @@ module.exports = ({ config }) => {
     '@ui': path.resolve(process.cwd(), 'src', 'UI'),
     '@shared': path.resolve(process.cwd(), 'src', 'shared'),
     '@events': path.resolve(process.cwd(), 'src', 'events'),
+    '@utils': path.resolve(process.cwd(), 'src', 'utils'),
   };
 
   return config;

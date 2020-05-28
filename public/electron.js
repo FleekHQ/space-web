@@ -10,6 +10,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow;
+let destroyStream = () => {};
 
 const createWindow = () => {
   const url = isDev
@@ -45,12 +46,14 @@ const createWindow = () => {
 
   mainWindow.on('closed', () => (mainWindow = null));
 
-  registerEvents(mainWindow);
+  destroyStream = registerEvents(mainWindow);
 };
 
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
+  destroyStream();
+
   if (process.platform !== 'darwin') {
     app.quit();
   }

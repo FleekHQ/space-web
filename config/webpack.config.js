@@ -298,6 +298,7 @@ module.exports = function(webpackEnv) {
         '@shared': path.resolve(process.cwd(), 'src', 'shared'),
         '@events': path.resolve(process.cwd(), 'src', 'events'),
         '@reducers': path.resolve(process.cwd(), 'src', 'reducers'),
+        '@utils': path.resolve(process.cwd(), 'src', 'utils'),
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
