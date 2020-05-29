@@ -28,7 +28,6 @@ export default (state = DEFAULT_STATE, action) => {
 
     case STORE_OBJECTS: {
       const objects = uniqBy([
-        ...state.objects,
         ...action.payload,
       ], 'fullKey');
 
