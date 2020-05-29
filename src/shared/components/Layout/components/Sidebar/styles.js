@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
     },
   },
   trafficLightsSpot: {
-    height: 27,
+    height: 34,
   },
   generalNav: {
     alignItems: 'center',

@@ -6,6 +6,7 @@ import createFleekTheme from '@ui/theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import SetUpWD from '@shared/components/SetUpWD';
+import DragableBar from '@shared/components/DragableBar';
 
 import {
   Route,
@@ -29,6 +30,7 @@ const App = () => (
       <CssBaseline />
       <SetUpWD />
       <Box height="100vh">
+        <DragableBar />
         <Router>
           <Switch>
             <Route path="/auth">

@@ -14,6 +14,8 @@ const activeLinkProps = {
   color: 'textSecondary',
 };
 
+const noTopbar = window.innerHeight === window.outerHeight;
+
 const Sidebar = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
@@ -21,7 +23,7 @@ const Sidebar = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.trafficLightsSpot} />
+      {noTopbar && <div className={classes.trafficLightsSpot} />}
       <TeamSelector
         accountsList={[{
           id: user.username,

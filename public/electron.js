@@ -11,6 +11,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow;
 let destroyStream = () => {};
+const isMac = process.platform === "darwin";
 
 const createWindow = () => {
   const url = isDev
@@ -22,6 +23,7 @@ const createWindow = () => {
     height: 680,
     minWidth: 680,
     minHeight: 500,
+    titleBarStyle: isMac ? 'hiddenInset' : undefined,
     webPreferences: {
       nodeIntegration: true,
       preload: `${__dirname}/preload.js`
