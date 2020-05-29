@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { number } from '@storybook/addon-knobs';
 import { faFilePlus } from '@fortawesome/pro-regular-svg-icons/faFilePlus';
 import { faFolderPlus } from '@fortawesome/pro-regular-svg-icons/faFolderPlus';
 import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt';
@@ -14,8 +13,6 @@ const categoryName = 'ElementalComponents';
 storiesOf(categoryName, module).add('CreateNewMenu', () => {
   const [menuOpen, setMenuOpen] = useState(true) 
   const defaultProps = {
-    bottom: number('bottom', 220),
-    left: number('left', 0),
     items: [
       {
         id: 'file-upload',

@@ -1,4 +1,3 @@
-// disable eslint for <div className={classes.container} onClick={itemAction} >
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
@@ -15,7 +14,7 @@ const Option = ({
   label,
   subItems,
   onClick,
-  setParentOpen,
+  closeParent,
 }) => {
   const classes = useStyles();
   const [popperOpen, setPopperOpen] = useState(false);
@@ -34,7 +33,7 @@ const Option = ({
   const itemAction = (e) => {
     if (!hasSubItems) {
       onClick(e);
-      setParentOpen(false);
+      closeParent();
     }
   };
 
@@ -79,19 +78,17 @@ const Option = ({
 };
 
 Option.defaultProps = {
-  onClick: () => {},
+  onClick: () => { },
   subItems: [],
 };
 
 Option.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  icon: PropTypes.object.isRequired,
+  icon: PropTypes.shape({}).isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-  // eslint-disable-next-line react/forbid-prop-types
-  subItems: PropTypes.array,
+  subItems: PropTypes.arrayOf(PropTypes.shape({})),
   id: PropTypes.string.isRequired,
-  setParentOpen: PropTypes.func.isRequired,
+  closeParent: PropTypes.func.isRequired,
 };
 
 export default Option;

@@ -28,6 +28,10 @@
     "storage": "Storage",
     "files": "Files"
   },
+  "createNewMenu": {
+    "fileUpload": "File Upload",
+    "folderUpload": "Folder Upload"
+  },
   "modules": {
     "storage": {
       "fileTable": {

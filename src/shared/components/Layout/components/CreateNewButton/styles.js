@@ -24,4 +24,17 @@ export default makeStyles((theme) => ({
       width: 14,
     },
   },
+  popover: {
+    boxShadow: 'none',
+    '&:after': {
+      content: '""',
+      margin: '0 auto 5px',
+      display: 'block',
+      borderLeft: '6px solid transparent',
+      borderRight: '6px solid transparent',
+      borderTop: `10px solid ${theme.palette.palette.gray5}`,
+      width: 0,
+      height: 0,
+    },
+  },
 }));
