@@ -25,6 +25,7 @@ const createWindow = () => {
     minHeight: 500,
     titleBarStyle: isMac ? 'hiddenInset' : undefined,
     webPreferences: {
+      webSecurity: false,
       nodeIntegration: true,
       preload: `${__dirname}/preload.js`
     }

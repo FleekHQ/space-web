@@ -9,6 +9,7 @@ import {
 import store from '../store';
 
 const EVENT_PREFIX = 'objects';
+const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
 const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
@@ -39,5 +40,7 @@ export const fetchObjects = (payload) => {
 
   ipcRenderer.send(FETCH_EVENT, payload);
 };
+
+export const openObject = (payload) => ipcRenderer.send(OPEN_EVENT, payload);
 
 export default registerObjectsEvents;

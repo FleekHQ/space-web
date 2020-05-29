@@ -15,10 +15,10 @@ const Storage = () => {
   return (
     <Layout>
       <Switch>
-        <Route path={`${match.path}/files`}>
+        <Route path={`${match.path}/files/*`}>
           <Files />
         </Route>
-        <Redirect to={`${match.path}/files`} />
+        <Redirect to={`${match.path}/files/`} />
       </Switch>
     </Layout>
   );

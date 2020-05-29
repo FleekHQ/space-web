@@ -7,6 +7,7 @@ const objectPresenter = (obj = {}, bucket = '') => {
 
   const isFolder = get(obj, 'isDir', false);
   const name = get(obj, 'name');
+  const ext = isFolder ? 'folder' : get(obj, 'fileExtension');
 
   const type = isFolder ? 'folder' : 'file';
 
@@ -28,7 +29,9 @@ const objectPresenter = (obj = {}, bucket = '') => {
     bytesSize,
     lastModified,
     selected: false,
+    id: `${bucket}/${key}`,
     fullKey: `${bucket}/${key}`,
+    ext: ext.replace(/^\./, ''),
   };
 };
 

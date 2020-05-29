@@ -18,7 +18,7 @@ const objectsSelector = (state, bucket, prefix, delimiter) => {
     const regexFilter = keyRegex.test(obj.fullKey);
     const searchTermFilter = searchTerm === ''
       ? true
-      : obj.name.includes(searchTerm);
+      : obj.name.toLowerCase().includes(searchTerm.toLowerCase());
 
     return regexFilter && searchTermFilter;
   });

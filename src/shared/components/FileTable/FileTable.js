@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
@@ -55,7 +56,7 @@ const FileTable = (props) => {
         }
       }}
     >
-      <FileCell ext={row.ext} src={row.src}>
+      <FileCell ext={row.ext} src={`file:${row.key}`}>
         <Typography variant="body1" noWrap>
           {row.name}
         </Typography>
@@ -67,7 +68,7 @@ const FileTable = (props) => {
       </TableCell>
       <TableCell>
         <Typography variant="body1" color="secondary" noWrap>
-          {row.lastModified}
+          {moment(row.lastModified).format('MMM d, YYYY hh:mm:ss A z')}
         </Typography>
       </TableCell>
       <TableCell align="right">
@@ -105,7 +106,7 @@ FileTable.propTypes = {
     ext: PropTypes.string,
     name: PropTypes.string,
     selected: PropTypes.bool,
-    lastModified: PropTypes.string,
+    lastModified: PropTypes.instanceOf(Date),
   })),
 };
 
