@@ -49,7 +49,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-### Release
+# Release
 For the release process, will be just necessary to create and merge a PR from `develop` to `master` branch, but before creating that PR, it will be required two previous actions:
 * Create a PR to `develop`, to update the app version based on semantic versioning, and push the tag as `v<APP_VERSION>`.
 **Note 1**: `v` is strictly necessary. Ex, `git tag v0.0.1`
