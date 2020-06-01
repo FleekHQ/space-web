@@ -40,7 +40,6 @@ const registerObjectsEvents = (mainWindow) => {
 
               return {
                 path: filePath,
-                fullKey: filePath,
                 size: stats['size'],
                 updated: stats['mtime'],
                 isDir: stats.isDirectory(),

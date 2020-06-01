@@ -11,11 +11,13 @@ const DEFAULT_STATE = {
   },
 };
 
+export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
+export const DELETE_OBJECT = 'DELETE_OBJECT';
+export const UPDATE_OBJECT = 'UPDATE_OBJECT';
 export const SET_ERROR_STATE = 'SET_ERROR_STATE';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
 export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
-
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
@@ -50,6 +52,57 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    }
+
+    case ADD_OBJECT: {
+      let objects = [];
+
+      const objectAlreadyExists = state.objects.findIndex(
+        (obj) => obj.fullKey === action.payload.fullKey,
+      ) >= 0;
+
+      if (objectAlreadyExists) {
+        objects = state.objects.map((obj) => {
+          if (obj.fullKey === action.payload.fullKey) {
+            return {
+              ...obj,
+              ...action.payload,
+            };
+          }
+
+          return obj;
+        });
+      } else {
+        objects = [
+          ...state.objects,
+          action.payload,
+        ];
+      }
+
+      return {
+        ...state,
+        objects: uniqBy(objects, 'fullKey'),
+        loading: false,
+      };
+    }
+
+    case DELETE_OBJECT: {
+      return {
+        ...state,
+        objects: state.objects.filter(
+          (obj) => obj.fullKey !== action.payload.fullKey,
+        ),
+      };
+    }
+
+    case UPDATE_OBJECT: {
+      return {
+        ...state,
+        objects: state.objects.map((obj) => {
+          if (obj.fullKey === action.payload.fullKey) return action.payload;
+          return obj;
+        }),
       };
     }
 
