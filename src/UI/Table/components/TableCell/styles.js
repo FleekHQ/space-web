@@ -6,6 +6,7 @@ export default makeStyles({
     fontSize: 14,
     borderBottom: 'none',
     alignItems: 'center',
+    width: ({ width }) => width,
     '&$head': {
       fontWeight: 'normal',
     },
