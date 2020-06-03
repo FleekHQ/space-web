@@ -1,12 +1,12 @@
 import React from 'react';
-import registerEvents from '@events';
 import { Provider } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import createFleekTheme from '@ui/theme';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
 import SetUpWD from '@shared/components/SetUpWD';
 import DragableBar from '@shared/components/DragableBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+import registerEvents, { fetchConfigInfo } from '@events';
 
 import {
   Route,
@@ -20,6 +20,8 @@ import Storage from './views/Storage';
 import PrivateRoute from './shared/components/PrivateRoute';
 
 registerEvents();
+fetchConfigInfo();
+
 const theme = createFleekTheme();
 
 /* TODO: Remove SetUpWD from Final Version */

@@ -3,6 +3,7 @@ import { faFilePlus } from '@fortawesome/pro-regular-svg-icons/faFilePlus';
 import { faFolderPlus } from '@fortawesome/pro-regular-svg-icons/faFolderPlus';
 import getUploadComponent from '../components/getUploadComponent';
 
+/* eslint-disable no-console */
 const useItems = () => {
   const { t } = useTranslation();
 
