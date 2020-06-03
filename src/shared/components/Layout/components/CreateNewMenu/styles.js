@@ -8,4 +8,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.palette.gray5,
     borderRadius: 4,
   },
+  subMenu: {
+    boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.16)',
+  },
 }));

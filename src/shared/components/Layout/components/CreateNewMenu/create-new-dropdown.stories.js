@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GoogleSheetImg from '../../../../../../public/assets/icons/google-sheet.png'
 import { storiesOf } from '@storybook/react';
 import { faFilePlus } from '@fortawesome/pro-regular-svg-icons/faFilePlus';
 import { faFolderPlus } from '@fortawesome/pro-regular-svg-icons/faFolderPlus';
@@ -39,8 +40,11 @@ storiesOf(categoryName, module).add('CreateNewMenu', () => {
         subItems: [
           { 
             id: 'submenu-item',
+            label: 'Submenu item',
             component: Option,
-            icon: faFilePlus,
+            img: GoogleSheetImg,
+            width: 12,
+            height: 12,
             onClick: () => console.log('submenu action'),
           }
         ]

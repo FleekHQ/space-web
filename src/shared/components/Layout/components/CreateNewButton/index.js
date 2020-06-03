@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Popover from '@material-ui/core/Popover';
 import { faPlus } from '@fortawesome/pro-regular-svg-icons/faPlus';
 import CreateNewMenu from '../CreateNewMenu';
+import useItems from '../CreateNewMenu/hooks/useItems';
 import useStyles from './styles';
 
 const CreateNewButton = (props) => {
@@ -15,25 +15,16 @@ const CreateNewButton = (props) => {
   const rootNodeRef = useRef(null);
 
   const toggleIsOpenMenu = () => setIsMenuOpen(!isMenuOpen);
+  const items = useItems();
 
   return (
     <>
-      <Popover
-        classes={{ paper: classes.popover }}
-        anchorEl={rootNodeRef.current}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={isMenuOpen}
-        onClose={toggleIsOpenMenu}
-      >
-        <CreateNewMenu close={toggleIsOpenMenu} />
-      </Popover>
+      {isMenuOpen && (
+        <CreateNewMenu
+          close={toggleIsOpenMenu}
+          items={items}
+        />
+      )}
       <Button
         variant="contained"
         color="primary"

@@ -45,4 +45,8 @@ export default makeStyles((theme) => ({
     width: 15,
     marginRight: 6,
   },
+  image: {
+    width: (props) => props.width || 14,
+    height: (props) => props.height || 14,
+  },
 }));
