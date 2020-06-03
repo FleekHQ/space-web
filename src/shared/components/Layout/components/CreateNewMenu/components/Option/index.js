@@ -20,8 +20,10 @@ const Option = ({
   closeParent,
   selectedItem,
   setSelectedItem,
+  placement,
+  ...restProps
 }) => {
-  const classes = useStyles();
+  const classes = useStyles(restProps);
   const [anchorEl, setAnchorEl] = useState(null);
   const hasSubItems = subItems.length > 0;
   const isSelected = selectedItem === id;
@@ -90,7 +92,7 @@ const Option = ({
         id={`${id}-popper`}
         open={isSelected}
         anchorEl={anchorEl}
-        placement="right-end"
+        placement={placement || 'right'}
       >
         <CreateNewMenu
           items={subItems}
@@ -108,6 +110,7 @@ Option.defaultProps = {
   icon: null,
   img: null,
   selectedItem: null,
+  placement: null,
 };
 
 Option.propTypes = {
@@ -120,6 +123,7 @@ Option.propTypes = {
   closeParent: PropTypes.func.isRequired,
   selectedItem: PropTypes.string,
   setSelectedItem: PropTypes.func.isRequired,
+  placement: PropTypes.string,
 };
 
 export default Option;
