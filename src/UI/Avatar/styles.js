@@ -10,7 +10,6 @@ export default makeStyles({
     overflow: 'hidden',
     borderRadius: '100%',
     backgroundColor: 'white',
-    padding: 5,
     boxSizing: 'border-box',
     width: ({ size }) => size || DEFAULT_SIZE,
     height: ({ size }) => size || DEFAULT_SIZE,

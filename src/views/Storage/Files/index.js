@@ -7,13 +7,13 @@ import { objectsSelector } from '@utils';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
 import { fetchObjects, openObject } from '@events';
-import FileTable from '@shared/components/FileTable';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { SEARCH_TERM_CHANGE } from '@reducers/storage';
+import FileTable from './components/FileTable';
 
 import useStyles from './styles';
 
