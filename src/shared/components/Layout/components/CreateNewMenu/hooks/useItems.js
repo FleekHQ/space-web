@@ -12,14 +12,20 @@ const useItems = () => {
       label: t('createNewMenu.fileUpload'),
       component: getUploadComponent(false),
       icon: faFilePlus,
-      onClick: (files) => console.log('upload files', files),
+      onClick: (files) => {
+        // eslint-disable-next-line no-console
+        console.log('upload files', files);
+      },
     },
     {
       id: 'folder-upload',
       label: t('createNewMenu.folderUpload'),
       component: getUploadComponent(true),
       icon: faFolderPlus,
-      onClick: (files) => console.log('upload directory', files),
+      onClick: (files) => {
+        // eslint-disable-next-line no-console
+        console.log('upload directory', files);
+      },
     },
   ];
 };

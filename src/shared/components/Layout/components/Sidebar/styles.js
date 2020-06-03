@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+import { stringToColor } from '@utils';
+
 export default makeStyles((theme) => ({
   root: {
+    paddingTop: 35,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.palette.white,
-    '& > *:not(:last-child)': {
-      borderBottom: `solid 1px ${theme.palette.palette.gray4}`,
-    },
   },
   trafficLightsSpot: {
     height: 34,
@@ -39,5 +39,15 @@ export default makeStyles((theme) => ({
   },
   pullDown: {
     marginTop: 'auto',
+  },
+  avatar: {
+    width: 38,
+    height: 38,
+    backgroundColor: ({ user }) => (stringToColor(user.username)),
+    color: ({ user }) => {
+      const color = stringToColor(user.username);
+
+      return theme.palette.getContrastText(color);
+    },
   },
 }));
