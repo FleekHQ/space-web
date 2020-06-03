@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Table, { TableCell, TableRow, FileCell } from '@ui/Table';
+import { formatBytes } from '@shared/utils';
 
 import useStyles from './styles';
 
@@ -20,17 +21,27 @@ const FileTable = (props) => {
   const { t } = useTranslation();
 
   const head = [
-    t('modules.storage.fileTable.head.name'),
-    t('modules.storage.fileTable.head.members'),
-    t('modules.storage.fileTable.head.lastModified'),
-    '',
+    {
+      label: t('modules.storage.fileTable.head.name'),
+      width: '41%',
+    },
+    {
+      label: t('modules.storage.fileTable.head.members'),
+      width: '29%',
+    },
+    {
+      label: t('modules.storage.fileTable.head.lastModified'),
+    },
+    {
+      label: '', width: 43,
+    },
   ];
 
   /* eslint-disable react/prop-types */
   const renderHead = ({ _head = [] }) => (
     <TableRow>
-      {_head.map((label) => (
-        <TableCell key={label} className={classes.headerCell}>
+      {_head.map(({ label, width }) => (
+        <TableCell key={label} className={classes.headerCell} width={width}>
           <Typography variant="body2">
             {label}
           </Typography>
@@ -39,7 +50,7 @@ const FileTable = (props) => {
     </TableRow>
   );
 
-  // TODO: replace options by menu dropdown and members column value
+  // TODO: replace options by menu dropdown
   const renderRow = ({ row }) => (
     <TableRow
       hover
@@ -63,12 +74,14 @@ const FileTable = (props) => {
       </FileCell>
       <TableCell>
         <Typography variant="body1" color="secondary" noWrap>
-          Only you
+          {formatBytes(row.size)}
         </Typography>
       </TableCell>
       <TableCell>
         <Typography variant="body1" color="secondary" noWrap>
           {moment(row.lastModified).format('MMM d, YYYY hh:mm:ss A z')}
+          {/* ^ just for testing, after POC should be used line below */}
+          {/* {formatMonthDayYear(row.lastModified)} */}
         </Typography>
       </TableCell>
       <TableCell align="right">
