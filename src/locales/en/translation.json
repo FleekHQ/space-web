@@ -30,7 +30,20 @@
   },
   "createNewMenu": {
     "fileUpload": "File Upload",
-    "folderUpload": "Folder Upload"
+    "folderUpload": "Folder Upload",
+    "folder": "Folder",
+    "textDoc": "Text Doc",
+    "googleDoc": "Google Doc",
+    "word": "Word",
+    "textEdit": "TextEdit",
+    "presentation": "Presentation",
+    "googleSlide": "Google Slide",
+    "powerpoint": "PowerPoint",
+    "keynote": "Keynote",
+    "sheets": "Sheets",
+    "googleSheet": "Google Sheet",
+    "excel": "Excel",
+    "numbers": "Number"
   },
   "modules": {
     "storage": {

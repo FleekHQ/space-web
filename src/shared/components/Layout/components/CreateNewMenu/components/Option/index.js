@@ -6,29 +6,33 @@ import Typography from '@material-ui/core/Typography';
 import Popper from '@material-ui/core/Popper';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons/faAngleRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CreateNewMenu from '../../index';
 import useStyles from './styles';
 
 const Option = ({
   id,
   icon,
+  img,
   label,
   subItems,
   onClick,
   closeParent,
+  selectedItem,
+  setSelectedItem,
+  placement,
+  ...restProps
 }) => {
-  const classes = useStyles();
-  const [popperOpen, setPopperOpen] = useState(false);
+  const classes = useStyles(restProps);
   const [anchorEl, setAnchorEl] = useState(null);
   const hasSubItems = subItems.length > 0;
+  const isSelected = selectedItem === id;
 
   const onMouseEnter = (e) => {
     if (hasSubItems) {
       setAnchorEl(anchorEl || e.currentTarget);
-      setPopperOpen(true);
     }
+    setSelectedItem(id);
   };
-
-  const onMouseLeave = () => setPopperOpen(false);
 
   const itemAction = (e) => {
     if (!hasSubItems) {
@@ -37,19 +41,39 @@ const Option = ({
     }
   };
 
+  const getIcon = () => {
+    if (icon) {
+      return (
+        <div className={classes.iconContainer}>
+          <FontAwesomeIcon
+            className={classes.icon}
+            icon={icon}
+          />
+        </div>
+      );
+    }
+    if (img) {
+      return (
+        <div className={classes.iconContainer}>
+          <img
+            src={img}
+            className={classes.image}
+            alt="icon"
+          />
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
-    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div onMouseEnter={onMouseEnter}>
       <div
         className={classes.container}
         onClick={itemAction}
       >
         <div className={classes.iconLabelContainer}>
-          <div className={classes.iconContainer}>
-            <FontAwesomeIcon
-              className={classes.icon}
-              icon={icon}
-            />
-          </div>
+          {getIcon()}
           <Typography className={classes.label}>
             {label}
           </Typography>
@@ -65,13 +89,15 @@ const Option = ({
       </div>
       <Popper
         id={`${id}-popper`}
-        open={popperOpen}
+        open={isSelected && hasSubItems}
         anchorEl={anchorEl}
-        placement="right-end"
+        placement={placement || 'right'}
       >
-        {() => (
-          <div className={classes.paper}>SUBMENU COMPONENT TODO</div>
-        )}
+        <CreateNewMenu
+          items={subItems}
+          close={closeParent}
+          isSubmenu
+        />
       </Popper>
     </div>
   );
@@ -80,15 +106,23 @@ const Option = ({
 Option.defaultProps = {
   onClick: () => { },
   subItems: [],
+  icon: null,
+  img: null,
+  selectedItem: null,
+  placement: null,
 };
 
 Option.propTypes = {
-  icon: PropTypes.shape({}).isRequired,
+  icon: PropTypes.shape({}),
+  img: PropTypes.string,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   subItems: PropTypes.arrayOf(PropTypes.shape({})),
   id: PropTypes.string.isRequired,
   closeParent: PropTypes.func.isRequired,
+  selectedItem: PropTypes.string,
+  setSelectedItem: PropTypes.func.isRequired,
+  placement: PropTypes.string,
 };
 
 export default Option;

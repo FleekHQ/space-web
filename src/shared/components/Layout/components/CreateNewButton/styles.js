@@ -24,7 +24,7 @@ export default makeStyles((theme) => ({
       width: 14,
     },
   },
-  popover: {
+  createNewMenu: {
     boxShadow: 'none',
     '&:after': {
       content: '""',

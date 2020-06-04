@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 import Dropzone from '@shared/components/Dropzone';
 import Option from '../Option';
