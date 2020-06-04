@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from '@ui/Avatar';
 import Typography from '@ui/Typography';
 
 import useStyles from './styles';
@@ -24,12 +24,9 @@ const TeamSelector = ({ accountsList, selectedAccountId }) => {
   return (
     <div className={classes.root}>
       <Avatar
-        className={classes.avatar}
-        alt={selectedAccountDetails.name}
-        src={selectedAccountDetails.imgURL}
-      >
-        {selectedAccountDetails.name[0].toUpperCase()}
-      </Avatar>
+        username={selectedAccountDetails.name}
+        imgUrl={selectedAccountDetails.imgURL}
+      />
       <div className={classes.textWrapper}>
         <Typography
           weight="medium"

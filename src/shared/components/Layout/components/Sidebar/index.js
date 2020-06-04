@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Avatar from '@material-ui/core/Avatar';
 import IconsNavigation from '@ui/IconsNavigation';
 import Typography from '@ui/Typography';
+import Avatar from '@ui/Avatar';
 import CreateNewButton from '../CreateNewButton';
 import TeamSelector from '../TeamSelector';
 import useStyles from './styles';
@@ -36,12 +36,9 @@ const Sidebar = () => {
         <div className={`${classes.navColumn} ${classes.generalNav}`}>
           <IconsNavigation options={generalNav} />
           <Avatar
-            src={user.imgURL}
-            alt={user.username}
-            className={classes.avatar}
-          >
-            {user.username[0].toUpperCase()}
-          </Avatar>
+            imgUrl={user.imgURL}
+            username={user.username}
+          />
         </div>
         <div className={`${classes.navColumn} ${classes.specificNavWrapper}`}>
           <Typography

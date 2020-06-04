@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-import { stringToColor } from '@utils';
-
 export default makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -19,17 +17,5 @@ export default makeStyles((theme) => ({
   textWrapper: {
     marginLeft: 14,
     minWidth: 0,
-  },
-  avatar: {
-    width: 38,
-    height: 38,
-    backgroundColor: ({ selectedAccountDetails }) => (
-      stringToColor(selectedAccountDetails.name)
-    ),
-    color: ({ selectedAccountDetails }) => {
-      const color = stringToColor(selectedAccountDetails.name);
-
-      return theme.palette.getContrastText(color);
-    },
   },
 }));
