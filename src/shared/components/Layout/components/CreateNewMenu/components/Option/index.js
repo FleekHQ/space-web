@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable import/no-cycle */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -90,7 +89,7 @@ const Option = ({
       </div>
       <Popper
         id={`${id}-popper`}
-        open={isSelected}
+        open={isSelected && hasSubItems}
         anchorEl={anchorEl}
         placement={placement || 'right'}
       >

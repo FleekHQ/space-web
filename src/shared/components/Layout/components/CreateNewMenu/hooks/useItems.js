@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { useTranslation } from 'react-i18next';
 import { faFileUpload } from '@fortawesome/pro-regular-svg-icons/faFileUpload';
 import { faFolderUpload } from '@fortawesome/pro-regular-svg-icons/faFolderUpload';

@@ -20,10 +20,12 @@ const CreateNewButton = (props) => {
   return (
     <>
       {isMenuOpen && (
-        <CreateNewMenu
-          close={toggleIsOpenMenu}
-          items={items}
-        />
+        <div className={classes.createNewMenu}>
+          <CreateNewMenu
+            close={toggleIsOpenMenu}
+            items={items}
+          />
+        </div>
       )}
       <Button
         variant="contained"
