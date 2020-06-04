@@ -1,4 +1,5 @@
 ![Test Action Status](https://github.com/FleekHQ/desktop-storage/workflows/Test/badge.svg)
+![Build-Pack-Release Action Status](https://github.com/FleekHQ/desktop-storage/workflows/Build-Pack-Release/badge.svg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -48,32 +49,11 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# Release
+For the release process, will be just necessary to create and merge a PR from `develop` to `master` branch, but before creating that PR, it will be required two previous actions:
+* Create a PR to `develop`, to update the app version based on semantic versioning, and push the tag as `v<APP_VERSION>`.
+**Note 1**: `v` is strictly necessary. Ex, `git tag v0.0.1`
+**Note 2**: By running `npm version <patch|minor|major>`, the tag is automatically created with `v`, it just required to be pushed. Ex, `git push origin --tags  `.
+* Create a draft release selecting the tag version previously pushed.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+After doing those actions, we are ready to create the PR to make the app release. When the release PR (`develop` to `master`) is merged, the CI process will be in charge of generating the installer for each OS (mac, linux, and windows) and links to the installers will be available on the [repository releases page](https://github.com/FleekHQ/desktop-storage/releases) based on the app version.

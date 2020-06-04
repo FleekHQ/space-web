@@ -1,5 +1,5 @@
 {
-  "name": "desktop-storage",
+  "name": "space-app",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
@@ -134,13 +134,25 @@
     ]
   },
   "build": {
-    "appId": "space.fleek.co",
+    "productName": "Space",
+    "appId": "com.electron.space-app",
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
     "files": [
       "build/**/*",
       "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.png"
+    },
+    "win": {
+      "icon": "build/icon.png"
+    },
+    "linux": {
+      "icon": "build/icon.png"
     }
   },
   "jest": {
