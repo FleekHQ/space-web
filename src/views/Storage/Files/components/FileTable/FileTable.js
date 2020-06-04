@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Table, { TableCell, TableRow, FileCell } from '@ui/Table';
-import { formatBytes } from '@shared/utils';
+import { formatBytes } from '@utils';
 
 import useStyles from './styles';
 
