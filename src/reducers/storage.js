@@ -56,29 +56,10 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     case ADD_OBJECT: {
-      let objects = [];
-
-      const objectAlreadyExists = state.objects.findIndex(
-        (obj) => obj.fullKey === action.payload.fullKey,
-      ) >= 0;
-
-      if (objectAlreadyExists) {
-        objects = state.objects.map((obj) => {
-          if (obj.fullKey === action.payload.fullKey) {
-            return {
-              ...obj,
-              ...action.payload,
-            };
-          }
-
-          return obj;
-        });
-      } else {
-        objects = [
-          ...state.objects,
-          action.payload,
-        ];
-      }
+      const objects = [
+        action.payload,
+        ...state.objects,
+      ];
 
       return {
         ...state,
