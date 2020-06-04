@@ -9,6 +9,7 @@ const DEFAULT_STATE = {
     error: null,
     isLoading: false,
   },
+  uploadError: null,
 };
 
 export const ADD_OBJECT = 'ADD_OBJECT';
@@ -18,6 +19,7 @@ export const UPDATE_OBJECT = 'UPDATE_OBJECT';
 export const SET_ERROR_STATE = 'SET_ERROR_STATE';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
 export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
+export const SET_UPLOAD_ERROR_STATE = 'SET_UPLOAD_ERROR_STATE';
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
@@ -84,6 +86,13 @@ export default (state = DEFAULT_STATE, action) => {
           if (obj.fullKey === action.payload.fullKey) return action.payload;
           return obj;
         }),
+      };
+    }
+
+    case SET_UPLOAD_ERROR_STATE: {
+      return {
+        ...state,
+        uploadError: action.payload,
       };
     }
 
