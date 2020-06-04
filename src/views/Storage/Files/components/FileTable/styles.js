@@ -15,7 +15,8 @@ export default makeStyles({
     paddingBottom: 6,
   },
   options: {
-    fontSize: 6,
+    fontSize: 18,
     height: '100%',
+    padding: '0 5px',
   },
 });

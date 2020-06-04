@@ -2,14 +2,14 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
 import Table, { TableCell, TableRow, FileCell } from '@ui/Table';
 import { formatBytes } from '@utils';
 
 import useStyles from './styles';
-
-const OPTIONS_TARGET_ID = 'options';
 
 const FileTable = (props) => {
   const {
@@ -50,7 +50,6 @@ const FileTable = (props) => {
     </TableRow>
   );
 
-  // TODO: replace options by menu dropdown
   const renderRow = ({ row }) => (
     <TableRow
       hover
@@ -59,12 +58,7 @@ const FileTable = (props) => {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-
-        const targetId = e.target.getAttribute('target-id');
-
-        if (targetId !== OPTIONS_TARGET_ID) {
-          onClick(row);
-        }
+        onClick(row);
       }}
     >
       <FileCell ext={row.ext} src={`file:${row.key}`}>
@@ -85,12 +79,16 @@ const FileTable = (props) => {
         </Typography>
       </TableCell>
       <TableCell align="right">
-        <ButtonBase
+        <Button
           className={classes.options}
-          target-id={OPTIONS_TARGET_ID}
+          color="secondary"
+          disableRipple
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
-          ●●●
-        </ButtonBase>
+          <FontAwesomeIcon icon={faEllipsisH} />
+        </Button>
       </TableCell>
     </TableRow>
   );
