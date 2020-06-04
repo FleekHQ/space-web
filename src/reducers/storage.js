@@ -9,12 +9,14 @@ const DEFAULT_STATE = {
     error: null,
     isLoading: false,
   },
+  uploadError: null,
 };
 
 export const STORE_OBJECTS = 'STORE_OBJECTS';
 export const SET_ERROR_STATE = 'SET_ERROR_STATE';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
 export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
+export const SET_UPLOAD_ERROR_STATE = 'SET_UPLOAD_ERROR_STATE';
 
 
 export default (state = DEFAULT_STATE, action) => {
@@ -50,6 +52,13 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    }
+
+    case SET_UPLOAD_ERROR_STATE: {
+      return {
+        ...state,
+        uploadError: action.payload,
       };
     }
 
