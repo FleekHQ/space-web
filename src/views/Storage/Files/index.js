@@ -27,15 +27,10 @@ const StorageMainView = () => {
   const prefix = get(params, '0');
 
   const { rows, searchTerm } = useSelector((state) => {
-    const wd = localStorage.getItem('_wd') || '';
+    const pathPrefix = prefix === '' ? prefix : `/${prefix}`;
 
     /* eslint-disable no-underscore-dangle */
-    const _rows = objectsSelector(
-      state,
-      '',
-      path.join(wd, prefix),
-      '/',
-    );
+    const _rows = objectsSelector(state, '', pathPrefix, '/');
 
     return {
       rows: _rows,
