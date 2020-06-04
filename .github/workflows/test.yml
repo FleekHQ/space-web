@@ -17,9 +17,9 @@ jobs:
       with:
         path: node_modules
         key: ${{ hashFiles('**/yarn.lock') }}
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2-beta
       with:
-        node-version: '10.x'
+        node-version: '12'
     - name: Install dependencies
       run: yarn install --ignore-scripts
     - name: Run lint
