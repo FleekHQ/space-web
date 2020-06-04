@@ -1,49 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Avatar from '@material-ui/core/Avatar';
+
 import useStyles from './styles';
 
-// eslint-disable-next-line react/prop-types
-const getContent = ({ id, alt, imgUrl }) => {
-  if (imgUrl) {
-    return (
-      <img src={imgUrl} alt={alt} />
-    );
-  }
-
-  return (
-    <svg data-jdenticon-value={id} />
-  );
-};
-
-const Avatar = ({
-  id,
-  alt,
+const UIAvatar = ({
   size,
   imgUrl,
+  username,
 }) => {
-  const classes = useStyles({ size });
-  const content = getContent({ id, alt, imgUrl });
+  const classes = useStyles({ size, username });
 
   return (
-    <div className={classes.root}>
-      {content}
-    </div>
+    <Avatar
+      src={imgUrl}
+      alt={username}
+      className={classes.root}
+    >
+      {username[0].toUpperCase()}
+    </Avatar>
   );
 };
 
-Avatar.defaultProps = {
-  alt: '',
+UIAvatar.defaultProps = {
   size: 38,
   imgUrl: null,
-  id: 'default-id',
 };
 
-Avatar.propTypes = {
-  id: PropTypes.string,
-  alt: PropTypes.string,
+UIAvatar.propTypes = {
   size: PropTypes.number,
   imgUrl: PropTypes.string,
+  username: PropTypes.string.isRequired,
 };
 
-export default Avatar;
+export default UIAvatar;

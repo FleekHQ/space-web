@@ -13,21 +13,20 @@ const defaultAccountData = {
 };
 
 const TeamSelector = ({ accountsList, selectedAccountId }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const selectedAccountDetails = accountsList.find(
     (option) => option.id === selectedAccountId,
   ) || defaultAccountData;
 
+  const classes = useStyles({ selectedAccountDetails });
+
   return (
     <div className={classes.root}>
-      <div className={classes.avatarWrapper}>
-        <Avatar
-          id={selectedAccountDetails.id}
-          imgUrl={selectedAccountDetails.photoUrl}
-        />
-      </div>
+      <Avatar
+        username={selectedAccountDetails.name}
+        imgUrl={selectedAccountDetails.imgURL}
+      />
       <div className={classes.textWrapper}>
         <Typography
           weight="medium"

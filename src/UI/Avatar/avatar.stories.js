@@ -9,10 +9,9 @@ const categoryName = 'Avatar';
 storiesOf(categoryName, module).add('Avatar', () => {
 
   const defaultProps = {
-    id: text('id', ''),
-    alt: text('alt', ''),
     size: number('size', 80),
-    imgUrl: text('imgUrl', 'https://image.flaticon.com/icons/svg/168/168732.svg'),
+    imgUrl: text('imgUrl', null),
+    username: text('username', 'someuser'),
   };
 
   return (

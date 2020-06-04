@@ -2,12 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
+    paddingTop: 35,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.palette.white,
-    '& > *:not(:last-child)': {
-      borderBottom: `solid 1px ${theme.palette.palette.gray4}`,
-    },
   },
   trafficLightsSpot: {
     height: 34,

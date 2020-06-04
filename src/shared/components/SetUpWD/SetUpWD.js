@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './styles';
 
 const SetUpWD = () => {
-  const [value, setValue] = useState(localStorage.getItem('_wd'));
+  const [value, setValue] = useState(localStorage.getItem('_wd') || '');
 
   const ref = useRef();
   const classes = useStyles();

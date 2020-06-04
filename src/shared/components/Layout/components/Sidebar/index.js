@@ -17,8 +17,8 @@ const activeLinkProps = {
 const noTopbar = window.innerHeight === window.outerHeight;
 
 const Sidebar = () => {
-  const classes = useStyles();
   const user = useSelector((state) => state.user);
+  const classes = useStyles({ user });
   const { generalNav, specificNav } = useNavigations();
 
   return (
@@ -35,9 +35,10 @@ const Sidebar = () => {
       <div className={classes.navWrapper}>
         <div className={`${classes.navColumn} ${classes.generalNav}`}>
           <IconsNavigation options={generalNav} />
-          <div className={classes.pullDown}>
-            <Avatar />
-          </div>
+          <Avatar
+            imgUrl={user.imgURL}
+            username={user.username}
+          />
         </div>
         <div className={`${classes.navColumn} ${classes.specificNavWrapper}`}>
           <Typography
