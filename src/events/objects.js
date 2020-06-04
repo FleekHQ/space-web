@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import { ipcRenderer } from 'electron';
 import { objectPresenter } from '@utils';
 import {
@@ -16,7 +17,8 @@ const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 
 const registerObjectsEvents = () => {
   ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
-    const objects = payload.map((obj) => objectPresenter(obj));
+    const entries = get(payload, 'entries', []) || [];
+    const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
       payload: objects,
