@@ -17,9 +17,8 @@ const activeLinkProps = {
 
 const noTopbar = window.innerHeight === window.outerHeight;
 
-const items = useItems();
-
 const Sidebar = () => {
+  const items = useItems();
   const user = useSelector((state) => state.user);
   const classes = useStyles({ user });
   const { generalNav, specificNav } = useNavigations();
