@@ -7,6 +7,7 @@ import {
 } from '@reducers/storage';
 
 import store from '../store';
+import { fetchObjects } from './objects';
 
 const EVENT_PREFIX = 'eventStream';
 const DATA_EVENT = `${EVENT_PREFIX}:data`;
@@ -20,6 +21,7 @@ const registerEventStream = () => {
   ipcRenderer.on(DATA_EVENT, (event, payload) => {
     // DO Something with the response (dispatch to redux)
     console.log(DATA_EVENT, event, payload);
+    fetchObjects();
   });
 
   ipcRenderer.on(ERROR_EVENT, (event, payload) => {

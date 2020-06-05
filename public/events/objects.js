@@ -232,7 +232,17 @@ const mockResponse = {
 
 const registerObjectsEvents = (mainWindow) => {
   ipcMain.on(OPEN_EVENT, (event, payload) => {
-    shell.openItem(payload);
+    client.OpenFile({ path: payload }, (err, res) => {
+      if (err) {
+        return mainWindow.webContents.send(ERROR_EVENT, err);
+      }
+
+      if (!res.location) {
+        return new Error('location not provided');
+      }
+
+      shell.openItem(res.location);
+    });
   });
 
   ipcMain.on(FETCH_EVENT, (event, payload) => {
