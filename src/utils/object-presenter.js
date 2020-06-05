@@ -14,13 +14,12 @@ const objectPresenter = (obj = {}, bucket = '') => {
   const lastModified = new Date(get(obj, 'updated'));
   const created = new Date(get(obj, 'created'));
 
-  const size = get(obj, 'Size', 0);
-  const bytesSize = isFolder
-    ? '--'
-    : formatBytes(size);
+  const size = parseInt(get(obj, 'sizeInBytes', 0), 10);
+  const bytesSize = formatBytes(size);
 
   return {
     key,
+    ext,
     type,
     name,
     size,
@@ -31,7 +30,6 @@ const objectPresenter = (obj = {}, bucket = '') => {
     selected: false,
     id: `${bucket}/${key}`,
     fullKey: `${bucket}/${key}`,
-    ext: ext.replace(/^\./, ''),
   };
 };
 

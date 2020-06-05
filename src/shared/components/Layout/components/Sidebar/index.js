@@ -5,6 +5,7 @@ import IconsNavigation from '@ui/IconsNavigation';
 import Typography from '@ui/Typography';
 import Avatar from '@ui/Avatar';
 import CreateNewButton from '../CreateNewButton';
+import useItems from '../CreateNewMenu/hooks/useItems';
 import TeamSelector from '../TeamSelector';
 import useStyles from './styles';
 import { useNavigations } from './hooks';
@@ -17,6 +18,7 @@ const activeLinkProps = {
 const noTopbar = window.innerHeight === window.outerHeight;
 
 const Sidebar = () => {
+  const items = useItems();
   const user = useSelector((state) => state.user);
   const classes = useStyles({ user });
   const { generalNav, specificNav } = useNavigations();
@@ -65,7 +67,7 @@ const Sidebar = () => {
             </Link>
           ))}
           <div className={classes.pullDown}>
-            <CreateNewButton />
+            <CreateNewButton items={items} />
           </div>
         </div>
       </div>

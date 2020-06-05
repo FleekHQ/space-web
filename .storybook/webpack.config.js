@@ -7,6 +7,7 @@ module.exports = ({ config }) => {
     '@shared': path.resolve(process.cwd(), 'src', 'shared'),
     '@events': path.resolve(process.cwd(), 'src', 'events'),
     '@utils': path.resolve(process.cwd(), 'src', 'utils'),
+    '@reducers': path.resolve(process.cwd(), 'src', 'reducers'),
   };
 
   return config;
