@@ -17,6 +17,13 @@ const upload = (files, prefix) => {
   startUpload({ files: filesSrcPaths, prefix });
 };
 
+const uploadFile = ([file], prefix) => {
+  startUpload({
+    targetPath: prefix,
+    sourcePath: file.path,
+  });
+};
+
 const useItems = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -30,7 +37,7 @@ const useItems = () => {
       label: t('createNewMenu.fileUpload'),
       component: getUploadComponent(false),
       icon: faFileUpload,
-      onClick: (files) => upload(files, prefix),
+      onClick: (files) => uploadFile(files, prefix),
     },
     {
       id: 'folder-upload',

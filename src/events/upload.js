@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { SET_ERROR_STATE } from '@reducers/storage';
+import { SET_UPLOAD_ERROR_STATE } from '@reducers/storage';
 
 import store from '../store';
 
@@ -19,7 +19,7 @@ const registerUploadEvents = () => {
     console.log('error: ', payload);
     store.dispatch({
       payload,
-      type: SET_ERROR_STATE,
+      type: SET_UPLOAD_ERROR_STATE,
     });
   });
 };

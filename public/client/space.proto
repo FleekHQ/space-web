@@ -1,6 +1,9 @@
 syntax = "proto3";
+
 import "google/protobuf/empty.proto";
+
 package space;
+
 service SpaceApi {
   rpc ListDirectories(ListDirectoriesRequest) returns (ListDirectoriesResponse) {}
   rpc GetConfigInfo(google.protobuf.Empty) returns (ConfigInfoResponse) {}
@@ -8,9 +11,14 @@ service SpaceApi {
   rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse) {}
   rpc GenerateKeyPairWithForce(GenerateKeyPairRequest) returns (GenerateKeyPairResponse) {}
   rpc Subscribe(google.protobuf.Empty) returns (stream FileEventResponse) {}
+  rpc OpenFile(OpenFileRequest) returns (OpenFileResponse) {}
+  rpc AddFile(AddFileRequest) returns (AddFileResponse) {}
 }
+
 message ListDirectoriesRequest {
+
 }
+
 message ListDirectoryEntry {
   string path = 1;
   bool isDir = 2;
@@ -20,27 +28,59 @@ message ListDirectoryEntry {
   string updated = 6;
   string fileExtension = 7;
 }
+
+
 message ListDirectoriesResponse {
   repeated ListDirectoryEntry entries = 1;
 }
+
 message ConfigInfoResponse {
   string folderPath = 1;
   string port = 2;
   string appPath = 3;
 }
+
+
 message PathInfoRequest {
   string path = 1;
 }
+
 message PathInfoResponse {
   string path = 1;
   string ipfsHash = 2;
   bool isDir = 3;
 }
+
 message GenerateKeyPairRequest {}
+
 message GenerateKeyPairResponse {
   string publicKey = 1;
   string privateKey = 2;
 }
+
+enum EventType {
+  ENTRY_ADDED = 0;
+  ENTRY_DELETED = 1;
+  ENTRY_UPDATED = 2;
+}
+
 message FileEventResponse {
+  EventType type = 1;
+  ListDirectoryEntry entry = 2;
+}
+
+message OpenFileRequest {
   string path = 1;
+}
+
+message OpenFileResponse {
+  string location = 1;
+}
+
+message AddFileRequest {
+  string sourcePath = 1; // full path to file on FS. Needs to be a location available to the daemon
+  string targetPath = 2; // target path in bucket.
+}
+// not sure we need to return anything other than an error if we failed
+message AddFileResponse {
 }
