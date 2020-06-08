@@ -1,12 +1,18 @@
 import getObjectRegex from './get-object-regex';
 
+const defaultPrefix = '/ipfs/[^/]*';
+
 const objectsSelector = (state, bucket, prefix, delimiter) => {
   const {
     objects = [],
     searchTerm = '',
   } = state.storage;
 
-  const keyRegex = getObjectRegex(bucket, prefix, delimiter);
+  const keyRegex = getObjectRegex(
+    bucket,
+    defaultPrefix + prefix,
+    delimiter,
+  );
 
   return objects.filter((obj) => {
     if (obj.name === '.keep') return false;

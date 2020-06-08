@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 
 const client = require('../client');
+const { listDirectories } = require('./objects');
 
 const EVENT_PREFIX = 'upload';
 const START_EVENT = `${EVENT_PREFIX}:start`;
@@ -17,6 +18,7 @@ const registerAddItemsEvents = (mainWindow) => {
         return;
       }
 
+      listDirectories(mainWindow);
       mainWindow.webContents.send(SUCCESS_EVENT, res);
     });
   });

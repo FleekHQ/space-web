@@ -6,8 +6,8 @@ const registerEventStream = (mainWindow) => {
   const eventStream = client.Subscribe();
 
   eventStream.on('data', (event) => {
-    // TODO: remove this event if it's not required
-    mainWindow.webContents.send(`${EVENT_PREFIX}:data`, event);
+    // TODO: Check with BE event to update files on FE
+    // mainWindow.webContents.send(`${EVENT_PREFIX}:data`, event);
 
     if (event.type && event.entry) {
       mainWindow.webContents.send(

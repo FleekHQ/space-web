@@ -8,20 +8,38 @@ const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 
+const listDirectories = (mainWindow, payload) => {
+  return client.ListDirectories(payload, (err, res) => {
+    if (err) {
+      return mainWindow.webContents.send(ERROR_EVENT, err);
+    }
+
+    // TODO replace mock response by res
+    mainWindow.webContents.send(SUCCESS_EVENT, res);
+  });
+}
+
 const registerObjectsEvents = (mainWindow) => {
   ipcMain.on(OPEN_EVENT, (event, payload) => {
-    shell.openItem(payload);
-  });
-
-  ipcMain.on(FETCH_EVENT, (event, payload) => {
-    client.ListDirectories(payload, (err, res) => {
+    client.OpenFile({ path: payload }, (err, res) => {
       if (err) {
         return mainWindow.webContents.send(ERROR_EVENT, err);
       }
 
-      mainWindow.webContents.send(SUCCESS_EVENT, res);
+      if (!res.location) {
+        return new Error('location not provided');
+      }
+
+      shell.openItem(res.location);
     });
+  });
+
+  ipcMain.on(FETCH_EVENT, (event, payload) => {
+    listDirectories(mainWindow, payload);
   });
 };
 
-module.exports = registerObjectsEvents;
+module.exports = {
+  default: registerObjectsEvents,
+  listDirectories,
+};
