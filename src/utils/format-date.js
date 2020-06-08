@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 
-const formatMonthDayYear = (date) => (
+const formatDate = (date) => (
   moment(date).tz(moment.tz.guess()).format('MMM d, YYYY')
 );
 
-export default formatMonthDayYear;
+export default formatDate;

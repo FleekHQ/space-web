@@ -15,12 +15,17 @@ import {
   SimpleIcon,
 } from './types';
 
-import { FILE_TYPES } from './constants';
+import {
+  MAP_EXT_TO_FILE_TYPE,
+  FILE_TYPES,
+} from './constants';
 
 const IconFile = ({
   src,
-  type,
+  ext,
 }) => {
+  const type = MAP_EXT_TO_FILE_TYPE[ext];
+
   const iconTypeMapping = {
     [FILE_TYPES.FOLDER]: <Folder />,
     [FILE_TYPES.IMAGE]: <Image src={src} />,
@@ -45,7 +50,7 @@ IconFile.defaultProps = {
 };
 
 IconFile.propTypes = {
-  type: PropTypes.string.isRequired,
+  ext: PropTypes.string.isRequired,
   src: PropTypes.string,
 };
 

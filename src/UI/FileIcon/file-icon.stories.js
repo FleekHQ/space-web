@@ -9,32 +9,32 @@ const categoryName = 'ElementalComponents';
 storiesOf(categoryName, module).add('FileIcon', () => {
   const icons = [
     {
-      type: FILE_TYPES.DEFAULT,
+      ext: 'default',
     },
     {
-      type: FILE_TYPES.FOLDER,
+      ext: 'folder',
     },
     {
-      type: FILE_TYPES.PDF,
+      ext: 'pdf',
     },
     {
-      type: FILE_TYPES.ZIP,
+      ext: 'zip',
     },
     {
-      type: FILE_TYPES.IMAGE,
+      ext: 'jpg',
       src: 'https://icatcare.org/app/uploads/2018/07/Thinking-of-getting-a-cat.png',
     },
     {
-      type: FILE_TYPES.POWERPOINT,
+      ext: 'ppt',
     },
     {
-      type: FILE_TYPES.WORD,
+      ext: 'doc',
     },
     {
-      type: FILE_TYPES.AUDIO,
+      ext: 'mp3',
     },
     {
-      type: FILE_TYPES.VIDEO,
+      ext: 'mp4',
     },
   ];
   return (
