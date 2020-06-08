@@ -22,13 +22,12 @@ const StarCheckbox = (props) => {
     >
       <FontAwesomeIcon
         className={classnames(classes.fill, {
-          [classes.active]: active,
           [classes.inactive]: !active,
         })}
         icon={faStarSolid}
       />
       <FontAwesomeIcon
-        className={classnames(classes.outline)}
+        className={classes.outline}
         icon={faStar}
       />
     </ButtonBase>
