@@ -3,7 +3,7 @@ const registerConfigEvents = require('./config');
 const registerObjectsEvents = require('./objects');
 const registerPathInfoEvents = require('./path-info');
 const registerGenerateKeyPairEvents = require('./generate-key-pair');
-const registerUploadEvents = require('./upload');
+const registerAddItemsEvents = require('./add-items');
 
 const registerEvents = (mainWindow) => {
   const stream = registerEventStream(mainWindow);
@@ -12,7 +12,7 @@ const registerEvents = (mainWindow) => {
   registerObjectsEvents(mainWindow);
   registerPathInfoEvents(mainWindow);
   registerGenerateKeyPairEvents(mainWindow);
-  registerUploadEvents(mainWindow);
+  registerAddItemsEvents(mainWindow);
 
   return () => stream.destroy();
 };
