@@ -17,10 +17,12 @@ const openDialog = ({ prefix, properties }) => async (event) => {
       properties: ['multiSelections', ...properties],
     });
 
-    addItems({
-      targetPath: prefix,
-      sourcePaths: filePaths,
-    });
+    if (filePaths.length) {
+      addItems({
+        targetPath: prefix,
+        sourcePaths: filePaths,
+      });
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error when selecting a folder or a file: ', error.message);
