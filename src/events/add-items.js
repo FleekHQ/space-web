@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { SET_ERROR_STATE } from '@reducers/storage';
+import { SET_UPLOAD_ERROR_STATE } from '@reducers/storage';
 
 import store from '../store';
 
@@ -16,15 +16,15 @@ const registerUploadEvents = () => {
 
   ipcRenderer.on(ERROR_EVENT, (event, payload) => {
     // eslint-disable-next-line no-console
-    console.log('error: ', payload);
+    console.error('Error on AddItems call: ', payload);
     store.dispatch({
       payload,
-      type: SET_ERROR_STATE,
+      type: SET_UPLOAD_ERROR_STATE,
     });
   });
 };
 
-export const startUpload = (payload) => {
+export const addItems = (payload) => {
   ipcRenderer.send(START_EVENT, payload);
 };
 

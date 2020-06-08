@@ -1,6 +1,9 @@
 syntax = "proto3";
+
 import "google/protobuf/empty.proto";
+
 package space;
+
 service SpaceApi {
   rpc ListDirectories(ListDirectoriesRequest) returns (ListDirectoriesResponse) {}
   rpc GetConfigInfo(google.protobuf.Empty) returns (ConfigInfoResponse) {}
@@ -11,8 +14,11 @@ service SpaceApi {
   rpc AddItems(AddItemsRequest) returns (AddItemsResponse) {}
   rpc CreateFolder(CreateFolderRequest) returns (CreateFolderResponse) {}
 }
+
 message ListDirectoriesRequest {
+
 }
+
 message ListDirectoryEntry {
   string path = 1;
   bool isDir = 2;
@@ -23,15 +29,19 @@ message ListDirectoryEntry {
   string fileExtension = 7;
   string ipfsHash = 8;
 }
+
+
 message ListDirectoriesResponse {
   repeated ListDirectoryEntry entries = 1;
 }
+
 message ConfigInfoResponse {
   string folderPath = 1;
   string port = 2;
   string appPath = 3;
 }
 message GenerateKeyPairRequest {}
+
 message GenerateKeyPairResponse {
   string publicKey = 1;
   string privateKey = 2;

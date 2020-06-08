@@ -2,7 +2,8 @@
   "test": "Translate me!",
   "createNew": "Create New",
   "common": {
-    "search": "Search"
+    "search": "Search",
+    "at": "at"
   },
   "contextMenu": {
     "open": "Open",
@@ -18,7 +19,17 @@
   },
   "detailsPanel": {
     "title": "Details Panel",
-    "message": "Select a file or folder to see a detailed breakdown."
+    "message": "Select a file or folder to see a detailed breakdown.",
+    "open": "Open",
+    "filesNumber": "{{count}} file",
+    "filesNumber_plural": "{{count}} files",
+    "foldersNumber": "{{count}} folder",
+    "foldersNumber_plural": "{{count}} folders",
+    "objectDetails": {
+      "size": "Size:",
+      "created": "Created:",
+      "lastModified": "Last Modified:"
+    }
   },
   "teamSelector": {
     "membersNumber": "{{count}} Member",
