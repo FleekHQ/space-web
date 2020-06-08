@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -28,7 +29,8 @@ const IconFile = ({
 
   const iconTypeMapping = {
     [FILE_TYPES.FOLDER]: <Folder />,
-    [FILE_TYPES.IMAGE]: <Image src={src} />,
+    // image as icon is not supported in the POC
+    // [FILE_TYPES.IMAGE]: <Image src={src} />,
     [FILE_TYPES.PDF]: <SimpleIcon iconSrc={PDFIcon} />,
     [FILE_TYPES.ZIP]: <SimpleIcon iconSrc={ZIPIcon} />,
     [FILE_TYPES.WORD]: <SimpleIcon iconSrc={DocIcon} />,
