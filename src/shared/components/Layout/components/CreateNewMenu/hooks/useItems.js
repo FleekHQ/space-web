@@ -1,3 +1,4 @@
+import { remote } from 'electron';
 import { matchPath, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -6,13 +7,24 @@ import { addItems } from '@events';
 import { faFileUpload } from '@fortawesome/pro-regular-svg-icons/faFileUpload';
 import { faFolderUpload } from '@fortawesome/pro-regular-svg-icons/faFolderUpload';
 
-import getUploadComponent from '../components/getUploadComponent';
+import Option from '../components/Option';
 
-const upload = (files, prefix) => {
-  addItems({
-    targetPath: prefix,
-    sourcePaths: files.map((file) => file.path),
-  });
+const openDialog = ({ prefix, properties }) => async (event) => {
+  event.preventDefault();
+
+  try {
+    const { filePaths = [] } = await remote.dialog.showOpenDialog({
+      properties: ['multiSelections', ...properties],
+    });
+
+    addItems({
+      targetPath: prefix,
+      sourcePaths: filePaths,
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error when selecting a folder or a file: ', error.message);
+  }
 };
 
 const useItems = () => {
@@ -26,16 +38,22 @@ const useItems = () => {
     {
       id: 'file-upload',
       label: t('createNewMenu.fileUpload'),
-      component: getUploadComponent(false),
+      component: Option,
       icon: faFileUpload,
-      onClick: (files) => upload(files, prefix),
+      onClick: openDialog({
+        prefix,
+        properties: ['openFile'],
+      }),
     },
     {
       id: 'folder-upload',
       label: t('createNewMenu.folderUpload'),
-      component: getUploadComponent(true),
+      component: Option,
       icon: faFolderUpload,
-      onClick: (files) => upload(files, prefix),
+      onClick: openDialog({
+        prefix,
+        properties: ['openDirectory'],
+      }),
     },
   ];
 };
