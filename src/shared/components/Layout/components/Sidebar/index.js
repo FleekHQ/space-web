@@ -15,7 +15,7 @@ const activeLinkProps = {
   color: 'textSecondary',
 };
 
-const noTopbar = window.innerHeight === window.outerHeight;
+const isMac = process.platform === 'darwin';
 
 const Sidebar = () => {
   const items = useItems();
@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   return (
     <div className={classes.root}>
-      {noTopbar && <div className={classes.trafficLightsSpot} />}
+      {isMac && <div className={classes.trafficLightsSpot} />}
       <TeamSelector
         accountsList={[{
           id: user.username,
