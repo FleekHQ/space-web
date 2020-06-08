@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import useStyles from './styles';
 import TableCell from '../TableCell';
-import { EXT_ICON } from './constants';
 import FileIcon from '../../../FileIcon';
 
 const FileCell = (props) => {
@@ -23,7 +22,7 @@ const FileCell = (props) => {
         <div className={classes.iconContainer}>
           <FileIcon
             src={src}
-            type={EXT_ICON[ext] || EXT_ICON.default}
+            ext={ext}
           />
         </div>
         {children}
