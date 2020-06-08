@@ -2,25 +2,16 @@ import { matchPath, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import get from 'lodash/get';
-import { startUpload } from '@events';
+import { addItems } from '@events';
 import { faFileUpload } from '@fortawesome/pro-regular-svg-icons/faFileUpload';
 import { faFolderUpload } from '@fortawesome/pro-regular-svg-icons/faFolderUpload';
 
 import getUploadComponent from '../components/getUploadComponent';
 
 const upload = (files, prefix) => {
-  const filesSrcPaths = files.map((file) => ({
-    fullPath: file.path,
-    relativePathWithFile: file.webkitRelativePath || file.name,
-    relativePath: file.webkitRelativePath.replace(new RegExp(`${file.name}$`), ''),
-  }));
-  startUpload({ files: filesSrcPaths, prefix });
-};
-
-const uploadFile = ([file], prefix) => {
-  startUpload({
+  addItems({
     targetPath: prefix,
-    sourcePath: file.path,
+    sourcePaths: files.map((file) => file.path),
   });
 };
 
@@ -37,7 +28,7 @@ const useItems = () => {
       label: t('createNewMenu.fileUpload'),
       component: getUploadComponent(false),
       icon: faFileUpload,
-      onClick: (files) => uploadFile(files, prefix),
+      onClick: (files) => upload(files, prefix),
     },
     {
       id: 'folder-upload',

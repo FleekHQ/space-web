@@ -7,11 +7,13 @@ const START_EVENT = `${EVENT_PREFIX}:start`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 
-const registerUploadEvents = (mainWindow) => {
+const registerAddItemsEvents = (mainWindow) => {
   ipcMain.on(START_EVENT, (event, payload) => {
-    client.AddFile(payload, (err, res) => {
+    client.AddItems(payload, (err, res) => {
       if (err) {
-        mainWindow.webContents.send(ERROR_EVENT, err);
+        mainWindow.webContents.send(ERROR_EVENT, {
+          message: err.message,
+        });
         return;
       }
 
@@ -20,4 +22,4 @@ const registerUploadEvents = (mainWindow) => {
   });
 };
 
-module.exports = registerUploadEvents;
+module.exports = registerAddItemsEvents;
