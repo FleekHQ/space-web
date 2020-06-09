@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import FileIcon from './index';
-import FILE_TYPES from './constants';
 
 const categoryName = 'ElementalComponents';
 
