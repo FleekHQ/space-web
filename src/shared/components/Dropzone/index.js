@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import useStyles from './styles';
 
 const propsToAllowOnlyDirectory = {
@@ -8,10 +9,16 @@ const propsToAllowOnlyDirectory = {
   directory: 'true',
 };
 
-const Dropzone = ({ children, allowOnlyDirectory, ...restProps }) => {
+const Dropzone = ({
+  children,
+  allowOnlyDirectory,
+  classes: overrideClasses,
+  ...restProps
+}) => {
   const {
     getRootProps,
     getInputProps,
+    isDragActive,
   } = useDropzone(restProps);
   const classes = useStyles();
 
@@ -21,8 +28,13 @@ const Dropzone = ({ children, allowOnlyDirectory, ...restProps }) => {
   };
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <div {...getRootProps()} className={classes.root}>
+    <div
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...getRootProps()}
+      className={classnames(classes.root, overrideClasses.root, {
+        [overrideClasses.active]: isDragActive,
+      })}
+    >
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...inputProps} />
       {children}
@@ -32,11 +44,16 @@ const Dropzone = ({ children, allowOnlyDirectory, ...restProps }) => {
 
 Dropzone.defaultProps = {
   allowOnlyDirectory: false,
+  classes: {},
 };
 
 Dropzone.propTypes = {
   children: PropTypes.node.isRequired,
   allowOnlyDirectory: PropTypes.bool,
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+    active: PropTypes.string,
+  }),
 };
 
 export default Dropzone;

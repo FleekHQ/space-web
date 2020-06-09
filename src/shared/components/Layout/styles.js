@@ -6,6 +6,7 @@ export default makeStyles((theme) => ({
     height: '100%',
   },
   mainContent: {
+    flexGrow: 1,
     backgroundColor: theme.palette.palette.gray5,
   },
 }));

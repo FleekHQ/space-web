@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
     userSelect: 'none',
     width: '100%',
@@ -19,4 +19,12 @@ export default makeStyles({
     height: '100%',
     padding: '0 5px',
   },
-});
+  dropzone: {
+    minHeight: '100%',
+    borderRadius: 4,
+    border: '2px solid transparent',
+  },
+  dropzoneActive: {
+    borderColor: theme.palette.palette.blue1,
+  },
+}));
