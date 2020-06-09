@@ -27,10 +27,13 @@ const StorageMainView = () => {
   const prefix = get(params, '0');
 
   const { rows, searchTerm } = useSelector((state) => {
-    const pathPrefix = prefix === '' ? prefix : `/${prefix}`;
-
     /* eslint-disable no-underscore-dangle */
-    const _rows = objectsSelector(state, '', pathPrefix, '/');
+    const _rows = objectsSelector(
+      state,
+      '',
+      prefix,
+      '/',
+    );
 
     return {
       rows: _rows,

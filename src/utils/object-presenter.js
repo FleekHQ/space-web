@@ -1,3 +1,4 @@
+/* eslint-disable */
 import get from 'lodash/get';
 
 import formatBytes from './format-bytes';
@@ -17,6 +18,8 @@ const objectPresenter = (obj = {}, bucket = '') => {
   const size = parseInt(get(obj, 'sizeInBytes', 0), 10);
   const bytesSize = formatBytes(size);
 
+  console.log('obj', obj);
+
   return {
     key,
     ext,
@@ -30,6 +33,7 @@ const objectPresenter = (obj = {}, bucket = '') => {
     selected: false,
     id: `${bucket}/${key}`,
     fullKey: `${bucket}/${key}`,
+    ipfsHash: get(obj, 'ipfsHash'),
   };
 };
 
