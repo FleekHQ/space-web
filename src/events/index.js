@@ -5,6 +5,7 @@ import registerObjectsEvents from './objects';
 import registerPathInfoEvents from './path-info';
 import registerGenerateKeyPairEvents from './generate-key-pair';
 import registerAddItemsEvents from './add-items';
+import registerTxlSubscribeEvents from './txl-subscribe';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -14,6 +15,7 @@ const registerEvents = () => {
   registerPathInfoEvents();
   registerGenerateKeyPairEvents();
   registerAddItemsEvents();
+  registerTxlSubscribeEvents();
 };
 
 export default registerEvents;
