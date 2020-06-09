@@ -30,6 +30,7 @@ const objectPresenter = (obj = {}, bucket = '') => {
     selected: false,
     id: `${bucket}/${key}`,
     fullKey: `${bucket}/${key}`,
+    ipfsHash: get(obj, 'ipfsHash'),
   };
 };
 
