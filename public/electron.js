@@ -47,7 +47,16 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  mainWindow.on('closed', () => (mainWindow = null));
+  mainWindow.on('closed', () => mainWindow = null);
+
+  mainWindow.on('close', (event) => {
+    if (app.quitting) {
+      mainWindow = null;
+    } else {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
 
   destroyStream = registerEvents(mainWindow);
 };
@@ -65,5 +74,9 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (!mainWindow) {
     createWindow();
+  } else {
+    mainWindow.show();
   }
 });
+
+app.on('before-quit', () => app.quitting = true);
