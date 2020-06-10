@@ -149,7 +149,8 @@
       "icon": "build/icon.png"
     },
     "win": {
-      "icon": "build/icon.png"
+      "icon": "build/icon.png",
+      "verifyUpdateCodeSignature": false
     },
     "linux": {
       "icon": "build/icon.png"

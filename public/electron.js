@@ -24,6 +24,7 @@ const createWindow = () => {
     minWidth: 680,
     minHeight: 500,
     titleBarStyle: isMac ? 'hiddenInset' : undefined,
+    icon: path.join(__dirname, '/icon.png'),
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
