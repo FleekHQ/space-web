@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package space;
+
+service SpaceApi {
+  rpc ListDirectories(ListDirectoriesRequest) returns (ListDirectoriesResponse) {}
+  rpc GetConfigInfo(google.protobuf.Empty) returns (ConfigInfoResponse) {}
+  rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse) {}
+  rpc GenerateKeyPairWithForce(GenerateKeyPairRequest) returns (GenerateKeyPairResponse) {}
+  rpc Subscribe(google.protobuf.Empty) returns (stream FileEventResponse) {}
+  rpc TxlSubscribe(google.protobuf.Empty) returns (stream TextileEventResponse) {}
+  rpc OpenFile(OpenFileRequest) returns (OpenFileResponse) {}
+  rpc AddItems(AddItemsRequest) returns (stream AddItemsResponse) {}
+  rpc CreateFolder(CreateFolderRequest) returns (CreateFolderResponse) {}
+}
+
+message ListDirectoriesRequest {
+
+}
+
+message ListDirectoryEntry {
+  string path = 1;
+  bool isDir = 2;
+  string name = 3;
+  string sizeInBytes = 4;
+  string created = 5;
+  string updated = 6;
+  string fileExtension = 7;
+  string ipfsHash = 8;
+}
+
+
+message ListDirectoriesResponse {
+  repeated ListDirectoryEntry entries = 1;
+}
+
+message ConfigInfoResponse {
+  string folderPath = 1;
+  string port = 2;
+  string appPath = 3;
+}
+
+message GenerateKeyPairRequest {}
+
+message GenerateKeyPairResponse {
+  string publicKey = 1;
+  string privateKey = 2;
+}
+
+enum EventType {
+  ENTRY_ADDED = 0;
+  ENTRY_DELETED = 1;
+  ENTRY_UPDATED = 2;
+}
+
+message FileEventResponse {
+  EventType type = 1;
+  ListDirectoryEntry entry = 2;
+}
+
+message TextileEventResponse {
+  string bucket = 1;
+}
+
+message OpenFileRequest {
+  string path = 1;
+}
+
+message OpenFileResponse {
+  string location = 1;
+}
+
+message AddItemsRequest {
+  repeated string sourcePaths = 1; // full paths to file or Folder on FS. Needs to be a location available to the daemon
+  string targetPath = 2; // target path in bucket.
+}
+
+message AddItemResult {
+  string sourcePath= 1;
+  string bucketPath = 2;
+  string error = 3;
+}
+
+message AddItemsResponse {
+  AddItemResult result = 1;
+  uint32 progress = 2;
+}
+
+message CreateFolderRequest {
+  string path = 1; // target path in bucket to add new empty folder
+}
+// not sure we need to return anything other than an error if we failed
+message CreateFolderResponse {
+}

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@ui": ["src/UI"],
+      "@shared": ["src/shared"],
+      "@events": ["src/events"],
+      "@reducers": ["src/reducers"],
+      "@utils": ["src/utils"]
+    }
+  },
+  "exclude": ["node_modules"]
+}

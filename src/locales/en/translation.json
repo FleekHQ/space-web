@@ -1,0 +1,76 @@
+{
+  "test": "Translate me!",
+  "createNew": "Create New",
+  "common": {
+    "search": "Search",
+    "at": "at"
+  },
+  "contextMenu": {
+    "open": "Open",
+    "openWith": "Open With",
+    "star": "Star",
+    "share": "Share...",
+    "copyLink": "Copy Link",
+    "duplicate": "Duplicate",
+    "rename": "Rename",
+    "copy": "Copy",
+    "delete": "Delete",
+    "viewInFolder": "View in Finder"
+  },
+  "detailsPanel": {
+    "title": "Details Panel",
+    "message": "Select a file or folder to see a detailed breakdown.",
+    "open": "Open",
+    "filesNumber": "{{count}} file",
+    "filesNumber_plural": "{{count}} files",
+    "foldersNumber": "{{count}} folder",
+    "foldersNumber_plural": "{{count}} folders",
+    "objectDetails": {
+      "size": "Size:",
+      "created": "Created:",
+      "lastModified": "Last Modified:"
+    }
+  },
+  "teamSelector": {
+    "membersNumber": "{{count}} Member",
+    "membersNumber_plural": "{{count}} Members"
+  },
+  "navigation": {
+    "storage": "Storage",
+    "files": "Files"
+  },
+  "createNewMenu": {
+    "fileUpload": "File Upload",
+    "folderUpload": "Folder Upload",
+    "folder": "Folder",
+    "textDoc": "Text Doc",
+    "googleDoc": "Google Doc",
+    "word": "Word",
+    "textEdit": "TextEdit",
+    "presentation": "Presentation",
+    "googleSlide": "Google Slide",
+    "powerpoint": "PowerPoint",
+    "keynote": "Keynote",
+    "sheets": "Sheets",
+    "googleSheet": "Google Sheet",
+    "excel": "Excel",
+    "numbers": "Number"
+  },
+  "modules": {
+    "storage": {
+      "fileTable": {
+        "head": {
+          "name": "Name",
+          "members": "Members",
+          "lastModified": "Last Modified",
+          "size": "Size"
+        }
+      }
+    },
+    "signup": {
+      "explore": "Explore Space",
+      "username": "Username",
+      "email": "Email (Optional)"
+    }
+  }
+}

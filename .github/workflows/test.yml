@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - develop
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      FA_NPM_TOKEN: ${{secrets.FA_NPM_TOKEN}}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v2
+      id: cache-step
+      with:
+        path: node_modules
+        key: ${{ hashFiles('**/yarn.lock') }}
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+    - name: Install dependencies
+      run: yarn install --ignore-scripts
+    - name: Run lint
+      run: yarn lint
