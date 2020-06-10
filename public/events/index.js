@@ -3,8 +3,8 @@ const registerConfigEvents = require('./config');
 const registerPathInfoEvents = require('./path-info');
 const registerObjectsEvents = require('./objects').default;
 const registerGenerateKeyPairEvents = require('./generate-key-pair');
-const registerAddItemsEvents = require('./add-items');
 const registerTxlSubscribe = require('./txl-subscribe');
+const registerAddItemsSubscribe = require('./add-items-subscribe');
 
 const registerEvents = (mainWindow) => {
   const stream = registerEventStream(mainWindow);
@@ -13,8 +13,8 @@ const registerEvents = (mainWindow) => {
   registerConfigEvents(mainWindow);
   registerObjectsEvents(mainWindow);
   registerPathInfoEvents(mainWindow);
+  registerAddItemsSubscribe(mainWindow);
   registerGenerateKeyPairEvents(mainWindow);
-  registerAddItemsEvents(mainWindow);
 
   return () => {
     stream.destroy();
