@@ -299,6 +299,7 @@ module.exports = function(webpackEnv) {
         '@events': path.resolve(process.cwd(), 'src', 'events'),
         '@reducers': path.resolve(process.cwd(), 'src', 'reducers'),
         '@utils': path.resolve(process.cwd(), 'src', 'utils'),
+        '@electron-store': path.resolve(process.cwd(), 'src', 'electron-store'),
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
