@@ -6,7 +6,8 @@
       "@shared": ["src/shared"],
       "@events": ["src/events"],
       "@reducers": ["src/reducers"],
-      "@utils": ["src/utils"]
+      "@utils": ["src/utils"],
+      "@electron-store": ["src/electron-store"]
     }
   },
   "exclude": ["node_modules"]
