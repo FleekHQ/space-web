@@ -37,7 +37,8 @@
           ["@utils", "./src/utils"],
           ["@shared", "./src/shared"],
           ["@events", "./src/events"],
-          ["@reducers", "./src/reducers"]
+          ["@reducers", "./src/reducers"],
+          ["@electron-store", "./src/electron-store"]
         ]
       }
     }

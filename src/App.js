@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import createFleekTheme from '@ui/theme';
-import SetUpWD from '@shared/components/SetUpWD';
 import DragableBar from '@shared/components/DragableBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -30,7 +29,6 @@ const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SetUpWD />
       <Box height="100vh">
         <DragableBar />
         <Router>
