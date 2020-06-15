@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import Grow from '@material-ui/core/Grow';
@@ -15,28 +15,26 @@ import classnames from 'classnames';
 
 import useStyles from './styles';
 
+/* eslint-disable react/jsx-props-no-spreading */
 const PermissionsDropdown = (props) => {
   const {
+    open,
     options,
     onChange,
-    defaultOpen,
+    className,
+    handleClose,
+    handleToggle,
     disableBorder,
-    defaultOption,
+    ...restProps
   } = props;
 
-  const anchorRef = useRef(null);
-  const [open, setOpen] = useState(defaultOpen);
-  const [selectedOptionId, setSelectedOptionId] = useState(defaultOption);
-
   const classes = useStyles();
+  const anchorRef = useRef(null);
 
-  const handleClose = () => setOpen(false);
-  const handleToggle = () => setOpen(!open);
-
-  const selectedOption = options.find((opt) => opt.id === selectedOptionId);
+  const selectedOption = options.find((opt) => opt.selected);
 
   return (
-    <div>
+    <>
       <ButtonBase
         ref={anchorRef}
         aria-haspopup="true"
@@ -44,8 +42,10 @@ const PermissionsDropdown = (props) => {
         className={classnames(
           classes.button,
           !disableBorder && classes.border,
+          className,
         )}
         aria-controls={open ? 'menu-list-grow' : undefined}
+        {...restProps}
       >
         {selectedOption.title}
         <FontAwesomeIcon
@@ -78,19 +78,18 @@ const PermissionsDropdown = (props) => {
                     <MenuItem
                       key={opt.id}
                       className={classes.menuItem}
-                      onClick={() => {
-                        onChange(opt);
-                        setSelectedOptionId(opt.id);
-                        handleClose();
-                      }}
+                      onClick={(e) => onChange(e, opt)}
                     >
                       <Typography
                         variant="body2"
                         display="inline"
+                        className={classnames(
+                          opt.danger && classes.danger,
+                        )}
                       >
                         {opt.title}
                       </Typography>
-                      {opt.id === selectedOptionId && (
+                      {opt.selected && (
                         <FontAwesomeIcon
                           icon={faCheck}
                           className={classes.iconCheck}
@@ -111,24 +110,29 @@ const PermissionsDropdown = (props) => {
           </Grow>
         )}
       </Popper>
-    </div>
+    </>
   );
 };
 
 PermissionsDropdown.defaultProps = {
-  defaultOpen: false,
+  open: false,
+  className: null,
   disableBorder: false,
 };
 
 PermissionsDropdown.propTypes = {
-  defaultOpen: PropTypes.bool,
+  open: PropTypes.bool,
+  className: PropTypes.string,
   disableBorder: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  defaultOption: PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
+    danger: PropTypes.bool,
+    selected: PropTypes.bool,
+    description: PropTypes.string,
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
   })).isRequired,
 };
 

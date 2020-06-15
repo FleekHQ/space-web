@@ -14,18 +14,16 @@ storiesOf(categoryName, module).add('MemberInput', () => {
       placeholder: 'Email, name',
     }),
     onChange: action('onChange'),
-    defaultOption: select('defaultOption', [
-      'edit',
-      'view',
-    ], 'edit'),
     options: object('options', [
       {
         id: 'edit',
+        selected: true,
         title: 'Can edit',
         description: 'Members can edit, delete, and add the file to their Space.',
       },
       {
         id: 'view',
+        selected: false,
         title: 'Can view',
         description: 'Members can view and download.',
       },
