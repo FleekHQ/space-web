@@ -47,7 +47,9 @@ const PermissionsDropdown = (props) => {
         aria-controls={open ? 'menu-list-grow' : undefined}
         {...restProps}
       >
-        {selectedOption.title}
+        <Typography variant="body2">
+          {selectedOption.title}
+        </Typography>
         <FontAwesomeIcon
           icon={faAngleDown}
           className={classes.iconAngle}
@@ -55,7 +57,6 @@ const PermissionsDropdown = (props) => {
       </ButtonBase>
       <Popper
         transition
-        disablePortal
         open={open}
         role={undefined}
         anchorEl={anchorRef.current}
