@@ -16,6 +16,7 @@ export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
 export const DELETE_OBJECT = 'DELETE_OBJECT';
 export const UPDATE_OBJECT = 'UPDATE_OBJECT';
+export const UPDATE_OBJECTS = 'UPDATE_OBJECTS';
 export const SET_ERROR_STATE = 'SET_ERROR_STATE';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
 export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
@@ -86,6 +87,17 @@ export default (state = DEFAULT_STATE, action) => {
           if (obj.fullKey === action.payload.fullKey) return action.payload;
           return obj;
         }),
+      };
+    }
+
+    case UPDATE_OBJECTS: {
+      const newObjs = state.objects.filter((obj) => (
+        action.payload.findIndex((newObj) => obj.id === newObj.id) === -1
+      ));
+
+      return {
+        ...state,
+        objects: action.payload.concat(newObjs),
       };
     }
 

@@ -17,10 +17,6 @@ export default makeStyles((theme) => ({
   title: {
     margin: '11px 18px 1px',
   },
-  tableWrapper: {
-    flexGrow: 1,
-    padding: 6,
-  },
   searchField: {
     flexGrow: 1,
   },

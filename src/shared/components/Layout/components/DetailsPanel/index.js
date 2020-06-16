@@ -1,32 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { matchPath, useLocation } from 'react-router-dom';
-import get from 'lodash/get';
-import electronStore from '@electron-store';
 import Empty from './components/Empty';
 import Header from './components/Header';
 import ObjectDetails from './components/ObjectDetails';
 import SharePanel from './components/SharePanel';
 import useStyles from './styles';
 
-const useTestingData = () => {
-  const location = useLocation();
-  const prefix = get(
-    matchPath(location.pathname, { path: '/storage/files/*' }),
-    'params[0]',
-    '',
-  );
-  const re = new RegExp(`^${electronStore.get('_wd')}/${prefix ? `${prefix}/` : ''}[^/]*$`);
-  const selectedObjects = useSelector((state) => (
-    state.storage.objects.filter(({ key }) => re.test(key))
-  ));
-
-  return selectedObjects;
-};
-
 const DetailsPanel = () => {
   const classes = useStyles();
-  const selectedObjects = useTestingData();
+  const selectedObjects = useSelector((state) => (
+    state.storage.objects.filter(({ selected }) => selected)
+  ));
 
   const getContent = () => {
     if (selectedObjects.length === 0) {
