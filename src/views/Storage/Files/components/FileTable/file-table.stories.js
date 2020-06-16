@@ -10,6 +10,7 @@ const categoryName = 'FileTable';
 storiesOf(categoryName, module).add('default', () => {
   const defaultProps = {
     onClick: action('onClick'),
+    addItems: action('addItems'),
     rows: object('rows', [
       {
         id: 'a1',

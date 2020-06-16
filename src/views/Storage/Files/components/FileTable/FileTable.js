@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import Table, { TableCell, TableRow, FileCell } from '@ui/Table';
 import Dropzone from '@shared/components/Dropzone';
 import { formatBytes } from '@utils';
-import { addItems } from '@events';
 
 import useStyles from './styles';
 
@@ -19,6 +18,7 @@ const FileTable = (props) => {
   const {
     rows,
     onClick,
+    addItems,
   } = props;
 
   const classes = useStyles();
@@ -127,10 +127,12 @@ const FileTable = (props) => {
 FileTable.defaultProps = {
   rows: [],
   onClick: () => {},
+  addItems: () => {},
 };
 
 FileTable.propTypes = {
   onClick: PropTypes.func,
+  addItems: PropTypes.func,
   rows: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     ext: PropTypes.string,

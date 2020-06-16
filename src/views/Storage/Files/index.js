@@ -6,8 +6,8 @@ import Typography from '@ui/Typography';
 import { objectsSelector } from '@utils';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
-import { fetchObjects, openObject } from '@events';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchObjects, openObject, addItems } from '@events';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -89,7 +89,7 @@ const StorageMainView = () => {
         {t('navigation.files')}
       </Typography>
       <div className={classes.tableWrapper}>
-        <FileTable rows={rows} onClick={onClickRow} />
+        <FileTable rows={rows} onClick={onClickRow} addItems={addItems} />
       </div>
     </div>
   );

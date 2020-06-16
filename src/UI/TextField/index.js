@@ -29,7 +29,7 @@ FleekTextField.defaultProps = {
 };
 
 FleekTextField.propTypes = {
-  variant: PropTypes.oneOf(['outlined', 'filled']),
+  variant: PropTypes.oneOf(['outlined', 'filled', 'standard']),
   label: PropTypes.string,
   // eslint-disable-next-line react/forbid-prop-types
   InputProps: PropTypes.object,
