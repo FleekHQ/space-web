@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -9,6 +10,8 @@ const UIAvatar = ({
   size,
   imgUrl,
   username,
+  children,
+  className,
 }) => {
   const classes = useStyles({ size, username });
 
@@ -16,9 +19,9 @@ const UIAvatar = ({
     <Avatar
       src={imgUrl}
       alt={username}
-      className={classes.root}
+      className={classNames(classes.root, className)}
     >
-      {username[0].toUpperCase()}
+      {children || username[0].toUpperCase()}
     </Avatar>
   );
 };
@@ -26,11 +29,15 @@ const UIAvatar = ({
 UIAvatar.defaultProps = {
   size: 38,
   imgUrl: null,
+  children: null,
+  className: '',
 };
 
 UIAvatar.propTypes = {
   size: PropTypes.number,
   imgUrl: PropTypes.string,
+  children: PropTypes.node,
+  className: PropTypes.string,
   username: PropTypes.string.isRequired,
 };
 

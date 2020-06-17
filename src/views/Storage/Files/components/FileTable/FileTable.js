@@ -155,6 +155,11 @@ const FileTable = () => {
 
   const handleTableOutsideClick = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      const detailePanel = document.getElementById('detail-panel');
+      if (detailePanel.contains(event.target)) {
+        return;
+      }
+
       dispatch({
         type: UPDATE_OBJECTS,
         payload: rows.map((_row) => ({

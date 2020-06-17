@@ -34,7 +34,7 @@ const DetailsPanel = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <div id="detail-panel" className={classes.root}>
       {getContent()}
     </div>
   );
