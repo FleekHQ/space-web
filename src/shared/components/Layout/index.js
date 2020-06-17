@@ -13,9 +13,7 @@ const Layout = ({ children }) => {
       <div className={classes.mainContent}>
         {children}
       </div>
-      <div>
-        <DetailsPanel />
-      </div>
+      <DetailsPanel />
     </div>
   );
 };

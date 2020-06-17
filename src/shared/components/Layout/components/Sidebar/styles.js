@@ -1,10 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+export const SIDEBAR_WIDTH = 220;
+
 export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.palette.white,
+    flex: `0 0 ${SIDEBAR_WIDTH}px`,
   },
   trafficLightsSpot: {
     height: 34,

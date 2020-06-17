@@ -72,5 +72,10 @@
       "username": "Username",
       "email": "Email (Optional)"
     }
+  },
+  "uploadProgressModal": {
+    "message": "<0>{{uploadedNumber}}</0> out of <0>{{totalNumber}}</0> files uploaded",
+    "dismiss": "Dismiss",
+    "defaultMessage": "Upload in progress..."
   }
 }

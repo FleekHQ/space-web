@@ -13,6 +13,7 @@ import {
   Redirect,
   HashRouter as Router,
 } from 'react-router-dom';
+import Modal from '@shared/components/Modal';
 import store from './store';
 import Auth from './views/Auth';
 import Storage from './views/Storage';
@@ -31,6 +32,7 @@ const App = () => (
       <CssBaseline />
       <Box height="100vh">
         <DragableBar />
+        <Modal />
         <Router>
           <Switch>
             <Route path="/auth">
