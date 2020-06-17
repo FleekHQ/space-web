@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import InputBase from '@material-ui/core/InputBase';
 
@@ -10,6 +11,7 @@ const MemberInput = (props) => {
   const {
     i18n,
     onChange,
+    className,
     options: defaultOptions,
   } = props;
 
@@ -41,7 +43,12 @@ const MemberInput = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classnames(
+        classes.root,
+        className,
+      )}
+    >
       <Typography>
         {i18n.to}
       </Typography>
@@ -64,7 +71,12 @@ const MemberInput = (props) => {
   );
 };
 
+MemberInput.defaultProps = {
+  className: null,
+};
+
 MemberInput.propTypes = {
+  className: PropTypes.string,
   i18n: PropTypes.shape({
     to: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,

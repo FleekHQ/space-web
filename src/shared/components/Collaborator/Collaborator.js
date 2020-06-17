@@ -31,10 +31,17 @@ const Collaborator = (props) => {
         )}
       </div>
       <div>
-        <Typography variant="body2">
+        <Typography
+          title={mainText}
+          variant="body2"
+        >
           {mainText}
         </Typography>
-        <Typography variant="body2" color="secondary">
+        <Typography
+          variant="body2"
+          color="secondary"
+          title={secondaryText}
+        >
           {secondaryText}
         </Typography>
       </div>

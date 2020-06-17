@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
+import classnames from 'classnames';
 
 import useStyles from './styles';
 import Collaborator from '../../../Collaborator';
@@ -12,6 +13,7 @@ const CollaboratorList = (props) => {
   const {
     i18n,
     options,
+    className,
     collaborators,
     onChangePermissions,
   } = props;
@@ -84,7 +86,12 @@ const CollaboratorList = (props) => {
   });
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classnames(
+        classes.root,
+        className,
+      )}
+    >
       {collaboratorsList}
     </div>
   );
@@ -92,11 +99,13 @@ const CollaboratorList = (props) => {
 
 CollaboratorList.defaultProps = {
   options: [],
+  className: null,
   collaborators: [],
   onChangePermissions: () => {},
 };
 
 CollaboratorList.propTypes = {
+  className: PropTypes.string,
   onChangePermissions: PropTypes.func,
   collaborators: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
