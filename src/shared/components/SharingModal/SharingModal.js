@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import useStyles from './styles';
@@ -16,6 +17,7 @@ const SharingModal = (props) => {
     ext,
     filename,
     shareLink,
+    className,
     collaborators,
     onShareLinkClick,
     onChangeUserPermissions,
@@ -46,7 +48,12 @@ const SharingModal = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classnames(
+        classes.root,
+        className,
+      )}
+    >
       <Header
         ext={ext}
         className={classes.header}
@@ -78,6 +85,7 @@ const SharingModal = (props) => {
 SharingModal.defaultProps = {
   filename: '',
   ext: 'default',
+  className: null,
   shareLink: false,
   collaborators: [],
   onShareLinkClick: () => {},
@@ -89,6 +97,7 @@ SharingModal.propTypes = {
   ext: PropTypes.string,
   shareLink: PropTypes.bool,
   filename: PropTypes.string,
+  className: PropTypes.string,
   onShareLinkClick: PropTypes.func,
   onChangeUserPermissions: PropTypes.func,
   onChangeInputPermissions: PropTypes.func,
