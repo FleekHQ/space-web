@@ -96,13 +96,15 @@ const PermissionsDropdown = (props) => {
                           className={classes.iconCheck}
                         />
                       )}
-                      <Typography
-                        display="block"
-                        variant="caption"
-                        color="secondary"
-                      >
-                        {opt.description}
-                      </Typography>
+                      {opt.description && (
+                        <Typography
+                          display="block"
+                          variant="caption"
+                          color="secondary"
+                        >
+                          {opt.description}
+                        </Typography>
+                      )}
                     </MenuItem>
                   ))}
                 </MenuList>

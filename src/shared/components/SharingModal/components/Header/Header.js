@@ -1,15 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FileIcon from '@ui/FileIcon';
+import classnames from 'classnames';
 import Typography from '@ui/Typography';
 
 import useStyles from './styles';
 
-const Header = ({ ext, children }) => {
+const Header = ({ ext, children, className }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classnames(
+        classes.root,
+        className,
+      )}
+    >
       <div className={classes.icon}>
         <FileIcon ext={ext} />
       </div>
@@ -24,13 +30,15 @@ const Header = ({ ext, children }) => {
 };
 
 Header.defaultProps = {
-  ext: 'default',
   children: '',
+  ext: 'default',
+  className: null,
 };
 
 Header.propTypes = {
   ext: PropTypes.string,
   children: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default Header;
