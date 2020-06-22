@@ -26,6 +26,8 @@ jobs:
           node-version: '12'
       - name: Install dependencies
         run: yarn install --network-timeout 1000000
+      - name: Get daemon
+        run: yarn download-daemon
       - name: Linux app pack and release
         if: matrix.os == 'ubuntu-latest'
         run: yarn electron-pack --linux
