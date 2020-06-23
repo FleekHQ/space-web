@@ -1,4 +1,3 @@
-
 export default (t, withRemoveOption = false) => {
   const baseOptions = [
     {

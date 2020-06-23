@@ -63,7 +63,6 @@ const contextMenuConfig = ({
   },
 ]);
 
-
 const ContextMenu = () => {
   const { t } = useTranslation();
   const menuItems = contextMenuConfig({ t });
