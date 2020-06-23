@@ -3,8 +3,8 @@ require('dotenv').config()
 const path = require('path');
 const electron = require('electron');
 const isDev = require('electron-is-dev');
-const { exec } = require('child_process');
 
+const childProcess = require('./process');
 const registerEvents = require('./events');
 
 const app = electron.app;
@@ -14,23 +14,11 @@ let mainWindow;
 let destroyStream = () => {};
 const isMac = process.platform === "darwin";
 
+
 const createWindow = () => {
   const url = isDev
     ? 'http://localhost:3000'
     : `file://${path.join(__dirname, '../build/index.html')}`;
-
-  // TODO: run daemon  
-  /* if (!isDev) {
-    exec(path.join(process.resourcesPath, 'space-daemon'), (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      console.log(stdout);
-      console.error(stderr);
-    });
-  } */
 
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -80,6 +68,7 @@ app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   destroyStream();
+  childProcess.kill();
 
   if (process.platform !== 'darwin') {
     app.quit();
