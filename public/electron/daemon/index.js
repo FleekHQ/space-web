@@ -41,19 +41,27 @@ class DaemonProcess {
 
     this.childProcess = spawn(daemonPath);
 
-    if (isDev) {
-      this.childProcess.stdout.on('data', (data) => {
-        console.log(chalk.green(data));
+    this.childProcess.stdout.on('data', (data) => {
+      console.log(chalk.green(data));
 
-        if (data.includes('level=debug msg="Starting textile threadsc listener[]')) {
-          this.callHandlers('ready');
-        }
-      });
+      // TODO replace log message
+      if (data.includes('level=debug msg="Starting textile threadsc listener[]')) {
+        this.callHandlers('ready');
+      }
+    });
 
-      this.childProcess.stderr.on('data', (data) => {
-        console.error(chalk.red(data));
-      });
-    }
+    this.childProcess.stderr.on('data', (data) => {
+      console.error(chalk.red(data));
+    });
+
+
+    this.callHandlers('pending');
+  }
+
+  startDev() {
+    setTimeout(() => {
+      this.callHandlers('ready');
+    }, 5000);
 
     this.callHandlers('pending');
   }
@@ -65,5 +73,7 @@ class DaemonProcess {
     }
   }
 }
+
+
 
 module.exports = DaemonProcess;

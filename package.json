@@ -2,7 +2,7 @@
   "name": "space-app",
   "version": "0.1.0",
   "private": true,
-  "main": "public/electron.js",
+  "main": "public/electron-app.js",
   "author": "Fleek Labs Inc.",
   "homepage": "./",
   "repository": {
@@ -16,7 +16,7 @@
     "download-daemon": "rimraf resources && node scripts/download-daemon.js",
     "lint": "eslint ./ --ext .js --ext .jsx",
     "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron-app.js",
     "preelectron-pack": "npm run clean && npm run build",
     "clean": "rimraf build dist",
     "storybook": "start-storybook -p 9001 -c .storybook -s public",
