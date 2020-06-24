@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-const path = require('path');
 const { app } = require('electron');
 const isDev = require('electron-is-dev');
 
@@ -44,14 +43,13 @@ app.on('ready', () => {
   mainWindow = createSplashWindow();
 });
 
-
 /**
  * Daemon Event handlers
  */
 daemon.on('ready', () => {
   const prevWindow = mainWindow;
 
-  mainWindow = createMainWindow(app);
+  mainWindow = createMainWindow();
 
   mainWindow.on('closed', () => {
     mainWindow = null;

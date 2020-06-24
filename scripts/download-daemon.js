@@ -37,7 +37,7 @@ async function getDaemon() {
 
   fs.mkdirSync(resourcesPath);
   // save space-daemon on ./resources/
-  const writer = fs.createWriteStream(path.join(resourcesPath, 'space'));
+  const writer = fs.createWriteStream(path.join(resourcesPath, 'space'), { mode: 0o755 });
 
   data.on('data', (chunk) => (
     progressBar.tick(chunk.length)

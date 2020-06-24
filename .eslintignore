@@ -5,9 +5,8 @@ config/*
 dist/*
 node_modules/*
 public/*
-!public/events
-!public/client
-!public/electron.js
+!public/electron
+!public/electron-app.js
 resources/*
 scripts/*
 !scripts/notarize.js

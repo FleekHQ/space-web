@@ -42,6 +42,7 @@ class DaemonProcess {
     this.childProcess = spawn(daemonPath);
 
     this.childProcess.stdout.on('data', (data) => {
+      // eslint-disable-next-line no-console
       console.log(chalk.green(data));
 
       // TODO replace log message
@@ -51,9 +52,9 @@ class DaemonProcess {
     });
 
     this.childProcess.stderr.on('data', (data) => {
+      // eslint-disable-next-line no-console
       console.error(chalk.red(data));
     });
-
 
     this.callHandlers('pending');
   }
@@ -73,7 +74,5 @@ class DaemonProcess {
     }
   }
 }
-
-
 
 module.exports = DaemonProcess;

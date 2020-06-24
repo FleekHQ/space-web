@@ -4,7 +4,7 @@ const { BrowserWindow } = require('electron');
 
 const isMac = process.platform === 'darwin';
 
-const createWindow = (app) => {
+const createWindow = () => {
   const url = isDev
     ? 'http://localhost:3000'
     : `file://${path.join(__dirname, '../../../build/index.html')}`;
