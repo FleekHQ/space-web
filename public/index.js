@@ -4,15 +4,20 @@ const path = require('path');
 const electron = require('electron');
 const isDev = require('electron-is-dev');
 
+const DaemonProcess = require('./process');
 const registerEvents = require('./events');
+
+const daemon = new DaemonProcess();
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+let appIcon;
 let mainWindow;
 let destroyStream = () => {};
 const isMac = process.platform === "darwin";
 
+const trayIcon = path.join(__dirname, 'trayTemplate.png');
 
 const createWindow = () => {
   const url = isDev
@@ -60,25 +65,83 @@ const createWindow = () => {
     }
   });
 
+  appIcon = new electron.Tray(trayIcon);
+  const contextMenu = electron.Menu.buildFromTemplate([
+    {
+      label: 'Initializing Daemon',
+      type: 'normal',
+      enabled: false,
+      icon: path.join(__dirname, 'pending.png'),
+    },
+    {
+      label: 'Stop Daemon',
+      type: 'normal',
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Quit Space',
+      type: 'normal',
+    },
+  ]);
+
+  appIcon.setToolTip('some test');
+  appIcon.setContextMenu(contextMenu);
+
   destroyStream = registerEvents(mainWindow);
 };
 
-app.on('ready', createWindow);
 
-app.on('window-all-closed', () => {
-  destroyStream();
 
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+
+daemon.on('pending', () => {
+  app.on('ready', createWindow);
+
+  app.on('window-all-closed', () => {
+    destroyStream();
+    daemon.stop();
+
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
+
+  app.on('activate', () => {
+    if (!mainWindow) {
+      createWindow();
+    } else {
+      mainWindow.show();
+    }
+  });
+
+  app.on('before-quit', () => app.quitting = true);
 });
 
-app.on('activate', () => {
-  if (!mainWindow) {
-    createWindow();
-  } else {
-    mainWindow.show();
-  }
+daemon.on('ready', () => {
+  console.log('ready fired!');
+
+  const contextMenu = electron.Menu.buildFromTemplate([
+    {
+      label: 'Space Daemon Runing',
+      type: 'normal',
+      enabled: false,
+      icon: path.join(__dirname, 'ready.png'),
+    },
+    {
+      label: 'Stop Daemon',
+      type: 'normal',
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Quit Space',
+      type: 'normal',
+    },
+  ]);
+
+  appIcon.setContextMenu(contextMenu);
 });
 
-app.on('before-quit', () => app.quitting = true);
+daemon.start();
