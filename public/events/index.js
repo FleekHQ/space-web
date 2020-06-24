@@ -6,8 +6,13 @@ const registerTxlSubscribe = require('./txl-subscribe');
 const registerObjectsEvents = require('./objects').default;
 const registerAddItemsSubscribe = require('./add-items-subscribe');
 const registerGenerateKeyPairEvents = require('./generate-key-pair');
+const registerAppUpdate = require('./app-update');
 
-const registerEvents = (mainWindow) => {
+const registerEvents = ({
+  app,
+  isDev,
+  mainWindow,
+}) => {
   const stream = registerEventStream(mainWindow);
   const txlStream = registerTxlSubscribe(mainWindow);
 
@@ -17,6 +22,10 @@ const registerEvents = (mainWindow) => {
   registerPathInfoEvents(mainWindow);
   registerAddItemsSubscribe(mainWindow);
   registerGenerateKeyPairEvents(mainWindow);
+
+  if (!isDev) {
+    registerAppUpdate({ app, mainWindow });
+  }
 
   return () => {
     stream.destroy();

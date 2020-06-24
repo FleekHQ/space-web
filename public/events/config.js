@@ -11,7 +11,8 @@ const registerConfigEvents = (mainWindow) => {
   ipcMain.on(FETCH_EVENT, (event, payload) => {
     client.GetConfigInfo(payload, (err, res) => {
       if (err) {
-        return mainWindow.webContents.send(ERROR_EVENT, err);
+        mainWindow.webContents.send(ERROR_EVENT, err);
+        return;
       }
 
       mainWindow.webContents.send(SUCCESS_EVENT, res);

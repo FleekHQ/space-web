@@ -6,7 +6,7 @@ const EVENT_PREFIX = 'txlSuscribe';
 const registerTxlSubscribe = (mainWindow) => {
   const eventStream = client.TxlSubscribe();
 
-  eventStream.on('data', (event) => {
+  eventStream.on('data', () => {
     listDirectories(mainWindow);
   });
 

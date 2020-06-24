@@ -11,7 +11,7 @@ const SUBSCRIBE_SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const registerAddItemsSubscribe = (mainWindow) => {
   let eventStream;
 
-  ipcMain.on(SUBSCRIBE_START_EVENT, (event, { id, payload }) => {
+  ipcMain.on(SUBSCRIBE_START_EVENT, (_, { id, payload }) => {
     eventStream = client.AddItems(payload);
 
     eventStream.on('data', (event) => {
@@ -21,7 +21,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
       );
       listDirectories(mainWindow);
     });
-  
+
     eventStream.on('error', (error) => {
       mainWindow.webContents.send(
         SUBSCRIBE_ERROR_EVENT,
@@ -31,7 +31,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
 
     eventStream.on('end', () => {
       eventStream.destroy();
-    })
+    });
   });
 };
 

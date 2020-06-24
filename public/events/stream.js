@@ -12,7 +12,7 @@ const registerEventStream = (mainWindow) => {
     if (event.type && event.entry) {
       mainWindow.webContents.send(
         `${EVENT_PREFIX}:${event.type}`,
-        event.entry
+        event.entry,
       );
     }
   });

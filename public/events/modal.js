@@ -25,12 +25,14 @@ const registerModalEvents = (mainWindow) => {
         nodeIntegration: true,
         preload: path.resolve(__dirname, '..', 'preload.js'),
       },
-      ...windowProps
+      ...windowProps,
     });
 
     modalWindow.loadURL(url + route);
 
-    modalWindow.on('closed', () => modalWindow = null);
+    modalWindow.on('closed', () => {
+      modalWindow = null;
+    });
   });
 };
 
