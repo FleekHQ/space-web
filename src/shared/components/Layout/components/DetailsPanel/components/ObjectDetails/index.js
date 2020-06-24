@@ -28,7 +28,6 @@ const ObjectDetails = ({ bytesSize, created, lastModified }) => {
     },
   ];
 
-
   return (
     <div className={classes.root}>
       {dataSet.map((data) => (

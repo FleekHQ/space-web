@@ -114,7 +114,6 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-
     default:
       return state;
   }

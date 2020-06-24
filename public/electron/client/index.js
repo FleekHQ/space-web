@@ -14,7 +14,6 @@ const proto = grpc.loadPackageDefinition(
   }),
 );
 
-
 const client = new proto.space.SpaceApi(
   SERVER_ADDRESS,
   grpc.credentials.createInsecure(),
