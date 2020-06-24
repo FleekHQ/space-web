@@ -1,25 +1,21 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const path = require('path');
-const electron = require('electron');
+const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
-const { exec } = require('child_process');
 
 const registerEvents = require('./events');
 
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-
 let mainWindow;
 let destroyStream = () => {};
-const isMac = process.platform === "darwin";
+const isMac = process.platform === 'darwin';
 
 const createWindow = () => {
   const url = isDev
     ? 'http://localhost:3000'
     : `file://${path.join(__dirname, '../build/index.html')}`;
 
-  // TODO: run daemon  
+  // TODO: run daemon
   /* if (!isDev) {
     exec(path.join(process.resourcesPath, 'space-daemon'), (err, stdout, stderr) => {
       if (err) {
@@ -42,8 +38,8 @@ const createWindow = () => {
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
-      preload: `${__dirname}/preload.js`
-    }
+      preload: `${__dirname}/preload.js`,
+    },
   });
 
   mainWindow.loadURL(url);
@@ -62,10 +58,12 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  mainWindow.on('closed', () => mainWindow = null);
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 
   mainWindow.on('close', (event) => {
-    if (app.quitting) {
+    if (app.quitting || app.newUpdate) {
       mainWindow = null;
     } else {
       event.preventDefault();
@@ -73,7 +71,11 @@ const createWindow = () => {
     }
   });
 
-  destroyStream = registerEvents(mainWindow);
+  destroyStream = registerEvents({
+    app,
+    isDev,
+    mainWindow,
+  });
 };
 
 app.on('ready', createWindow);
@@ -81,7 +83,7 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   destroyStream();
 
-  if (process.platform !== 'darwin') {
+  if (process.platform !== 'darwin' || app.newUpdate) {
     app.quit();
   }
 });
@@ -94,4 +96,6 @@ app.on('activate', () => {
   }
 });
 
-app.on('before-quit', () => app.quitting = true);
+app.on('before-quit', () => {
+  app.quitting = true;
+});
