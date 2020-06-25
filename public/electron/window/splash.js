@@ -1,16 +1,18 @@
 const path = require('path');
+const isDev = require('electron-is-dev');
 const { BrowserWindow } = require('electron');
 
-const isMac = process.platform === 'darwin';
-
-// TODO remove window buttons, add loading html file
 const createWindow = () => {
+  const url = isDev
+    ? 'http://localhost:3000/#/splash'
+    : `file://${path.join(__dirname, '../../../build/index.html#/splash')}`;
+
   const win = new BrowserWindow({
     width: 400,
     height: 400,
+    frame: false,
     minWidth: 400,
     minHeight: 400,
-    titleBarStyle: isMac ? 'hiddenInset' : undefined,
     icon: path.join(__dirname, '..', '..', 'icon.png'),
     webPreferences: {
       webSecurity: false,
@@ -18,6 +20,8 @@ const createWindow = () => {
       preload: path.join(__dirname, '..', '..', 'preload.js'),
     },
   });
+
+  win.loadURL(url);
 
   return win;
 };

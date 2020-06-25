@@ -16,6 +16,7 @@ import {
 import Modal from '@shared/components/Modal';
 import store from './store';
 import Auth from './views/Auth';
+import Splash from './views/Splash';
 import Storage from './views/Storage';
 import ModalView from './views/Modal';
 import PrivateRoute from './shared/components/PrivateRoute';
@@ -38,6 +39,9 @@ const App = () => (
           <Switch>
             <Route path="/auth">
               <Auth />
+            </Route>
+            <Route path="/splash">
+              <Splash />
             </Route>
             <PrivateRoute path="/storage">
               <Storage />

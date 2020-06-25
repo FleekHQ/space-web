@@ -176,7 +176,9 @@
       "icon": "build/icon.png",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "electronLanguages": ["en"],
+      "electronLanguages": [
+        "en"
+      ],
       "entitlements": "./build/entitlements.mac.plist",
       "entitlementsInherit": "./build/entitlements.mac.plist"
     },

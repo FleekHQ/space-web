@@ -24,6 +24,11 @@ export const MAP_EXT_TO_FILE_TYPE = {
   pdf: PDF,
   zip: ZIP,
   doc: WORD,
+  odt: WORD,
+  rtf: WORD,
+  tex: WORD,
+  txt: WORD,
+  wpd: WORD,
   qt: VIDEO,
   docx: WORD,
   jpg: IMAGE,
@@ -53,6 +58,9 @@ export const MAP_EXT_TO_FILE_TYPE = {
   folder: FOLDER,
   ppt: POWERPOINT,
   pptx: POWERPOINT,
+  key: POWERPOINT,
+  odp: POWERPOINT,
+  pps: POWERPOINT,
   default: DEFAULT,
 };
 
