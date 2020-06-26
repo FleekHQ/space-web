@@ -27,4 +27,11 @@ export default makeStyles((theme) => ({
   dropzoneActive: {
     borderColor: theme.palette.palette.blue1,
   },
+  selected: {
+    backgroundColor: `${theme.palette.palette.white} !important`,
+  },
+  tableWrapper: {
+    flexGrow: 1,
+    padding: 6,
+  },
 }));

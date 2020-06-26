@@ -10,16 +10,19 @@ const DEFAULT_STATE = {
     isLoading: false,
   },
   uploadError: null,
+  uploadsList: {},
 };
 
 export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
 export const DELETE_OBJECT = 'DELETE_OBJECT';
 export const UPDATE_OBJECT = 'UPDATE_OBJECT';
+export const UPDATE_OBJECTS = 'UPDATE_OBJECTS';
 export const SET_ERROR_STATE = 'SET_ERROR_STATE';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
 export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
 export const SET_UPLOAD_ERROR_STATE = 'SET_UPLOAD_ERROR_STATE';
+export const SET_UPLOAD_SUCCESS_STATE = 'SET_UPLOAD_SUCCESS_STATE';
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
@@ -89,10 +92,25 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-    case SET_UPLOAD_ERROR_STATE: {
+    case UPDATE_OBJECTS: {
+      const newObjs = state.objects.filter((obj) => (
+        action.payload.findIndex((newObj) => obj.id === newObj.id) === -1
+      ));
+
       return {
         ...state,
-        uploadError: action.payload,
+        objects: action.payload.concat(newObjs),
+      };
+    }
+
+    case SET_UPLOAD_ERROR_STATE:
+    case SET_UPLOAD_SUCCESS_STATE: {
+      return {
+        ...state,
+        uploadsList: {
+          ...state.uploadsList,
+          [action.payload.id]: action.payload.payload,
+        },
       };
     }
 

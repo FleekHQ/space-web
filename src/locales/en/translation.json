@@ -3,7 +3,19 @@
   "createNew": "Create New",
   "common": {
     "search": "Search",
-    "at": "at"
+    "at": "at",
+    "remove": "Remove",
+    "owner": "Owner",
+    "access": {
+      "edit": {
+        "title": "Can edit",
+        "description": "Members can edit, delete, and add the file to their Space."
+      },
+      "view": {
+        "title": "Can view",
+        "description": "Members can view and download."
+      }
+    }
   },
   "contextMenu": {
     "open": "Open",
@@ -29,6 +41,14 @@
       "size": "Size:",
       "created": "Created:",
       "lastModified": "Last Modified:"
+    },
+    "share": {
+      "copy": "Copy Link",
+      "invite": "Invite Members",
+      "with": "Shared with",
+      "manage": "Manage",
+      "group": "+{{number}} others",
+      "you": " (you)"
     }
   },
   "teamSelector": {
@@ -71,6 +91,22 @@
       "explore": "Explore Space",
       "username": "Username",
       "email": "Email (Optional)"
+    }
+  },
+  "uploadProgressModal": {
+    "message": "<0>{{uploadedNumber}}</0> out of <0>{{totalNumber}}</0> files uploaded",
+    "dismiss": "Dismiss",
+    "defaultMessage": "Upload in progress..."
+  },
+  "modals": {
+    "sharingModal": {
+      "to": "To",
+      "inputPlaceholder": "Email, name",
+      "linkTitle": "Share a link instead",
+      "noLinkDescription": "No link created yet.",
+      "linkDescription": "Anyone with this link can view the folder.",
+      "copyLink": "Copy link",
+      "createLink": "Create link"
     }
   }
 }

@@ -49,6 +49,34 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Run dev mode + dameon process
+On production builds the app tries to launch the daemon process from the resources builds. This behavior is disabled on dev mode, so you can run the daemon separately. If you want to run the daemon process from the app on dev mode you need to pass two env variables:
+- `DEV_DAEMON=true` to allow execute the daemon on dev mode
+- `DAEMON_PATH=/path/to/the/bin/daemon` this one points to the daemon bin on your machine
+
+Also, if the daemon requires additional env variables, you need to pass those envs as well:
+
+`DEV_DAEMON=true DAEMON_PATH=/path/to/the/bin/daemon SOME_DAEMON_ENV=foo yarn electron:dev`
+
+You can also download the latest version of the daemon directly into the resource folder (same way as CI does). To do that you can run `yarn download-daemon`
+
+## Build app locally
+The default behavior of the build process it's to try to sign the application. If you are not exporting the ENV variables required to sign the application, the build process is going to fail. If you want to skip the signing process in order to be able to run the build process locally you can pass the `CSC_IDENTITY_AUTO_DISCOVERY=false` env variable, so the sign step is going to be ignored
+
+example:
+`CSC_IDENTITY_AUTO_DISCOVERY=false yarn electron-pack --mac`  
+
+if you want to run a build that was not signed, you need to pass an additional env variable before executing the app (to skip check for updates). Please read the next section
+
+## Run build not signed
+If you have a build not signed, you need to disable the "check-updates" events, otherwise, the app is going to break. To do that you just need to launch the app from the command line passing an env variable `SKIP_AUTOUPDATE=true`
+
+so let's say that you have installed the app on your `Applications` folder (OSX), you just need to run the following command:
+
+`SKIP_AUTOUPDATE=true open /Applications/Space.app/Contents/MacOS/Space`
+
+also you can pass additional env variables if you needed (to pass env variables required by the daemon for example)
+
 # Release
 For the release process, will be just necessary to create and merge a PR from `develop` to `master` branch, but before creating that PR, it will be required two previous actions:
 * Create a PR to `develop`, to update the app version based on semantic versioning, and push the tag as `v<APP_VERSION>`.

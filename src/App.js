@@ -13,9 +13,12 @@ import {
   Redirect,
   HashRouter as Router,
 } from 'react-router-dom';
+import Modal from '@shared/components/Modal';
 import store from './store';
 import Auth from './views/Auth';
+import Splash from './views/Splash';
 import Storage from './views/Storage';
+import ModalView from './views/Modal';
 import PrivateRoute from './shared/components/PrivateRoute';
 
 registerEvents();
@@ -31,13 +34,20 @@ const App = () => (
       <CssBaseline />
       <Box height="100vh">
         <DragableBar />
+        <Modal />
         <Router>
           <Switch>
             <Route path="/auth">
               <Auth />
             </Route>
+            <Route path="/splash">
+              <Splash />
+            </Route>
             <PrivateRoute path="/storage">
               <Storage />
+            </PrivateRoute>
+            <PrivateRoute path="/modal/:modalKey">
+              <ModalView />
             </PrivateRoute>
             <Redirect to="/storage" />
           </Switch>

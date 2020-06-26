@@ -7,6 +7,8 @@ const gray5 = '#F6F8FC';
 const gray6 = '#7b7b7b';
 const gray7 = '#cbcbcb';
 const gray8 = '#464646';
+const gray9 = '#e2e2e2';
+const gray10 = '#e4e4e4';
 const white = '#FFFFFF';
 const blue1 = '#006EFF';
 const blue2 = '#4a97ff';
@@ -26,6 +28,8 @@ const palette = {
   gray6,
   gray7,
   gray8,
+  gray9,
+  gray10,
   white,
   blue1,
   blue2,

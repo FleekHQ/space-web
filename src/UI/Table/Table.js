@@ -17,7 +17,7 @@ const Table = (props) => {
 
   const content = loading
     ? renderLoadingRows()
-    : rows.map((row) => renderRow({
+    : rows.map((row, index) => renderRow({
       row,
       rows,
       head,
@@ -25,6 +25,7 @@ const Table = (props) => {
       renderRow,
       renderHead,
       renderLoadingRows,
+      rowIndex: index,
       ...restProps,
     }));
 
