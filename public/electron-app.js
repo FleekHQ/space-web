@@ -1,12 +1,12 @@
 require('dotenv').config();
 
+const path = require('path');
 const { app, Tray } = require('electron');
 const isDev = require('electron-is-dev');
 
 const DaemonProcess = require('./electron/daemon');
 const registerEvents = require('./electron/events');
 const createMainWindow = require('./electron/window/main');
-const createSplashWindow = require('./electron/window/splash');
 const { getMenuOptions, trayIcon } = require('./electron/tray-menu');
 
 let appIcon;
@@ -21,6 +21,8 @@ const enableDevDaemon = process.env.DEV_DAEMON === 'true';
  * App events
  */
 app.on('window-all-closed', () => {
+  // eslint-disable-next-line no-console
+  console.log('All windows are closed...');
   destroyStream();
 
   if (process.platform !== 'darwin' || app.newUpdate) {
@@ -43,12 +45,14 @@ app.on('activate', () => {
 });
 
 app.on('before-quit', () => {
+  // eslint-disable-next-line no-console
+  console.log('App is quiting...');
   daemon.stop();
   app.quitting = true;
 });
 
 app.on('ready', () => {
-  mainWindow = createSplashWindow();
+  mainWindow = createMainWindow();
 
   const contextMenu = getMenuOptions(app, 'pending');
 
@@ -60,9 +64,9 @@ app.on('ready', () => {
  * Daemon Event handlers
  */
 daemon.on('ready', () => {
-  const prevWindow = mainWindow;
-
-  mainWindow = createMainWindow();
+  mainWindow.loadURL(isDev
+    ? 'http://localhost:3000'
+    : `file://${path.join(__dirname, '../build/index.html')}`);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -76,8 +80,6 @@ daemon.on('ready', () => {
       mainWindow.hide();
     }
   });
-
-  prevWindow.destroy();
 
   destroyStream = registerEvents({
     app,
@@ -98,5 +100,4 @@ if (isDev && !enableDevDaemon) {
   daemon.startDev();
   return;
 }
-
 daemon.start();

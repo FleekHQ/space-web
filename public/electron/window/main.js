@@ -6,14 +6,15 @@ const isMac = process.platform === 'darwin';
 
 const createWindow = () => {
   const url = isDev
-    ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, '../../../build/index.html')}`;
+    ? 'http://localhost:3000/#/splash'
+    : `file://${path.join(__dirname, '../../../build/index.html#/splash')}`;
 
   const win = new BrowserWindow({
     width: 1200,
     height: 680,
     minWidth: 680,
     minHeight: 500,
+    backgroundColor: '#000000',
     titleBarStyle: isMac ? 'hiddenInset' : undefined,
     icon: path.join(__dirname, '..', '..', 'icon.png'),
     webPreferences: {

@@ -181,7 +181,7 @@ const FileTable = () => {
     return () => {
       document.removeEventListener('click', handleTableOutsideClick);
     };
-  }, [rows.length]);
+  }, [rows]);
 
   return (
     <div className={classes.tableWrapper}>

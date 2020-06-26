@@ -37,60 +37,6 @@ const SharePanel = ({ t }) => {
       {
         username: 'sddavcsdgdfhfhjhmfhjsrgdfb',
       },
-      {
-        username: 'zxczxcasdasdaczxcasdasdaczxas',
-      },
-      {
-        username: 'someuser1asdasdzcxc',
-      },
-      {
-        username: '4retxcssdsd',
-      },
-      {
-        username: 'xzcasd',
-      },
-      {
-        username: 'pfdoggohikjym',
-      },
-      {
-        username: 'asdxcasd',
-      },
-      {
-        username: 'hjgtybb',
-      },
-      {
-        username: 'zxczxcasdasdasdaczxas',
-      },
-      {
-        username: 'sobbvbasdasdzcxc',
-      },
-      {
-        username: '4regjfghjssdsd',
-      },
-      {
-        username: 'xzcasdvbdsfs45',
-      },
-      {
-        username: 'bnsiduyty',
-      },
-      {
-        username: 'zxcsffhgfhher',
-      },
-      {
-        username: 'bvsdfs',
-      },
-      {
-        username: 'cxvcxvsd',
-      },
-      {
-        username: 'dflgkwer',
-      },
-      {
-        username: 'xcvoiiuyen',
-      },
-      {
-        username: 'dfrtrtmm',
-      },
     ],
   }));
 
@@ -196,8 +142,11 @@ const SharePanel = ({ t }) => {
               return newArray.concat(collaborator);
             }
 
-            // eslint-disable-next-line no-param-reassign
-            newArray[newArray.length - 1].username = t('detailsPanel.share.group', { number: index - state.maxCollaborators + 2 });
+            if (newArray.length) {
+              // eslint-disable-next-line no-param-reassign
+              newArray[newArray.length - 1].username = t('detailsPanel.share.group', { number: index - state.maxCollaborators + 2 });
+            }
+
             return newArray;
           }, [])
           .map((collaborator, index, arr) => (
