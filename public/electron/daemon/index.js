@@ -46,7 +46,7 @@ class DaemonProcess {
       console.log(chalk.green(data));
 
       // TODO replace log message
-      if (data.includes('level=debug msg="Starting textile threadsc listener[]')) {
+      if (data.includes('daemon ready')) {
         this.callHandlers('ready');
       }
     });
