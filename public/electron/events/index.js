@@ -1,3 +1,4 @@
+const registerAuthEvents = require('./auth');
 const registerModalEvents = require('./modal');
 const registerEventStream = require('./stream');
 const registerConfigEvents = require('./config');
@@ -16,6 +17,7 @@ const registerEvents = ({
   const stream = registerEventStream(mainWindow);
   const txlStream = registerTxlSubscribe(mainWindow);
 
+  registerAuthEvents(mainWindow);
   registerModalEvents(mainWindow);
   registerConfigEvents(mainWindow);
   registerObjectsEvents(mainWindow);

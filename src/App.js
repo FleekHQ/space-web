@@ -5,7 +5,7 @@ import createFleekTheme from '@ui/theme';
 import DragableBar from '@shared/components/DragableBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import registerEvents, { fetchConfigInfo } from '@events';
+import registerEvents from '@events';
 
 import {
   Route,
@@ -22,7 +22,6 @@ import ModalView from './views/Modal';
 import PrivateRoute from './shared/components/PrivateRoute';
 
 registerEvents();
-fetchConfigInfo();
 
 const theme = createFleekTheme();
 

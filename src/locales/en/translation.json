@@ -90,7 +90,12 @@
     "signup": {
       "explore": "Explore Space",
       "username": "Username",
-      "email": "Email (Optional)"
+      "email": "Email (Optional)",
+      "errors": {
+        "generic": "Sorry, there was a problem.",
+        "username": "Sorry, this username is already taken.",
+        "address": "Sorry, the current address is already registered."
+      }
     }
   },
   "uploadProgressModal": {

@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/styles';
 
 export default makeStyles((theme) => ({
+  signupRoot: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: 238,
+    maxWidth: 282,
+  },
   form: {
     display: 'inherit',
     flexDirection: 'column',
@@ -50,5 +56,15 @@ export default makeStyles((theme) => ({
   },
   inputLabelPropsShrink: {
     top: 0,
+  },
+  alert: {
+    width: 'auto',
+    padding: '5px 30px',
+    height: 25,
+    borderRadius: 6,
+    margin: '12px 0',
+    textAlign: 'center',
+    color: theme.palette.palette.white,
+    backgroundColor: theme.palette.palette.red,
   },
 }));
