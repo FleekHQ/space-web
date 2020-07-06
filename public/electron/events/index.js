@@ -1,7 +1,6 @@
 const registerAuthEvents = require('./auth');
 const registerModalEvents = require('./modal');
 const registerEventStream = require('./stream');
-const registerConfigEvents = require('./config');
 const registerPathInfoEvents = require('./path-info');
 const registerTxlSubscribe = require('./txl-subscribe');
 const registerObjectsEvents = require('./objects').default;
@@ -18,7 +17,6 @@ const registerEvents = ({
 
   registerAuthEvents(mainWindow);
   registerModalEvents(mainWindow);
-  registerConfigEvents(mainWindow);
   registerObjectsEvents(mainWindow);
   registerPathInfoEvents(mainWindow);
   registerAddItemsSubscribe(mainWindow);
