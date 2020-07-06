@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron');
 
-const client = require('../client');
+const spaceClient = require('../space-client');
 const { listDirectories } = require('./objects');
 
 const EVENT_PREFIX = 'addItemsSubscribe';
@@ -12,7 +12,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
   let eventStream;
 
   ipcMain.on(SUBSCRIBE_START_EVENT, (_, { id, payload }) => {
-    eventStream = client.AddItems(payload);
+    eventStream = spaceClient.addItems(payload);
 
     eventStream.on('data', (event) => {
       mainWindow.webContents.send(
@@ -23,6 +23,9 @@ const registerAddItemsSubscribe = (mainWindow) => {
     });
 
     eventStream.on('error', (error) => {
+      // eslint-disable-next-line no-console
+      console.log('Error received in add item stream: ', error.message);
+
       mainWindow.webContents.send(
         SUBSCRIBE_ERROR_EVENT,
         { id, payload: error },
@@ -30,7 +33,8 @@ const registerAddItemsSubscribe = (mainWindow) => {
     });
 
     eventStream.on('end', () => {
-      eventStream.destroy();
+      // eslint-disable-next-line no-console
+      console.log('Add item steam ended');
     });
   });
 };
