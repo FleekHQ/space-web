@@ -1,4 +1,5 @@
 require('dotenv').config();
+global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 const path = require('path');
 const { app, Tray } = require('electron');
