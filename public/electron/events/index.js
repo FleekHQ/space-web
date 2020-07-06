@@ -1,11 +1,9 @@
 const registerAuthEvents = require('./auth');
 const registerModalEvents = require('./modal');
 const registerEventStream = require('./stream');
-const registerConfigEvents = require('./config');
 const registerTxlSubscribe = require('./txl-subscribe');
 const registerObjectsEvents = require('./objects').default;
 const registerAddItemsSubscribe = require('./add-items-subscribe');
-const registerGenerateKeyPairEvents = require('./generate-key-pair');
 const registerAppUpdate = require('./app-update');
 
 const registerEvents = ({
@@ -18,10 +16,8 @@ const registerEvents = ({
 
   registerAuthEvents(mainWindow);
   registerModalEvents(mainWindow);
-  registerConfigEvents(mainWindow);
   registerObjectsEvents(mainWindow);
   registerAddItemsSubscribe(mainWindow);
-  registerGenerateKeyPairEvents(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });
