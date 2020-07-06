@@ -1,6 +1,6 @@
 const { ipcMain, shell } = require('electron');
 
-const client = require('../client');
+const spaceClient = require('../space-client');
 
 const EVENT_PREFIX = 'objects';
 const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
@@ -8,9 +8,13 @@ const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 
-const listDirectories = async (mainWindow, payload) => {
+const listDirectories = async (mainWindow, payload = {}) => {
   try {
-    const res = await client.listDirectories(payload);
+    const res = await spaceClient.listDirectories({
+      bucket: 'personal',
+      ...payload,
+    });
+
     const entriesList = res.getEntriesList();
 
     const entries = entriesList.reduce((acc, entry) => [
@@ -36,7 +40,11 @@ const listDirectories = async (mainWindow, payload) => {
 const registerObjectsEvents = (mainWindow) => {
   ipcMain.on(OPEN_EVENT, async (event, payload) => {
     try {
-      const res = await client.openFile({ path: payload, bucket: 'personal' });
+      const res = await spaceClient.openFile({
+        path: payload,
+        bucket: 'personal',
+      });
+
       const location = res.getLocation();
 
       if (!location) {

@@ -1,10 +1,10 @@
-const client = require('../client');
+const spaceClient = require('../space-client');
 const { listDirectories } = require('./objects');
 
 const EVENT_PREFIX = 'txlSuscribe';
 
 const registerTxlSubscribe = (mainWindow) => {
-  const eventStream = client.txlSubscribe();
+  const eventStream = spaceClient.txlSubscribe();
 
   eventStream.on('data', async () => {
     await listDirectories(mainWindow);

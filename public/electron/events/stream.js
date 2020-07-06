@@ -1,9 +1,9 @@
-const client = require('../client');
+const spaceClient = require('../space-client');
 
 const EVENT_PREFIX = 'eventStream';
 
 const registerEventStream = (mainWindow) => {
-  const eventStream = client.subscribe();
+  const eventStream = spaceClient.subscribe();
 
   eventStream.on('data', (event) => {
     // TODO: Check with BE event to update files on FE
