@@ -17,7 +17,16 @@ const registerAddItemsSubscribe = (mainWindow) => {
     eventStream.on('data', (event) => {
       mainWindow.webContents.send(
         SUBSCRIBE_SUCCESS_EVENT,
-        { id, payload: event },
+        {
+          id,
+          payload: {
+            result: event.getResult(),
+            totalBytes: event.getTotalbytes(),
+            totalFiles: event.getTotalfiles(),
+            completedfiles: event.getCompletedfiles(),
+            completedbytes: event.getCompletedbytes(),
+          },
+        },
       );
       listDirectories(mainWindow);
     });
