@@ -23,7 +23,9 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(CHECK_USERNAME_EVENT, async (event, payload) => {
     try {
       const res = await spaceClient.getIdentityByUsername(payload);
-      mainWindow.webContents.send(CHECK_USERNAME_SUCCESS_EVENT, res);
+      mainWindow.webContents.send(CHECK_USERNAME_SUCCESS_EVENT, {
+        identity: res.getIdentity(),
+      });
     } catch (err) {
       mainWindow.webContents.send(CHECK_USERNAME_ERROR_EVENT, err);
     }
