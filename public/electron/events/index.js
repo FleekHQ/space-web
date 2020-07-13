@@ -1,7 +1,6 @@
 const registerAuthEvents = require('./auth');
 const registerModalEvents = require('./modal');
 const registerEventStream = require('./stream');
-const registerPathInfoEvents = require('./path-info');
 const registerTxlSubscribe = require('./txl-subscribe');
 const registerObjectsEvents = require('./objects').default;
 const registerAddItemsSubscribe = require('./add-items-subscribe');
@@ -18,7 +17,6 @@ const registerEvents = ({
   registerAuthEvents(mainWindow);
   registerModalEvents(mainWindow);
   registerObjectsEvents(mainWindow);
-  registerPathInfoEvents(mainWindow);
   registerAddItemsSubscribe(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {

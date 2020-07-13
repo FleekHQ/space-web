@@ -1,6 +1,6 @@
 const { ipcMain, shell } = require('electron');
 
-const client = require('../client');
+const spaceClient = require('../space-client');
 
 const EVENT_PREFIX = 'objects';
 const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
@@ -8,33 +8,57 @@ const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 
-const listDirectories = (mainWindow, payload) => client.ListDirectories(payload, (err, res) => {
-  if (err) {
-    mainWindow.webContents.send(ERROR_EVENT, err);
-    return;
-  }
+const listDirectories = async (mainWindow, payload = {}) => {
+  try {
+    const res = await spaceClient.listDirectories({
+      bucket: 'personal',
+      ...payload,
+    });
 
-  // TODO replace mock response by res
-  mainWindow.webContents.send(SUCCESS_EVENT, res);
-});
+    const entriesList = res.getEntriesList();
+
+    const entries = entriesList.reduce((acc, entry) => [
+      ...acc,
+      {
+        path: entry.getPath(),
+        name: entry.getName(),
+        isDir: entry.getIsdir(),
+        created: entry.getCreated(),
+        updated: entry.getUpdated(),
+        ipfsHash: entry.getIpfshash(),
+        sizeInBytes: entry.getSizeinbytes(),
+        fileExtension: entry.getFileextension(),
+      },
+    ], []);
+
+    mainWindow.webContents.send(SUCCESS_EVENT, { entries });
+  } catch (err) {
+    mainWindow.webContents.send(ERROR_EVENT, err);
+  }
+};
 
 const registerObjectsEvents = (mainWindow) => {
-  ipcMain.on(OPEN_EVENT, (event, payload) => {
-    client.OpenFile({ path: payload }, (err, res) => {
-      if (err) {
-        return mainWindow.webContents.send(ERROR_EVENT, err);
+  ipcMain.on(OPEN_EVENT, async (event, payload) => {
+    try {
+      const res = await spaceClient.openFile({
+        path: payload,
+        bucket: 'personal',
+      });
+
+      const location = res.getLocation();
+
+      if (!location) {
+        throw new Error('location not provided');
       }
 
-      if (!res.location) {
-        return new Error('location not provided');
-      }
-
-      return shell.openItem(res.location);
-    });
+      shell.openItem(location);
+    } catch (err) {
+      mainWindow.webContents.send(ERROR_EVENT, err);
+    }
   });
 
-  ipcMain.on(FETCH_EVENT, (event, payload) => {
-    listDirectories(mainWindow, payload);
+  ipcMain.on(FETCH_EVENT, async (event, payload) => {
+    await listDirectories(mainWindow, payload);
   });
 };
 
