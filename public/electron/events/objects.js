@@ -8,7 +8,11 @@ const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 
-const listDirectories = async (mainWindow, payload = {}) => {
+const defaultPayload = {
+  bucket: 'personal',
+};
+
+const listDirectories = async (mainWindow, payload = defaultPayload) => {
   try {
     const res = await spaceClient.listDirectories(payload);
 
