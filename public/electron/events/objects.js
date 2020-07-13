@@ -10,26 +10,20 @@ const OPEN_EVENT = `${EVENT_PREFIX}:open`;
 
 const listDirectories = async (mainWindow, payload = {}) => {
   try {
-    const res = await spaceClient.listDirectories({
-      bucket: 'personal',
-      ...payload,
-    });
+    const res = await spaceClient.listDirectories(payload);
 
     const entriesList = res.getEntriesList();
 
-    const entries = entriesList.reduce((acc, entry) => [
-      ...acc,
-      {
-        path: entry.getPath(),
-        name: entry.getName(),
-        isDir: entry.getIsdir(),
-        created: entry.getCreated(),
-        updated: entry.getUpdated(),
-        ipfsHash: entry.getIpfshash(),
-        sizeInBytes: entry.getSizeinbytes(),
-        fileExtension: entry.getFileextension(),
-      },
-    ], []);
+    const entries = entriesList.map((entry) => ({
+      path: entry.getPath(),
+      name: entry.getName(),
+      isDir: entry.getIsdir(),
+      created: entry.getCreated(),
+      updated: entry.getUpdated(),
+      ipfsHash: entry.getIpfshash(),
+      sizeInBytes: entry.getSizeinbytes(),
+      fileExtension: entry.getFileextension(),
+    }));
 
     mainWindow.webContents.send(SUCCESS_EVENT, { entries });
   } catch (err) {
@@ -40,10 +34,7 @@ const listDirectories = async (mainWindow, payload = {}) => {
 const registerObjectsEvents = (mainWindow) => {
   ipcMain.on(OPEN_EVENT, async (event, payload) => {
     try {
-      const res = await spaceClient.openFile({
-        path: payload,
-        bucket: 'personal',
-      });
+      const res = await spaceClient.openFile(payload);
 
       const location = res.getLocation();
 
