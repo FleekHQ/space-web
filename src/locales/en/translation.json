@@ -57,7 +57,8 @@
   },
   "navigation": {
     "storage": "Storage",
-    "files": "Files"
+    "files": "Files",
+    "shared-with-me": "Shared with me"
   },
   "createNewMenu": {
     "fileUpload": "File Upload",
