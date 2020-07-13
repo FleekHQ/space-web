@@ -15,16 +15,22 @@ const registerAddItemsSubscribe = (mainWindow) => {
     eventStream = spaceClient.addItems(payload);
 
     eventStream.on('data', (event) => {
+      const result = event.getResult();
+
       mainWindow.webContents.send(
         SUBSCRIBE_SUCCESS_EVENT,
         {
           id,
           payload: {
-            result: event.getResult(),
+            result: {
+              sourcePath: result.getSourcepath(),
+              bucketPath: result.getBucketpath(),
+              error: result.getError(),
+            },
             totalBytes: event.getTotalbytes(),
             totalFiles: event.getTotalfiles(),
-            completedfiles: event.getCompletedfiles(),
-            completedbytes: event.getCompletedbytes(),
+            completedFiles: event.getCompletedfiles(),
+            completedBytes: event.getCompletedbytes(),
           },
         },
       );

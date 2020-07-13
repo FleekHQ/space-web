@@ -34,15 +34,18 @@ const registerObjectsEvents = () => {
   });
 };
 
-export const fetchObjects = (payload) => {
+export const fetchObjects = (bucket = 'personal') => {
   store.dispatch({
     payload: true,
     type: SET_LOADING_STATE,
   });
 
-  ipcRenderer.send(FETCH_EVENT, payload);
+  ipcRenderer.send(FETCH_EVENT, { bucket });
 };
 
-export const openObject = (payload) => ipcRenderer.send(OPEN_EVENT, payload);
+export const openObject = (path, bucket = 'personal') => ipcRenderer.send(OPEN_EVENT, {
+  path,
+  bucket,
+});
 
 export default registerObjectsEvents;
