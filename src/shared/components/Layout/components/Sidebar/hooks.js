@@ -6,11 +6,15 @@ const getDefaultConfig = (location) => ([
     key: 'storage',
     icon: 'files',
     to: '/storage/files',
-    active: !!matchPath(location.pathname, { path: '/storage/files' }),
+    active: !!matchPath(location.pathname, { path: '/storage' }),
     subNav: [
       {
         key: 'files',
         to: '/storage/files',
+      },
+      {
+        key: 'shared-with-me',
+        to: '/storage/shared-with-me',
       },
     ],
   },
