@@ -41,6 +41,7 @@ const SharedWithMeView = () => {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span><strong>Bucket:&nbsp;</strong>{routeMatch.params.bucket}</span>
               <Link to={`${routeMatch.url}/my-folder`}>To my-folder</Link>
+              <FileTable />
             </div>
           )}
         />

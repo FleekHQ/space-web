@@ -37,10 +37,6 @@ const BucketsTable = () => {
   const match = matchPath(location.pathname, { path: '/storage/files/*' });
   const prefix = get(match, 'params.0', '') || '';
 
-  React.useEffect(() => {
-    // fetchBuckets();
-  }, []);
-
   const heads = [
     {
       width: '41%',
@@ -55,19 +51,10 @@ const BucketsTable = () => {
     },
   ];
 
-  // const rows = useSelector((state) => (
-  //   /* eslint-disable no-underscore-dangle */
-  //   objectsSelector(
-  //     state,
-  //     '',
-  //     prefix,
-  //     '/',
-  //   )
-  // ));
-
   const rows = [
     {
       type: 'folder',
+      ext: 'folder',
       name: 'Bucket A',
       id: 'a',
       lastModified: new Date(),
@@ -75,6 +62,7 @@ const BucketsTable = () => {
     },
     {
       type: 'folder',
+      ext: 'folder',
       name: 'Bucket B',
       id: 'b',
       lastModified: new Date(),
@@ -88,7 +76,11 @@ const BucketsTable = () => {
       heads={heads}
       renderRow={renderRow}
       withRowOptions
-      getRedirectUrl={(rowName) => path.join('/storage/files', prefix, rowName)}
+      getRedirectUrl={(row) => path.join(
+        '/storage/shared-with-me',
+        prefix,
+        row.id,
+      )}
     />
   );
 };

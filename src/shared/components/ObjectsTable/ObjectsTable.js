@@ -75,7 +75,7 @@ const ObjectsTable = ({
     let newRows = [];
 
     if (row.type === 'folder') {
-      const redirectUrl = getRedirectUrl(row.name);
+      const redirectUrl = getRedirectUrl(row);
       history.push(redirectUrl);
 
       newRows = rows.map((_row) => ({

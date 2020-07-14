@@ -84,7 +84,7 @@ const FileTable = () => {
       renderRow={renderRow}
       withRowOptions
       onDropzoneDrop={onDropzoneDrop}
-      getRedirectUrl={(rowName) => path.join('/storage/files', prefix, rowName)}
+      getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}
     />
   );
 };
