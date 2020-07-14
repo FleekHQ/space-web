@@ -13,6 +13,7 @@ const DEFAULT_STATE = {
   uploadsList: {},
 };
 
+export const STORE_DIR = 'STORE_DIR';
 export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
 export const DELETE_OBJECT = 'DELETE_OBJECT';
@@ -35,6 +36,19 @@ export default (state = DEFAULT_STATE, action) => {
 
     case STORE_OBJECTS: {
       const objects = uniqBy([
+        ...action.payload,
+      ], 'fullKey');
+
+      return {
+        ...state,
+        objects,
+        loading: false,
+      };
+    }
+
+    case STORE_DIR: {
+      const objects = uniqBy([
+        ...state.objects,
         ...action.payload,
       ], 'fullKey');
 
