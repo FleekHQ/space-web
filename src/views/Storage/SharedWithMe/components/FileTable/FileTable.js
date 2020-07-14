@@ -1,14 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import path from 'path';
-import moment from 'moment';
 import get from 'lodash/get';
 import { useSelector } from 'react-redux';
 import { matchPath, useLocation } from 'react-router-dom';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import Typography from '@material-ui/core/Typography';
-import { addItems } from '@events';
-import { formatBytes, objectsSelector } from '@utils';
+import { addItems, fetchObjects } from '@events';
+import { formatBytes, objectsSelector, formatDate } from '@utils';
 import { TableCell, FileCell } from '@ui/Table';
 
 const renderRow = (row) => (
@@ -25,9 +24,9 @@ const renderRow = (row) => (
     </TableCell>
     <TableCell>
       <Typography variant="body1" color="secondary" noWrap>
-        {moment(row.lastModified).format('MMM d, YYYY hh:mm:ss A z')}
+        {/* {moment(row.lastModified).format('MMM d, YYYY hh:mm:ss A z')} */}
         {/* ^ just for testing, after POC should be used line below */}
-        {/* {formatMonthDayYear(row.lastModified)} */}
+        {formatDate(row.lastModified)}
       </Typography>
     </TableCell>
   </>
