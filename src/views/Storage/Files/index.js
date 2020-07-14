@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import get from 'lodash/get';
 import TextField from '@ui/TextField';
 import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, matchPath } from 'react-router-dom';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { SEARCH_TERM_CHANGE } from '@reducers/storage';
+import { fetchDir } from '@events/objects';
 import FileTable from './components/FileTable';
 
 import useStyles from './styles';
@@ -23,6 +24,14 @@ const StorageMainView = () => {
   const { searchTerm } = useSelector((state) => ({
     searchTerm: get(state, 'storage.searchTerm', ''),
   }));
+
+  useEffect(() => {
+    const { location } = history;
+    const match = matchPath(location.pathname, { path: '/storage/files/*' });
+    const prefix = get(match, 'params.0', '') || '';
+
+    fetchDir(prefix);
+  }, [history.location.pathname]);
 
   return (
     <div className={classes.root}>

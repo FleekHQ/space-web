@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { addItems, fetchObjects, openObject } from '@events';
+import { addItems, openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import { formatBytes, objectsSelector } from '@utils';
 import Dropzone from '@shared/components/Dropzone';
@@ -170,10 +170,6 @@ const FileTable = () => {
       });
     }
   };
-
-  React.useEffect(() => {
-    fetchObjects();
-  }, []);
 
   React.useEffect(() => {
     document.addEventListener('click', handleTableOutsideClick);
