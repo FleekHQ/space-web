@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import { useSelector } from 'react-redux';
 import { matchPath, useLocation } from 'react-router-dom';
 import ObjectsTable from '@shared/components/ObjectsTable';
-import { addItems, fetchObjects } from '@events';
+import { addItems } from '@events';
 import { objectsSelector } from '@utils';
 import { renderRow } from '../../../shared/renderRow';
 import getTableHeads from '../../../shared/getTableHeads';
@@ -15,10 +15,6 @@ const FileTable = () => {
   const location = useLocation();
   const match = matchPath(location.pathname, { path: '/storage/files/*' });
   const prefix = get(match, 'params.0', '') || '';
-
-  React.useEffect(() => {
-    fetchObjects();
-  }, []);
 
   const rows = useSelector((state) => (
     /* eslint-disable no-underscore-dangle */
