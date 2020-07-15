@@ -11,25 +11,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { SEARCH_TERM_CHANGE } from '@reducers/storage';
 import { fetchDir } from '@events/objects';
-import FileTable from './components/FileTable';
+import { FileTable } from '../shared/components';
 
 import useStyles from './styles';
 
 const StorageMainView = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { location } = history;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const match = matchPath(location.pathname, { path: '/storage/files/*' });
+  const prefix = get(match, 'params.0', '') || '';
 
   const { searchTerm } = useSelector((state) => ({
     searchTerm: get(state, 'storage.searchTerm', ''),
   }));
 
   useEffect(() => {
-    const { location } = history;
-    const match = matchPath(location.pathname, { path: '/storage/files/*' });
-    const prefix = get(match, 'params.0', '') || '';
-
     fetchDir(prefix);
   }, [history.location.pathname]);
 
@@ -66,7 +66,7 @@ const StorageMainView = () => {
       <Typography variant="h6" className={classes.title} weight="medium">
         {t('navigation.files')}
       </Typography>
-      <FileTable />
+      <FileTable bucket="personal" prefix={prefix} />
     </div>
   );
 };

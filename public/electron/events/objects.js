@@ -1,4 +1,5 @@
 const { ipcMain, shell } = require('electron');
+const get = require('lodash/get');
 
 const spaceClient = require('../space-client');
 
@@ -10,7 +11,10 @@ const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const FETCH_DIR_EVENT = `${EVENT_PREFIX}:fetchDir`;
 const SUCCESS_DIR_EVENT = `${EVENT_PREFIX}:successDir`;
 
-const entryToObject = (entry) => ({
+const DEFAULT_BUCKET = 'personal';
+
+const entryToObject = (entry, bucket) => ({
+  bucket,
   path: entry.getPath(),
   name: entry.getName(),
   isDir: entry.getIsdir(),
@@ -22,11 +26,13 @@ const entryToObject = (entry) => ({
 });
 
 const listDirectories = async (mainWindow, payload = {}) => {
+  const bucket = get(payload, 'bucket', DEFAULT_BUCKET) || DEFAULT_BUCKET;
+
   try {
     const res = await spaceClient.listDirectories(payload);
 
     const entriesList = res.getEntriesList();
-    const entries = entriesList.map(entryToObject);
+    const entries = entriesList.map((entry) => entryToObject(entry, bucket));
 
     mainWindow.webContents.send(SUCCESS_EVENT, { entries });
   } catch (err) {
@@ -38,9 +44,11 @@ const listDirectory = async (
   mainWindow,
   payload = { path: '', fetchSubFolders: true },
 ) => {
+  const bucket = get(payload, 'bucket', DEFAULT_BUCKET) || DEFAULT_BUCKET;
+
   try {
     const res = await spaceClient.listDirectory(payload);
-    const entries = res.getEntriesList().map(entryToObject);
+    const entries = res.getEntriesList().map((entry) => entryToObject(entry, bucket));
 
     mainWindow.webContents.send(SUCCESS_DIR_EVENT, { entries });
 

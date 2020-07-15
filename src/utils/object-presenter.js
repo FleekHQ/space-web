@@ -2,7 +2,8 @@ import get from 'lodash/get';
 
 import formatBytes from './format-bytes';
 
-const objectPresenter = (obj = {}, bucket = '') => {
+const objectPresenter = (obj = {}) => {
+  const bucket = get(obj, 'bucket', '') || '';
   const key = get(obj, 'path', '');
 
   const isFolder = get(obj, 'isDir', false);
@@ -28,8 +29,8 @@ const objectPresenter = (obj = {}, bucket = '') => {
     bytesSize,
     lastModified,
     selected: false,
-    id: `${bucket}/${key}`,
-    fullKey: `${bucket}/${key}`,
+    id: `${bucket}${key}`,
+    fullKey: `${bucket}${key}`,
     ipfsHash: get(obj, 'ipfsHash'),
   };
 };

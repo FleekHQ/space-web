@@ -7,8 +7,9 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import FileTable from './components/FileTable';
 import BucketsTable from './components/BucketsTable';
+
+import { FileTable } from '../shared/components';
 
 const SharedWithMeView = () => {
   const match = useRouteMatch();
@@ -20,7 +21,7 @@ const SharedWithMeView = () => {
         <Route exact path={match.path}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span><strong>List of Buckets</strong></span>
-            <Link to={`${match.path}/bucket-test`}>BUCKET-TEST</Link>
+            <Link to={`${match.path}/bucket-test/`}>BUCKET-TEST</Link>
             <BucketsTable />
           </div>
         </Route>
@@ -31,17 +32,10 @@ const SharedWithMeView = () => {
               <span><strong>Bucket:&nbsp;</strong>{routeMatch.params.bucket}</span>
               <span><strong>Prefix:&nbsp;</strong>{routeMatch.params[0]}</span>
               <Link to={`${routeMatch.url}/my-sub-folder`}>To my-sub-folder</Link>
-              <FileTable />
-            </div>
-          )}
-        />
-        <Route
-          path={`${match.path}/:bucket`}
-          render={({ match: routeMatch }) => (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span><strong>Bucket:&nbsp;</strong>{routeMatch.params.bucket}</span>
-              <Link to={`${routeMatch.url}/my-folder`}>To my-folder</Link>
-              <FileTable />
+              <FileTable
+                bucket={routeMatch.params.bucket}
+                prefix={routeMatch.params[0] || '/'}
+              />
             </div>
           )}
         />
