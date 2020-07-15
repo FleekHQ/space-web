@@ -42,11 +42,13 @@ class DaemonProcess {
     this.childProcess = spawn(daemonPath);
 
     this.childProcess.stdout.on('data', (data) => {
+      const daemonLog = data.toString().toLowerCase();
+
       // eslint-disable-next-line no-console
-      console.log(chalk.green(data));
+      console.log(chalk.green(daemonLog));
 
       // TODO replace log message
-      if (data.includes('daemon ready')) {
+      if (daemonLog.includes('daemon ready')) {
         this.callHandlers('ready');
       }
     });
