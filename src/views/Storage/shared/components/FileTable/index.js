@@ -1,26 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import path from 'path';
-import get from 'lodash/get';
 import { useSelector } from 'react-redux';
-import { matchPath, useLocation } from 'react-router-dom';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import { addItems } from '@events';
 import { objectsSelector } from '@utils';
-import { renderRow } from '../../../shared/renderRow';
-import getTableHeads from '../../../shared/getTableHeads';
+import { renderRow } from '../../renderRow';
+import getTableHeads from '../../getTableHeads';
 
-const FileTable = () => {
+const FileTable = (props) => {
+  const { bucket, prefix } = props;
   const { t } = useTranslation();
-  const location = useLocation();
-  const match = matchPath(location.pathname, { path: '/storage/files/*' });
-  const prefix = get(match, 'params.0', '') || '';
 
   const rows = useSelector((state) => (
     /* eslint-disable no-underscore-dangle */
     objectsSelector(
       state,
-      '',
+      bucket,
       prefix,
       '/',
     )
@@ -43,6 +40,11 @@ const FileTable = () => {
       getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}
     />
   );
+};
+
+FileTable.propTypes = {
+  bucket: PropTypes.string.isRequired,
+  prefix: PropTypes.string.isRequired,
 };
 
 export default FileTable;

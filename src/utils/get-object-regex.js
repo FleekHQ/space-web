@@ -1,6 +1,6 @@
 const getObjectRegex = (bucket, prefix, delimiter) => {
-  const bucketPath = bucket ? `${bucket}/` : '/';
-  const prefixPath = prefix ? `${prefix}/` : '/';
+  const bucketPath = bucket ? `${bucket}` : '';
+  const prefixPath = prefix ? `/${prefix}/` : '/';
 
   const prefixRegex = `${bucketPath}${prefixPath}`.replace(/\//g, '\\/');
   const delimiterRegex = `[^${delimiter}]*${delimiter}?$`.replace(/\//g, '\\/');
