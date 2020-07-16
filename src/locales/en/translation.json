@@ -58,7 +58,7 @@
   "navigation": {
     "storage": "Storage",
     "files": "Files",
-    "shared-with-me": "Shared with me"
+    "shared-by": "Shared by"
   },
   "createNewMenu": {
     "fileUpload": "File Upload",
