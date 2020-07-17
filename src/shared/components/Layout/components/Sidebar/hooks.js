@@ -13,8 +13,8 @@ const getDefaultConfig = (location) => ([
         to: '/storage/files',
       },
       {
-        key: 'shared-with-me',
-        to: '/storage/shared-with-me',
+        key: 'shared-by',
+        to: '/storage/shared-by',
       },
     ],
   },

@@ -8,7 +8,7 @@ import {
 
 import Layout from '@shared/components/Layout';
 import Files from './Files';
-import SharedWithMe from './SharedWithMe';
+import SharedWithMe from './SharedBy';
 
 const Storage = () => {
   const match = useRouteMatch();
@@ -19,7 +19,7 @@ const Storage = () => {
         <Route path={`${match.path}/files/*`}>
           <Files />
         </Route>
-        <Route path={`${match.path}/shared-with-me`}>
+        <Route path={`${match.path}/shared-by`}>
           <SharedWithMe />
         </Route>
         <Redirect to={`${match.path}/files/`} />
