@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useStyles from './styles';
 
 const SendEmailFooter = (props) => {
-  const { 
+  const {
     className,
     shareButtonText,
     onSendEmailClick,
@@ -29,6 +29,6 @@ SendEmailFooter.propTypes = {
   shareButtonText: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   onSendEmailClick: PropTypes.func.isRequired,
-}
+};
 
 export default SendEmailFooter;

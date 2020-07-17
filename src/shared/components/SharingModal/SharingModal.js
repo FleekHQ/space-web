@@ -26,12 +26,11 @@ const SharingModal = (props) => {
     onChangeInputPermissions,
     onSendEmailClick,
   } = props;
-
   const classes = useStyles();
   const { t } = useTranslation();
 
   const [emailBody, setEmailBody] = useState('');
-  const [emailAddresses, setEmailAddresses] = useState([1]);
+  const [emailAddresses, setEmailAddresses] = useState([]);
 
   const i18n = {
     memberInput: {
@@ -53,7 +52,7 @@ const SharingModal = (props) => {
     },
     email: {
       placeholder: t('modals.sharingModal.emailPlaceholder'),
-      shareButton: t('modals.sharingModal.shareEmailButton')
+      shareButton: t('modals.sharingModal.shareEmailButton'),
     },
   };
 
@@ -75,6 +74,9 @@ const SharingModal = (props) => {
         i18n={i18n.memberInput}
         className={classes.memberInput}
         onChange={onChangeInputPermissions}
+        setEmailAddresses={setEmailAddresses}
+        emailAddresses={emailAddresses}
+        collaborators={collaborators}
       />
       {
         emailAddresses.length > 0 ? (
@@ -87,7 +89,7 @@ const SharingModal = (props) => {
             <SendEmailFooter
               className={classes.footer}
               shareButtonText={i18n.email.shareButton}
-              onSendEmailClick={onSendEmailClick}
+              onSendEmailClick={() => onSendEmailClick(emailAddresses)}
             />
           </>
         ) : (

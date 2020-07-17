@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
-import InputBase from '@material-ui/core/InputBase';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import isEqual from 'lodash/isEqual';
 
 import useStyles from './styles';
 import PermissionsDropdown from '../../../PermissionsDropdown';
@@ -13,6 +16,9 @@ const MemberInput = (props) => {
     onChange,
     className,
     options: defaultOptions,
+    setEmailAddresses,
+    emailAddresses,
+    collaborators,
   } = props;
 
   const classes = useStyles();
@@ -42,6 +48,17 @@ const MemberInput = (props) => {
     onChange(option);
   };
 
+  // removes already selected items from the list
+  const filteredOptions = collaborators.filter((collaborator) => {
+    let collaboratorAlreadyChosen = false;
+    emailAddresses.forEach(emailAddress => {
+      if (isEqual(emailAddress, collaborator)) {
+        collaboratorAlreadyChosen = true;
+      }
+    });
+    return !collaboratorAlreadyChosen;
+  });
+
   return (
     <div
       className={classnames(
@@ -52,13 +69,29 @@ const MemberInput = (props) => {
       <Typography>
         {i18n.to}
       </Typography>
-      <InputBase
+      <Autocomplete
+        multiple
         placeholder={i18n.placeholder}
-        inputProps={{ 'aria-label': 'naked' }}
+        options={filteredOptions}
+        getOptionLabel={(option) => option.mainText}
         classes={{
-          input: classes.input,
-          root: classes.inputRoot,
+          root: classes.autocomplete,
         }}
+        onChange={(e, newValue) => setEmailAddresses(newValue)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: () => null,
+              disableUnderline: true,
+            }}
+            placeholder={i18n.placeholder}
+            classes={{
+              root: classes.textfield,
+            }}
+          />
+        )}
       />
       <PermissionsDropdown
         open={open}
@@ -73,6 +106,7 @@ const MemberInput = (props) => {
 
 MemberInput.defaultProps = {
   className: null,
+  collaborators: [],
 };
 
 MemberInput.propTypes = {
@@ -89,6 +123,16 @@ MemberInput.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
+  setEmailAddresses: PropTypes.func.isRequired,
+  emailAddresses: PropTypes.array.isRequired,
+  collaborators: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    isOwner: PropTypes.bool,
+    avatar: PropTypes.string,
+    mainText: PropTypes.string,
+    secondaryText: PropTypes.string,
+    permissionsId: PropTypes.string,
+  })),
 };
 
 export default MemberInput;

@@ -12,6 +12,7 @@ import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { SEARCH_TERM_CHANGE } from '@reducers/storage';
 import { fetchDir } from '@events/objects';
 import { FileTable } from '../shared/components';
+import { openShareModal } from '../../../events/modal';
 
 import useStyles from './styles';
 
@@ -32,6 +33,10 @@ const StorageMainView = () => {
   useEffect(() => {
     fetchDir(prefix);
   }, [history.location.pathname]);
+
+  useEffect(() => {
+    openShareModal('sharing');
+  }, []);
 
   return (
     <div className={classes.root}>

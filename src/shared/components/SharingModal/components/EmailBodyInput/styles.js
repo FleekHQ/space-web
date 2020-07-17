@@ -5,6 +5,6 @@ export default makeStyles({
     padding: '18px',
     height: 223,
     maxHeight: 223,
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
 });

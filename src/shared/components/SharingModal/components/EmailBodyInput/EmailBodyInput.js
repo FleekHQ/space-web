@@ -9,9 +9,10 @@ const EmailBodyInput = (props) => {
     setEmailBody,
     emailBody,
   } = props;
+
   const onChange = (e) => {
-    setEmailBody(e.target.value)
-  }
+    setEmailBody(e.target.value);
+  };
 
   const classes = useStyles();
 
@@ -29,9 +30,10 @@ const EmailBodyInput = (props) => {
 
 EmailBodyInput.defaultProps = {
   emailBody: '',
-}
+};
 
 EmailBodyInput.propTypes = {
+  emailBody: PropTypes.string,
   setEmailBody: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
