@@ -24,6 +24,7 @@ const MemberInput = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(defaultOptions);
+  const [emailInput, setEmailInput] = useState('');
 
   const handleClose = () => setOpen(false);
   const handleToggle = () => setOpen(!open);
@@ -51,13 +52,41 @@ const MemberInput = (props) => {
   // removes already selected items from the list
   const filteredOptions = collaborators.filter((collaborator) => {
     let collaboratorAlreadyChosen = false;
-    emailAddresses.forEach(emailAddress => {
+    emailAddresses.forEach((emailAddress) => {
       if (isEqual(emailAddress, collaborator)) {
         collaboratorAlreadyChosen = true;
       }
     });
     return !collaboratorAlreadyChosen;
   });
+
+  const onKeyDown = (e) => {
+    // if the user press the Enter key
+    if (e.keyCode === 13) {
+      // TODO: email input validation and error
+      // TODO: validate that new address is not already in the options
+      const newEmail = e.target.value;
+      if (newEmail === '') {
+        return;
+      }
+      let newEntry = {
+        id: e.target.value,
+        mainText: e.target.value,
+      };
+
+      const emailInOptions = filteredOptions.find((option) => option.id === newEmail);
+
+      if (emailInOptions) {
+        newEntry = emailInOptions;
+      }
+
+      setEmailAddresses([
+        ...emailAddresses,
+        newEntry,
+      ]);
+      setEmailInput('');
+    }
+  };
 
   return (
     <div
@@ -69,14 +98,20 @@ const MemberInput = (props) => {
       <Typography>
         {i18n.to}
       </Typography>
+      {/* TODO: autocomplete options: show the image + mainText */}
+      {/* TODO: autocomplete textfield: show image + maintext */}
       <Autocomplete
         multiple
         placeholder={i18n.placeholder}
+        value={emailAddresses}
+        inputValue={emailInput}
         options={filteredOptions}
-        getOptionLabel={(option) => option.mainText}
+        getOptionLabel={(option) => option.id}
+        onKeyDown={onKeyDown}
         classes={{
           root: classes.autocomplete,
         }}
+        onInputChange={(e) => setEmailInput(e.target.value || '')}
         onChange={(e, newValue) => setEmailAddresses(newValue)}
         renderInput={(params) => (
           <TextField
@@ -107,6 +142,7 @@ const MemberInput = (props) => {
 MemberInput.defaultProps = {
   className: null,
   collaborators: [],
+  emailAddresses: [],
 };
 
 MemberInput.propTypes = {
@@ -124,7 +160,14 @@ MemberInput.propTypes = {
     title: PropTypes.string.isRequired,
   })).isRequired,
   setEmailAddresses: PropTypes.func.isRequired,
-  emailAddresses: PropTypes.array.isRequired,
+  emailAddresses: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    isOwner: PropTypes.bool,
+    avatar: PropTypes.string,
+    mainText: PropTypes.string,
+    secondaryText: PropTypes.string,
+    permissionsId: PropTypes.string,
+  })),
   collaborators: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     isOwner: PropTypes.bool,
