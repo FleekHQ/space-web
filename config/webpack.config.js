@@ -539,12 +539,12 @@ module.exports = function(webpackEnv) {
                 },
               }
             : {
-                /* meta: {
+                meta: {
                   'Content-Security-Policy': {
                     'http-equiv': 'Content-Security-Policy',
                     'content': "script-src 'self'"
                   }
-                }, */
+                },
               },
         )
       ),
