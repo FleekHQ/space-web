@@ -11,6 +11,7 @@ import {
   MemberInput,
   CollaboratorList,
   EmailBodyInput,
+  SendEmailFooter,
 } from './components';
 
 const SharingModal = (props) => {
@@ -83,10 +84,10 @@ const SharingModal = (props) => {
               setEmailBody={setEmailBody}
               emailBody={emailBody}
             />
-            <EditFooter
-              i18n={i18n.footer}
+            <SendEmailFooter
               className={classes.footer}
-              onClick={onShareLinkClick}
+              shareButtonText={i18n.email.shareButton}
+              onSendEmailClick={onSendEmailClick}
             />
           </>
         ) : (
