@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import Empty from './components/Empty';
 import Header from './components/Header';
-import ObjectDetails from './components/ObjectDetails';
 import SharePanel from './components/SharePanel';
+import ObjectDetails from './components/ObjectDetails';
+
 import useStyles from './styles';
 
 const DetailsPanel = () => {
@@ -26,7 +28,7 @@ const DetailsPanel = () => {
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <ObjectDetails {...selectedObjects[0]} />
             <div className={classes.divider} />
-            <SharePanel />
+            <SharePanel selectedObject={selectedObjects[0]} />
           </>
         )}
       </>

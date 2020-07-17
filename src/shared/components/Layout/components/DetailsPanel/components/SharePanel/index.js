@@ -1,15 +1,58 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+// import { useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
-import CollaboratorList from '../CollaboratorList';
+import { generateLink } from '@events';
+import { SHARE_TYPES } from '@reducers/details-panel/share';
+// TODO: use it when integration is ready
+// import Typography from '@material-ui/core/Typography';
+// import CollaboratorList from '../CollaboratorList';
 
 import useStyles from './styles';
 
-const SharePanel = () => {
+const handleCopyLink = ({ dispatch }) => (event) => {
+  event.preventDefault();
+
+  dispatch({
+    type: SHARE_TYPES.ON_GENERATE_LINK,
+  });
+};
+
+const SharePanel = ({ selectedObject }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const shareState = useSelector((state) => state.detailsPanel.share);
+
+  React.useEffect(() => {
+    if (shareState.generateLink.loading) {
+      generateLink({
+        filePath: selectedObject.key,
+      });
+    }
+  }, [shareState.generateLink.loading]);
+
+  React.useEffect(() => {
+    let timer;
+    if (shareState.generateLink.success) {
+      timer = setTimeout(() => {
+        dispatch({
+          type: SHARE_TYPES.ON_GENERATE_LINK_RESET,
+        });
+      }, 2000);
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [shareState.generateLink.success]);
 
   return (
     <div className={classes.root}>
@@ -22,10 +65,18 @@ const SharePanel = () => {
       <Button
         fullWidth
         variant="outlined"
+        disabled={shareState.generateLink.loading || shareState.generateLink.success}
+        onClick={handleCopyLink({ dispatch })}
       >
-        {t('detailsPanel.share.copy')}
+        {
+          shareState.generateLink.loading && (
+            <FontAwesomeIcon spin icon={faSpinner} />
+          )
+        }
+        {shareState.generateLink.success && t('detailsPanel.share.copied')}
+        {!shareState.generateLink.loading && !shareState.generateLink.success && t('detailsPanel.share.copy')}
       </Button>
-      <div className={classes.shareWidth}>
+      {/* <div className={classes.shareWidth}>
         <Typography variant="body1">
           {t('detailsPanel.share.with')}
         </Typography>
@@ -33,9 +84,15 @@ const SharePanel = () => {
           {t('detailsPanel.share.manage')}
         </Typography>
       </div>
-      <CollaboratorList t={t} />
+      <CollaboratorList t={t} /> */}
     </div>
   );
+};
+
+SharePanel.propTypes = {
+  selectedObject: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default SharePanel;

@@ -44,6 +44,7 @@
     },
     "share": {
       "copy": "Copy Link",
+      "copied": "Copied to clipboard!",
       "invite": "Invite Members",
       "with": "Shared with",
       "manage": "Manage",
