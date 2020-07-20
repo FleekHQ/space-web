@@ -5,12 +5,10 @@ export default makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
-  input: {
-    padding: 0,
-  },
-  inputRoot: {
-    flex: 1,
-    display: 'flex',
+  autocomplete: {
     margin: '0 18px',
+    '&&&  div': {
+      paddingRight: 0,
+    },
   },
 });

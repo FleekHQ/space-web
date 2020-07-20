@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
-import InputBase from '@material-ui/core/InputBase';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import isEqual from 'lodash/isEqual';
 
 import useStyles from './styles';
 import PermissionsDropdown from '../../../PermissionsDropdown';
@@ -13,11 +16,15 @@ const MemberInput = (props) => {
     onChange,
     className,
     options: defaultOptions,
+    setEmailAddresses,
+    emailAddresses,
+    collaborators,
   } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(defaultOptions);
+  const [emailInput, setEmailInput] = useState('');
 
   const handleClose = () => setOpen(false);
   const handleToggle = () => setOpen(!open);
@@ -42,6 +49,45 @@ const MemberInput = (props) => {
     onChange(option);
   };
 
+  // removes already selected items from the list
+  const filteredOptions = collaborators.filter((collaborator) => {
+    let collaboratorAlreadyChosen = false;
+    emailAddresses.forEach((emailAddress) => {
+      if (isEqual(emailAddress, collaborator)) {
+        collaboratorAlreadyChosen = true;
+      }
+    });
+    return !collaboratorAlreadyChosen;
+  });
+
+  const onKeyDown = (e) => {
+    // if the user press the Enter key
+    if (e.keyCode === 13) {
+      // TODO: email input validation and error
+      // TODO: validate that new address is not already in the options
+      const newEmail = e.target.value;
+      if (newEmail === '') {
+        return;
+      }
+      let newEntry = {
+        id: e.target.value,
+        mainText: e.target.value,
+      };
+
+      const emailInOptions = filteredOptions.find((option) => option.id === newEmail);
+
+      if (emailInOptions) {
+        newEntry = emailInOptions;
+      }
+
+      setEmailAddresses([
+        ...emailAddresses,
+        newEntry,
+      ]);
+      setEmailInput('');
+    }
+  };
+
   return (
     <div
       className={classnames(
@@ -52,13 +98,34 @@ const MemberInput = (props) => {
       <Typography>
         {i18n.to}
       </Typography>
-      <InputBase
+      {/* TODO: autocomplete options: show the image + mainText */}
+      {/* TODO: autocomplete textfield: show image + maintext */}
+      <Autocomplete
+        multiple
         placeholder={i18n.placeholder}
-        inputProps={{ 'aria-label': 'naked' }}
+        value={emailAddresses}
+        inputValue={emailInput}
+        options={filteredOptions}
+        getOptionLabel={(option) => option.id}
+        onKeyDown={onKeyDown}
+        fullWidth
         classes={{
-          input: classes.input,
-          root: classes.inputRoot,
+          root: classes.autocomplete,
         }}
+        onInputChange={(e) => setEmailInput(e.target.value || '')}
+        onChange={(e, newValue) => setEmailAddresses(newValue)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            fullWidth
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: () => null,
+              disableUnderline: true,
+            }}
+            placeholder={i18n.placeholder}
+          />
+        )}
       />
       <PermissionsDropdown
         open={open}
@@ -73,6 +140,8 @@ const MemberInput = (props) => {
 
 MemberInput.defaultProps = {
   className: null,
+  collaborators: [],
+  emailAddresses: [],
 };
 
 MemberInput.propTypes = {
@@ -89,6 +158,23 @@ MemberInput.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
+  setEmailAddresses: PropTypes.func.isRequired,
+  emailAddresses: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    isOwner: PropTypes.bool,
+    avatar: PropTypes.string,
+    mainText: PropTypes.string,
+    secondaryText: PropTypes.string,
+    permissionsId: PropTypes.string,
+  })),
+  collaborators: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    isOwner: PropTypes.bool,
+    avatar: PropTypes.string,
+    mainText: PropTypes.string,
+    secondaryText: PropTypes.string,
+    permissionsId: PropTypes.string,
+  })),
 };
 
 export default MemberInput;
