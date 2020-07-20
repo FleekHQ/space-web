@@ -30,6 +30,7 @@ const SharingModal = (props) => {
   const { t } = useTranslation();
 
   const [emailBody, setEmailBody] = useState('');
+  const [showEmailBody, setShowEmailBody] = useState(false);
   const [emailAddresses, setEmailAddresses] = useState([]);
 
   const i18n = {
@@ -76,10 +77,13 @@ const SharingModal = (props) => {
         onChange={onChangeInputPermissions}
         setEmailAddresses={setEmailAddresses}
         emailAddresses={emailAddresses}
+        showEmailBody={showEmailBody}
+        setShowEmailBody={setShowEmailBody}
+        setEmailBody={setEmailBody}
         collaborators={collaborators}
       />
       {
-        emailAddresses.length > 0 ? (
+        showEmailBody ? (
           <>
             <EmailBodyInput
               placeholder={i18n.email.placeholder}

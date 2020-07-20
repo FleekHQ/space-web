@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import isEqual from 'lodash/isEqual';
 
+import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
 import Collaborator from '../../../Collaborator';
 import PermissionsDropdown from '../../../PermissionsDropdown';
@@ -20,12 +21,24 @@ const MemberInput = (props) => {
     setEmailAddresses,
     emailAddresses,
     collaborators,
+    showEmailBody,
+    setShowEmailBody,
   } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(defaultOptions);
   const [emailInput, setEmailInput] = useState('');
+
+  useEffect(() => {
+    const userEnteredInput = emailInput.length > 0 || emailAddresses.length > 0;
+    if (userEnteredInput && !showEmailBody) {
+      setShowEmailBody(true);
+    }
+    if (!userEnteredInput && showEmailBody) {
+      setShowEmailBody(false);
+    }
+  }, [emailInput, emailAddresses]);
 
   const handleClose = () => setOpen(false);
   const handleToggle = () => setOpen(!open);
@@ -111,7 +124,12 @@ const MemberInput = (props) => {
         value={emailAddresses}
         inputValue={emailInput}
         options={filteredOptions}
-        getOptionLabel={(option) => option.mainText}
+        getOptionLabel={(option) => (
+          <CollaboratorInput
+            imageSrc={option.imageSrc}
+            mainText={option.mainText}
+          />
+        )}
         onKeyDown={onKeyDown}
         fullWidth
         classes={{
@@ -187,6 +205,8 @@ MemberInput.propTypes = {
     secondaryText: PropTypes.string,
     permissionsId: PropTypes.string,
   })),
+  showEmailBody: PropTypes.bool.isRequired,
+  setShowEmailBody: PropTypes.func.isRequired,
 };
 
 export default MemberInput;
