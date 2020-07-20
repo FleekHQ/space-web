@@ -1,4 +1,9 @@
 import React from 'react';
+import get from 'lodash/get';
+import qs from 'query-string';
+import { shareItems } from '@events/share';
+import { closeModal } from '@events/modal';
+import { useLocation } from 'react-router-dom';
 import SharingModal from '@shared/components/SharingModal';
 
 import useStyles from './styles';
@@ -46,6 +51,7 @@ const collaboratorsMock = [
 ];
 
 const Sharing = () => {
+  const location = useLocation();
   const classes = useStyles();
 
   /* eslint-disable no-console */
@@ -61,6 +67,28 @@ const Sharing = () => {
     console.log('onChangeInputPermissions', ...args);
   };
 
+  const onSendEmailClick = (members, message) => {
+    const query = qs.parse(location.search);
+
+    const bucket = get(query, 'bucket', 'personal');
+    const itemPaths = get(query, 'itemPaths', []);
+
+    const payload = {
+      bucket,
+      customMessage: message,
+      invitations: members.map((member) => ({
+        invitationType: 'INVITE_THROUGH_EMAIL',
+        invitationValue: member.id,
+      })),
+      itemPaths: typeof itemPaths === 'string'
+        ? [itemPaths]
+        : itemPaths,
+    };
+
+    shareItems(payload);
+    closeModal();
+  };
+
   return (
     <SharingModal
       ext="folder"
@@ -71,6 +99,7 @@ const Sharing = () => {
       onShareLinkClick={onShareLinkClick}
       onChangeUserPermissions={onChangeUserPermissions}
       onChangeInputPermissions={onChangeInputPermissions}
+      onSendEmailClick={onSendEmailClick}
     />
   );
 };

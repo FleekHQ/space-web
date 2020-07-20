@@ -4,6 +4,7 @@ import { modalKeys } from '../views/Modal/modals';
 
 const EVENT_PREFIX = 'modal';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
+const CLOSE_EVENT = `${EVENT_PREFIX}:close`;
 
 /* eslint-disable import/prefer-default-export */
 export const openShareModal = (payload) => {
@@ -18,3 +19,5 @@ export const openShareModal = (payload) => {
     maximizable: false,
   });
 };
+
+export const closeModal = () => ipcRenderer.send(CLOSE_EVENT);
