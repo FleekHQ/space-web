@@ -93,7 +93,9 @@ const MemberInput = (props) => {
 
       const isEmailValid = validateCustomEmail(newEmail);
 
-      const duplicateEmail = emailAddresses.find((email) => email.secondaryText === newEmail);
+      const duplicateEmail = emailAddresses.find((email) => (
+        email.secondaryText.toLowerCase() === newEmail.toLowerCase()
+      ));
 
       if (!isEmailValid) {
         setEmailError(emailErrors.invalidEmail);
@@ -131,67 +133,77 @@ const MemberInput = (props) => {
   });
 
   return (
-    <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
-    >
-      <Typography>
-        {i18n.to}
+    <div>
+      <Typography
+        className={classes.emailError}
+        variant="body2"
+      >
+        {emailError}
       </Typography>
-      <Autocomplete
-        filterOptions={filterOptions}
-        multiple
-        value={emailAddresses}
-        inputValue={emailInput}
-        options={filteredOptions}
-        getOptionLabel={(option) => (
-          <CollaboratorInput
-            imageSrc={option.imageSrc}
-            mainText={option.mainText}
-          />
+      <div
+        className={classnames(
+          classes.root,
+          className,
         )}
-        onKeyDown={onKeyDown}
-        fullWidth
-        classes={{
-          root: classes.autocomplete,
-        }}
-        onInputChange={(e) => {
-          // There is a bug with <Autocomplete /> where sometimes the event is null
-          // so we must verify that the event exist before getting the target
-          const newEmail = (e && e.target.value) || '';
-          setEmailInput(newEmail);
-          setEmailError(null);
-        }}
-        onChange={(e, newValue) => setEmailAddresses(newValue)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            fullWidth
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: () => null,
-              disableUnderline: true,
-            }}
-            placeholder={emailAddresses.length > 0 ? '' : i18n.placeholder}
-          />
-        )}
-        renderOption={(option) => (
-          <Collaborator
-            imageSrc={option.imageSrc}
-            mainText={option.mainText}
-            secondaryText={option.secondaryText}
-          />
-        )}
-      />
-      <PermissionsDropdown
-        open={open}
-        options={options}
-        onChange={handleOnChange}
-        handleClose={handleClose}
-        handleToggle={handleToggle}
-      />
+      >
+        <Typography>
+          {i18n.to}
+        </Typography>
+        <Autocomplete
+          filterOptions={filterOptions}
+          multiple
+          value={emailAddresses}
+          inputValue={emailInput}
+          options={filteredOptions}
+          getOptionLabel={(option) => (
+            <CollaboratorInput
+              imageSrc={option.imageSrc}
+              mainText={option.mainText}
+            />
+          )}
+          onKeyDown={onKeyDown}
+          fullWidth
+          classes={{
+            root: classes.autocomplete,
+          }}
+          onInputChange={(e) => {
+            // There is a bug with <Autocomplete /> where sometimes the event is null
+            // so we must verify that the event exist before getting the target
+            const newEmail = (e && e.target.value) || '';
+            setEmailInput(newEmail);
+            if (newEmail !== emailInput) {
+              setEmailError(null);
+            }
+          }}
+          onChange={(e, newValue) => setEmailAddresses(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              fullWidth
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: () => null,
+                disableUnderline: true,
+              }}
+              placeholder={emailAddresses.length > 0 ? '' : i18n.placeholder}
+            />
+          )}
+          renderOption={(option) => (
+            <Collaborator
+              imageSrc={option.imageSrc}
+              mainText={option.mainText}
+              secondaryText={option.secondaryText}
+            />
+          )}
+        />
+        <PermissionsDropdown
+          open={open}
+          options={options}
+          onChange={handleOnChange}
+          handleClose={handleClose}
+          handleToggle={handleToggle}
+        />
+      </div>
     </div>
   );
 };

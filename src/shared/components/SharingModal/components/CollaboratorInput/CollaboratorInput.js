@@ -9,6 +9,7 @@ const CollaboratorInput = (props) => {
   const {
     imageSrc,
     mainText,
+    secondaryText,
   } = props;
 
   const classes = useStyles();
@@ -30,6 +31,7 @@ const CollaboratorInput = (props) => {
         )}
       </div>
       <Typography
+        title={secondaryText}
         variant="body2"
       >
         {mainText}
@@ -41,11 +43,13 @@ const CollaboratorInput = (props) => {
 CollaboratorInput.defaultProps = {
   imageSrc: null,
   mainText: null,
+  secondaryText: null,
 };
 
 CollaboratorInput.propTypes = {
   imageSrc: PropTypes.string,
   mainText: PropTypes.string,
+  secondaryText: PropTypes.string,
 };
 
 export default CollaboratorInput;
