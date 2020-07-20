@@ -32,7 +32,6 @@ const SharingModal = (props) => {
   const [emailBody, setEmailBody] = useState('');
   const [showEmailBody, setShowEmailBody] = useState(false);
   const [emailAddresses, setEmailAddresses] = useState([]);
-
   const i18n = {
     memberInput: {
       to: t('modals.sharingModal.to'),
@@ -54,6 +53,10 @@ const SharingModal = (props) => {
     email: {
       placeholder: t('modals.sharingModal.emailPlaceholder'),
       shareButton: t('modals.sharingModal.shareEmailButton'),
+    },
+    emailErrors: {
+      invalidEmail: t('modals.sharingModal.errors.invalidEmail'),
+      duplicateEmail: t('modals.sharingModal.errors.duplicateEmail'),
     },
   };
 
@@ -81,6 +84,7 @@ const SharingModal = (props) => {
         setShowEmailBody={setShowEmailBody}
         setEmailBody={setEmailBody}
         collaborators={collaborators}
+        emailErrors={i18n.emailErrors}
       />
       {
         showEmailBody ? (

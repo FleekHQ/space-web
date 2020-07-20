@@ -23,12 +23,14 @@ const MemberInput = (props) => {
     collaborators,
     showEmailBody,
     setShowEmailBody,
+    emailErrors,
   } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(defaultOptions);
   const [emailInput, setEmailInput] = useState('');
+  const [emailError, setEmailError] = useState(null);
 
   useEffect(() => {
     const userEnteredInput = emailInput.length > 0 || emailAddresses.length > 0;
@@ -74,18 +76,40 @@ const MemberInput = (props) => {
     return !collaboratorAlreadyChosen;
   });
 
+  const validateCustomEmail = (email) => {
+    const emailRegEx = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
+
+    return emailRegEx.test(email);
+  };
+
   const onKeyDown = (e) => {
     // if the user press the Enter key
     if (e.keyCode === 13) {
-      // TODO: email input validation and error
-      // TODO: validate that new address is not already in the options
       const newEmail = e.target.value;
-      if (newEmail === '') {
+      const isInputEmpty = newEmail === '';
+      if (isInputEmpty) {
         return;
       }
+
+      const isEmailValid = validateCustomEmail(newEmail);
+
+      const duplicateEmail = emailAddresses.find((email) => email.secondaryText === newEmail);
+
+      if (!isEmailValid) {
+        setEmailError(emailErrors.invalidEmail);
+        return;
+      }
+
+      if (duplicateEmail) {
+        setEmailError(emailErrors.duplicateEmail);
+        return;
+      }
+
       let newEntry = {
         id: e.target.value,
         mainText: e.target.value,
+        secondaryText: e.target.value,
+        imageSrc: null,
       };
 
       const emailInOptions = filteredOptions.find((option) => option.id === newEmail);
@@ -116,8 +140,6 @@ const MemberInput = (props) => {
       <Typography>
         {i18n.to}
       </Typography>
-      {/* TODO: autocomplete options: show the image + mainText */}
-      {/* TODO: autocomplete textfield: show image + maintext */}
       <Autocomplete
         filterOptions={filterOptions}
         multiple
@@ -135,7 +157,13 @@ const MemberInput = (props) => {
         classes={{
           root: classes.autocomplete,
         }}
-        onInputChange={(e) => setEmailInput(e.target.value || '')}
+        onInputChange={(e) => {
+          // There is a bug with <Autocomplete /> where sometimes the event is null
+          // so we must verify that the event exist before getting the target
+          const newEmail = (e && e.target.value) || '';
+          setEmailInput(newEmail);
+          setEmailError(null);
+        }}
         onChange={(e, newValue) => setEmailAddresses(newValue)}
         renderInput={(params) => (
           <TextField
@@ -207,6 +235,10 @@ MemberInput.propTypes = {
   })),
   showEmailBody: PropTypes.bool.isRequired,
   setShowEmailBody: PropTypes.func.isRequired,
+  emailErrors: PropTypes.shape({
+    invalidEmail: PropTypes.string.isRequired,
+    duplicateEmail: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default MemberInput;
