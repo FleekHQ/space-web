@@ -108,6 +108,7 @@ const MemberInput = (props) => {
         options={filteredOptions}
         getOptionLabel={(option) => option.id}
         onKeyDown={onKeyDown}
+        fullWidth
         classes={{
           root: classes.autocomplete,
         }}
@@ -116,15 +117,13 @@ const MemberInput = (props) => {
         renderInput={(params) => (
           <TextField
             {...params}
+            fullWidth
             InputProps={{
               ...params.InputProps,
               endAdornment: () => null,
               disableUnderline: true,
             }}
             placeholder={i18n.placeholder}
-            classes={{
-              root: classes.textfield,
-            }}
           />
         )}
       />

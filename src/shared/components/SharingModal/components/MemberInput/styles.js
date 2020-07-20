@@ -7,9 +7,8 @@ export default makeStyles({
   },
   autocomplete: {
     margin: '0 18px',
-    width: '100%',
-  },
-  textfield: {
-    width: '100%',
+    '&&&  div': {
+      paddingRight: 0,
+    },
   },
 });
