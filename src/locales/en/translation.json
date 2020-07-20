@@ -117,7 +117,7 @@
       "shareEmailButton": "Share",
       "errors": {
         "invalidEmail": "Email is invalid",
-        "duplicateEmail": "This email already exists"
+        "duplicateEmail": "This email is already selected"
       }
     }
   }
