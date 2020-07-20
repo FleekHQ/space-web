@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import isEqual from 'lodash/isEqual';
 
 import useStyles from './styles';
@@ -89,6 +89,10 @@ const MemberInput = (props) => {
     }
   };
 
+  const filterOptions = createFilterOptions({
+    stringify: (option) => `${option.mainText} ${option.secondaryText}`,
+  });
+
   return (
     <div
       className={classnames(
@@ -102,11 +106,12 @@ const MemberInput = (props) => {
       {/* TODO: autocomplete options: show the image + mainText */}
       {/* TODO: autocomplete textfield: show image + maintext */}
       <Autocomplete
+        filterOptions={filterOptions}
         multiple
         value={emailAddresses}
         inputValue={emailInput}
         options={filteredOptions}
-        getOptionLabel={(option) => option.id}
+        getOptionLabel={(option) => option.mainText}
         onKeyDown={onKeyDown}
         fullWidth
         classes={{
