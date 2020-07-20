@@ -8,6 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import isEqual from 'lodash/isEqual';
 
 import useStyles from './styles';
+import Collaborator from '../../../Collaborator';
 import PermissionsDropdown from '../../../PermissionsDropdown';
 
 const MemberInput = (props) => {
@@ -102,7 +103,6 @@ const MemberInput = (props) => {
       {/* TODO: autocomplete textfield: show image + maintext */}
       <Autocomplete
         multiple
-        placeholder={i18n.placeholder}
         value={emailAddresses}
         inputValue={emailInput}
         options={filteredOptions}
@@ -123,7 +123,14 @@ const MemberInput = (props) => {
               endAdornment: () => null,
               disableUnderline: true,
             }}
-            placeholder={i18n.placeholder}
+            placeholder={emailAddresses.length > 0 ? '' : i18n.placeholder}
+          />
+        )}
+        renderOption={(option) => (
+          <Collaborator
+            imageSrc={option.imageSrc}
+            mainText={option.mainText}
+            secondaryText={option.secondaryText}
           />
         )}
       />
