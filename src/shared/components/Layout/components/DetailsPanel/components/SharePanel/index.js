@@ -1,4 +1,5 @@
 import React from 'react';
+import electron from 'electron';
 import PropTypes from 'prop-types';
 // import { useLocation } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -40,6 +41,8 @@ const SharePanel = ({ selectedObject }) => {
   React.useEffect(() => {
     let timer;
     if (shareState.generateLink.success) {
+      electron.clipboard.writeText(shareState.generateLink.success.link);
+
       timer = setTimeout(() => {
         dispatch({
           type: SHARE_TYPES.ON_GENERATE_LINK_RESET,
@@ -65,7 +68,7 @@ const SharePanel = ({ selectedObject }) => {
       <Button
         fullWidth
         variant="outlined"
-        disabled={shareState.generateLink.loading || shareState.generateLink.success}
+        disabled={shareState.generateLink.loading || !!shareState.generateLink.success}
         onClick={handleCopyLink({ dispatch })}
       >
         {
