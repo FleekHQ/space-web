@@ -5,12 +5,13 @@ import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import isEqual from 'lodash/isEqual';
 
 import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
 import Collaborator from '../../../Collaborator';
 import PermissionsDropdown from '../../../PermissionsDropdown';
+import isEmailError from './utils/email-validation';
+import getFilteredOptions from './utils/get-filtered-options';
 
 const MemberInput = (props) => {
   const {
@@ -65,45 +66,16 @@ const MemberInput = (props) => {
     onChange(option);
   };
 
-  // removes already selected items from the list
-  const filteredOptions = collaborators.filter((collaborator) => {
-    let collaboratorAlreadyChosen = false;
-    emailAddresses.forEach((emailAddress) => {
-      if (isEqual(emailAddress, collaborator)) {
-        collaboratorAlreadyChosen = true;
-      }
-    });
-    return !collaboratorAlreadyChosen;
-  });
-
-  const validateCustomEmail = (email) => {
-    const emailRegEx = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
-
-    return emailRegEx.test(email);
-  };
+  const filteredOptions = getFilteredOptions(emailAddresses, collaborators);
 
   const onKeyDown = (e) => {
     // if the user press the Enter key
     if (e.keyCode === 13) {
       const newEmail = e.target.value;
-      const isInputEmpty = newEmail === '';
-      if (isInputEmpty) {
-        return;
-      }
 
-      const isEmailValid = validateCustomEmail(newEmail);
+      const isError = isEmailError(newEmail, emailAddresses, setEmailError, emailErrors);
 
-      const duplicateEmail = emailAddresses.find((email) => (
-        email.secondaryText.toLowerCase() === newEmail.toLowerCase()
-      ));
-
-      if (!isEmailValid) {
-        setEmailError(emailErrors.invalidEmail);
-        return;
-      }
-
-      if (duplicateEmail) {
-        setEmailError(emailErrors.duplicateEmail);
+      if (isError) {
         return;
       }
 
