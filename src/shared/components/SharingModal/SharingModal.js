@@ -97,7 +97,7 @@ const SharingModal = (props) => {
             <SendEmailFooter
               className={classes.footer}
               shareButtonText={i18n.email.shareButton}
-              onSendEmailClick={() => onSendEmailClick(emailAddresses)}
+              onSendEmailClick={() => onSendEmailClick(emailAddresses, emailBody)}
               disabled={emailAddresses.length === 0}
             />
           </>
