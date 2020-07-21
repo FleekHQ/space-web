@@ -16,4 +16,12 @@ export default makeStyles((theme) => ({
     margin: '8px 0 -8px 0',
     color: theme.palette.palette.red,
   },
+  option: {
+    '&&& p': {
+      textOverflow: 'ellipsis',
+      display: 'inline-block',
+      overflow: 'hidden',
+      width: 215,
+    },
+  },
 }));

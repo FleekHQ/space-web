@@ -6,6 +6,7 @@ export default makeStyles({
     alignItems: 'center',
   },
   imageContainer: {
+    minWidth: 30,
     width: 30,
     height: 30,
     overflow: 'hidden',

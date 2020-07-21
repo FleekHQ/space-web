@@ -137,6 +137,7 @@ const MemberInput = (props) => {
           fullWidth
           classes={{
             root: classes.autocomplete,
+            option: classes.option,
           }}
           onInputChange={(e) => {
             // There is a bug with <Autocomplete /> where sometimes the event is null
