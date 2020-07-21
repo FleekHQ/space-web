@@ -11,7 +11,12 @@ const registerTxlSubscribe = (mainWindow) => {
   });
 
   eventStream.on('error', (error) => {
-    mainWindow.webContents.send(`${EVENT_PREFIX}:error`, error);
+    try {
+      mainWindow.webContents.send(`${EVENT_PREFIX}:error`, error);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
   });
 
   return eventStream;
