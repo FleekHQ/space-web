@@ -98,12 +98,8 @@ const SharePanel = (props) => {
   );
 };
 
-SharePanel.defaultProps = {
-  onInviteMembers: () => {},
-};
-
 SharePanel.propTypes = {
-  onInviteMembers: PropTypes.func,
+  onInviteMembers: PropTypes.func.isRequired,
   selectedObject: PropTypes.shape({
     key: PropTypes.string.isRequired,
   }).isRequired,
