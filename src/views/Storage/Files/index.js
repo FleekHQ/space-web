@@ -38,12 +38,24 @@ const StorageMainView = () => {
       <div className={classes.header}>
         <FolderNavButton
           direction="back"
-          onClick={() => history.goBack()}
+          onClick={() => {
+            const isRootPath = /^\/storage\/files\/?$/.test(location.pathname);
+
+            if (!isRootPath) {
+              history.goBack();
+            }
+          }}
         />
         <FolderNavButton
           direction="forward"
           className={classes.forwardButton}
-          onClick={() => history.goForward()}
+          onClick={() => {
+            const isFilePath = /^\/storage\/files\/.*/.test(location.pathname);
+
+            if (isFilePath) {
+              history.goForward();
+            }
+          }}
         />
         <TextField
           variant="filled"

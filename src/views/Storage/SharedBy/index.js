@@ -5,19 +5,68 @@ import {
   Link,
   Switch,
   Redirect,
+  useHistory,
+  useLocation,
   useRouteMatch,
 } from 'react-router-dom';
+import FolderNavButton from '@ui/FolderNavButton';
+import TextField from '@ui/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
+import { useTranslation } from 'react-i18next';
 
 import Breadcrumbs from './components/Breadcrumbs';
 import BucketsTable from './components/BucketsTable';
 
 import { FileTable } from '../shared/components';
 
+import useStyles from './styles';
+
 const SharedWithMeView = () => {
+  const classes = useStyles();
   const match = useRouteMatch();
+  const history = useHistory();
+  const location = useLocation();
+  const { t } = useTranslation();
 
   return (
-    <div style={{ marginTop: 30, padding: '0 18px' }}>
+    <div style={{ padding: '6px 0' }}>
+      <div className={classes.header}>
+        <FolderNavButton
+          direction="back"
+          onClick={() => {
+            const isRootPath = /^\/storage\/shared-by\/?$/.test(location.pathname);
+
+            if (!isRootPath) {
+              history.goBack();
+            }
+          }}
+        />
+        <FolderNavButton
+          direction="forward"
+          className={classes.forwardButton}
+          onClick={() => {
+            const isStoragePath = /^\/storage\/shared-by\/.*/.test(location.pathname);
+
+            if (isStoragePath) {
+              history.goForward();
+            }
+          }}
+        />
+        <TextField
+          variant="filled"
+          label={t('common.search')}
+          className={classes.searchField}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <FontAwesomeIcon icon={faSearch} className={classes.icon} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
       <Breadcrumbs />
       <Switch>
         <Route exact path={match.path}>
