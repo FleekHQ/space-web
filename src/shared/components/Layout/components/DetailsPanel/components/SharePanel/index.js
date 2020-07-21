@@ -2,8 +2,8 @@ import React from 'react';
 import electron from 'electron';
 import PropTypes from 'prop-types';
 // import { useLocation } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
+import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
@@ -24,7 +24,12 @@ const handleCopyLink = ({ dispatch }) => (event) => {
   });
 };
 
-const SharePanel = ({ selectedObject }) => {
+const SharePanel = (props) => {
+  const {
+    selectedObject,
+    onInviteMembers,
+  } = props;
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -62,6 +67,7 @@ const SharePanel = ({ selectedObject }) => {
       <Button
         fullWidth
         variant="contained"
+        onClick={onInviteMembers}
       >
         {t('detailsPanel.share.invite')}
       </Button>
@@ -93,6 +99,7 @@ const SharePanel = ({ selectedObject }) => {
 };
 
 SharePanel.propTypes = {
+  onInviteMembers: PropTypes.func.isRequired,
   selectedObject: PropTypes.shape({
     key: PropTypes.string.isRequired,
   }).isRequired,
