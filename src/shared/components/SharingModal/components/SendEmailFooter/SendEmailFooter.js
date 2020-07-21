@@ -9,6 +9,7 @@ const SendEmailFooter = (props) => {
     className,
     shareButtonText,
     onSendEmailClick,
+    disabled,
   } = props;
 
   const classes = useStyles();
@@ -18,6 +19,7 @@ const SendEmailFooter = (props) => {
       <Button
         variant="contained"
         onClick={onSendEmailClick}
+        disabled={disabled}
       >
         {shareButtonText}
       </Button>
@@ -29,6 +31,7 @@ SendEmailFooter.propTypes = {
   shareButtonText: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   onSendEmailClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default SendEmailFooter;

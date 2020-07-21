@@ -1,14 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import isEqual from 'lodash/isEqual';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
+import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
+import Collaborator from '../../../Collaborator';
 import PermissionsDropdown from '../../../PermissionsDropdown';
+import isEmailError from './utils/email-validation';
+import getFilteredOptions from './utils/get-filtered-options';
 
 const MemberInput = (props) => {
   const {
@@ -19,12 +22,26 @@ const MemberInput = (props) => {
     setEmailAddresses,
     emailAddresses,
     collaborators,
+    showEmailBody,
+    setShowEmailBody,
+    emailErrors,
   } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(defaultOptions);
   const [emailInput, setEmailInput] = useState('');
+  const [emailError, setEmailError] = useState(null);
+
+  useEffect(() => {
+    const userEnteredInput = emailInput.length > 0 || emailAddresses.length > 0;
+    if (userEnteredInput && !showEmailBody) {
+      setShowEmailBody(true);
+    }
+    if (!userEnteredInput && showEmailBody) {
+      setShowEmailBody(false);
+    }
+  }, [emailInput, emailAddresses]);
 
   const handleClose = () => setOpen(false);
   const handleToggle = () => setOpen(!open);
@@ -49,29 +66,24 @@ const MemberInput = (props) => {
     onChange(option);
   };
 
-  // removes already selected items from the list
-  const filteredOptions = collaborators.filter((collaborator) => {
-    let collaboratorAlreadyChosen = false;
-    emailAddresses.forEach((emailAddress) => {
-      if (isEqual(emailAddress, collaborator)) {
-        collaboratorAlreadyChosen = true;
-      }
-    });
-    return !collaboratorAlreadyChosen;
-  });
+  const filteredOptions = getFilteredOptions(emailAddresses, collaborators);
 
   const onKeyDown = (e) => {
     // if the user press the Enter key
     if (e.keyCode === 13) {
-      // TODO: email input validation and error
-      // TODO: validate that new address is not already in the options
       const newEmail = e.target.value;
-      if (newEmail === '') {
+
+      const isError = isEmailError(newEmail, emailAddresses, setEmailError, emailErrors);
+
+      if (isError) {
         return;
       }
+
       let newEntry = {
         id: e.target.value,
         mainText: e.target.value,
+        secondaryText: e.target.value,
+        imageSrc: null,
       };
 
       const emailInOptions = filteredOptions.find((option) => option.id === newEmail);
@@ -88,52 +100,82 @@ const MemberInput = (props) => {
     }
   };
 
+  const filterOptions = createFilterOptions({
+    stringify: (option) => `${option.mainText} ${option.secondaryText}`,
+  });
+
   return (
-    <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
-    >
-      <Typography>
-        {i18n.to}
+    <div>
+      <Typography
+        className={classes.emailError}
+        variant="body2"
+      >
+        {emailError}
       </Typography>
-      {/* TODO: autocomplete options: show the image + mainText */}
-      {/* TODO: autocomplete textfield: show image + maintext */}
-      <Autocomplete
-        multiple
-        placeholder={i18n.placeholder}
-        value={emailAddresses}
-        inputValue={emailInput}
-        options={filteredOptions}
-        getOptionLabel={(option) => option.id}
-        onKeyDown={onKeyDown}
-        fullWidth
-        classes={{
-          root: classes.autocomplete,
-        }}
-        onInputChange={(e) => setEmailInput(e.target.value || '')}
-        onChange={(e, newValue) => setEmailAddresses(newValue)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            fullWidth
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: () => null,
-              disableUnderline: true,
-            }}
-            placeholder={i18n.placeholder}
-          />
+      <div
+        className={classnames(
+          classes.root,
+          className,
         )}
-      />
-      <PermissionsDropdown
-        open={open}
-        options={options}
-        onChange={handleOnChange}
-        handleClose={handleClose}
-        handleToggle={handleToggle}
-      />
+      >
+        <Typography>
+          {i18n.to}
+        </Typography>
+        <Autocomplete
+          filterOptions={filterOptions}
+          multiple
+          value={emailAddresses}
+          inputValue={emailInput}
+          options={filteredOptions}
+          getOptionLabel={(option) => (
+            <CollaboratorInput
+              imageSrc={option.imageSrc}
+              mainText={option.mainText}
+            />
+          )}
+          onKeyDown={onKeyDown}
+          fullWidth
+          classes={{
+            root: classes.autocomplete,
+          }}
+          onInputChange={(e) => {
+            // There is a bug with <Autocomplete /> where sometimes the event is null
+            // so we must verify that the event exist before getting the target
+            const newEmail = (e && e.target.value) || '';
+            setEmailInput(newEmail);
+            if (newEmail !== emailInput) {
+              setEmailError(null);
+            }
+          }}
+          onChange={(e, newValue) => setEmailAddresses(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              fullWidth
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: () => null,
+                disableUnderline: true,
+              }}
+              placeholder={emailAddresses.length > 0 ? '' : i18n.placeholder}
+            />
+          )}
+          renderOption={(option) => (
+            <Collaborator
+              imageSrc={option.imageSrc}
+              mainText={option.mainText}
+              secondaryText={option.secondaryText}
+            />
+          )}
+        />
+        <PermissionsDropdown
+          open={open}
+          options={options}
+          onChange={handleOnChange}
+          handleClose={handleClose}
+          handleToggle={handleToggle}
+        />
+      </div>
     </div>
   );
 };
@@ -175,6 +217,12 @@ MemberInput.propTypes = {
     secondaryText: PropTypes.string,
     permissionsId: PropTypes.string,
   })),
+  showEmailBody: PropTypes.bool.isRequired,
+  setShowEmailBody: PropTypes.func.isRequired,
+  emailErrors: PropTypes.shape({
+    invalidEmail: PropTypes.string.isRequired,
+    duplicateEmail: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default MemberInput;

@@ -115,7 +115,11 @@
       "copyLink": "Copy link",
       "createLink": "Create link",
       "emailPlaceholder": "Add a message (optional)",
-      "shareEmailButton": "Share"
+      "shareEmailButton": "Share",
+      "errors": {
+        "invalidEmail": "Email is invalid",
+        "duplicateEmail": "This email is already selected"
+      }
     }
   }
 }
