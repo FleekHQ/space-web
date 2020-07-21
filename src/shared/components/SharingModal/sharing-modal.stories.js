@@ -29,7 +29,7 @@ storiesOf(categoryName, module).add('default', () => {
       {
         id: 'morochroyce@gmail.com',
         mainText: 'Peter Adams',
-        secondaryText: 'morochroyce@gmail.com',
+        secondaryText: 'morochroyce@gmail.comaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
         isOwner: true,
