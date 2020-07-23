@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/pro-regular-svg-icons/faUsers';
@@ -13,7 +12,10 @@ import useStyles from './styles';
 const RESIZE_DEBOUNCE_TIME = 300;
 const COLLABORATOR_ITEM_HEIGHT = 27;
 
-const SharePanel = ({ t }) => {
+const SharePanel = ({
+  t,
+  collaborators,
+}) => {
   const [state, setState] = React.useState({
     listMaxHeight: 0,
     maxCollaborators: 0,
@@ -21,24 +23,6 @@ const SharePanel = ({ t }) => {
   });
   const classes = useStyles({ listMaxHeight: state.listMaxHeight });
   const collaboratorList = React.useRef(null);
-
-  const { collaborators } = useSelector((reduxState) => ({
-    // TODO: remove this mock
-    collaborators: [
-      {
-        username: reduxState.user.username,
-      },
-      {
-        username: 'someuser1',
-      },
-      {
-        username: '4retggsdfgsfdfg',
-      },
-      {
-        username: 'sddavcsdgdfhfhjhmfhjsrgdfb',
-      },
-    ],
-  }));
 
   /* eslint-disable react/prop-types */
   const getAvatar = ({ isLast, collaborator }) => {
@@ -111,7 +95,7 @@ const SharePanel = ({ t }) => {
         setState({
           ...state,
           listMaxHeight,
-          maxCollaborators,
+          maxCollaborators: maxCollaborators === collaborators.length ? 0 : maxCollaborators,
         });
         return;
       }
@@ -128,18 +112,18 @@ const SharePanel = ({ t }) => {
     <div className={classes.root} ref={collaboratorList}>
       {
         collaborators
-          .reduce((newArray, collaborator, index, arr) => {
+          .reduce((newArray, collaborator, index) => {
             if (state.maxCollaborators === 0) {
-              return newArray.concat(collaborator);
+              return newArray.concat({ ...collaborator });
             }
 
             if (index <= state.maxCollaborators - 1) {
-              if (index === arr.length - 1) {
+              if (index === collaborators.length - 1) {
                 return newArray.concat({
                   username: t('detailsPanel.share.group', { number: index - state.maxCollaborators + 2 }),
                 });
               }
-              return newArray.concat(collaborator);
+              return newArray.concat({ ...collaborator });
             }
 
             if (newArray.length) {
@@ -169,8 +153,15 @@ const SharePanel = ({ t }) => {
   );
 };
 
+SharePanel.defaultProps = {
+  collaborators: [],
+};
+
 SharePanel.propTypes = {
   t: PropTypes.func.isRequired,
+  collaborators: PropTypes.arrayOf(PropTypes.shape({
+    username: PropTypes.string.isRequired,
+  }).isRequired),
 };
 
 export default SharePanel;

@@ -4,7 +4,7 @@ export default makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '10px 22px 0 22px',
+    padding: '15px 22px 0 22px',
     '& > button': {
       margin: '5px 0',
     },

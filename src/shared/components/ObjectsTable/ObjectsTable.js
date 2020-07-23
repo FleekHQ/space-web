@@ -15,13 +15,14 @@ import Table, { TableCell, TableRow } from '@ui/Table';
 import useStyles from './styles';
 
 const ObjectsTable = ({
-  heads,
   rows,
-  onDropzoneDrop,
+  heads,
+  bucket,
   renderRow,
   withRowOptions,
   getRedirectUrl,
-  bucket,
+  onOutsideClick,
+  onDropzoneDrop,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -126,20 +127,7 @@ const ObjectsTable = ({
 
   const handleTableOutsideClick = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      const detailePanel = document.getElementById('detail-panel');
-      if (detailePanel.contains(event.target)) {
-        return;
-      }
-
-      dispatch({
-        type: UPDATE_OBJECTS,
-        payload: rows.map((_row) => ({
-          ..._row,
-          pivote: false,
-          selected: false,
-        })),
-        bucket,
-      });
+      onOutsideClick(event.target);
     }
   };
 
@@ -213,10 +201,12 @@ const ObjectsTable = ({
 ObjectsTable.defaultProps = {
   onDropzoneDrop: null,
   withRowOptions: false,
+  onOutsideClick: () => null,
 };
 
 ObjectsTable.propTypes = {
   onDropzoneDrop: PropTypes.func,
+  onOutsideClick: PropTypes.func,
   rows: PropTypes.arrayOf(PropTypes.object).isRequired,
   heads: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
