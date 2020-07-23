@@ -43,6 +43,7 @@ const FileTable = ({
         pivote: false,
         selected: false,
       })),
+      bucket,
     });
   };
 
@@ -57,6 +58,7 @@ const FileTable = ({
     <ObjectsTable
       withRowOptions
       rows={rows}
+      bucket={bucket}
       renderRow={renderRow}
       heads={getTableHeads(t)}
       getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}

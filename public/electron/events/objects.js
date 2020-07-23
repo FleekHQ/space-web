@@ -34,7 +34,7 @@ const listDirectories = async (mainWindow, payload = {}) => {
     const entriesList = res.getEntriesList();
     const entries = entriesList.map((entry) => entryToObject(entry, bucket));
 
-    mainWindow.webContents.send(SUCCESS_EVENT, { entries });
+    mainWindow.webContents.send(SUCCESS_EVENT, { entries, bucket });
   } catch (err) {
     mainWindow.webContents.send(ERROR_EVENT, err);
   }
@@ -50,7 +50,7 @@ const listDirectory = async (
     const res = await spaceClient.listDirectory(payload);
     const entries = res.getEntriesList().map((entry) => entryToObject(entry, bucket));
 
-    mainWindow.webContents.send(SUCCESS_DIR_EVENT, { entries });
+    mainWindow.webContents.send(SUCCESS_DIR_EVENT, { entries, bucket });
 
     // fetch sub-folders
     if (payload.fetchSubFolders) {

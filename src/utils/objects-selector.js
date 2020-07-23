@@ -1,10 +1,13 @@
+import get from 'lodash/get';
 import getObjectRegex from './get-object-regex';
 
 const objectsSelector = (state, bucket, prefix, delimiter) => {
   const {
-    objects = [],
+    buckets,
     searchTerm = '',
   } = state.storage;
+
+  const objects = get(buckets, `${bucket}.objects`, []);
 
   const keyRegex = getObjectRegex(bucket, prefix, delimiter);
 

@@ -8,6 +8,7 @@ export default (t) => [
     title: t('modules.storage.fileTable.head.members'),
   },
   {
+    width: 'auto',
     title: t('modules.storage.fileTable.head.lastModified'),
   },
 ];

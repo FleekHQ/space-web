@@ -37,6 +37,7 @@ const ShareBox = ({
         <div className={classes.objectsList}>
           {objectsList.map((obj) => (
             <Button
+              key={obj.name}
               disableRipple
               className={classes.objectItem}
               onClick={() => onObjectClick(obj)}
