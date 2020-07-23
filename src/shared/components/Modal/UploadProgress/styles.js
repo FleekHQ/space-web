@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { DETAILS_PANEL_WIDTH } from '@shared/components/Layout/components/DetailsPanel/styles';
+import { DETAILS_PANEL_WIDTH } from '@shared/components/DetailsPanel/styles';
 import { SIDEBAR_WIDTH } from '@shared/components/Layout/components/Sidebar/styles';
 
 export default makeStyles((theme) => ({
