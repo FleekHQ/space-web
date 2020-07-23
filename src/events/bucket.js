@@ -9,13 +9,13 @@ import {
 
 import store from '../store';
 
-const EVENT_PREFIX = 'buckets-list';
-const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
-const ERROR_EVENT = `${EVENT_PREFIX}:error`;
-const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
+const EVENT_PREFIX = 'bucket';
+const LIST_FETCH_EVENT = `${EVENT_PREFIX}:list:fetch`;
+const LIST_ERROR_EVENT = `${EVENT_PREFIX}:list:error`;
+const LIST_SUCCESS_EVENT = `${EVENT_PREFIX}:list:success`;
 
-const registerBucketsEvents = () => {
-  ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
+const registerBucketEvents = () => {
+  ipcRenderer.on(LIST_SUCCESS_EVENT, (event, payload) => {
     const bucketsList = get(payload, 'bucketsList', []) || [];
     const buckets = bucketsList.map((obj) => bucketPresenter(obj));
 
@@ -25,7 +25,7 @@ const registerBucketsEvents = () => {
     });
   });
 
-  ipcRenderer.on(ERROR_EVENT, (event, payload) => {
+  ipcRenderer.on(LIST_ERROR_EVENT, (event, payload) => {
     store.dispatch({
       payload,
       type: SET_ERROR_STATE,
@@ -39,7 +39,7 @@ export const fetchBuckets = () => {
     type: SET_LOADING_STATE,
   });
 
-  ipcRenderer.send(FETCH_EVENT);
+  ipcRenderer.send(LIST_FETCH_EVENT);
 };
 
-export default registerBucketsEvents;
+export default registerBucketEvents;

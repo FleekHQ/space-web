@@ -33,7 +33,6 @@ const registerEventStream = () => {
     store.dispatch({
       type: ADD_OBJECT,
       payload: objectPresenter(payload),
-      bucket,
     });
   });
 
@@ -41,7 +40,6 @@ const registerEventStream = () => {
     store.dispatch({
       type: DELETE_OBJECT,
       payload: objectPresenter(payload),
-      bucket,
     });
   });
 
@@ -49,7 +47,6 @@ const registerEventStream = () => {
     store.dispatch({
       type: UPDATE_OBJECT,
       payload: objectPresenter(payload),
-      bucket,
     });
   });
 };

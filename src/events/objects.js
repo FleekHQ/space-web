@@ -21,25 +21,21 @@ const SUCCESS_DIR_EVENT = `${EVENT_PREFIX}:successDir`;
 const registerObjectsEvents = () => {
   ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
     const entries = get(payload, 'entries', []) || [];
-    const bucket = get(payload, 'bucket');
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
       payload: objects,
       type: STORE_OBJECTS,
-      bucket,
     });
   });
 
   ipcRenderer.on(SUCCESS_DIR_EVENT, (event, payload) => {
     const entries = get(payload, 'entries', []) || [];
-    const bucket = get(payload, 'bucket');
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
       payload: objects,
       type: STORE_DIR,
-      bucket,
     });
   });
 

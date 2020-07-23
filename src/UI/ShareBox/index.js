@@ -20,7 +20,7 @@ const ShareBox = ({
     <div className={classes.root}>
       <div className={classes.header}>
         <Avatar
-          username={user.username}
+          username={user.username || ' '}
           imgUrl={user.imgUrl}
           size={23}
           className={classes.avatar}
@@ -71,7 +71,8 @@ const ShareBox = ({
 ShareBox.propTypes = {
   user: PropTypes.shape({
     imgUrl: PropTypes.string,
-    username: PropTypes.string.isRequired,
+    username: PropTypes.string,
+    publicKey: PropTypes.string,
   }).isRequired,
   i18n: PropTypes.shape({
     subtitle: PropTypes.string.isRequired,
