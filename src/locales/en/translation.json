@@ -87,6 +87,10 @@
           "lastModified": "Last Modified",
           "size": "Size"
         }
+      },
+      "sharedBy": {
+        "mostRecentShared": "Most Recently Shared",
+        "viewAll": "View All"
       }
     },
     "signup": {

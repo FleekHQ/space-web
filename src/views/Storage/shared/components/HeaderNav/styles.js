@@ -3,11 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: {
     display: 'flex',
-    height: '100%',
+    padding: '0 18px',
   },
-  mainContent: {
+  forwardButton: {
+    margin: '0 18px 0 8px',
+  },
+  searchField: {
     flexGrow: 1,
-    backgroundColor: theme.palette.palette.gray5,
-    minWidth: 0,
+  },
+  icon: {
+    color: theme.palette.palette.gray1,
   },
 }));

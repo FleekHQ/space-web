@@ -21,6 +21,7 @@ const ObjectsTable = ({
   renderRow,
   withRowOptions,
   getRedirectUrl,
+  bucket,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -67,6 +68,7 @@ const ObjectsTable = ({
     dispatch({
       payload,
       type: UPDATE_OBJECTS,
+      bucket,
     });
   };
 
@@ -96,6 +98,7 @@ const ObjectsTable = ({
     dispatch({
       type: UPDATE_OBJECTS,
       payload: newRows,
+      bucket,
     });
   };
 
@@ -117,6 +120,7 @@ const ObjectsTable = ({
     dispatch({
       type: UPDATE_OBJECTS,
       payload: newRows,
+      bucket,
     });
   };
 
@@ -134,6 +138,7 @@ const ObjectsTable = ({
           pivote: false,
           selected: false,
         })),
+        bucket,
       });
     }
   };
@@ -219,6 +224,7 @@ ObjectsTable.propTypes = {
   })).isRequired,
   renderRow: PropTypes.func.isRequired,
   getRedirectUrl: PropTypes.func.isRequired,
+  bucket: PropTypes.string.isRequired,
   withRowOptions: PropTypes.bool,
 };
 

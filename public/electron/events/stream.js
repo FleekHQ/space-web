@@ -24,6 +24,7 @@ const registerEventStream = (mainWindow) => {
           ipfsHash: entry.getIpfshash(),
           sizeInBytes: entry.getSizeinbytes(),
           fileExtension: entry.getFileextension(),
+          bucket: 'personal',
         },
       );
     }

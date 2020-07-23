@@ -12,9 +12,10 @@ import useStyles from './styles';
 
 const DetailsPanel = () => {
   const classes = useStyles();
-  const selectedObjects = useSelector((state) => (
-    state.storage.objects.filter(({ selected }) => selected)
-  ));
+  const selectedObjects = useSelector((state) => {
+    const bucket = state.storage.buckets.personal || { objects: [] };
+    return bucket.objects.filter(({ selected }) => selected);
+  });
 
   const onInviteMembers = () => {
     const bucket = get(selectedObjects, '[0].bucket');

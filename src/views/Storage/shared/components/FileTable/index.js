@@ -32,6 +32,7 @@ const FileTable = (props) => {
 
   return (
     <ObjectsTable
+      bucket={bucket}
       rows={rows}
       heads={getTableHeads(t)}
       renderRow={renderRow}
