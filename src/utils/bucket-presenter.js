@@ -17,6 +17,7 @@ const bucketPresenter = (bucket = {}) => {
     updatedAt,
     membersList,
     isSelectGroupBucket,
+    selected: name === 'bucket-19',
   };
 };
 
