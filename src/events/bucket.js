@@ -3,8 +3,8 @@ import { ipcRenderer } from 'electron';
 import { bucketPresenter } from '@utils';
 import {
   STORE_BUCKETS,
-  SET_ERROR_STATE,
-  SET_LOADING_STATE,
+  SET_BUCKETS_LIST_ERROR_STATE,
+  SET_BUCKETS_LIST_LOADING_STATE,
 } from '@reducers/storage';
 
 import store from '../store';
@@ -28,7 +28,7 @@ const registerBucketEvents = () => {
   ipcRenderer.on(LIST_ERROR_EVENT, (event, payload) => {
     store.dispatch({
       payload,
-      type: SET_ERROR_STATE,
+      type: SET_BUCKETS_LIST_ERROR_STATE,
     });
   });
 };
@@ -36,7 +36,7 @@ const registerBucketEvents = () => {
 export const fetchBuckets = () => {
   store.dispatch({
     payload: true,
-    type: SET_LOADING_STATE,
+    type: SET_BUCKETS_LIST_LOADING_STATE,
   });
 
   ipcRenderer.send(LIST_FETCH_EVENT);

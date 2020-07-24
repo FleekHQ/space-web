@@ -5,7 +5,7 @@ const { listDirectory } = require('./objects');
 
 const EVENT_PREFIX = 'bucket';
 const LIST_FETCH_EVENT = `${EVENT_PREFIX}:list:fetch`;
-const LIST_ERROR_EVENT = `${EVENT_PREFIX}:list:error`;
+// const LIST_ERROR_EVENT = `${EVENT_PREFIX}:list:error`;
 const LIST_SUCCESS_EVENT = `${EVENT_PREFIX}:list:success`;
 
 const fakeListBucketsSuccess = (mainWindow) => {
@@ -88,7 +88,8 @@ const listBuckets = async (
       });
     });
   } catch (error) {
-    mainWindow.webContents.send(LIST_ERROR_EVENT, error);
+    // uncomment when method will be implemented
+    // mainWindow.webContents.send(LIST_ERROR_EVENT, error);
     fakeListBucketsSuccess(mainWindow);
   }
 };

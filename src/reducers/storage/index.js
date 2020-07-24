@@ -23,12 +23,15 @@ const DEFAULT_STATE = {
   },
   uploadError: null,
   uploadsList: {},
+  bucketsListLoading: false,
 };
 
 export const SET_ERROR_STATE = 'SET_ERROR_STATE';
 export const SET_LOADING_STATE = 'SET_LOADING_STATE';
+export const SET_BUCKETS_LIST_LOADING_STATE = 'SET_BUCKETS_LIST_LOADING_STATE';
 export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
 export const SET_UPLOAD_ERROR_STATE = 'SET_UPLOAD_ERROR_STATE';
+export const SET_BUCKETS_LIST_ERROR_STATE = 'SET_BUCKETS_LIST_ERROR_STATE';
 export const SET_UPLOAD_SUCCESS_STATE = 'SET_UPLOAD_SUCCESS_STATE';
 
 export default (state = DEFAULT_STATE, action) => {
@@ -47,10 +50,25 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
+    case SET_BUCKETS_LIST_LOADING_STATE: {
+      return {
+        ...state,
+        bucketsListLoading: action.payload,
+      };
+    }
+
     case SET_ERROR_STATE: {
       return {
         ...state,
         loading: false,
+        error: action.payload,
+      };
+    }
+
+    case SET_BUCKETS_LIST_ERROR_STATE: {
+      return {
+        ...state,
+        bucketsListLoading: false,
         error: action.payload,
       };
     }
@@ -69,6 +87,7 @@ export default (state = DEFAULT_STATE, action) => {
     case STORE_BUCKETS: {
       return {
         ...state,
+        bucketsListLoading: false,
         buckets: action.payload.reduce((result, bucketData) => ({
           ...result,
           [bucketData.name]: bucketReducer(state.buckets[bucketData.name], {

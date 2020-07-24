@@ -19,4 +19,10 @@ export default makeStyles({
   itemWrapper: {
     marginBottom: 11,
   },
+  centerText: {
+    position: 'absolute',
+    top: '30vh',
+    left: '50vw',
+    transform: 'translateX(-50%)',
+  },
 });
