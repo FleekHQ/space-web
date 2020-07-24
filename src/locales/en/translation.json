@@ -92,6 +92,13 @@
       "sharedBy": {
         "mostRecentShared": "Most Recently Shared",
         "viewAll": "View All"
+      },
+      "detailsPanel": {
+        "title": "Details Panel",
+        "message": {
+          "members": "Select a bucket to see a detailed breakdown.",
+          "files": "Select a file or folder to see a detailed breakdown."
+        }
       }
     },
     "signup": {

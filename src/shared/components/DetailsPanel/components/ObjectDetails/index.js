@@ -5,7 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { formatDate, formatHour } from '@utils';
 import useStyles from './styles';
 
-const ObjectDetails = ({ bytesSize, created, lastModified }) => {
+const ObjectDetails = ({
+  created,
+  bytesSize,
+  lastModified,
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -18,15 +22,21 @@ const ObjectDetails = ({ bytesSize, created, lastModified }) => {
       label: t('detailsPanel.objectDetails.size'),
       value: bytesSize,
     },
-    {
+  ];
+
+  if (created) {
+    dataSet.push({
       label: t('detailsPanel.objectDetails.created'),
       value: formatTime(created),
-    },
-    {
+    });
+  }
+
+  if (lastModified) {
+    dataSet.push({
       label: t('detailsPanel.objectDetails.lastModified'),
       value: formatTime(lastModified),
-    },
-  ];
+    });
+  }
 
   return (
     <div className={classes.root}>
@@ -44,10 +54,15 @@ const ObjectDetails = ({ bytesSize, created, lastModified }) => {
   );
 };
 
+ObjectDetails.defaultProps = {
+  created: null,
+  lastModified: null,
+};
+
 ObjectDetails.propTypes = {
+  created: PropTypes.instanceOf(Date),
+  lastModified: PropTypes.instanceOf(Date),
   bytesSize: PropTypes.string.isRequired,
-  created: PropTypes.instanceOf(Date).isRequired,
-  lastModified: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default ObjectDetails;
