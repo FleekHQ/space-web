@@ -52,7 +52,7 @@ const AvatarHeader = ({ objects }) => {
         </Box>
       </Typography>
       <br />
-      <Button fullWidth variant="outlined" className={classes.menuBtn}>
+      <Button fullWidth variant="outlined">
         <FontAwesomeIcon icon={faEllipsisH} />
       </Button>
     </div>
