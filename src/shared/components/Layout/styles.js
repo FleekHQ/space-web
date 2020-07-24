@@ -4,9 +4,11 @@ export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     height: '100%',
+    backgroundColor: theme.palette.palette.gray5,
   },
   mainContent: {
     flexGrow: 1,
-    backgroundColor: theme.palette.palette.gray5,
+    minWidth: 0,
+    display: 'flex',
   },
 }));

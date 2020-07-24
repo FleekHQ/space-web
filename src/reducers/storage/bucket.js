@@ -1,36 +1,24 @@
 import uniqBy from 'lodash/uniqBy';
 
-const DEFAULT_STATE = {
-  error: null,
-  objects: [],
-  loading: false,
-  searchTerm: '',
-  buckets: {
-    error: null,
-    isLoading: false,
-  },
-  uploadError: null,
-  uploadsList: {},
-};
-
 export const STORE_DIR = 'STORE_DIR';
 export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
 export const DELETE_OBJECT = 'DELETE_OBJECT';
 export const UPDATE_OBJECT = 'UPDATE_OBJECT';
 export const UPDATE_OBJECTS = 'UPDATE_OBJECTS';
-export const SET_ERROR_STATE = 'SET_ERROR_STATE';
-export const SET_LOADING_STATE = 'SET_LOADING_STATE';
-export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
-export const SET_UPLOAD_ERROR_STATE = 'SET_UPLOAD_ERROR_STATE';
-export const SET_UPLOAD_SUCCESS_STATE = 'SET_UPLOAD_SUCCESS_STATE';
+export const STORE_BUCKETS = 'STORE_BUCKETS';
+
+const DEFAULT_STATE = {
+  membersList: [],
+  objects: [],
+};
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-    case SEARCH_TERM_CHANGE: {
+    case STORE_BUCKETS: {
       return {
         ...state,
-        searchTerm: action.payload,
+        ...action.payload,
       };
     }
 
@@ -42,7 +30,6 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         objects,
-        loading: false,
       };
     }
 
@@ -55,22 +42,6 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         objects,
-        loading: false,
-      };
-    }
-
-    case SET_LOADING_STATE: {
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    }
-
-    case SET_ERROR_STATE: {
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
       };
     }
 
@@ -83,7 +54,6 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         objects: uniqBy(objects, 'fullKey'),
-        loading: false,
       };
     }
 
@@ -114,17 +84,6 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         objects: action.payload.concat(newObjs),
-      };
-    }
-
-    case SET_UPLOAD_ERROR_STATE:
-    case SET_UPLOAD_SUCCESS_STATE: {
-      return {
-        ...state,
-        uploadsList: {
-          ...state.uploadsList,
-          [action.payload.id]: action.payload.payload,
-        },
       };
     }
 

@@ -1,22 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Typography from '@ui/Typography';
-import { useTranslation } from 'react-i18next';
+
 import useStyles from './styles';
 
-const Empty = () => {
+const Empty = ({
+  title,
+  message,
+}) => {
   const classes = useStyles();
-  const { t } = useTranslation();
 
   return (
     <div className={classes.root}>
       <Typography variant="h6" className={classes.title}>
-        {t('detailsPanel.title')}
+        {title}
       </Typography>
       <Typography variant="body2" color="secondary">
-        {t('detailsPanel.message')}
+        {message}
       </Typography>
     </div>
   );
+};
+
+Empty.propTypes = {
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 export default Empty;

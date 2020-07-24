@@ -43,6 +43,7 @@
       "lastModified": "Last Modified:"
     },
     "share": {
+      "share": "Share",
       "copy": "Copy Link",
       "copied": "Copied to clipboard!",
       "invite": "Invite Members",
@@ -87,6 +88,18 @@
           "lastModified": "Last Modified",
           "size": "Size"
         }
+      },
+      "sharedBy": {
+        "mostRecentShared": "Most Recently Shared",
+        "viewAll": "View All",
+        "emptyList": "No shared files"
+      },
+      "detailsPanel": {
+        "title": "Details Panel",
+        "message": {
+          "members": "Select a bucket to see a detailed breakdown.",
+          "files": "Select a file or folder to see a detailed breakdown."
+        }
       }
     },
     "signup": {
@@ -115,7 +128,11 @@
       "copyLink": "Copy link",
       "createLink": "Create link",
       "emailPlaceholder": "Add a message (optional)",
-      "shareEmailButton": "Share"
+      "shareEmailButton": "Share",
+      "errors": {
+        "invalidEmail": "Email is invalid",
+        "duplicateEmail": "This email is already selected"
+      }
     }
   }
 }

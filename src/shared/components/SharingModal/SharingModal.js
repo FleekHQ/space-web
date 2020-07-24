@@ -30,8 +30,8 @@ const SharingModal = (props) => {
   const { t } = useTranslation();
 
   const [emailBody, setEmailBody] = useState('');
+  const [showEmailBody, setShowEmailBody] = useState(false);
   const [emailAddresses, setEmailAddresses] = useState([]);
-
   const i18n = {
     memberInput: {
       to: t('modals.sharingModal.to'),
@@ -53,6 +53,10 @@ const SharingModal = (props) => {
     email: {
       placeholder: t('modals.sharingModal.emailPlaceholder'),
       shareButton: t('modals.sharingModal.shareEmailButton'),
+    },
+    emailErrors: {
+      invalidEmail: t('modals.sharingModal.errors.invalidEmail'),
+      duplicateEmail: t('modals.sharingModal.errors.duplicateEmail'),
     },
   };
 
@@ -76,10 +80,14 @@ const SharingModal = (props) => {
         onChange={onChangeInputPermissions}
         setEmailAddresses={setEmailAddresses}
         emailAddresses={emailAddresses}
+        showEmailBody={showEmailBody}
+        setShowEmailBody={setShowEmailBody}
+        setEmailBody={setEmailBody}
         collaborators={collaborators}
+        emailErrors={i18n.emailErrors}
       />
       {
-        emailAddresses.length > 0 ? (
+        showEmailBody ? (
           <>
             <EmailBodyInput
               placeholder={i18n.email.placeholder}
@@ -90,6 +98,7 @@ const SharingModal = (props) => {
               className={classes.footer}
               shareButtonText={i18n.email.shareButton}
               onSendEmailClick={() => onSendEmailClick(emailAddresses, emailBody)}
+              disabled={emailAddresses.length === 0}
             />
           </>
         ) : (

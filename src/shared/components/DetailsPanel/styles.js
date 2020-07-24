@@ -10,7 +10,4 @@ export default makeStyles((theme) => ({
     boxSizing: 'border-box',
     backgroundColor: theme.palette.palette.white,
   },
-  divider: {
-    borderTop: `1px solid ${theme.palette.palette.gray5}`,
-  },
 }));

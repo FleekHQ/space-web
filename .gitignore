@@ -24,3 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 dist/
 .env
+
+#yalc
+.yalc
+yalc.lock

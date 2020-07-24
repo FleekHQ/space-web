@@ -29,15 +29,15 @@ storiesOf(categoryName, module).add('default', () => {
       {
         id: 'morochroyce@gmail.com',
         mainText: 'Peter Adams',
-        secondaryText: 'morochroyce@gmail.com',
+        secondaryText: 'morochroyce@gmail.comaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
         isOwner: true,
       },
       {
         id: 'morochgfx@gmail.com',
-        mainText: 'morochgfx@gmail.com',
-        secondaryText: 'Outside of Team',
+        mainText: 'Royce',
+        secondaryText: 'morochgfx@gmail.com',
         permissionsId: 'view',
       },
       {
@@ -48,15 +48,15 @@ storiesOf(categoryName, module).add('default', () => {
         permissionsId: 'edit',
       },
       {
-        id: 'morochroyce@gmail.com2',
-        mainText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus recusandae est nobis quia exercitationem error harum ex laborum molestiae beatae molestias itaque voluptas soluta, eos dignissimos! In inventore autem asperiores!',
-        secondaryText: 'morochroyceconsecteturadipisicing@gmail.com',
+        id: 'lorelipsum.com',
+        mainText: 'Lorem ipsum',
+        secondaryText: 'lorelipsum@gmail.com',
         permissionsId: 'edit',
       },
       {
         id: 'asd123@gmail.com',
-        mainText: 'asd123@gmail.com',
-        secondaryText: 'Outside of Team',
+        mainText: 'asd123',
+        secondaryText: 'asd123@gmail.com',
         permissionsId: 'view',
       },
       {

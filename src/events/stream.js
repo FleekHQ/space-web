@@ -29,21 +29,21 @@ const registerEventStream = () => {
     console.log(ERROR_EVENT, event, payload);
   });
 
-  ipcRenderer.on(ENTRY_ADDED_EVENT, (event, payload) => {
+  ipcRenderer.on(ENTRY_ADDED_EVENT, (event, { bucket, ...payload }) => {
     store.dispatch({
       type: ADD_OBJECT,
       payload: objectPresenter(payload),
     });
   });
 
-  ipcRenderer.on(ENTRY_DELETED_EVENT, (event, payload) => {
+  ipcRenderer.on(ENTRY_DELETED_EVENT, (event, { bucket, ...payload }) => {
     store.dispatch({
       type: DELETE_OBJECT,
       payload: objectPresenter(payload),
     });
   });
 
-  ipcRenderer.on(ENTRY_UPDATED_EVENT, (event, payload) => {
+  ipcRenderer.on(ENTRY_UPDATED_EVENT, (event, { bucket, ...payload }) => {
     store.dispatch({
       type: UPDATE_OBJECT,
       payload: objectPresenter(payload),

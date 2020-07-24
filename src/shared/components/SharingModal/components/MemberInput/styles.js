@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -11,4 +11,17 @@ export default makeStyles({
       paddingRight: 0,
     },
   },
-});
+  emailError: {
+    textAlign: 'center',
+    margin: '8px 0 -8px 0',
+    color: theme.palette.palette.red,
+  },
+  option: {
+    '&&& p': {
+      textOverflow: 'ellipsis',
+      display: 'inline-block',
+      overflow: 'hidden',
+      width: 215,
+    },
+  },
+}));

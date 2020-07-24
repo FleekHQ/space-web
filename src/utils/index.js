@@ -5,3 +5,4 @@ export { default as objectsSelector } from './objects-selector';
 export { default as stringToColor } from './string-to-color';
 export { default as formatHour } from './format-hour';
 export { default as formatDate } from './format-date';
+export { default as bucketPresenter } from './bucket-presenter';

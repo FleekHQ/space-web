@@ -31,6 +31,7 @@ UIAvatar.defaultProps = {
   imgUrl: null,
   children: null,
   className: '',
+  username: ' ',
 };
 
 UIAvatar.propTypes = {
@@ -38,7 +39,7 @@ UIAvatar.propTypes = {
   imgUrl: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
 };
 
 export default UIAvatar;

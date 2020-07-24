@@ -37,6 +37,7 @@ export default makeStyles((theme) => ({
     padding: '4px 0',
     width: '100%',
     justifyContent: 'flex-start',
+    textTransform: 'initial',
   },
   viewAllBtn: {
     padding: 5,
