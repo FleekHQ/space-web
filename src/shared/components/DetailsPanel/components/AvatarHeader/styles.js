@@ -11,11 +11,17 @@ export default makeStyles({
     justifyContent: 'center',
     '& > *': {
       margin: ({ objectsLength }) => {
-        if (objectsLength === 1) {
-          return 0;
+        let margin = 0;
+
+        if (objectsLength > 1 && objectsLength <= 4) {
+          margin = 5;
         }
 
-        return 3;
+        if (objectsLength > 4) {
+          margin = 3;
+        }
+
+        return margin;
       },
     },
   },
