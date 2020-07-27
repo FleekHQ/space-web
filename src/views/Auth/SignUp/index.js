@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
@@ -89,17 +89,6 @@ const SignUp = () => {
           InputLabelProps={InputLabelProps}
           onChange={handleInputChange({ dispatch })}
         />
-        <TextField
-          id="tfEmail"
-          type="email"
-          variant="outlined"
-          value={state.tfEmail}
-          label={t('modules.signup.email')}
-          classes={tfClasses}
-          InputProps={InputProps}
-          InputLabelProps={InputLabelProps}
-          onChange={handleInputChange({ dispatch })}
-        />
         <Button
           fullWidth
           type="submit"
@@ -113,19 +102,26 @@ const SignUp = () => {
           {
             state.loading ? (
               <FontAwesomeIcon spin icon={faSpinner} size="lg" />
-            ) : t('modules.signup.explore')
+            ) : t('modules.signup.title')
           }
         </Button>
+        {
+          state.error && (
+            <div className={classes.alert}>
+              <Typography noWrap color="inherit" variant="body2">
+                {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
+              </Typography>
+            </div>
+          )
+        }
       </form>
-      {
-        state.error && (
-          <div className={classes.alert}>
-            <Typography noWrap color="inherit" variant="body2">
-              {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
-            </Typography>
-          </div>
-        )
-      }
+      <Typography
+        to="/auth/signin"
+        component={Link}
+        className={classes.link}
+      >
+        {t('modules.signup.link')}<strong>&nbsp;{t('modules.signin.title')}</strong>
+      </Typography>
     </div>
   );
 };

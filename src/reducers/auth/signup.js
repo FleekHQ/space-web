@@ -2,7 +2,6 @@ const DEFAULT_STATE = {
   error: null,
   success: false,
   loading: false,
-  tfEmail: '',
   tfUsername: '',
 };
 
