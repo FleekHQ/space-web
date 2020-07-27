@@ -1,11 +1,8 @@
 import React from 'react';
-import get from 'lodash/get';
-import qs from 'query-string';
+import PropTypes from 'prop-types';
 import { shareItems } from '@events/share';
-import { closeModal } from '@events/modal';
-import { useLocation } from 'react-router-dom';
+import BaseModal from '@ui/BaseModal';
 import SharingModal from '@shared/components/SharingModal';
-
 import useStyles from './styles';
 
 const collaboratorsMock = [
@@ -50,8 +47,7 @@ const collaboratorsMock = [
   },
 ];
 
-const Sharing = () => {
-  const location = useLocation();
+const Sharing = ({ bucket, itemPaths, closeModal }) => {
   const classes = useStyles();
 
   /* eslint-disable no-console */
@@ -68,11 +64,6 @@ const Sharing = () => {
   };
 
   const onSendEmailClick = (members, message) => {
-    const query = qs.parse(location.search);
-
-    const bucket = get(query, 'bucket', 'personal');
-    const itemPaths = get(query, 'itemPaths', []);
-
     const payload = {
       bucket,
       customMessage: message,
@@ -90,18 +81,31 @@ const Sharing = () => {
   };
 
   return (
-    <SharingModal
-      ext="folder"
-      filename="folder"
-      shareLink={false}
-      className={classes.root}
-      collaborators={collaboratorsMock}
-      onShareLinkClick={onShareLinkClick}
-      onChangeUserPermissions={onChangeUserPermissions}
-      onChangeInputPermissions={onChangeInputPermissions}
-      onSendEmailClick={onSendEmailClick}
-    />
+    <BaseModal onClose={closeModal} maxWidth={460}>
+      <SharingModal
+        ext="folder"
+        filename="folder"
+        shareLink={false}
+        className={classes.root}
+        collaborators={collaboratorsMock}
+        onShareLinkClick={onShareLinkClick}
+        onChangeUserPermissions={onChangeUserPermissions}
+        onChangeInputPermissions={onChangeInputPermissions}
+        onSendEmailClick={onSendEmailClick}
+      />
+    </BaseModal>
   );
+};
+
+Sharing.defaultProps = {
+  bucket: 'personal',
+  itemPaths: [],
+};
+
+Sharing.propTypes = {
+  bucket: PropTypes.string,
+  itemPaths: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default Sharing;
