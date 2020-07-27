@@ -6,6 +6,8 @@
     "at": "at",
     "remove": "Remove",
     "owner": "Owner",
+    "save": "Save",
+    "cancel": "Cancel",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -132,6 +134,15 @@
       "errors": {
         "invalidEmail": "Email is invalid",
         "duplicateEmail": "This email is already selected"
+      },
+      "shareLink": {
+        "title": "Share via Password Protected Link",
+        "resetLink": "Reset link",
+        "createLink": "Create Link",
+        "passwordPlaceholder": "Enter password for link",
+        "copyLink": "Copy Link",
+        "tooltipContent": "This password is used by the receiving user to open the file being sent. Do not use your Space password.",
+        "tooltipButton": "Okay"
       }
     }
   }
