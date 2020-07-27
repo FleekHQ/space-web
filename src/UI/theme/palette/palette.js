@@ -17,6 +17,7 @@ const blue4 = '#b2d3ff';
 const blue5 = '#e9e8f9';
 const red = '#ef6a6e';
 const yellow = '#FFD700';
+const green = '#00a83e';
 
 const palette = {
   black,
@@ -38,6 +39,7 @@ const palette = {
   blue5,
   red,
   yellow,
+  green,
 };
 
 export default palette;

@@ -3,7 +3,7 @@ import {
   SET_UPLOAD_SUCCESS_STATE, SET_UPLOAD_ERROR_STATE,
 } from '@reducers/storage';
 import {
-  openModal, UPLOAD_PROGRESS_MODAL,
+  openModal, UPLOAD_PROGRESS_TOAST,
 } from '@shared/components/Modal/actions';
 
 import store from '../store';
@@ -30,7 +30,7 @@ const registerAddItemsSubscribeEvents = () => {
 };
 
 export const addItems = (payload) => {
-  const modalId = store.dispatch(openModal(UPLOAD_PROGRESS_MODAL));
+  const modalId = store.dispatch(openModal(UPLOAD_PROGRESS_TOAST));
   ipcRenderer.send(SUBSCRIBE_START_EVENT, { id: modalId, payload });
 };
 

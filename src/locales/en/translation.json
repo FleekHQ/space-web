@@ -118,6 +118,11 @@
     "dismiss": "Dismiss",
     "defaultMessage": "Upload in progress..."
   },
+  "sharingProgressModal": {
+    "message": "Shared <0>{{fileName}}",
+    "inProgress": "Sharing <0>{{fileName}}...",
+    "dismiss": "Close"
+  },
   "modals": {
     "sharingModal": {
       "to": "To",
