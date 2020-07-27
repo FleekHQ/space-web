@@ -18,6 +18,8 @@ const HeaderNav = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const { location } = history;
+
   const { searchTerm } = useSelector((state) => ({
     searchTerm: get(state, 'storage.searchTerm', ''),
   }));
@@ -26,12 +28,26 @@ const HeaderNav = () => {
     <div className={classes.root}>
       <FolderNavButton
         direction="back"
-        onClick={() => history.goBack()}
+        onClick={() => {
+          const isFileRootPath = /^\/storage\/files\/?$/.test(location.pathname);
+          const isSharedRootPath = /^\/storage\/shared-by\/?$/.test(location.pathname);
+
+          if (!isFileRootPath && !isSharedRootPath) {
+            history.goBack();
+          }
+        }}
       />
       <FolderNavButton
         direction="forward"
         className={classes.forwardButton}
-        onClick={() => history.goForward()}
+        onClick={() => {
+          const isFilePath = /^\/storage\/files\/.*/.test(location.pathname);
+          const isStoragePath = /^\/storage\/shared-by\/.*/.test(location.pathname);
+
+          if (isFilePath || isStoragePath) {
+            history.goForward();
+          }
+        }}
       />
       <TextField
         variant="filled"

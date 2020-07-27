@@ -14,8 +14,8 @@ import SharedByList from './components/SharedByList';
 import useStyles from './styles';
 
 const SharedWithMeView = () => {
-  const match = useRouteMatch();
   const classes = useStyles();
+  const match = useRouteMatch();
 
   return (
     <div className={classes.root}>
