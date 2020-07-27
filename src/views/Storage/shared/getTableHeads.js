@@ -5,7 +5,7 @@ export default (t) => [
   },
   {
     width: '29%',
-    title: t('modules.storage.fileTable.head.members'),
+    title: t('modules.storage.fileTable.head.size'),
   },
   {
     width: 'auto',
