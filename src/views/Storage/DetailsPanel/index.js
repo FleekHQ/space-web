@@ -1,11 +1,11 @@
 import React from 'react';
 import get from 'lodash/get';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
 
 import { objectsSelector } from '@utils';
-import { openShareModal } from '@events/modal';
+import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
 import DetailsPanel, {
   Empty,
   Header,
@@ -15,13 +15,12 @@ import DetailsPanel, {
   ObjectDetails,
 } from '@shared/components/DetailsPanel';
 
-import { modalKeys } from '../../Modal/modals';
-
 import { OBJECT_TYPES } from './constants';
 
 const StorageDetailsPanel = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const dispatch = useDispatch();
   const { user, objectsType, selectedObjects } = useSelector((state) => {
     let prefix;
     let bucket;
@@ -75,10 +74,7 @@ const StorageDetailsPanel = () => {
   const handleShare = () => {
     const bucket = get(selectedObjects, '[0].bucket');
     const itemPaths = selectedObjects.map((item) => item.key);
-
-    const query = { bucket, itemPaths };
-
-    openShareModal({ route: modalKeys.sharing, query });
+    dispatch(openModal(SHARING_MODAL, { bucket, itemPaths }));
   };
 
   return (

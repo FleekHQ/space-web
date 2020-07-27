@@ -1,5 +1,5 @@
 const registerAuthEvents = require('./auth');
-const registerModalEvents = require('./modal');
+// const registerModalEvents = require('./modal');
 const registerEventStream = require('./stream');
 const registerTxlSubscribe = require('./txl-subscribe');
 const registerObjectsEvents = require('./objects').default;
@@ -17,7 +17,7 @@ const registerEvents = ({
   const txlStream = registerTxlSubscribe(mainWindow);
 
   registerAuthEvents(mainWindow);
-  registerModalEvents(mainWindow);
+  // registerModalEvents(mainWindow);
   registerShareUpdate(mainWindow);
   registerObjectsEvents(mainWindow);
   registerAddItemsSubscribe(mainWindow);

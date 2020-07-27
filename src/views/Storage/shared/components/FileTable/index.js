@@ -8,6 +8,7 @@ import { addItems } from '@events';
 import { objectsSelector } from '@utils';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import ObjectsTable from '@shared/components/ObjectsTable';
+import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
 import { renderRow } from '../../renderRow';
 import getTableHeads from '../../getTableHeads';
@@ -19,20 +20,21 @@ const FileTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const rows = useSelector((state) => (
-    /* eslint-disable no-underscore-dangle */
+  const [rows, isSharingModalVisible] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
       prefix,
       '/',
-    )
-  ));
+    ),
+    state.modals.some((modal) => modal.type === SHARING_MODAL),
+  ]);
 
   const handleTableOutsideClick = (target) => {
     // avoid unselecting if user interact with detail panel
-    const detailePanel = document.getElementById('storage-detail-panel');
-    if (detailePanel && detailePanel.contains(target)) {
+    const detailsPanel = document.getElementById('storage-detail-panel');
+    const clickedInDetailsPanel = detailsPanel && detailsPanel.contains(target);
+    if (isSharingModalVisible || clickedInDetailsPanel) {
       return;
     }
 

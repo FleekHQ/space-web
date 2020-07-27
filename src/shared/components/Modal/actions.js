@@ -6,6 +6,7 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 
 /* Modal Ids */
 export const UPLOAD_PROGRESS_MODAL = 'UPLOAD_PROGRESS_MODAL';
+export const SHARING_MODAL = 'SHARING_MODAL';
 
 /* Action creators */
 export const openModal = (modalType, props = {}) => (dispatch) => {

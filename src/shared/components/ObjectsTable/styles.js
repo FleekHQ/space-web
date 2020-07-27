@@ -33,5 +33,7 @@ export default makeStyles((theme) => ({
   tableWrapper: {
     flexGrow: 1,
     padding: 6,
+    minHeight: 0,
+    overflow: 'auto',
   },
 }));

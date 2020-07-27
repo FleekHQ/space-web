@@ -60,6 +60,7 @@ const PermissionsDropdown = (props) => {
         open={open}
         role={undefined}
         anchorEl={anchorRef.current}
+        className={classes.popper}
       >
         {({ TransitionProps, placement }) => (
           /* eslint-disable react/jsx-props-no-spreading */

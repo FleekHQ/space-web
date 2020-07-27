@@ -22,4 +22,7 @@ export default makeStyles((theme) => ({
   danger: {
     color: theme.palette.palette.red,
   },
+  popper: {
+    zIndex: theme.zIndex.modal,
+  },
 }));
