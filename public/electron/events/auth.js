@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron');
 
-const spaceClient = require('../space-client');
+const { spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'auth';
 const SIGNUP_EVENT = `${EVENT_PREFIX}:signup`;
