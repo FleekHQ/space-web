@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import SignUp from './SignUp';
+// import SignIn from './SignIn';
 
 import useStyles from './styles';
 
@@ -18,8 +19,13 @@ const Auth = () => {
 
   return (
     <div className={classes.root}>
-      <img src={`${PUBLIC_URL}/assets/images/auth_logo.svg`} alt="space app logo" />
+      <div className={classes.logoContent}>
+        <img src={`${PUBLIC_URL}/assets/images/auth_logo.svg`} alt="space app logo" />
+      </div>
       <Switch>
+        {/* <Route path={`${match.path}/signin`}>
+          <SignIn />
+        </Route> */}
         <Route path={`${match.path}/signup`}>
           <SignUp />
         </Route>
