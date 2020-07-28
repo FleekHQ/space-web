@@ -4,28 +4,18 @@ import { Link } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 
-import Avatar from '@ui/Avatar';
-
 import useStyles from './styles';
 
 const Breadcrumb = ({
   link,
   name,
-  imgUrl,
+  startAdornment,
 }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      {
-        imgUrl && (
-          <Avatar
-            size={18}
-            imgUrl={imgUrl}
-            username={name}
-          />
-        )
-      }
+      {startAdornment}
       <Typography
         variant="h6"
         to={link}
@@ -41,11 +31,11 @@ const Breadcrumb = ({
 };
 
 Breadcrumb.defaultProps = {
-  imgUrl: null,
+  startAdornment: null,
 };
 
 Breadcrumb.propTypes = {
-  imgUrl: PropTypes.string,
+  startAdornment: PropTypes.node,
   name: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
 };
