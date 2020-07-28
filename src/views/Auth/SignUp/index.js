@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { singup } from '@events';
+import { singup, getPublicKey } from '@events';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import helper from './helper';
@@ -68,13 +68,24 @@ const SignUp = () => {
   }, [state.success]);
 
   React.useEffect(() => {
-    if (state.loading) {
+    if (state.loading && !state.publicKey) {
+      getPublicKey();
+    } else if (state.publicKey) {
       singup({
-        email: state.tfEmail,
+        publicKey: state.publicKey,
         username: state.tfUsername,
       });
     }
   }, [state.loading]);
+
+  React.useEffect(() => {
+    if (state.publicKey) {
+      singup({
+        publicKey: state.publicKey,
+        username: state.tfUsername,
+      });
+    }
+  }, [state.publicKey]);
 
   return (
     <div className={classes.signupRoot}>
