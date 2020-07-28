@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import SignUp from './SignUp';
-import SignIn from './SignIn';
+// import SignIn from './SignIn';
 
 import useStyles from './styles';
 
@@ -23,13 +23,13 @@ const Auth = () => {
         <img src={`${PUBLIC_URL}/assets/images/auth_logo.svg`} alt="space app logo" />
       </div>
       <Switch>
-        <Route path={`${match.path}/signin`}>
+        {/* <Route path={`${match.path}/signin`}>
           <SignIn />
-        </Route>
+        </Route> */}
         <Route path={`${match.path}/signup`}>
           <SignUp />
         </Route>
-        <Redirect to={`${match.path}/signin`} />
+        <Redirect to={`${match.path}/signup`} />
       </Switch>
     </div>
   );

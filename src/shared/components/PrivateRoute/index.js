@@ -17,7 +17,7 @@ const PrivateRoute = ({ children, ...rest }) => {
         }
 
         return (
-          <Redirect to="/auth/signin" />
+          <Redirect to="/auth/signup" />
         );
       }}
     />

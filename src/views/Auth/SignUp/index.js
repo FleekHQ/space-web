@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { /* Link , */ useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
@@ -115,13 +115,13 @@ const SignUp = () => {
           )
         }
       </form>
-      <Typography
+      {/* <Typography
         to="/auth/signin"
         component={Link}
         className={classes.link}
       >
         {t('modules.signup.link')}<strong>&nbsp;{t('modules.signin.title')}</strong>
-      </Typography>
+      </Typography> */}
     </div>
   );
 };
