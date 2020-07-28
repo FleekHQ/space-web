@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import ShareBox, { ShareBoxSkeleton } from '@ui/ShareBox';
 import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 import { fetchBuckets } from '@events';
 import useStyles from './styles';
@@ -69,6 +69,8 @@ const SharedBy = () => {
 
   return (
     <div className={classes.root}>
+      {/* Todo: Remove this */}
+      <Link to="/storage/shared-by/bucket-test">Bucket test</Link>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className={classes.masonryGrid}
