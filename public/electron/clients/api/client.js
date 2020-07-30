@@ -36,8 +36,12 @@ function ApiClient({
   /**
    * Identity endpoints.
    * @name ApiClient#identity
+   * @type {import('./endpoints/identity.js')}
    */
-  this.identity = identityEndpoints;
+  this.identity = Object.keys(identityEndpoints).reduce((identityMethods, key) => ({
+    ...identityMethods,
+    [key]: identityEndpoints[key].bind(this),
+  }), {});
 }
 
 module.exports = ApiClient;
