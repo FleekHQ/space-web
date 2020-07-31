@@ -7,6 +7,7 @@ import registerTxlSubscribeEvents from './txl-subscribe';
 import registerAddItemsSubscribeEvents from './add-items-subscribe';
 import registerBucketEvents from './bucket';
 import registerKeysEvents from './keys';
+import registerNotificationsEvents from './notifications';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -18,6 +19,7 @@ const registerEvents = () => {
   registerAddItemsSubscribeEvents();
   registerBucketEvents();
   registerKeysEvents();
+  registerNotificationsEvents();
 };
 
 export default registerEvents;
@@ -27,3 +29,4 @@ export * from './objects';
 export * from './add-items-subscribe';
 export * from './bucket';
 export * from './keys';
+export * from './notifications';

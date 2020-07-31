@@ -1,7 +1,7 @@
 const { ipcMain, shell } = require('electron');
 const get = require('lodash/get');
 
-const spaceClient = require('../space-client');
+const { spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
