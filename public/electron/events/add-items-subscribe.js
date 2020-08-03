@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron');
 
-const spaceClient = require('../space-client');
+const { spaceClient } = require('../clients');
 const { listDirectory } = require('./objects');
 
 const EVENT_PREFIX = 'addItemsSubscribe';
