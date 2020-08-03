@@ -17,6 +17,7 @@ storiesOf(categoryName, module).add('Button', () => {
     i18n: {
       accept: 'Accept',
       reject: 'Reject',
+      empty: 'No notifications',
       markAsRead: 'Mark all as read',
       notifications: 'Notifications',
     },

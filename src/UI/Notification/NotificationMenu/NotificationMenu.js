@@ -18,6 +18,7 @@ const NotificationMenu = (props) => {
     onMarkAsRead,
     onAcceptInvitation,
     onRejectInvitation,
+    ...menuProps
   } = props;
 
   const classes = useStyles();
@@ -31,6 +32,7 @@ const NotificationMenu = (props) => {
       PopoverClasses={{
         paper: classes.popoverPaper,
       }}
+      {...menuProps}
     >
       <MenuItem className={classes.menuItem} disableRipple>
         <Typography variant="body2">
@@ -39,6 +41,7 @@ const NotificationMenu = (props) => {
         <Button
           color="primary"
           onClick={onMarkAsRead}
+          disabled={items.length < 1}
           className={classes.markAsReadButton}
         >
           <Typography variant="body2" color="inherit">
@@ -46,7 +49,7 @@ const NotificationMenu = (props) => {
           </Typography>
         </Button>
       </MenuItem>
-      {items.map((item) => (
+      {items.length > 0 ? items.map((item) => (
         <NotificationItem
           key={item.id}
           i18n={i18n}
@@ -54,7 +57,17 @@ const NotificationMenu = (props) => {
           onReject={() => onRejectInvitation(item)}
           {...item}
         />
-      ))}
+      )) : (
+        <MenuItem className={classes.menuItem} disableRipple>
+          <Typography
+            variant="body2"
+            align="center"
+            className={classes.empty}
+          >
+            {i18n.empty}
+          </Typography>
+        </MenuItem>
+      )}
     </Menu>
   );
 };
@@ -88,6 +101,7 @@ NotificationMenu.propTypes = {
     })),
   })),
   i18n: PropTypes.shape({
+    empty: PropTypes.string.isRequired,
     accept: PropTypes.string.isRequired,
     reject: PropTypes.string.isRequired,
     markAsRead: PropTypes.string.isRequired,
