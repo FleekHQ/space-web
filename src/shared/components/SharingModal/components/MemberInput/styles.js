@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles(() => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -11,11 +11,6 @@ export default makeStyles((theme) => ({
       paddingRight: 0,
     },
   },
-  emailError: {
-    textAlign: 'center',
-    margin: '8px 0 -8px 0',
-    color: theme.palette.palette.red,
-  },
   option: {
     '&&& p': {
       textOverflow: 'ellipsis',
@@ -23,5 +18,8 @@ export default makeStyles((theme) => ({
       overflow: 'hidden',
       width: 215,
     },
+  },
+  permissionDropdown: {
+    minWidth: 70,
   },
 }));

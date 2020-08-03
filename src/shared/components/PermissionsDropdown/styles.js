@@ -25,4 +25,7 @@ export default makeStyles((theme) => ({
   popper: {
     zIndex: theme.zIndex.modal,
   },
+  noSelect: {
+    cursor: 'default',
+  },
 }));

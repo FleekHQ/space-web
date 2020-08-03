@@ -140,7 +140,7 @@
   "modals": {
     "sharingModal": {
       "to": "To",
-      "inputPlaceholder": "Email, name",
+      "inputPlaceholder": "Username",
       "linkTitle": "Share a link instead",
       "noLinkDescription": "No link created yet.",
       "linkDescription": "Anyone with this link can view the folder.",

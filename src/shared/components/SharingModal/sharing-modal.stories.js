@@ -38,13 +38,13 @@ storiesOf(categoryName, module).add('default', () => {
         id: 'morochgfx@gmail.com',
         mainText: 'Royce',
         secondaryText: 'morochgfx@gmail.com',
-        permissionsId: 'view',
+        permissionsId: 'edit',
       },
       {
         id: 'maria.mart@gmail.com',
         mainText: 'Maria Martinez',
         secondaryText: 'maria.mart@gmail.com',
-        imageSrc: 'https://aboutfaceskincare.com/wp-content/uploads/2019/11/About-Face-Skincare1172_pp-1-e1574785727292.jpg',
+        imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
       },
       {
@@ -57,7 +57,7 @@ storiesOf(categoryName, module).add('default', () => {
         id: 'asd123@gmail.com',
         mainText: 'asd123',
         secondaryText: 'asd123@gmail.com',
-        permissionsId: 'view',
+        permissionsId: 'edit',
       },
       {
         id: 'mon.kallen@gmail.com4',

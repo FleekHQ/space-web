@@ -10,8 +10,6 @@ import {
   EditFooter,
   MemberInput,
   CollaboratorList,
-  EmailBodyInput,
-  SendEmailFooter,
 } from './components';
 
 const SharingModal = (props) => {
@@ -29,9 +27,7 @@ const SharingModal = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [emailBody, setEmailBody] = useState('');
-  const [showEmailBody, setShowEmailBody] = useState(false);
-  const [emailAddresses, setEmailAddresses] = useState([]);
+  const [usernames, setUsernames] = useState([]);
   const i18n = {
     memberInput: {
       to: t('modals.sharingModal.to'),
@@ -49,14 +45,6 @@ const SharingModal = (props) => {
       cta: shareLink
         ? t('modals.sharingModal.copyLink')
         : t('modals.sharingModal.createLink'),
-    },
-    email: {
-      placeholder: t('modals.sharingModal.emailPlaceholder'),
-      shareButton: t('modals.sharingModal.shareEmailButton'),
-    },
-    emailErrors: {
-      invalidEmail: t('modals.sharingModal.errors.invalidEmail'),
-      duplicateEmail: t('modals.sharingModal.errors.duplicateEmail'),
     },
   };
 
@@ -78,46 +66,23 @@ const SharingModal = (props) => {
         i18n={i18n.memberInput}
         className={classes.memberInput}
         onChange={onChangeInputPermissions}
-        setEmailAddresses={setEmailAddresses}
-        emailAddresses={emailAddresses}
-        showEmailBody={showEmailBody}
-        setShowEmailBody={setShowEmailBody}
-        setEmailBody={setEmailBody}
+        setUsernames={setUsernames}
+        usernames={usernames}
         collaborators={collaborators}
-        emailErrors={i18n.emailErrors}
       />
-      {
-        showEmailBody ? (
-          <>
-            <EmailBodyInput
-              placeholder={i18n.email.placeholder}
-              setEmailBody={setEmailBody}
-              emailBody={emailBody}
-            />
-            <SendEmailFooter
-              className={classes.footer}
-              shareButtonText={i18n.email.shareButton}
-              onSendEmailClick={() => onSendEmailClick(emailAddresses, emailBody)}
-              disabled={emailAddresses.length === 0}
-            />
-          </>
-        ) : (
-          <>
-            <CollaboratorList
-              i18n={i18n.collaboratorList}
-              collaborators={collaborators}
-              options={getOptions(t, true)}
-              className={classes.collaboratorList}
-              onChangePermissions={onChangeUserPermissions}
-            />
-            <EditFooter
-              i18n={i18n.footer}
-              className={classes.footer}
-              onClick={onShareLinkClick}
-            />
-          </>
-        )
-      }
+      <CollaboratorList
+        i18n={i18n.collaboratorList}
+        collaborators={collaborators}
+        options={getOptions(t, true)}
+        className={classes.collaboratorList}
+        onChangePermissions={onChangeUserPermissions}
+      />
+      <button type="button"> onClick={onSendEmailClick}HEY</button>
+      <EditFooter
+        i18n={i18n.footer}
+        className={classes.footer}
+        onClick={onShareLinkClick}
+      />
     </div>
   );
 };

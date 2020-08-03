@@ -31,6 +31,7 @@ const PermissionsDropdown = (props) => {
   const classes = useStyles();
   const anchorRef = useRef(null);
 
+  const hideSelectMenu = options.length <= 1;
   const selectedOption = options.find((opt) => opt.selected);
 
   return (
@@ -39,9 +40,11 @@ const PermissionsDropdown = (props) => {
         ref={anchorRef}
         aria-haspopup="true"
         onClick={handleToggle}
+        disableRipple={hideSelectMenu}
         className={classnames(
           classes.button,
           !disableBorder && classes.border,
+          hideSelectMenu && classes.noSelect,
           className,
         )}
         aria-controls={open ? 'menu-list-grow' : undefined}
@@ -50,14 +53,16 @@ const PermissionsDropdown = (props) => {
         <Typography variant="body2">
           {selectedOption.title}
         </Typography>
-        <FontAwesomeIcon
-          icon={faAngleDown}
-          className={classes.iconAngle}
-        />
+        {!hideSelectMenu && (
+          <FontAwesomeIcon
+            icon={faAngleDown}
+            className={classes.iconAngle}
+          />
+        )}
       </ButtonBase>
       <Popper
         transition
-        open={open}
+        open={open && !hideSelectMenu}
         role={undefined}
         anchorEl={anchorRef.current}
         className={classes.popper}

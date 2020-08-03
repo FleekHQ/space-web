@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
@@ -10,7 +10,6 @@ import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
 import Collaborator from '../../../Collaborator';
 import PermissionsDropdown from '../../../PermissionsDropdown';
-import isEmailError from './utils/email-validation';
 import getFilteredOptions from './utils/get-filtered-options';
 
 const MemberInput = (props) => {
@@ -19,29 +18,15 @@ const MemberInput = (props) => {
     onChange,
     className,
     options: defaultOptions,
-    setEmailAddresses,
-    emailAddresses,
+    setUsernames,
+    usernames,
     collaborators,
-    showEmailBody,
-    setShowEmailBody,
-    emailErrors,
   } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState(defaultOptions);
-  const [emailInput, setEmailInput] = useState('');
-  const [emailError, setEmailError] = useState(null);
-
-  useEffect(() => {
-    const userEnteredInput = emailInput.length > 0 || emailAddresses.length > 0;
-    if (userEnteredInput && !showEmailBody) {
-      setShowEmailBody(true);
-    }
-    if (!userEnteredInput && showEmailBody) {
-      setShowEmailBody(false);
-    }
-  }, [emailInput, emailAddresses]);
+  const [usernameInput, setUsernameInput] = useState('');
 
   const handleClose = () => setOpen(false);
   const handleToggle = () => setOpen(!open);
@@ -66,39 +51,33 @@ const MemberInput = (props) => {
     onChange(option);
   };
 
-  const filteredOptions = getFilteredOptions(emailAddresses, collaborators);
+  const filteredOptions = getFilteredOptions(usernames, collaborators);
 
-  const onKeyDown = (e) => {
-    // if the user press the Enter key
-    if (e.keyCode === 13) {
-      const newEmail = e.target.value;
+  // const onKeyDown = (e) => {
+  // if the user press the Enter key
+  // if (e.keyCode === 13) {
+  //   const newUsername = e.target.value;
 
-      const isError = isEmailError(newEmail, emailAddresses, setEmailError, emailErrors);
+  //   let newEntry = {
+  //     id: e.target.value,
+  //     mainText: e.target.value,
+  //     secondaryText: e.target.value,
+  //     imageSrc: null,
+  //   };
 
-      if (isError) {
-        return;
-      }
+  //   const usernameInOptions = filteredOptions.find((option) => option.mainText === newUsername);
 
-      let newEntry = {
-        id: e.target.value,
-        mainText: e.target.value,
-        secondaryText: e.target.value,
-        imageSrc: null,
-      };
+  //   if (usernameInOptions) {
+  //     newEntry = usernameInOptions;
+  //   }
 
-      const emailInOptions = filteredOptions.find((option) => option.id === newEmail);
-
-      if (emailInOptions) {
-        newEntry = emailInOptions;
-      }
-
-      setEmailAddresses([
-        ...emailAddresses,
-        newEntry,
-      ]);
-      setEmailInput('');
-    }
-  };
+  //   setUsernames([
+  //     ...usernames,
+  //     newEntry,
+  //   ]);
+  //   setUsernameInput('');
+  // }
+  // };
 
   const filterOptions = createFilterOptions({
     stringify: (option) => `${option.mainText} ${option.secondaryText}`,
@@ -106,12 +85,6 @@ const MemberInput = (props) => {
 
   return (
     <div>
-      <Typography
-        className={classes.emailError}
-        variant="body2"
-      >
-        {emailError}
-      </Typography>
       <div
         className={classnames(
           classes.root,
@@ -124,8 +97,8 @@ const MemberInput = (props) => {
         <Autocomplete
           filterOptions={filterOptions}
           multiple
-          value={emailAddresses}
-          inputValue={emailInput}
+          value={usernames}
+          inputValue={usernameInput}
           options={filteredOptions}
           getOptionLabel={(option) => (
             <CollaboratorInput
@@ -133,7 +106,6 @@ const MemberInput = (props) => {
               mainText={option.mainText}
             />
           )}
-          onKeyDown={onKeyDown}
           fullWidth
           classes={{
             root: classes.autocomplete,
@@ -142,13 +114,10 @@ const MemberInput = (props) => {
           onInputChange={(e) => {
             // There is a bug with <Autocomplete /> where sometimes the event is null
             // so we must verify that the event exist before getting the target
-            const newEmail = (e && e.target.value) || '';
-            setEmailInput(newEmail);
-            if (newEmail !== emailInput) {
-              setEmailError(null);
-            }
+            const newUsername = (e && e.target.value) || '';
+            setUsernameInput(newUsername);
           }}
-          onChange={(e, newValue) => setEmailAddresses(newValue)}
+          onChange={(e, newValue) => setUsernames(newValue)}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -158,7 +127,7 @@ const MemberInput = (props) => {
                 endAdornment: () => null,
                 disableUnderline: true,
               }}
-              placeholder={emailAddresses.length > 0 ? '' : i18n.placeholder}
+              placeholder={usernames.length > 0 ? '' : i18n.placeholder}
             />
           )}
           renderOption={(option) => (
@@ -175,6 +144,7 @@ const MemberInput = (props) => {
           onChange={handleOnChange}
           handleClose={handleClose}
           handleToggle={handleToggle}
+          className={classes.permissionDropdown}
         />
       </div>
     </div>
@@ -184,7 +154,7 @@ const MemberInput = (props) => {
 MemberInput.defaultProps = {
   className: null,
   collaborators: [],
-  emailAddresses: [],
+  usernames: [],
 };
 
 MemberInput.propTypes = {
@@ -201,8 +171,8 @@ MemberInput.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
-  setEmailAddresses: PropTypes.func.isRequired,
-  emailAddresses: PropTypes.arrayOf(PropTypes.shape({
+  setUsernames: PropTypes.func.isRequired,
+  usernames: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     isOwner: PropTypes.bool,
     avatar: PropTypes.string,
@@ -218,12 +188,6 @@ MemberInput.propTypes = {
     secondaryText: PropTypes.string,
     permissionsId: PropTypes.string,
   })),
-  showEmailBody: PropTypes.bool.isRequired,
-  setShowEmailBody: PropTypes.func.isRequired,
-  emailErrors: PropTypes.shape({
-    invalidEmail: PropTypes.string.isRequired,
-    duplicateEmail: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default MemberInput;

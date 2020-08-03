@@ -23,7 +23,7 @@ storiesOf(categoryName, module).add('CollaboratorList', () => {
         id: 'morochgfx@gmail.com',
         mainText: 'morochgfx@gmail.com',
         secondaryText: 'Outside of Team',
-        permissionsId: 'view',
+        permissionsId: 'edit',
       },
       {
         id: 'maria.mart@gmail.com',
@@ -40,12 +40,12 @@ storiesOf(categoryName, module).add('CollaboratorList', () => {
         title: 'Can edit',
         description: 'Members can edit, delete, and add the file to their Space.',
       },
-      {
-        id: 'view',
-        selected: false,
-        title: 'Can view',
-        description: 'Members can view and download.',
-      },
+      // {
+      //   id: 'view',
+      //   selected: false,
+      //   title: 'Can view',
+      //   description: 'Members can view and download.',
+      // },
       {
         id: 'remove',
         title: 'Remove',
