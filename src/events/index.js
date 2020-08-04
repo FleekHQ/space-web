@@ -8,6 +8,7 @@ import registerAddItemsSubscribeEvents from './add-items-subscribe';
 import registerBucketEvents from './bucket';
 import registerKeysEvents from './keys';
 import registerNotificationsEvents from './notifications';
+import registerAccountEvents from './account';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -20,6 +21,7 @@ const registerEvents = () => {
   registerBucketEvents();
   registerKeysEvents();
   registerNotificationsEvents();
+  registerAccountEvents();
 };
 
 export default registerEvents;
@@ -30,3 +32,4 @@ export * from './add-items-subscribe';
 export * from './bucket';
 export * from './keys';
 export * from './notifications';
+export * from './account';
