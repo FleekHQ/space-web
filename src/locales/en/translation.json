@@ -120,13 +120,17 @@
         "generic": "Sorry, there was a problem.",
         "username": "Sorry, this username is already taken.",
         "address": "Sorry, the current address is already registered."
-      }
+      },
+      "username": "Username",
+      "password": "Password",
+      "forgotPassword": "Forgot password?"
     },
     "signup": {
       "title": "Sign Up",
       "username": "Pick a username",
       "email": "Email (Optional)",
       "link": "Already have an account?",
+      "forgotPassword": "Forgot password?",
       "errors": {
         "generic": "Sorry, there was a problem.",
         "username": "Sorry, this username is already taken.",

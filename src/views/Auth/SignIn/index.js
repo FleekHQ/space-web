@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link, useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,7 @@ import useStyles from './styles';
 
 const SignUp = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { t } = useTranslation();
 
   return (
@@ -18,6 +19,7 @@ const SignUp = () => {
           fullWidth
           type="button"
           variant="contained"
+          onClick={() => history.push('/auth/signin/username')}
           classes={{
             root: classes.buttonRoot,
             contained: classes.buttonContained,
