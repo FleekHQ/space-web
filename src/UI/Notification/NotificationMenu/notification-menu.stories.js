@@ -11,6 +11,7 @@ const categoryName = 'Notification';
 storiesOf(categoryName, module).add('Menu', () => {
   const defaultProps = {
     i18n: object('i18n', {
+      empty: 'No notifications',
       accept: 'Accept',
       reject: 'Reject',
       markAsRead: 'Mark all as read',

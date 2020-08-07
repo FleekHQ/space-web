@@ -13,6 +13,7 @@ export default makeStyles((theme) => ({
     fontSize: 12,
     height: 26,
     width: 57,
+    padding: 0,
     boxSizing: 'border-box',
   },
   rejectButton: {

@@ -23,4 +23,9 @@ export default makeStyles((theme) => ({
   popoverPaper: {
     minWidth: 280,
   },
+  empty: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+  },
 }));

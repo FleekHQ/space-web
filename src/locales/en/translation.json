@@ -31,6 +31,13 @@
     "delete": "Delete",
     "viewInFolder": "View in Finder"
   },
+  "notifications": {
+    "accept": "Accept",
+    "reject": "Reject",
+    "markAsRead": "Mark all as read",
+    "notifications": "Notifications",
+    "empty": "No notifications"
+  },
   "detailsPanel": {
     "title": "Details Panel",
     "message": "Select a file or folder to see a detailed breakdown.",
