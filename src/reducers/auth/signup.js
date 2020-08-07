@@ -3,7 +3,15 @@ const DEFAULT_STATE = {
   success: false,
   loading: false,
   publicKey: null,
-  tfUsername: '',
+  showPassword: false,
+  tfUsername: {
+    value: '',
+    isFocus: false,
+  },
+  tfPassword: {
+    value: '',
+    isFocus: false,
+  },
 };
 
 export const SIGNUP_ACTION_TYPES = {
@@ -12,6 +20,8 @@ export const SIGNUP_ACTION_TYPES = {
   ON_SUBMIT_ERROR: 'ON_SUBMIT_ERROR',
   ON_SUBMIT_SUCCESS: 'ON_SUBMIT_SUCCESS',
   ON_GET_PUBLIC_KEY: 'ON_GET_PUBLIC_KEY',
+  ON_INPUT_FOCUS_BLUR: 'ON_INPUT_FOCUS_BLUR',
+  ON_PASSWORD_CHANGE_VISIBILITY: 'ON_PASSWORD_CHANGE_VISIBILITY',
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -19,7 +29,19 @@ export default (state = DEFAULT_STATE, action) => {
     case SIGNUP_ACTION_TYPES.ON_INPUT_CHANGE: {
       return {
         ...state,
-        [action.input.key]: action.input.value,
+        [action.input.key]: {
+          ...state[action.input.key],
+          value: action.input.value,
+        },
+      };
+    }
+    case SIGNUP_ACTION_TYPES.ON_INPUT_FOCUS_BLUR: {
+      return {
+        ...state,
+        [action.input.key]: {
+          ...state[action.input.key],
+          isFocus: !state[action.input.key].isFocus,
+        },
       };
     }
     case SIGNUP_ACTION_TYPES.ON_SUBMIT: {
@@ -47,6 +69,12 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         publicKey: action.publicKey,
+      };
+    }
+    case SIGNUP_ACTION_TYPES.ON_PASSWORD_CHANGE_VISIBILITY: {
+      return {
+        ...state,
+        showPassword: !state.showPassword,
       };
     }
     default: {
