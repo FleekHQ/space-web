@@ -128,6 +128,7 @@
     "signup": {
       "title": "Sign Up",
       "username": "Pick a username",
+      "password": "Create a password",
       "email": "Email (Optional)",
       "link": "Already have an account?",
       "forgotPassword": "Forgot password?",
