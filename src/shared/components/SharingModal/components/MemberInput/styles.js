@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -21,5 +21,16 @@ export default makeStyles(() => ({
   },
   permissionDropdown: {
     minWidth: 70,
+  },
+  chipIcon: {
+    color: theme.palette.palette.black,
+  },
+  chip: {
+    height: 20,
+    borderRadius: 0,
+    backgroundcolor: theme.palette.palette.grey5,
+  },
+  chipLabel: {
+    paddingLeft: 5,
   },
 }));

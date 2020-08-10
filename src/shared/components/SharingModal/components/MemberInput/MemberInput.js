@@ -5,7 +5,9 @@ import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
 import Collaborator from '../../../Collaborator';
@@ -107,6 +109,18 @@ const MemberInput = (props) => {
             />
           )}
           fullWidth
+          ChipProps={{
+            classes: {
+              root: classes.chip,
+              label: classes.chipLabel,
+            },
+            deleteIcon: (
+              <FontAwesomeIcon
+                className={classes.chipIcon}
+                icon={faTimes}
+              />
+            ),
+          }}
           classes={{
             root: classes.autocomplete,
             option: classes.option,
