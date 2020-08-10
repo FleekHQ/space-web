@@ -18,6 +18,7 @@ export default makeStyles((theme) => ({
   collaboratorList: {
     flex: 1,
     overflow: 'auto',
+    maxHeight: 200,
     padding: '12px 25px',
     '& div > p': {
       maxWidth: 260,

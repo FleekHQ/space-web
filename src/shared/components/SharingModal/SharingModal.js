@@ -36,6 +36,7 @@ const SharingModal = (props) => {
     },
     collaboratorList: {
       owner: t('common.owner'),
+      shareButton: t('modals.sharingModal.shareEmailButton'),
     },
     footer: {
       canView: t('common.access.view.title'),
@@ -77,8 +78,8 @@ const SharingModal = (props) => {
         options={getOptions(t, true)}
         className={classes.collaboratorList}
         onChangePermissions={onChangeUserPermissions}
+        onSendEmailClick={onSendEmailClick}
       />
-      <button type="button"> onClick={onSendEmailClick}HEY</button>
       <EditFooter
         i18n={i18n.footer}
         className={classes.footer}
