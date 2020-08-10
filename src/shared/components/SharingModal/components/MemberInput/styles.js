@@ -24,11 +24,14 @@ export default makeStyles((theme) => ({
   },
   chipIcon: {
     color: theme.palette.palette.black,
+    fontSize: 10,
   },
   chip: {
     height: 20,
     borderRadius: 0,
-    backgroundcolor: theme.palette.palette.grey5,
+    backgroundColor: '#f6f6f6',
+    // TODO: uncomment once fe-theme is updated
+    // backgroundcolor: theme.palette.palette.grey7,
   },
   chipLabel: {
     paddingLeft: 5,
