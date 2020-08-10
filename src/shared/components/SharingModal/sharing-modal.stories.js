@@ -29,7 +29,6 @@ storiesOf(categoryName, module).add('default', () => {
       {
         id: 'morochroyce@gmail.com',
         mainText: 'Peter Adams',
-        secondaryText: 'morochroyce@gmail.comaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
         isOwner: true,
@@ -37,32 +36,27 @@ storiesOf(categoryName, module).add('default', () => {
       {
         id: 'morochgfx@gmail.com',
         mainText: 'Royce',
-        secondaryText: 'morochgfx@gmail.com',
         permissionsId: 'edit',
       },
       {
         id: 'maria.mart@gmail.com',
         mainText: 'Maria Martinez',
-        secondaryText: 'maria.mart@gmail.com',
         imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
       },
       {
         id: 'lorelipsum.com',
         mainText: 'Lorem ipsum',
-        secondaryText: 'lorelipsum@gmail.com',
         permissionsId: 'edit',
       },
       {
         id: 'asd123@gmail.com',
         mainText: 'asd123',
-        secondaryText: 'asd123@gmail.com',
         permissionsId: 'edit',
       },
       {
         id: 'mon.kallen@gmail.com4',
         mainText: 'Mon Kallen',
-        secondaryText: 'mon.kallen@gmail.com4',
         permissionsId: 'edit',
       },
     ]),

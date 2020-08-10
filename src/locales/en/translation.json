@@ -141,6 +141,7 @@
     "sharingModal": {
       "to": "To",
       "inputPlaceholder": "Username",
+      "shareVia": "Share via Username (Recommended)",
       "linkTitle": "Share a link instead",
       "noLinkDescription": "No link created yet.",
       "linkDescription": "Anyone with this link can view the folder.",

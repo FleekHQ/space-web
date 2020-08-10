@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
     padding: '10px 25px',
   },
   memberInput: {
-    padding: '13px 25px',
+    padding: '10px 25px 12px 25px',
   },
   collaboratorList: {
     flex: 1,

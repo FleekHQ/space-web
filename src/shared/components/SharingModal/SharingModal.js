@@ -30,6 +30,7 @@ const SharingModal = (props) => {
   const [usernames, setUsernames] = useState([]);
   const i18n = {
     memberInput: {
+      shareVia: t('modals.sharingModal.shareVia'),
       to: t('modals.sharingModal.to'),
       placeholder: t('modals.sharingModal.inputPlaceholder'),
     },

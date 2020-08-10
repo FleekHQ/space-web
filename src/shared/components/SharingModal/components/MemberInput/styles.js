@@ -4,6 +4,7 @@ export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
+    minHeight: 60,
   },
   autocomplete: {
     margin: '0 18px',
@@ -12,6 +13,7 @@ export default makeStyles((theme) => ({
     },
   },
   option: {
+    display: 'flex',
     '&&& p': {
       textOverflow: 'ellipsis',
       display: 'inline-block',
@@ -29,11 +31,14 @@ export default makeStyles((theme) => ({
   chip: {
     height: 20,
     borderRadius: 0,
-    backgroundColor: '#f6f6f6',
-    // TODO: uncomment once fe-theme is updated
-    // backgroundcolor: theme.palette.palette.grey7,
+    backgroundcolor: theme.palette.palette.grey11,
   },
   chipLabel: {
     paddingLeft: 5,
+  },
+  shareVia: {
+    margin: '11px 0px 0px 25px',
+    fontSize: 14,
+    fontWeight: 500,
   },
 }));

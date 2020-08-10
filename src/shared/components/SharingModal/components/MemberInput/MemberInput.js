@@ -55,38 +55,17 @@ const MemberInput = (props) => {
 
   const filteredOptions = getFilteredOptions(usernames, collaborators);
 
-  // const onKeyDown = (e) => {
-  // if the user press the Enter key
-  // if (e.keyCode === 13) {
-  //   const newUsername = e.target.value;
-
-  //   let newEntry = {
-  //     id: e.target.value,
-  //     mainText: e.target.value,
-  //     secondaryText: e.target.value,
-  //     imageSrc: null,
-  //   };
-
-  //   const usernameInOptions = filteredOptions.find((option) => option.mainText === newUsername);
-
-  //   if (usernameInOptions) {
-  //     newEntry = usernameInOptions;
-  //   }
-
-  //   setUsernames([
-  //     ...usernames,
-  //     newEntry,
-  //   ]);
-  //   setUsernameInput('');
-  // }
-  // };
-
   const filterOptions = createFilterOptions({
     stringify: (option) => `${option.mainText} ${option.secondaryText}`,
   });
 
   return (
     <div>
+      <Typography
+        className={classes.shareVia}
+      >
+        {i18n.shareVia}
+      </Typography>
       <div
         className={classnames(
           classes.root,
@@ -176,6 +155,7 @@ MemberInput.propTypes = {
   i18n: PropTypes.shape({
     to: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
+    shareVia: PropTypes.string.isRequired,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
