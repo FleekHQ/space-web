@@ -23,6 +23,7 @@ const SharingModal = (props) => {
     onChangeUserPermissions,
     onChangeInputPermissions,
     onSendEmailClick,
+    onClickSettings,
   } = props;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -60,6 +61,7 @@ const SharingModal = (props) => {
       <Header
         ext={ext}
         className={classes.header}
+        onClickSettings={onClickSettings}
       >
         {filename}
       </Header>
@@ -99,6 +101,7 @@ SharingModal.defaultProps = {
   onChangeUserPermissions: () => {},
   onChangeInputPermissions: () => {},
   onSendEmailClick: () => {},
+  onClickSettings: () => {},
 };
 
 SharingModal.propTypes = {
@@ -118,6 +121,7 @@ SharingModal.propTypes = {
     permissionsId: PropTypes.string,
   })),
   onSendEmailClick: PropTypes.func,
+  onClickSettings: PropTypes.func,
 };
 
 export default SharingModal;

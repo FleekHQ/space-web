@@ -25,6 +25,8 @@ storiesOf(categoryName, module).add('default', () => {
     onShareLinkClick: action('onShareLinkClick'),
     onChangeUserPermissions: action('onChangeUserPermissions'),
     onChangeInputPermissions: action('onChangeInputPermissions'),
+    onSendEmailClick: action('onSendEmailClick'),
+    onClickSettings: action('onClickSettings'),
     collaborators: object('collaborators', [
       {
         id: 'morochroyce@gmail.com',
