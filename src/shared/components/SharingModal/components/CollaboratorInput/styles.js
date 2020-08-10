@@ -8,8 +8,8 @@ export default makeStyles((theme) => ({
     height: 20,
   },
   imageContainer: {
-    width: 14,
-    height: 14,
+    width: 15,
+    height: 15,
     overflow: 'hidden',
     borderRadius: '50%',
     backgroundColor: theme.palette.palette.gray10,

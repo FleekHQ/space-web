@@ -7,24 +7,26 @@ import useStyles from './styles';
 import getOptions from './options';
 import {
   Header,
-  EditFooter,
   MemberInput,
   CollaboratorList,
 } from './components';
 
+import ShareLink from '../../../views/Modal/modals/Sharing/components/ShareLink';
+
+/* eslint-disable react/jsx-props-no-spreading */
 const SharingModal = (props) => {
   const {
     ext,
     filename,
-    shareLink,
     className,
     collaborators,
-    onShareLinkClick,
     onChangeUserPermissions,
     onChangeInputPermissions,
     onSendEmailClick,
     onClickSettings,
+    ...shareLinkProps
   } = props;
+
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -39,54 +41,48 @@ const SharingModal = (props) => {
       owner: t('common.owner'),
       shareButton: t('modals.sharingModal.shareEmailButton'),
     },
-    footer: {
-      canView: t('common.access.view.title'),
-      title: t('modals.sharingModal.linkTitle'),
-      description: shareLink
-        ? t('modals.sharingModal.linkDescription')
-        : t('modals.sharingModal.noLinkDescription'),
-      cta: shareLink
-        ? t('modals.sharingModal.copyLink')
-        : t('modals.sharingModal.createLink'),
-    },
   };
 
   return (
-    <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
-    >
-      <Header
-        ext={ext}
-        className={classes.header}
-        onClickSettings={onClickSettings}
+    <div>
+      <div
+        className={classnames(
+          classes.root,
+          className,
+        )}
       >
-        {filename}
-      </Header>
-      <MemberInput
-        options={getOptions(t)}
-        i18n={i18n.memberInput}
-        className={classes.memberInput}
-        onChange={onChangeInputPermissions}
-        setUsernames={setUsernames}
-        usernames={usernames}
-        collaborators={collaborators}
-      />
-      <CollaboratorList
-        i18n={i18n.collaboratorList}
-        collaborators={collaborators}
-        options={getOptions(t, true)}
-        className={classes.collaboratorList}
-        onChangePermissions={onChangeUserPermissions}
-        onSendEmailClick={onSendEmailClick}
-      />
-      <EditFooter
-        i18n={i18n.footer}
+        <Header
+          ext={ext}
+          className={classes.header}
+          onClickSettings={onClickSettings}
+        >
+          {filename}
+        </Header>
+        <MemberInput
+          options={getOptions(t)}
+          i18n={i18n.memberInput}
+          className={classes.memberInput}
+          onChange={onChangeInputPermissions}
+          setUsernames={setUsernames}
+          usernames={usernames}
+          collaborators={collaborators}
+        />
+        <CollaboratorList
+          i18n={i18n.collaboratorList}
+          collaborators={collaborators}
+          options={getOptions(t, true)}
+          className={classes.collaboratorList}
+          onChangePermissions={onChangeUserPermissions}
+          onSendEmailClick={onSendEmailClick}
+        />
+      </div>
+      <div
         className={classes.footer}
-        onClick={onShareLinkClick}
-      />
+      >
+        <ShareLink
+          {...shareLinkProps}
+        />
+      </div>
     </div>
   );
 };
@@ -95,9 +91,7 @@ SharingModal.defaultProps = {
   filename: '',
   ext: 'default',
   className: null,
-  shareLink: false,
   collaborators: [],
-  onShareLinkClick: () => {},
   onChangeUserPermissions: () => {},
   onChangeInputPermissions: () => {},
   onSendEmailClick: () => {},
@@ -106,10 +100,8 @@ SharingModal.defaultProps = {
 
 SharingModal.propTypes = {
   ext: PropTypes.string,
-  shareLink: PropTypes.bool,
   filename: PropTypes.string,
   className: PropTypes.string,
-  onShareLinkClick: PropTypes.func,
   onChangeUserPermissions: PropTypes.func,
   onChangeInputPermissions: PropTypes.func,
   collaborators: PropTypes.arrayOf(PropTypes.shape({

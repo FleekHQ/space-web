@@ -62,17 +62,32 @@ storiesOf(categoryName, module).add('default', () => {
         permissionsId: 'edit',
       },
     ]),
+    shareLinkProps: {
+      step: 0,
+      defaultStep: 0,
+      url: 'xyx.com'
+    },
   };
 
   return (
     <div
       style={{
-        width: 460,
-        height: 420,
-        backgroundColor: 'white',
+        width: 1000,
+        height: 1000,
+        backgroundColor: 'black',
+        padding: 20,
       }}
     >
-      <SharingModal {...defaultProps} />
+      <div
+        style={{
+          width: 460,
+          height: 420,
+          borderRadius: 6,
+          backgroundColor: 'white',
+        }}
+      >
+        <SharingModal {...defaultProps} />
+      </div>
     </div>
   );
 });

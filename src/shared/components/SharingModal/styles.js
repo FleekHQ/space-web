@@ -29,5 +29,9 @@ export default makeStyles((theme) => ({
   },
   footer: {
     padding: '14px 25px 23px',
+    backgroundColor: 'white',
+    position: 'relative',
+    top: 20,
+    borderRadius: 6,
   },
 }));
