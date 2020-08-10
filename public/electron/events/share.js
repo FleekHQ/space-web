@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron');
 
-const spaceClient = require('../space-client');
+const { spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'share';
 const GENERATE_LINK_EVENT = `${EVENT_PREFIX}:generateLink`;

@@ -7,10 +7,13 @@ const EVENT_PREFIX = 'keys';
 const GET_PUBLIC_KEY_EVENT = `${EVENT_PREFIX}:publicKey`;
 const GET_PUBLIC_KEY_ERROR_EVENT = `${EVENT_PREFIX}:publicKey:error`;
 const GET_PUBLIC_KEY_SUCCESS_EVENT = `${EVENT_PREFIX}:publicKey:success`;
+const DELETE_KEY_PAIR = `${EVENT_PREFIX}:delete`;
+const DELETE_KEY_PAIR_SUCCESS = `${EVENT_PREFIX}:delete:success`;
+const DELETE_KEY_PAIR_ERROR = `${EVENT_PREFIX}:delete:error`;
 
+/* eslint-disable no-console */
 const registerKeysEvents = () => {
   ipcRenderer.on(GET_PUBLIC_KEY_ERROR_EVENT, (_, error) => {
-    // eslint-disable-next-line no-console
     console.error('Error when trying to get the publick key: ', error.message);
 
     store.dispatch({
@@ -25,10 +28,20 @@ const registerKeysEvents = () => {
       publicKey: data.publicKey,
     });
   });
+
+  ipcRenderer.on(DELETE_KEY_PAIR_SUCCESS, () => {
+    console.log('key pair deleted');
+  });
+
+  ipcRenderer.on(DELETE_KEY_PAIR_ERROR, () => {
+    console.log('error delete key pair');
+  });
 };
 
 export const getPublicKey = () => {
   ipcRenderer.send(GET_PUBLIC_KEY_EVENT);
 };
+
+export const deleteKeyPair = () => ipcRenderer.send(DELETE_KEY_PAIR);
 
 export default registerKeysEvents;

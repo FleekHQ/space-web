@@ -34,5 +34,8 @@ export default makeStyles((theme) => ({
   },
   buttonOutlined: {
     color: theme.palette.palette.white,
+    '&&&': {
+      border: 'none',
+    },
   },
 }));

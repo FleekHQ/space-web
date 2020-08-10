@@ -1,4 +1,4 @@
-const spaceClient = require('../space-client');
+const { spaceClient } = require('../clients');
 const { listDirectories } = require('./objects');
 
 const EVENT_PREFIX = 'txlSuscribe';

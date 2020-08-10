@@ -9,6 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
 import { SEARCH_TERM_CHANGE } from '@reducers/storage';
+import Notifications from '@shared/components/Notifications';
 
 import useStyles from './styles';
 
@@ -66,6 +67,7 @@ const HeaderNav = () => {
           ),
         }}
       />
+      <Notifications />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-const spaceClient = require('../space-client');
+const { spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'eventStream';
 

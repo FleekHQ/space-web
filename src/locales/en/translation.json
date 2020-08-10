@@ -31,6 +31,13 @@
     "delete": "Delete",
     "viewInFolder": "View in Finder"
   },
+  "notifications": {
+    "accept": "Accept",
+    "reject": "Reject",
+    "markAsRead": "Mark all as read",
+    "notifications": "Notifications",
+    "empty": "No notifications"
+  },
   "detailsPanel": {
     "title": "Details Panel",
     "message": "Select a file or folder to see a detailed breakdown.",
@@ -113,13 +120,18 @@
         "generic": "Sorry, there was a problem.",
         "username": "Sorry, this username is already taken.",
         "address": "Sorry, the current address is already registered."
-      }
+      },
+      "username": "Username",
+      "password": "Password",
+      "forgotPassword": "Forgot password?"
     },
     "signup": {
       "title": "Sign Up",
       "username": "Pick a username",
+      "password": "Create a password",
       "email": "Email (Optional)",
       "link": "Already have an account?",
+      "forgotPassword": "Forgot password?",
       "errors": {
         "generic": "Sorry, there was a problem.",
         "username": "Sorry, this username is already taken.",

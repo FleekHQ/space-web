@@ -8,7 +8,8 @@ const registerAppUpdate = require('./app-update');
 const registerShareUpdate = require('./share');
 const registerBucketEvents = require('./bucket');
 const registerKeysEvents = require('./keys');
-const registerNotificationEvents = require('./notifications');
+const registerNotificationsEvents = require('./notifications');
+const registerAccountEvents = require('./account');
 
 const registerEvents = ({
   app,
@@ -25,7 +26,8 @@ const registerEvents = ({
   registerAddItemsSubscribe(mainWindow);
   registerBucketEvents(mainWindow);
   registerKeysEvents(mainWindow);
-  registerNotificationEvents(mainWindow);
+  registerNotificationsEvents(mainWindow);
+  registerAccountEvents(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });
