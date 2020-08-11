@@ -137,6 +137,18 @@
         "username": "Sorry, this username is already taken.",
         "address": "Sorry, the current address is already registered."
       }
+    },
+    "shared": {
+      "passwordCheck": {
+        "title": "Password must have",
+        "requirements": {
+          "number": "One number",
+          "lowerCase": "Lowercase character",
+          "upperCase": "Uppercase character",
+          "specialChar": "One special character",
+          "charLength": "8 characters minimun"
+        }
+      }
     }
   },
   "uploadProgressModal": {

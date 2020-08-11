@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { singup, getPublicKey } from '@events';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import PasswordCheckTooltip from '@shared/components/PasswordCheckTooltip';
 
 import helper from './helper';
 import useStyles from './styles';
@@ -142,36 +143,42 @@ const SignUp = () => {
           onBlur={handleInputFocusAndBlur({ dispatch })}
           onFocus={handleInputFocusAndBlur({ dispatch })}
         />
-        <TextField
-          fullWidth
-          id="tfPassword"
-          variant="outlined"
-          value={state.tfPassword.value}
-          label={t('modules.signup.password')}
-          type={state.showPassword ? 'text' : 'password'}
-          classes={tfClasses}
-          InputLabelProps={InputLabelProps}
-          InputProps={{
-            ...InputProps,
-            endAdornment: (
-              <IconButton
-                disableRipple
-                aria-label="toggle password visibility"
-                classes={{
-                  root: classes.iconButtonRoot,
-                }}
-                onClick={handlePasswordVisibility({ dispatch })}
-              >
-                <FontAwesomeIcon
-                  icon={state.showPassword ? faEyeSlash : faEye}
-                />
-              </IconButton>
-            ),
-          }}
-          onChange={handleInputChange({ dispatch })}
-          onBlur={handleInputFocusAndBlur({ dispatch })}
-          onFocus={handleInputFocusAndBlur({ dispatch })}
-        />
+        <PasswordCheckTooltip
+          invert
+          open={state.tfPassword.isFocus}
+          password={state.tfPassword.value}
+        >
+          <TextField
+            fullWidth
+            id="tfPassword"
+            variant="outlined"
+            value={state.tfPassword.value}
+            label={t('modules.signup.password')}
+            type={state.showPassword ? 'text' : 'password'}
+            classes={tfClasses}
+            InputLabelProps={InputLabelProps}
+            InputProps={{
+              ...InputProps,
+              endAdornment: (
+                <IconButton
+                  disableRipple
+                  aria-label="toggle password visibility"
+                  classes={{
+                    root: classes.iconButtonRoot,
+                  }}
+                  onClick={handlePasswordVisibility({ dispatch })}
+                >
+                  <FontAwesomeIcon
+                    icon={state.showPassword ? faEyeSlash : faEye}
+                  />
+                </IconButton>
+              ),
+            }}
+            onChange={handleInputChange({ dispatch })}
+            onBlur={handleInputFocusAndBlur({ dispatch })}
+            onFocus={handleInputFocusAndBlur({ dispatch })}
+          />
+        </PasswordCheckTooltip>
         <Button
           fullWidth
           type="submit"
