@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import IconsNavigation from '@ui/IconsNavigation';
 import Typography from '@ui/Typography';
 import Avatar from '@ui/Avatar';
 import CreateNewButton from '../CreateNewButton';
@@ -21,35 +20,55 @@ const Sidebar = () => {
   const items = useItems();
   const user = useSelector((state) => state.user);
   const classes = useStyles({ user });
-  const { generalNav, specificNav } = useNavigations();
+  const { specificNav } = useNavigations();
 
   return (
     <div className={classes.root}>
       {isMac && <div className={classes.trafficLightsSpot} />}
-      <TeamSelector
-        accountsList={[{
-          id: user.username,
-          name: user.username,
-          membersNumber: 0,
-        }]}
-        selectedAccountId={user.username}
-      />
-      <div className={classes.navWrapper}>
-        <div className={`${classes.navColumn} ${classes.generalNav}`}>
-          <IconsNavigation options={generalNav} />
-          <Avatar
-            imgUrl={user.imgURL}
-            username={user.username}
-          />
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <div className={classes.navWrapper}>
+            <div className={`${classes.navColumn} ${classes.generalNav}`}>
+              <Avatar
+                imgUrl={user.imgURL}
+                username={user.username}
+              />
+            </div>
+          </div>
         </div>
-        <div className={`${classes.navColumn} ${classes.specificNavWrapper}`}>
-          <Typography
-            weight="medium"
-            variant="h6"
-            className={classes.specificNavTitle}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
           >
-            {specificNav.title}
-          </Typography>
+            <TeamSelector
+              accountsList={[{
+                id: user.username,
+                name: user.username,
+                membersNumber: 0,
+              }]}
+              selectedAccountId={user.username}
+            />
+            <CreateNewButton items={items} />
+          </div>
           {specificNav.list.map((navLink) => (
             <Link
               key={navLink.key}
@@ -66,9 +85,6 @@ const Sidebar = () => {
               </Typography>
             </Link>
           ))}
-          <div className={classes.pullDown}>
-            <CreateNewButton items={items} />
-          </div>
         </div>
       </div>
     </div>

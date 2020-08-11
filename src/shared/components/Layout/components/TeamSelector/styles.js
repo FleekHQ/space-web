@@ -15,7 +15,6 @@ export default makeStyles((theme) => ({
     marginBottom: 5,
   },
   textWrapper: {
-    marginLeft: 14,
     minWidth: 0,
   },
 }));
