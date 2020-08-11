@@ -172,6 +172,24 @@
         "tooltipContent": "This password is used by the receiving user to open the file being sent. Do not use your Space password.",
         "tooltipButton": "Okay"
       }
+    },
+    "settings": {
+      "title": "Settings",
+      "account": {
+        "title": "Account"
+      },
+      "security": {
+        "title": "Security"
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "usage": {
+        "title": "Usage"
+      },
+      "referrals": {
+        "title": "Referrals"
+      }
     }
   }
 }
