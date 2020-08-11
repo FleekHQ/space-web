@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const SIDEBAR_WIDTH = 220;
 
 export default makeStyles((theme) => ({
-  root: {
+  rootSidebar: {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.palette.white,
@@ -11,6 +11,24 @@ export default makeStyles((theme) => ({
   },
   trafficLightsSpot: {
     height: 34,
+  },
+  sidebarContent: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  accounts: {
+    width: 52,
+    display: 'flex',
+    paddingTop: 5,
+    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.palette.white,
+    borderTop: `1px solid ${theme.palette.palette.gray4}`,
+    borderRight: `1px solid ${theme.palette.palette.gray4}`,
+    '& > div': {
+      margin: '5px 0',
+    },
   },
   generalNav: {
     alignItems: 'center',

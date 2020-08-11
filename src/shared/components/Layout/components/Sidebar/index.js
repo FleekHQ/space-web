@@ -23,29 +23,16 @@ const Sidebar = () => {
   const { specificNav } = useNavigations();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.rootSidebar}>
       {isMac && <div className={classes.trafficLightsSpot} />}
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div className={classes.navWrapper}>
-            <div className={`${classes.navColumn} ${classes.generalNav}`}>
-              <Avatar
-                imgUrl={user.imgURL}
-                username={user.username}
-              />
-            </div>
-          </div>
+      <div className={classes.sidebarContent}>
+        <div className={classes.accounts}>
+          <Avatar
+            active
+            size={24}
+            imgUrl={user.imgURL}
+            username={user.username}
+          />
         </div>
         <div
           style={{
