@@ -4,9 +4,9 @@ import { action } from '@storybook/addon-actions';
 
 import Settings from './index';
 
-const categoryName = 'Modal';
+const categoryName = 'Modal.Settings';
 
-storiesOf(categoryName, module).add('Settings', () => {
+storiesOf(categoryName, module).add('Modal', () => {
   const defaultProps = {
     closeModal: action('closeModal'),
   };
