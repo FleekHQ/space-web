@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
   chip: {
     height: 20,
     borderRadius: 0,
-    backgroundColor: theme.palette.palette.gray12,
+    backgroundColor: theme.palette.palette.gray13,
   },
   chipLabel: {
     paddingLeft: 5,

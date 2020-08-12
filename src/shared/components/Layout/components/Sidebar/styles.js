@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const SIDEBAR_WIDTH = 220;
 
 export default makeStyles((theme) => ({
-  root: {
+  rootSidebar: {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.palette.palette.white,
@@ -12,32 +12,48 @@ export default makeStyles((theme) => ({
   trafficLightsSpot: {
     height: 34,
   },
-  generalNav: {
-    alignItems: 'center',
-    backgroundColor: theme.palette.palette.gray5,
-    paddingBottom: 11,
-  },
-  navWrapper: {
+  contentSidebar: {
+    flex: 1,
     display: 'flex',
-    flexGrow: 1,
+    flexDirection: 'row',
   },
-  navColumn: {
+  leftPanel: {
+    width: 52,
+    display: 'flex',
+    paddingTop: 5,
+    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.palette.white,
+    borderTop: `1px solid ${theme.palette.palette.gray4}`,
+    borderRight: `1px solid ${theme.palette.palette.gray4}`,
+    '& > div': {
+      margin: '5px 0',
+    },
+  },
+  rightPanel: {
+    flex: 1,
+    width: 163,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
   },
-  specificNavWrapper: {
-    padding: '15px 13px 14px 12px',
-    alignItems: 'flex-start',
+  userContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: '11px 15px 11px 13px',
+    borderTop: `1px solid ${theme.palette.palette.gray4}`,
   },
-  specificNavTitle: {
-    marginBottom: 14,
+  rootDivider: {
+    backgroundColor: `${theme.palette.palette.gray4} !important`,
+  },
+  navMenu: {
+    margin: 0,
+    padding: '3px 13px 0 13px',
+    listStyleType: 'none',
+    '& > li': {
+      margin: '10px 0',
+    },
   },
   specificNavLink: {
-    marginBottom: 10,
     textDecoration: 'none',
-  },
-  pullDown: {
-    marginTop: 'auto',
   },
 }));

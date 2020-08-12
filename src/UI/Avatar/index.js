@@ -9,11 +9,12 @@ import useStyles from './styles';
 const UIAvatar = ({
   size,
   imgUrl,
+  active,
   username,
   children,
   className,
 }) => {
-  const classes = useStyles({ size, username });
+  const classes = useStyles({ size, active, username });
 
   return (
     <Avatar
@@ -29,6 +30,7 @@ const UIAvatar = ({
 UIAvatar.defaultProps = {
   size: 38,
   imgUrl: null,
+  active: false,
   children: null,
   className: '',
   username: ' ',
@@ -36,6 +38,7 @@ UIAvatar.defaultProps = {
 
 UIAvatar.propTypes = {
   size: PropTypes.number,
+  active: PropTypes.bool,
   imgUrl: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,

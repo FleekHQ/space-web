@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import UploadProgressModal from './UploadProgress';
 import SharingProgressModal from './SharingProgress';
+import SettingsModal from './Settings';
 import SharingModal from './Sharing';
 import useStyles from './styles';
 
@@ -10,12 +11,14 @@ import {
   closeModal as closeModalAction,
   UPLOAD_PROGRESS_TOAST,
   SHARE_PROGRESS_TOAST,
+  SETTINGS_MODAL,
   SHARING_MODAL,
 } from './actions';
 
 const MODALS = {
   [UPLOAD_PROGRESS_TOAST]: UploadProgressModal,
   [SHARE_PROGRESS_TOAST]: SharingProgressModal,
+  [SETTINGS_MODAL]: SettingsModal,
   [SHARING_MODAL]: SharingModal,
 };
 

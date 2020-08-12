@@ -1,3 +1,7 @@
+import React from 'react';
+
+import { IconsTooltip } from '@ui/Table';
+
 export default (t) => [
   {
     width: '41%',
@@ -10,5 +14,9 @@ export default (t) => [
   {
     width: 'auto',
     title: t('modules.storage.fileTable.head.lastModified'),
+  },
+  {
+    width: '80px',
+    title: <IconsTooltip />,
   },
 ];

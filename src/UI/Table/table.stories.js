@@ -9,6 +9,7 @@ import {
   FileCell,
   TableRow,
   TableCell,
+  IconsCell,
 } from './components';
 
 const categoryName = 'ElementalComponents/Table';
@@ -47,7 +48,7 @@ const renderRow = ({ row }) => (
     </TableCell>
     <TableCell align="right">
       <Typography variant="body2">
-        ●●●
+        <IconsCell />
       </Typography>
     </TableCell>
   </TableRow>

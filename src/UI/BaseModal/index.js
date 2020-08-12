@@ -2,18 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Modal from '@material-ui/core/Modal';
+import classnames from 'classnames';
 
 import useStyles, { backdropStyles } from './styles';
 
+/* eslint-disable react/jsx-props-no-spreading */
 const BaseModal = ({
   children,
   maxWidth,
   onClose,
   modalProps,
+  paperProps,
 }) => {
   const classes = useStyles({
     maxWidth,
   });
+
+  const {
+    className: paperClassName,
+    ...paperRestProps
+  } = paperProps;
 
   return (
     <Modal
@@ -21,10 +29,15 @@ const BaseModal = ({
       onClose={onClose}
       disableAutoFocus
       BackdropProps={{ style: backdropStyles }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...modalProps}
     >
-      <Paper className={classes.paper}>
+      <Paper
+        className={classnames(
+          classes.paper,
+          paperClassName,
+        )}
+        {...paperRestProps}
+      >
         {children}
       </Paper>
     </Modal>
@@ -34,6 +47,9 @@ const BaseModal = ({
 BaseModal.defaultProps = {
   maxWidth: 'initial',
   modalProps: {},
+  paperProps: {
+    className: null,
+  },
 };
 
 BaseModal.propTypes = {
@@ -41,6 +57,9 @@ BaseModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   maxWidth: PropTypes.number,
   modalProps: PropTypes.shape({}),
+  paperProps: PropTypes.shape({
+    className: PropTypes.string,
+  }),
 };
 
 export default BaseModal;

@@ -62,9 +62,13 @@
       "you": " (you)"
     }
   },
-  "teamSelector": {
-    "membersNumber": "{{count}} Member",
-    "membersNumber_plural": "{{count}} Members"
+  "account": {
+    "personal": "Personal",
+    "menu": {
+      "settings": "Settings",
+      "help": "Help",
+      "signout": "Sign out"
+    }
   },
   "navigation": {
     "storage": "Storage",
@@ -95,7 +99,8 @@
           "name": "Name",
           "members": "Members",
           "lastModified": "Last Modified",
-          "size": "Size"
+          "size": "Size",
+          "tooltip": "The first icon is blue if the file is in local storage. The second is green if the file is in space storage. The last icon shows the amount of users the file has been shared with."
         }
       },
       "sharedBy": {
@@ -137,6 +142,18 @@
         "username": "Sorry, this username is already taken.",
         "address": "Sorry, the current address is already registered."
       }
+    },
+    "shared": {
+      "passwordCheck": {
+        "title": "Password must have",
+        "requirements": {
+          "number": "One number",
+          "lowerCase": "Lowercase character",
+          "upperCase": "Uppercase character",
+          "specialChar": "One special character",
+          "charLength": "8 characters minimun"
+        }
+      }
     }
   },
   "uploadProgressModal": {
@@ -173,6 +190,24 @@
         "copyLink": "Copy Link",
         "tooltipContent": "This password is used by the receiving user to open the file being sent. Do not use your Space password.",
         "tooltipButton": "Okay"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "account": {
+        "title": "Account"
+      },
+      "security": {
+        "title": "Security"
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "usage": {
+        "title": "Usage"
+      },
+      "referrals": {
+        "title": "Referrals"
       }
     }
   }
