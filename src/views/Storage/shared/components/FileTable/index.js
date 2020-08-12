@@ -58,7 +58,6 @@ const FileTable = ({
 
   return (
     <ObjectsTable
-      withRowOptions
       rows={rows}
       bucket={bucket}
       renderRow={renderRow}
