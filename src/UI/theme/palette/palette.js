@@ -10,15 +10,19 @@ const gray8 = '#464646';
 const gray9 = '#e2e2e2';
 const gray10 = '#e4e4e4';
 const gray11 = '#a2a2a2';
+const gray12 = '#edeff5';
 const white = '#FFFFFF';
 const blue1 = '#006EFF';
 const blue2 = '#4a97ff';
 const blue3 = '#79b3ff';
 const blue4 = '#b2d3ff';
 const blue5 = '#e9e8f9';
+const blue6 = '#0771ff';
 const red = '#ef6a6e';
 const yellow = '#FFD700';
 const green = '#00a83e';
+const green2 = '#00c9a7';
+const pink = '#ed54ea';
 
 const palette = {
   black,
@@ -33,15 +37,19 @@ const palette = {
   gray9,
   gray10,
   gray11,
+  gray12,
   white,
   blue1,
   blue2,
   blue3,
   blue4,
   blue5,
+  blue6,
   red,
   yellow,
   green,
+  green2,
+  pink,
 };
 
 export default palette;
