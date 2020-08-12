@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import TableRow from './index';
 import FileCell from '../FileCell';
 import TableCell from '../TableCell';
+import IconsCell from '../IconsCell';
 
 const categoryName = 'ElementalComponents/Table';
 
@@ -59,7 +60,7 @@ storiesOf(categoryName, module).add('TableRow', () => {
               </Typography>
             </TableCell>
             <TableCell align="right">
-              ●●●
+              <IconsCell />
             </TableCell>
           </TableRow>
         </TableBody>
