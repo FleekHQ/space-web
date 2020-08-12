@@ -62,9 +62,13 @@
       "you": " (you)"
     }
   },
-  "teamSelector": {
-    "membersNumber": "{{count}} Member",
-    "membersNumber_plural": "{{count}} Members"
+  "account": {
+    "personal": "Personal",
+    "menu": {
+      "settings": "Settings",
+      "help": "Help",
+      "signout": "Sign out"
+    }
   },
   "navigation": {
     "storage": "Storage",

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@ui/Typography';
 import Avatar from '@ui/Avatar';
-import CreateNewButton from '../CreateNewButton';
-import useItems from '../CreateNewMenu/hooks/useItems';
-import TeamSelector from '../TeamSelector';
+// import CreateNewButton from '../CreateNewButton';
+// import useItems from '../CreateNewMenu/hooks/useItems';
+import Account from '../Account';
 import useStyles from './styles';
 import { useNavigations } from './hooks';
 
@@ -17,7 +18,7 @@ const activeLinkProps = {
 const isMac = process.platform === 'darwin';
 
 const Sidebar = () => {
-  const items = useItems();
+  // const items = useItems();
   const user = useSelector((state) => state.user);
   const classes = useStyles({ user });
   const { specificNav } = useNavigations();
@@ -25,8 +26,8 @@ const Sidebar = () => {
   return (
     <div className={classes.rootSidebar}>
       {isMac && <div className={classes.trafficLightsSpot} />}
-      <div className={classes.sidebarContent}>
-        <div className={classes.accounts}>
+      <div className={classes.contentSidebar}>
+        <div className={classes.leftPanel}>
           <Avatar
             active
             size={24}
@@ -34,44 +35,43 @@ const Sidebar = () => {
             username={user.username}
           />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-          >
-            <TeamSelector
+        <div className={classes.rightPanel}>
+          <div className={classes.userContent}>
+            <Account
               accountsList={[{
                 id: user.username,
                 name: user.username,
                 membersNumber: 0,
               }]}
               selectedAccountId={user.username}
+              account={{
+                id: user.username,
+                name: user.username,
+                membersNumber: 0,
+              }}
             />
-            <CreateNewButton items={items} />
+            {/* <CreateNewButton items={items} /> */}
           </div>
-          {specificNav.list.map((navLink) => (
-            <Link
-              key={navLink.key}
-              to={navLink.to}
-              className={classes.specificNavLink}
-            >
-              <Typography
-                color="secondary"
-                variant="body1"
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...navLink.active && activeLinkProps}
-              >
-                {navLink.text}
-              </Typography>
-            </Link>
-          ))}
+          <Divider classes={{ root: classes.rootDivider }} />
+          <ul className={classes.navMenu}>
+            {specificNav.list.map((navLink) => (
+              <li key={navLink.key}>
+                <Link
+                  to={navLink.to}
+                  className={classes.specificNavLink}
+                >
+                  <Typography
+                    color="secondary"
+                    variant="body1"
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...navLink.active && activeLinkProps}
+                  >
+                    {navLink.text}
+                  </Typography>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
