@@ -10,11 +10,19 @@ export default makeStyles((theme) => ({
   root: {
     width: getSize,
     height: getSize,
+    boxSizing: 'initial',
     backgroundColor: ({ username }) => (stringToColor(username)),
     color: ({ username }) => {
       const color = stringToColor(username);
 
       return theme.palette.getContrastText(color);
+    },
+    border: ({ active }) => {
+      if (!active) {
+        return null;
+      }
+
+      return '2px solid black';
     },
   },
 }));
