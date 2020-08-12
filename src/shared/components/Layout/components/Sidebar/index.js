@@ -38,19 +38,32 @@ const Sidebar = () => {
         <div className={classes.rightPanel}>
           <div className={classes.userContent}>
             <Account
-              accountsList={[{
-                id: user.username,
-                name: user.username,
-                membersNumber: 0,
-              }]}
-              selectedAccountId={user.username}
               account={{
                 id: user.username,
                 name: user.username,
                 membersNumber: 0,
               }}
             />
-            {/* <CreateNewButton items={items} /> */}
+            {/* TODO: replace this with the right add button */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <div
+                style={{
+                  height: 30,
+                  width: 30,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                +
+              </div>
+              {/* <CreateNewButton items={items} /> */}
+            </div>
           </div>
           <Divider classes={{ root: classes.rootDivider }} />
           <ul className={classes.navMenu}>

@@ -47,7 +47,9 @@ const Account = ({ account }) => {
         onClick={handleClick}
         endIcon={<FontAwesomeIcon icon={faAngleDown} />}
       >
-        {account.name}
+        <Typography noWrap color="inherit">
+          {account.name}
+        </Typography>
       </Button>
       <Popover
         id={id}

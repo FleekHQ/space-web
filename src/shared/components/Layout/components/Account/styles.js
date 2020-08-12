@@ -20,6 +20,9 @@ export const userAccountMenu = makeStyles({
 });
 
 export const useUserBtnStyles = makeStyles((theme) => ({
+  label: {
+    maxWidth: 109,
+  },
   colorInherit: {
     padding: 0,
     fontWeight: 500,
@@ -36,8 +39,10 @@ export const useUserBtnStyles = makeStyles((theme) => ({
 
 export default makeStyles({
   root: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   avatarWrapper: {
     flexShrink: 0,
