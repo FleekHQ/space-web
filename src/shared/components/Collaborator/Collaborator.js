@@ -37,6 +37,7 @@ const Collaborator = (props) => {
         >
           {mainText}
         </Typography>
+        {secondaryText && (
         <Typography
           variant="body2"
           color="secondary"
@@ -44,6 +45,7 @@ const Collaborator = (props) => {
         >
           {secondaryText}
         </Typography>
+        )}
       </div>
     </div>
   );

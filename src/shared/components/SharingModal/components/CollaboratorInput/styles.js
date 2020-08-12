@@ -5,10 +5,11 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    height: 20,
   },
   imageContainer: {
-    width: 25,
-    height: 25,
+    width: 15,
+    height: 15,
     overflow: 'hidden',
     borderRadius: '50%',
     backgroundColor: theme.palette.palette.gray10,
@@ -18,7 +19,7 @@ export default makeStyles((theme) => ({
     marginRight: 8,
   },
   icon: {
-    fontSize: 16,
+    fontSize: 12,
   },
   image: {
     width: '100%',

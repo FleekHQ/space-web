@@ -25,11 +25,12 @@ storiesOf(categoryName, module).add('default', () => {
     onShareLinkClick: action('onShareLinkClick'),
     onChangeUserPermissions: action('onChangeUserPermissions'),
     onChangeInputPermissions: action('onChangeInputPermissions'),
+    onSendEmailClick: action('onSendEmailClick'),
+    onClickSettings: action('onClickSettings'),
     collaborators: object('collaborators', [
       {
         id: 'morochroyce@gmail.com',
         mainText: 'Peter Adams',
-        secondaryText: 'morochroyce@gmail.comaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
         isOwner: true,
@@ -37,46 +38,56 @@ storiesOf(categoryName, module).add('default', () => {
       {
         id: 'morochgfx@gmail.com',
         mainText: 'Royce',
-        secondaryText: 'morochgfx@gmail.com',
-        permissionsId: 'view',
+        permissionsId: 'edit',
       },
       {
         id: 'maria.mart@gmail.com',
         mainText: 'Maria Martinez',
-        secondaryText: 'maria.mart@gmail.com',
-        imageSrc: 'https://aboutfaceskincare.com/wp-content/uploads/2019/11/About-Face-Skincare1172_pp-1-e1574785727292.jpg',
+        imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
         permissionsId: 'edit',
       },
       {
         id: 'lorelipsum.com',
         mainText: 'Lorem ipsum',
-        secondaryText: 'lorelipsum@gmail.com',
         permissionsId: 'edit',
       },
       {
         id: 'asd123@gmail.com',
         mainText: 'asd123',
-        secondaryText: 'asd123@gmail.com',
-        permissionsId: 'view',
+        permissionsId: 'edit',
       },
       {
         id: 'mon.kallen@gmail.com4',
         mainText: 'Mon Kallen',
-        secondaryText: 'mon.kallen@gmail.com4',
         permissionsId: 'edit',
       },
     ]),
+    shareLinkProps: {
+      step: 0,
+      defaultStep: 0,
+      url: 'xyx.com'
+    },
   };
 
   return (
     <div
       style={{
-        width: 460,
-        height: 420,
-        backgroundColor: 'white',
+        width: 1000,
+        height: 1000,
+        backgroundColor: 'black',
+        padding: 20,
       }}
     >
-      <SharingModal {...defaultProps} />
+      <div
+        style={{
+          width: 460,
+          height: 420,
+          borderRadius: 6,
+          backgroundColor: 'white',
+        }}
+      >
+        <SharingModal {...defaultProps} />
+      </div>
     </div>
   );
 });

@@ -14,4 +14,12 @@ export default makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  shareButtonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  shareButton: {
+    margin: '20px 25px 20px 0',
+    minWidth: 86,
+  },
 });

@@ -13,11 +13,12 @@ export default makeStyles((theme) => ({
     padding: '10px 25px',
   },
   memberInput: {
-    padding: '13px 25px',
+    padding: '10px 25px 12px 25px',
   },
   collaboratorList: {
     flex: 1,
     overflow: 'auto',
+    maxHeight: 200,
     padding: '12px 25px',
     '& div > p': {
       maxWidth: 260,
@@ -28,5 +29,9 @@ export default makeStyles((theme) => ({
   },
   footer: {
     padding: '14px 25px 23px',
+    backgroundColor: 'white',
+    position: 'relative',
+    top: 20,
+    borderRadius: 6,
   },
 }));

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import classnames from 'classnames';
+import Button from '@material-ui/core/Button';
 
 import useStyles from './styles';
 import Collaborator from '../../../Collaborator';
@@ -16,6 +17,7 @@ const CollaboratorList = (props) => {
     className,
     collaborators,
     onChangePermissions,
+    onSendEmailClick,
   } = props;
 
   const classes = useStyles();
@@ -86,13 +88,25 @@ const CollaboratorList = (props) => {
   });
 
   return (
-    <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
-    >
-      {collaboratorsList}
+    <div>
+      <div
+        className={classnames(
+          classes.root,
+          className,
+        )}
+      >
+        {collaboratorsList}
+      </div>
+      <div className={classes.shareButtonContainer}>
+        <Button
+          onClick={onSendEmailClick}
+          variant="contained"
+          color="primary"
+          className={classes.shareButton}
+        >
+          {i18n.shareButton}
+        </Button>
+      </div>
     </div>
   );
 };
@@ -102,6 +116,7 @@ CollaboratorList.defaultProps = {
   className: null,
   collaborators: [],
   onChangePermissions: () => {},
+  onSendEmailClick: () => {},
 };
 
 CollaboratorList.propTypes = {
@@ -123,7 +138,9 @@ CollaboratorList.propTypes = {
   })),
   i18n: PropTypes.shape({
     owner: PropTypes.string,
+    shareButton: PropTypes.string,
   }).isRequired,
+  onSendEmailClick: PropTypes.func,
 };
 
 export default CollaboratorList;

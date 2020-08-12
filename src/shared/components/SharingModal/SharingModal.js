@@ -7,117 +7,82 @@ import useStyles from './styles';
 import getOptions from './options';
 import {
   Header,
-  EditFooter,
   MemberInput,
   CollaboratorList,
-  EmailBodyInput,
-  SendEmailFooter,
 } from './components';
 
+import ShareLink from '../../../views/Modal/modals/Sharing/components/ShareLink';
+
+/* eslint-disable react/jsx-props-no-spreading */
 const SharingModal = (props) => {
   const {
     ext,
     filename,
-    shareLink,
     className,
     collaborators,
-    onShareLinkClick,
     onChangeUserPermissions,
     onChangeInputPermissions,
     onSendEmailClick,
+    onClickSettings,
+    ...shareLinkProps
   } = props;
+
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [emailBody, setEmailBody] = useState('');
-  const [showEmailBody, setShowEmailBody] = useState(false);
-  const [emailAddresses, setEmailAddresses] = useState([]);
+  const [usernames, setUsernames] = useState([]);
   const i18n = {
     memberInput: {
+      shareVia: t('modals.sharingModal.shareVia'),
       to: t('modals.sharingModal.to'),
       placeholder: t('modals.sharingModal.inputPlaceholder'),
     },
     collaboratorList: {
       owner: t('common.owner'),
-    },
-    footer: {
-      canView: t('common.access.view.title'),
-      title: t('modals.sharingModal.linkTitle'),
-      description: shareLink
-        ? t('modals.sharingModal.linkDescription')
-        : t('modals.sharingModal.noLinkDescription'),
-      cta: shareLink
-        ? t('modals.sharingModal.copyLink')
-        : t('modals.sharingModal.createLink'),
-    },
-    email: {
-      placeholder: t('modals.sharingModal.emailPlaceholder'),
       shareButton: t('modals.sharingModal.shareEmailButton'),
-    },
-    emailErrors: {
-      invalidEmail: t('modals.sharingModal.errors.invalidEmail'),
-      duplicateEmail: t('modals.sharingModal.errors.duplicateEmail'),
     },
   };
 
   return (
-    <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
-    >
-      <Header
-        ext={ext}
-        className={classes.header}
+    <div>
+      <div
+        className={classnames(
+          classes.root,
+          className,
+        )}
       >
-        {filename}
-      </Header>
-      <MemberInput
-        options={getOptions(t)}
-        i18n={i18n.memberInput}
-        className={classes.memberInput}
-        onChange={onChangeInputPermissions}
-        setEmailAddresses={setEmailAddresses}
-        emailAddresses={emailAddresses}
-        showEmailBody={showEmailBody}
-        setShowEmailBody={setShowEmailBody}
-        setEmailBody={setEmailBody}
-        collaborators={collaborators}
-        emailErrors={i18n.emailErrors}
-      />
-      {
-        showEmailBody ? (
-          <>
-            <EmailBodyInput
-              placeholder={i18n.email.placeholder}
-              setEmailBody={setEmailBody}
-              emailBody={emailBody}
-            />
-            <SendEmailFooter
-              className={classes.footer}
-              shareButtonText={i18n.email.shareButton}
-              onSendEmailClick={() => onSendEmailClick(emailAddresses, emailBody)}
-              disabled={emailAddresses.length === 0}
-            />
-          </>
-        ) : (
-          <>
-            <CollaboratorList
-              i18n={i18n.collaboratorList}
-              collaborators={collaborators}
-              options={getOptions(t, true)}
-              className={classes.collaboratorList}
-              onChangePermissions={onChangeUserPermissions}
-            />
-            <EditFooter
-              i18n={i18n.footer}
-              className={classes.footer}
-              onClick={onShareLinkClick}
-            />
-          </>
-        )
-      }
+        <Header
+          ext={ext}
+          className={classes.header}
+          onClickSettings={onClickSettings}
+        >
+          {filename}
+        </Header>
+        <MemberInput
+          options={getOptions(t)}
+          i18n={i18n.memberInput}
+          className={classes.memberInput}
+          onChange={onChangeInputPermissions}
+          setUsernames={setUsernames}
+          usernames={usernames}
+          collaborators={collaborators}
+        />
+        <CollaboratorList
+          i18n={i18n.collaboratorList}
+          collaborators={collaborators}
+          options={getOptions(t, true)}
+          className={classes.collaboratorList}
+          onChangePermissions={onChangeUserPermissions}
+          onSendEmailClick={onSendEmailClick}
+        />
+      </div>
+      <div
+        className={classes.footer}
+      >
+        <ShareLink
+          {...shareLinkProps}
+        />
+      </div>
     </div>
   );
 };
@@ -126,20 +91,17 @@ SharingModal.defaultProps = {
   filename: '',
   ext: 'default',
   className: null,
-  shareLink: false,
   collaborators: [],
-  onShareLinkClick: () => {},
   onChangeUserPermissions: () => {},
   onChangeInputPermissions: () => {},
   onSendEmailClick: () => {},
+  onClickSettings: () => {},
 };
 
 SharingModal.propTypes = {
   ext: PropTypes.string,
-  shareLink: PropTypes.bool,
   filename: PropTypes.string,
   className: PropTypes.string,
-  onShareLinkClick: PropTypes.func,
   onChangeUserPermissions: PropTypes.func,
   onChangeInputPermissions: PropTypes.func,
   collaborators: PropTypes.arrayOf(PropTypes.shape({
@@ -151,6 +113,7 @@ SharingModal.propTypes = {
     permissionsId: PropTypes.string,
   })),
   onSendEmailClick: PropTypes.func,
+  onClickSettings: PropTypes.func,
 };
 
 export default SharingModal;

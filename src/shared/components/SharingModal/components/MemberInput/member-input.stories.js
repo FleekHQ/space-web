@@ -21,12 +21,12 @@ storiesOf(categoryName, module).add('MemberInput', () => {
         title: 'Can edit',
         description: 'Members can edit, delete, and add the file to their Space.',
       },
-      {
-        id: 'view',
-        selected: false,
-        title: 'Can view',
-        description: 'Members can view and download.',
-      },
+      // {
+      //   id: 'view',
+      //   selected: false,
+      //   title: 'Can view',
+      //   description: 'Members can view and download.',
+      // },
     ]),
   };
 

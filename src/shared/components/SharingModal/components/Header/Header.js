@@ -3,10 +3,18 @@ import PropTypes from 'prop-types';
 import FileIcon from '@ui/FileIcon';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { faCog } from '@fortawesome/pro-regular-svg-icons/faCog';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import useStyles from './styles';
 
-const Header = ({ ext, children, className }) => {
+const Header = ({
+  ext,
+  children,
+  className,
+  onClickSettings,
+}) => {
   const classes = useStyles();
 
   return (
@@ -16,15 +24,26 @@ const Header = ({ ext, children, className }) => {
         className,
       )}
     >
-      <div className={classes.icon}>
-        <FileIcon ext={ext} />
+      <div className={classes.iconTitleContainer}>
+        <div className={classes.icon}>
+          <FileIcon ext={ext} />
+        </div>
+        <Typography
+          variant="body1"
+          className={classes.title}
+        >
+          {children}
+        </Typography>
       </div>
-      <Typography
-        variant="body1"
-        className={classes.title}
+      <ButtonBase
+        onClickSettings={onClickSettings}
+        className={classes.settingsButton}
       >
-        {children}
-      </Typography>
+        <FontAwesomeIcon
+          icon={faCog}
+          className={classes.settingsIcon}
+        />
+      </ButtonBase>
     </div>
   );
 };
@@ -33,12 +52,14 @@ Header.defaultProps = {
   children: '',
   ext: 'default',
   className: null,
+  onClickSettings: () => {},
 };
 
 Header.propTypes = {
   ext: PropTypes.string,
   children: PropTypes.string,
   className: PropTypes.string,
+  onClickSettings: PropTypes.func,
 };
 
 export default Header;
