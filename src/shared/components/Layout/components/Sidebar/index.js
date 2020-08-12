@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@ui/Typography';
 import Avatar from '@ui/Avatar';
-// import CreateNewButton from '../CreateNewButton';
-// import useItems from '../CreateNewMenu/hooks/useItems';
+import CreateNewButton from '../CreateNewButton';
 import Account from '../Account';
 import useStyles from './styles';
 import { useNavigations } from './hooks';
@@ -18,7 +17,6 @@ const activeLinkProps = {
 const isMac = process.platform === 'darwin';
 
 const Sidebar = () => {
-  // const items = useItems();
   const user = useSelector((state) => state.user);
   const classes = useStyles({ user });
   const { specificNav } = useNavigations();
@@ -44,26 +42,7 @@ const Sidebar = () => {
                 membersNumber: 0,
               }}
             />
-            {/* TODO: replace this with the right add button */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <div
-                style={{
-                  height: 30,
-                  width: 30,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                +
-              </div>
-              {/* <CreateNewButton items={items} /> */}
-            </div>
+            <CreateNewButton />
           </div>
           <Divider classes={{ root: classes.rootDivider }} />
           <ul className={classes.navMenu}>

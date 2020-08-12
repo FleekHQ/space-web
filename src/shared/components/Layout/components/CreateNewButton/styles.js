@@ -1,5 +1,21 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+export const useIconButtonStyles = makeStyles((theme) => ({
+  root: {
+    padding: 0,
+    width: '30px',
+    height: '30px',
+    boxShadow: '0 0 9px 0 rgba(222, 222, 222, 0.8)',
+    border: 'solid 1px #ebebeb',
+    backgroundColor: theme.palette.palette.white,
+  },
+  colorPrimary: {
+    '&:hover': {
+      backgroundColor: theme.palette.palette.white,
+    },
+  },
+}));
+
 export default makeStyles((theme) => ({
   container: {
     textTransform: 'none',
