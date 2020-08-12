@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 import { formatBytes } from '@utils';
-import { TableCell, FileCell } from '@ui/Table';
+import { TableCell, FileCell, IconsCell } from '@ui/Table';
 
 // eslint-disable-next-line import/prefer-default-export
 export const renderRow = (row) => (
@@ -23,6 +23,9 @@ export const renderRow = (row) => (
         {/* ^ just for testing, after POC should be used line below */}
         {/* {formatMonthDayYear(row.lastModified)} */}
       </Typography>
+    </TableCell>
+    <TableCell>
+      <IconsCell />
     </TableCell>
   </>
 );
