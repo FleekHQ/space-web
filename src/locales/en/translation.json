@@ -198,7 +198,13 @@
         "title": "Account"
       },
       "security": {
-        "title": "Security"
+        "title": "Security",
+        "password": "Password",
+        "paperKey": "Paper Key",
+        "paperKeyTitle": "What is the Paper Key?",
+        "downloadPaperKey": "Download Paper Key",
+        "changePassword": "Change Password",
+        "paperKeyInfo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim."
       },
       "notifications": {
         "title": "Notifications"
