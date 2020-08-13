@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BaseModal from '@ui/BaseModal';
@@ -101,6 +100,15 @@ const Prompt = (props) => {
   );
 };
 
+Prompt.defaultProps = {
+  title: '',
+  validate: () => null,
+  onSubmit: () => {},
+  closeModal: () => {},
+  validateOnChange: false,
+  validateOnSubmit: true,
+};
+
 Prompt.propTypes = {
   title: PropTypes.string,
   validate: PropTypes.func,
@@ -112,7 +120,7 @@ Prompt.propTypes = {
     label: PropTypes.string,
     cancel: PropTypes.string,
     submit: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
 export default Prompt;
