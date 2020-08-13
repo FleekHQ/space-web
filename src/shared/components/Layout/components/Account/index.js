@@ -2,28 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/pro-light-svg-icons/faCog';
-import { faSignOut } from '@fortawesome/pro-light-svg-icons/faSignOut';
-import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
-import { faQuestionCircle } from '@fortawesome/pro-light-svg-icons/faQuestionCircle';
+import { faCog } from '@fortawesome/pro-regular-svg-icons/faCog';
+import { faSignOut } from '@fortawesome/pro-regular-svg-icons/faSignOut';
+import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
+import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 
-import useStyles, { userAccountMenu, useUserBtnStyles } from './styles';
+import MenuDropdown from '@ui/MenuDropdown';
+
+import { MENU_DROPDOWN_ITEMS } from './constants';
+import useStyles, { useUserBtnStyles } from './styles';
 
 const Account = ({ account }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
+  const btnClasses = useUserBtnStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const classes = useStyles();
-  const listClasses = userAccountMenu();
-  const btnClasses = useUserBtnStyles();
+  const open = Boolean(anchorEl);
+  const id = open ? 'account-menu' : undefined;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,8 +34,11 @@ const Account = ({ account }) => {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'account-menu' : undefined;
+  const handleMenuItemClick = (item) => {
+    // TODO: handle item click
+    // eslint-disable-next-line no-console
+    console.log('item clicked: ', item);
+  };
 
   return (
     <div className={classes.root}>
@@ -68,27 +72,29 @@ const Account = ({ account }) => {
           horizontal: 'left',
         }}
       >
-        <List classes={listClasses}>
-          <ListItem>
-            <FontAwesomeIcon icon={faCog} />
-            <Typography color="inherit">
-              {t('account.menu.settings')}
-            </Typography>
-          </ListItem>
-          <ListItem>
-            <FontAwesomeIcon icon={faQuestionCircle} />
-            <Typography color="inherit">
-              {t('account.menu.help')}
-            </Typography>
-          </ListItem>
-          <Divider classes={{ root: classes.rootDivider }} />
-          <ListItem>
-            <FontAwesomeIcon icon={faSignOut} />
-            <Typography color="inherit">
-              {t('account.menu.signout')}
-            </Typography>
-          </ListItem>
-        </List>
+        <MenuDropdown
+          items={[
+            {
+              id: MENU_DROPDOWN_ITEMS.settings,
+              divider: false,
+              icon: faCog,
+              name: t('account.menu.settings'),
+            },
+            {
+              id: MENU_DROPDOWN_ITEMS.help,
+              divider: true,
+              icon: faQuestionCircle,
+              name: t('account.menu.help'),
+            },
+            {
+              id: MENU_DROPDOWN_ITEMS.signout,
+              divider: false,
+              icon: faSignOut,
+              name: t('account.menu.signout'),
+            },
+          ]}
+          onItemClick={handleMenuItemClick}
+        />
       </Popover>
       <Typography variant="body2" color="secondary">
         {t('account.personal')}

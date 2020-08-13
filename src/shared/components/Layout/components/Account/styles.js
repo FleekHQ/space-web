@@ -1,24 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const userAccountMenu = makeStyles({
-  root: {
-    color: 'black',
-    width: 138,
-    margin: '-8px 0',
-    '& > li': {
-      padding: 0,
-      margin: '8px 0',
-      cursor: 'pointer',
-    },
-    '& > li > svg': {
-      marginRight: 5,
-    },
-  },
-  padding: {
-    padding: '10px 13px',
-  },
-});
-
 export const useUserBtnStyles = makeStyles((theme) => ({
   label: {
     maxWidth: 109,
