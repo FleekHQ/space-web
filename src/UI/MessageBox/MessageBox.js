@@ -19,7 +19,6 @@ const getIconByType = (type) => {
   return icons[type] || icons.info;
 };
 
-/* eslint-disable react/jsx-props-no-spreading */
 const MessageBox = (props) => {
   const {
     type,
@@ -27,7 +26,6 @@ const MessageBox = (props) => {
     bgColor,
     children,
     className,
-    ...restProps
   } = props;
 
   const classes = useStyles({ type, bgColor });
@@ -40,7 +38,6 @@ const MessageBox = (props) => {
         classes.root,
         className,
       )}
-      {...restProps}
     >
       <div className={classes.titleContainer}>
         <FontAwesomeIcon
