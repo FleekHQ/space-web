@@ -144,7 +144,6 @@ const SignUp = () => {
           onFocus={handleInputFocusAndBlur({ dispatch })}
         />
         <PasswordCheckTooltip
-          invert
           open={state.tfPassword.isFocus}
           password={state.tfPassword.value}
         >
