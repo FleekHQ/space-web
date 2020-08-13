@@ -2,18 +2,20 @@ import { makeStyles } from '@material-ui/styles';
 
 import { TYPES, BG_COLORS } from './constants';
 
+const getColor = (theme) => ({ type, bgColor }) => {
+  if (type === TYPES.danger) {
+    return theme.palette.palette.red;
+  }
+  if (bgColor === BG_COLORS.secondary) {
+    return theme.palette.common.white;
+  }
+  return theme.palette.common.black;
+};
+
 export const useCustomToolTipStyles = makeStyles((theme) => ({
   arrow: {
     fontSize: '1.7em',
-    color: ({ type, bgColor }) => {
-      if (type === TYPES.danger) {
-        return theme.palette.palette.red;
-      }
-      if (bgColor === BG_COLORS.secondary) {
-        return theme.palette.common.white;
-      }
-      return theme.palette.common.black;
-    },
+    color: getColor(theme),
   },
   tooltip: ({ type, bgColor }) => {
     let color = theme.palette.common.black;
@@ -53,15 +55,7 @@ export default makeStyles((theme) => ({
     '& > svg': {
       fontSize: 11,
       marginRight: 6,
-      color: ({ type, bgColor }) => {
-        if (type === TYPES.danger) {
-          return theme.palette.palette.red;
-        }
-        if (bgColor === BG_COLORS.secondary) {
-          return theme.palette.common.white;
-        }
-        return theme.palette.common.black;
-      },
+      color: getColor(theme),
     },
   },
   requirementList: {
