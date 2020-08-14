@@ -8,6 +8,7 @@
     "owner": "Owner",
     "save": "Save",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -215,6 +216,12 @@
       "referrals": {
         "title": "Referrals"
       }
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "currPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password"
     }
   }
 }
