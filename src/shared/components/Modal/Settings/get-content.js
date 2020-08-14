@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Security } from './views';
+
 export default (t) => [
   {
     id: 'account',
@@ -10,7 +12,7 @@ export default (t) => [
   {
     id: 'security',
     title: t('modals.settings.security.title'),
-    content: <div>security</div>,
+    content: <Security t={t} />,
   },
   {
     id: 'notifications',
