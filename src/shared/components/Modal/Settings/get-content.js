@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Security } from './views';
+import { Security, Account } from './views';
 
 export default (t) => [
   {
     id: 'account',
     default: true,
     title: t('modals.settings.account.title'),
-    content: <div>account</div>,
+    content: <Account />,
   },
   {
     id: 'security',

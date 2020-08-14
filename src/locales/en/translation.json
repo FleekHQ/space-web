@@ -196,7 +196,16 @@
     "settings": {
       "title": "Settings",
       "account": {
-        "title": "Account"
+        "title": "Account",
+        "profilePicture": "Profile Picture",
+        "edit": "Edit",
+        "displayName": "Display Name",
+        "setDisplayName": "Set Display Name",
+        "username": "Username",
+        "setUsername": "Pick a Username",
+        "profileId": "Profile ID",
+        "dangerZone": "Danger Zone",
+        "deleteAccount": "Delete Account"
       },
       "security": {
         "title": "Security",
