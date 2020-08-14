@@ -132,14 +132,17 @@
     },
     "signup": {
       "title": "Sign Up",
+      "logIn": "Log in",
+      "claim": "Claim Username",
+      "doLater": "Do this later",
       "username": "Pick a username",
-      "password": "Create a password",
+      "helperText": "No special characters allowed, only \"-\".",
       "email": "Email (Optional)",
       "link": "Already have an account?",
       "forgotPassword": "Forgot password?",
       "errors": {
         "generic": "Sorry, there was a problem.",
-        "username": "Sorry, this username is already taken.",
+        "username": "Username is taken.",
         "address": "Sorry, the current address is already registered."
       }
     },
