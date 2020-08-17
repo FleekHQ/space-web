@@ -214,14 +214,14 @@
       "security": {
         "title": "Security",
         "password": "Password",
-        "paperKey": "Paper Key",
-        "paperKeyTitle": "What is the Paper Key?",
+        "paperKey": "Seed Phrase",
+        "paperKeyTitle": "What is the Seed Phrase?",
         "downloadPaperKey": "Download Seed Phrase",
         "changePassword": "Change Password",
-        "paperKeyInfo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "paperKeyInfo": "The generated seed phrase will be necessary in case you want to recover your account.",
         "seedPhraseModal": {
           "title": "Seed phrase generated!",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "description": "Please take note of your the seed.",
           "confirmation": "Yes, I wrote this down."
         }
       },
