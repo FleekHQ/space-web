@@ -5,8 +5,12 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 import MessageBox from '@ui/MessageBox';
 
-import { BaseCard } from '../../components';
-import { Body, Header, Section } from '../../components/BaseCard/components';
+import {
+  Body,
+  Header,
+  Section,
+  BaseCard,
+} from '../../components';
 
 const handleChangePassword = (event) => {
   event.preventDefault();

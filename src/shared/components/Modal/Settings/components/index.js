@@ -1,2 +1,2 @@
-/* eslint-disable import/prefer-default-export */
+export * from './BaseCard';
 export { default as BaseCard } from './BaseCard';
