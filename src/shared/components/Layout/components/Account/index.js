@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,7 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 
 import MenuDropdown from '@ui/MenuDropdown';
+import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 
 import { MENU_DROPDOWN_ITEMS } from './constants';
 import useStyles, { useUserBtnStyles } from './styles';
@@ -21,6 +23,7 @@ const Account = ({ account }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const btnClasses = useUserBtnStyles();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
@@ -35,7 +38,12 @@ const Account = ({ account }) => {
   };
 
   const handleMenuItemClick = (item) => {
-    // TODO: handle item click
+    setAnchorEl(null);
+    if (item.id === MENU_DROPDOWN_ITEMS.settings) {
+      dispatch(openModal(SETTINGS_MODAL));
+      return;
+    }
+    // TODO: handle rest of item click
     // eslint-disable-next-line no-console
     console.log('item clicked: ', item);
   };
@@ -48,8 +56,8 @@ const Account = ({ account }) => {
         color="inherit"
         classes={btnClasses}
         aria-describedby={id}
-        onClick={handleClick}
         endIcon={<FontAwesomeIcon icon={faAngleDown} />}
+        onClick={handleClick}
       >
         <Typography noWrap color="inherit">
           {account.name}
