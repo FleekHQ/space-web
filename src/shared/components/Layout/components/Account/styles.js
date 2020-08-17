@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useUserBtnStyles = makeStyles((theme) => ({
   label: {
     maxWidth: 109,
+    '& > p': {
+      fontWeight: 500,
+    },
   },
   colorInherit: {
     padding: 0,

@@ -7,6 +7,7 @@
     "remove": "Remove",
     "owner": "Owner",
     "save": "Save",
+    "done": "Done",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "access": {
@@ -203,9 +204,14 @@
         "password": "Password",
         "paperKey": "Paper Key",
         "paperKeyTitle": "What is the Paper Key?",
-        "downloadPaperKey": "Download Paper Key",
+        "downloadPaperKey": "Download Seed Phrase",
         "changePassword": "Change Password",
-        "paperKeyInfo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim."
+        "paperKeyInfo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "seedPhraseModal": {
+          "title": "Seed phrase generated!",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "confirmation": "Yes, I wrote this down."
+        }
       },
       "notifications": {
         "title": "Notifications"
