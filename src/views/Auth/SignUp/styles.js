@@ -16,6 +16,9 @@ export default makeStyles((theme) => ({
     '& > *': {
       margin: '8px 0',
     },
+    '& > #tfUsername-helperText': {
+      margin: '0 0 6px 0',
+    },
   },
   buttonRoot: {
     height: 39,
@@ -25,6 +28,14 @@ export default makeStyles((theme) => ({
     '&.Mui-disabled': {
       color: theme.palette.palette.white,
       backgroundColor: theme.palette.palette.gray11,
+    },
+  },
+  buttonContained: {
+    color: theme.palette.palette.white,
+    borderColor: theme.palette.palette.white,
+    '&.Mui-disabled': {
+      color: theme.palette.palette.white,
+      borderColor: theme.palette.palette.white,
     },
   },
   link: {
@@ -39,7 +50,10 @@ export default makeStyles((theme) => ({
     },
   },
   textFieldRoot: {
-    '& label.Mui-focused, & label.MuiFormLabel-filled': {
+    '& .MuiFormLabel-root': {
+      color: '#727272',
+    },
+    '& .MuiFormLabel-root.Mui-focused, & .MuiFormLabel-root.MuiFormLabel-filled, & .MuiFormLabel-root.MuiFormLabel-filled.Mui-error': {
       color: theme.palette.palette.white,
     },
     '& .MuiInput-underline:after': {
@@ -56,6 +70,16 @@ export default makeStyles((theme) => ({
     '& label.MuiFormLabel-filled + .MuiOutlinedInput-root': {
       '& fieldset, &:hover fieldset': {
         borderColor: theme.palette.palette.white,
+      },
+    },
+    '& label.MuiFormLabel-filled + .MuiOutlinedInput-root.Mui-error': {
+      '& fieldset, &:hover fieldset': {
+        borderColor: theme.palette.palette.red,
+      },
+    },
+    '& .MuiOutlinedInput-root.Mui-error': {
+      '& fieldset, &:hover fieldset, &.Mui-focused fieldset': {
+        borderColor: theme.palette.palette.red,
       },
     },
   },

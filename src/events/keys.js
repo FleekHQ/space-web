@@ -26,6 +26,7 @@ const registerKeysEvents = () => {
     store.dispatch({
       type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY,
       publicKey: data.publicKey,
+      hubAuthToken: data.hubAuthToken,
     });
   });
 
