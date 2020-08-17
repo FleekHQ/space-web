@@ -40,7 +40,6 @@ storiesOf(categoryName, module).add('BaseCard', () => {
           </Section>
         </Header>
       </BaseCard>
-
       <BaseCard>
         <Header>
           <Section>

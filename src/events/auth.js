@@ -31,10 +31,10 @@ const registerAuthEvents = () => {
     });
   });
 
-  ipcRenderer.on(SIGNUP_SUCCESS_EVENT, (_, payload) => {
+  ipcRenderer.on(SIGNUP_SUCCESS_EVENT, (_, data) => {
     store.dispatch({
       type: SIGNUP_ACTION_TYPES.ON_SUBMIT_SUCCESS,
-      user: payload,
+      user: data,
     });
   });
 

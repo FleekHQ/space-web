@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: {
     maxWidth: 730,
+    maxHeight: 550,
+    height: '100%',
   },
   titleContainer: {
     display: 'flex',
@@ -15,11 +17,13 @@ export default makeStyles((theme) => ({
   },
   bodyContainer: {
     display: 'flex',
+    flex: 1,
+    height: 'calc(100% - 58px)',
   },
   content: {
     flex: 1,
     padding: 27,
-    maxHeight: 510,
+    heigh: '100%',
     overflow: 'auto',
     backgroundColor: theme.palette.palette.gray5,
   },

@@ -134,14 +134,17 @@
     },
     "signup": {
       "title": "Sign Up",
+      "logIn": "Log in",
+      "claim": "Claim Username",
+      "doLater": "Do this later",
       "username": "Pick a username",
-      "password": "Create a password",
+      "helperText": "No special characters allowed, only \"-\".",
       "email": "Email (Optional)",
       "link": "Already have an account?",
       "forgotPassword": "Forgot password?",
       "errors": {
         "generic": "Sorry, there was a problem.",
-        "username": "Sorry, this username is already taken.",
+        "username": "Username is taken.",
         "address": "Sorry, the current address is already registered."
       }
     },
@@ -197,7 +200,16 @@
     "settings": {
       "title": "Settings",
       "account": {
-        "title": "Account"
+        "title": "Account",
+        "profilePicture": "Profile Picture",
+        "edit": "Edit",
+        "displayName": "Display Name",
+        "setDisplayName": "Set Display Name",
+        "username": "Username",
+        "setUsername": "Pick a Username",
+        "profileId": "Profile ID",
+        "dangerZone": "Danger Zone",
+        "deleteAccount": "Delete Account"
       },
       "security": {
         "title": "Security",
