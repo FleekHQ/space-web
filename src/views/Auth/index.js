@@ -9,6 +9,7 @@ import {
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import UsernameSignin from './UsernameSignin';
+import RecoverAccount from './RecoverAccount';
 
 import useStyles from './styles';
 
@@ -32,6 +33,9 @@ const Auth = () => {
         </Route>
         <Route path={`${match.path}/signup`} exact>
           <SignUp />
+        </Route>
+        <Route path={`${match.path}/recover-account`} exact>
+          <RecoverAccount />
         </Route>
         <Redirect to={`${match.path}/signup`} exact />
       </Switch>
