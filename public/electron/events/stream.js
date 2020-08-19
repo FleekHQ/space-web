@@ -25,6 +25,9 @@ const registerEventStream = (mainWindow) => {
           sizeInBytes: entry.getSizeinbytes(),
           fileExtension: entry.getFileextension(),
           bucket: 'personal',
+          isLocallyAvailable: entry.getIslocallyavailable(),
+          backupCount: entry.getBackupcount(),
+          members: entry.getMembersList(),
         },
       );
     }
