@@ -5,6 +5,7 @@ import UploadProgressModal from './UploadProgress';
 import SharingProgressModal from './SharingProgress';
 import SettingsModal from './Settings';
 import SharingModal from './Sharing';
+import PromptModal from './Prompt';
 import useStyles from './styles';
 
 import {
@@ -13,6 +14,7 @@ import {
   SHARE_PROGRESS_TOAST,
   SETTINGS_MODAL,
   SHARING_MODAL,
+  PROMPT_MODAL,
 } from './actions';
 
 const MODALS = {
@@ -20,6 +22,7 @@ const MODALS = {
   [SHARE_PROGRESS_TOAST]: SharingProgressModal,
   [SETTINGS_MODAL]: SettingsModal,
   [SHARING_MODAL]: SharingModal,
+  [PROMPT_MODAL]: PromptModal,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {

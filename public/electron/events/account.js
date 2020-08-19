@@ -1,11 +1,17 @@
 const { ipcMain } = require('electron');
 
-const { spaceClient } = require('../clients');
+const { spaceClient, apiClient } = require('../clients');
 
 const EVENT_PREFIX = 'account';
 const DELETE_ACCOUNT_EVENT = `${EVENT_PREFIX}:delete`;
 const DELETE_ACCOUNT_ERROR_EVENT = `${EVENT_PREFIX}:delete:error`;
 const DELETE_ACCOUNT_SUCCESS_EVENT = `${EVENT_PREFIX}:delete:success`;
+const UPDATE_IDENTITY_EVENT = `${EVENT_PREFIX}:identity:update`;
+const UPDATE_IDENTITY_ERROR_EVENT = `${UPDATE_IDENTITY_EVENT}:error`;
+const UPDATE_IDENTITY_SUCCESS_EVENT = `${UPDATE_IDENTITY_EVENT}:success`;
+const UPLOAD_PROFILE_PIC_EVENT = `${EVENT_PREFIX}:identity:uploadProfilePic`;
+const UPLOAD_PROFILE_PIC_ERROR_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:error`;
+const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
 
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(DELETE_ACCOUNT_EVENT, async () => {
@@ -15,6 +21,40 @@ const registerAuthEvents = (mainWindow) => {
       mainWindow.webContents.send(DELETE_ACCOUNT_SUCCESS_EVENT, {});
     } catch (err) {
       mainWindow.webContents.send(DELETE_ACCOUNT_ERROR_EVENT, err);
+    }
+  });
+
+  ipcMain.on(UPDATE_IDENTITY_EVENT, async (event, payload) => {
+    try {
+      const { data } = await apiClient.identity.update(payload);
+      mainWindow.webContents.send(UPDATE_IDENTITY_SUCCESS_EVENT, data);
+    } catch (error) {
+      let message = '';
+
+      if (error.response && error.response.data) {
+        message = error.response.data.message;
+      }
+
+      mainWindow.webContents.send(UPDATE_IDENTITY_ERROR_EVENT, {
+        message,
+      });
+    }
+  });
+
+  ipcMain.on(UPLOAD_PROFILE_PIC_EVENT, async (event, payload) => {
+    try {
+      const { data } = await apiClient.identity.uploadProfilePic(payload);
+      mainWindow.webContents.send(UPLOAD_PROFILE_PIC_SUCCESS_EVENT, data);
+    } catch (error) {
+      let message = '';
+
+      if (error.response && error.response.data) {
+        message = error.response.data.message;
+      }
+
+      mainWindow.webContents.send(UPLOAD_PROFILE_PIC_ERROR_EVENT, {
+        message,
+      });
     }
   });
 };

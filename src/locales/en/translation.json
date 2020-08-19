@@ -214,7 +214,11 @@
         "setUsername": "Pick a Username",
         "profileId": "Profile ID",
         "dangerZone": "Danger Zone",
-        "deleteAccount": "Delete Account"
+        "deleteAccount": "Delete Account",
+        "editDisplayName": "Edit Display Name",
+        "displayNameLable": "Display Name",
+        "editUsername": "Edit Username",
+        "usernameLabel": "Username"
       },
       "security": {
         "title": "Security",
