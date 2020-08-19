@@ -109,7 +109,7 @@ const CreateNewButton = () => {
               id: MENU_DROPDOWN_ITEMS.folderUpload,
               divider: true,
               icon: faFolderUpload,
-              name: t('createNewMenu.fileUpload'),
+              name: t('createNewMenu.folderUpload'),
             },
             {
               id: MENU_DROPDOWN_ITEMS.newFolder,
