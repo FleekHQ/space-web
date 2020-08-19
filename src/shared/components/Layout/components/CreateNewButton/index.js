@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { faFileUpload } from '@fortawesome/pro-regular-svg-icons/faFileUpload';
 import { faFolderUpload } from '@fortawesome/pro-regular-svg-icons/faFolderUpload';
 
-import { addItems } from '@events';
+import { addItems, createFolder } from '@events';
 import MenuDropdown from '@ui/MenuDropdown';
 
 import { MENU_DROPDOWN_ITEMS } from './constants';
@@ -54,6 +54,7 @@ const CreateNewButton = () => {
   };
 
   const handleMenuItemClick = (item) => {
+    setAnchorEl(null);
     if (item.id === MENU_DROPDOWN_ITEMS.fileUpload) {
       openDialog({ properties: ['openFile'] });
       return;
@@ -64,9 +65,7 @@ const CreateNewButton = () => {
       return;
     }
 
-    // TODO: handle new folder
-    // eslint-disable-next-line no-console
-    console.log('Item Clicked: ', item);
+    createFolder({ path: prefix });
   };
 
   return (
