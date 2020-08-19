@@ -23,6 +23,9 @@ const entryToObject = (entry, bucket) => ({
   ipfsHash: entry.getIpfshash(),
   sizeInBytes: entry.getSizeinbytes(),
   fileExtension: entry.getFileextension(),
+  isLocallyAvailable: entry.getIslocallyavailable(),
+  backupCount: entry.getBackupcount(),
+  members: entry.getMembersList(),
 });
 
 const listDirectories = async (mainWindow, payload = {}) => {
