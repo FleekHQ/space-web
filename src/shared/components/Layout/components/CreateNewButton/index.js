@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 import { remote } from 'electron';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
 
@@ -9,8 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import { faFileUpload } from '@fortawesome/pro-regular-svg-icons/faFileUpload';
 import { faFolderUpload } from '@fortawesome/pro-regular-svg-icons/faFolderUpload';
 
-import { addItems, createFolder } from '@events';
 import MenuDropdown from '@ui/MenuDropdown';
+import { addItems } from '@events';
+import { openModal, CREATE_FOLDER } from '@shared/components/Modal/actions';
 
 import { MENU_DROPDOWN_ITEMS } from './constants';
 import useStyles, { useIconButtonStyles } from './styles';
@@ -19,6 +21,7 @@ const CreateNewButton = () => {
   const classes = useStyles();
   const location = useLocation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const iconBtnClasses = useIconButtonStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -65,7 +68,7 @@ const CreateNewButton = () => {
       return;
     }
 
-    createFolder({ path: prefix });
+    dispatch(openModal(CREATE_FOLDER, { path: prefix }));
   };
 
   return (

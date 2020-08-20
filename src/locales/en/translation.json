@@ -8,6 +8,7 @@
     "owner": "Owner",
     "save": "Save",
     "done": "Done",
+    "create": "Create",
     "cancel": "Cancel",
     "confirm": "Confirm",
     "access": {
@@ -245,6 +246,10 @@
       "currPassword": "Current Password",
       "newPassword": "New Password",
       "confirmPassword": "Confirm New Password"
+    },
+    "createFolder": {
+      "title": "Create New Folder",
+      "inputLabel": "Folder Name"
     }
   }
 }
