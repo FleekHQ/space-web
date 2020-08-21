@@ -30,6 +30,7 @@ const registerKeysEvents = () => {
  * create folder event
  * @param {Object} payload
  * @param {string} payload.path
+ * @param {string} payload.folderName - Name of the folder
  * @param {string=} payload.bucket - Bucket to create the folder. Default is personal
  */
 export const createFolder = (payload) => {

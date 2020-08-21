@@ -40,6 +40,14 @@ const CreateFolder = ({
     });
   };
 
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: CREATE_FOLDER_ACTION_TYPES.ON_RESTART,
+      });
+    }
+  ), []);
+
   React.useEffect(() => {
     if (state.success) {
       closeModal();
@@ -49,13 +57,15 @@ const CreateFolder = ({
   React.useEffect(() => {
     if (state.loading) {
       createFolder({
-        path: path.length === 0 ? state.folderName : `${path}/${state.folderName}`,
+        path,
+        folderName: state.folderName,
       });
     }
   }, [state.loading]);
 
   return (
     <BaseModal
+      onClose={closeModal}
       paperProps={{
         className: classes.root,
       }}
@@ -75,6 +85,7 @@ const CreateFolder = ({
         <form onSubmit={onSubmitForm}>
           <TextField
             fullWidth
+            autoFocus
             label={t('modals.createFolder.inputLabel')}
             value={state.folderName}
             onChange={onChange}

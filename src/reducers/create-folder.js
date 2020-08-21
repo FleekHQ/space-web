@@ -7,6 +7,7 @@ const DEFAULT_STATE = {
 
 export const CREATE_FOLDER_ACTION_TYPES = {
   ON_SUBMIT: 'CREATE_FOLDER_ON_SUBMIT',
+  ON_RESTART: 'CREATE_FOLDER_ON_RESTART',
   ON_INPUT_CHANGE: 'CREATE_FOLDER_ON_INPUT_CHANGE',
   ON_SUBMIT_ERROR: 'CREATE_FOLDER_ON_SUBMIT_ERROR',
   ON_SUBMIT_SUCCESS: 'CREATE_FOLDER_ON_SUBMIT_SUCCESS',
@@ -40,6 +41,11 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         success: true,
+      };
+    }
+    case CREATE_FOLDER_ACTION_TYPES.ON_RESTART: {
+      return {
+        ...DEFAULT_STATE,
       };
     }
     default: {

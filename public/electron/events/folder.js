@@ -1,4 +1,6 @@
 const { ipcMain } = require('electron');
+const pickBy = require('lodash/pickBy');
+const identity = require('lodash/identity');
 
 const { spaceClient } = require('../clients');
 const { listDirectory } = require('./objects');
@@ -11,16 +13,23 @@ const CREATE_FOLDER_SUCCESS_EVENT = `${EVENT_PREFIX}:folder:success`;
 const registerFolderEvents = (mainWindow) => {
   ipcMain.on(CREATE_FOLDER_EVENT, async (_, payload) => {
     try {
-      await spaceClient.createFolder(payload);
+      const { path, bucket, folderName } = payload;
+      const createFolderPayload = pickBy({
+        bucket,
+        path: path.length === 0 ? folderName : `${path}/${folderName}`,
+      }, identity);
+
+      await spaceClient.createFolder(createFolderPayload);
+
       mainWindow.webContents.send(CREATE_FOLDER_SUCCESS_EVENT, {});
 
       const listDirPayload = {
-        path: payload.path,
+        path,
         fetchSubFolders: false,
       };
 
-      if (payload.bucket) {
-        listDirPayload.bucket = payload.bucket;
+      if (bucket) {
+        listDirPayload.bucket = bucket;
       }
 
       await listDirectory(mainWindow, listDirPayload);
