@@ -11,6 +11,8 @@
     "create": "Create",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "on": "on",
+    "off": "off",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -235,7 +237,37 @@
         "title": "Notifications"
       },
       "usage": {
-        "title": "Usage"
+        "title": "Usage",
+        "using": "Using <0>{{size}}</0>",
+        "usingOf": "Using <0>{{size}}</0> of <0>{{maxSize}}</0>",
+        "storage": "Storage ({{size}})",
+        "transferMonthly": "Transfer - Resets Monthly ({{size}})",
+        "local": {
+          "diagramTitle": "Local Usage"
+        },
+        "backup": {
+          "switchTitle": "Backup Storage is <0>{{value}}</0>",
+          "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
+        },
+        "info": {
+          "upgrade": {
+            "title": "Upgrade to Space Pro",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "reachingLimit": {
+            "title": "Reaching Backup Limit",
+            "message": "The free {{backupLimit}} backup storage is coming close to being at capacity. Upgrade to Space Pro in order to keep backing up your data.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "backupBenefits": {
+            "title": "Backup Storage Benefits",
+            "message": "Store encrypted backups of your files in Space to ensure you don’t lose your files in case you ever lose your device. Storing encrypted backup copies of your files in Space allows you to access your files from other machines, recover files from a lost machine, and also enables users who you share files with to access those files even if you are offline.",
+            "confirm": "Turn on Backup Storage"
+          }
+        }
       },
       "referrals": {
         "title": "Referrals"
