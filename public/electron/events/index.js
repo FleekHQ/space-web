@@ -10,6 +10,7 @@ const registerBucketEvents = require('./bucket');
 const registerKeysEvents = require('./keys');
 const registerNotificationsEvents = require('./notifications');
 const registerAccountEvents = require('./account');
+const registerFolderEvents = require('./folder');
 
 const registerEvents = ({
   app,
@@ -28,6 +29,7 @@ const registerEvents = ({
   registerKeysEvents(mainWindow);
   registerNotificationsEvents(mainWindow);
   registerAccountEvents(mainWindow);
+  registerFolderEvents(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });

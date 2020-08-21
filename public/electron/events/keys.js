@@ -10,7 +10,7 @@ const DELETE_KEY_PAIR = `${EVENT_PREFIX}:delete`;
 const DELETE_KEY_PAIR_SUCCESS = `${EVENT_PREFIX}:delete:success`;
 const DELETE_KEY_PAIR_ERROR = `${EVENT_PREFIX}:delete:error`;
 
-const registerAuthEvents = (mainWindow) => {
+const registerKeysEvents = (mainWindow) => {
   ipcMain.on(GET_PUBLIC_KEY_EVENT, async () => {
     try {
       const res = await spaceClient.getPublicKey();
@@ -35,4 +35,4 @@ const registerAuthEvents = (mainWindow) => {
   });
 };
 
-module.exports = registerAuthEvents;
+module.exports = registerKeysEvents;

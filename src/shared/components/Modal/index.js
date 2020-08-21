@@ -5,6 +5,7 @@ import UploadProgressModal from './UploadProgress';
 import SharingProgressModal from './SharingProgress';
 import SettingsModal from './Settings';
 import SharingModal from './Sharing';
+import CreateFolder from './CreateFolder';
 import useStyles from './styles';
 
 import {
@@ -13,6 +14,7 @@ import {
   SHARE_PROGRESS_TOAST,
   SETTINGS_MODAL,
   SHARING_MODAL,
+  CREATE_FOLDER,
 } from './actions';
 
 const MODALS = {
@@ -20,6 +22,7 @@ const MODALS = {
   [SHARE_PROGRESS_TOAST]: SharingProgressModal,
   [SETTINGS_MODAL]: SettingsModal,
   [SHARING_MODAL]: SharingModal,
+  [CREATE_FOLDER]: CreateFolder,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {
