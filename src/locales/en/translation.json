@@ -229,7 +229,7 @@
         "paperKeyInfo": "The generated seed phrase will be necessary in case you want to recover your account.",
         "seedPhraseModal": {
           "title": "Seed phrase generated!",
-          "description": "Please take note of your the seed.",
+          "description": "Please take note of your 12 words seed phrase.",
           "confirmation": "Yes, I wrote this down."
         }
       },
