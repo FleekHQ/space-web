@@ -1,4 +1,6 @@
-const DEFAULT_PATH = '/identities';
+const omit = require('lodash/omit');
+
+const DEFAULT_PATH = '/identity';
 
 /**
  * @typedef {Object} Identity
@@ -6,6 +8,7 @@ const DEFAULT_PATH = '/identities';
  * @property {string} username
  * @property {string} publicKey
  * @property {string} createdAt
+ * @property {string=} profilePicture
 */
 
 /**
@@ -65,9 +68,49 @@ function getByUsername(payload) {
   });
 }
 
+/**
+ * @this {import('../client.js')}
+ * @param {Object} payload - Payload to create an indentity.
+ * @param {string} payload.token - Auth token
+ * @param {string=} payload.username - Username of the identity.
+ * @param {string=} payload.displayName - Public key of the identity.
+ * @returns {import('axios').AxiosResponse<Identity>}
+ */
+function update(payload) {
+  return this.instance({
+    method: 'put',
+    url: DEFAULT_PATH,
+    headers: {
+      Authorization: payload.token,
+    },
+    data: omit(payload, ['token']),
+  });
+}
+
+/**
+ * @this {import('../client.js')}
+ * @param {Object} payload - Payload to create an indentity.
+ * @param {string} payload.token - Auth token
+ * @param {string} payload.base64Image - Username of the identity.
+ * @returns {import('axios').AxiosResponse<Identity>}
+ */
+function uploadProfilePic(payload) {
+  return this.instance({
+    method: 'post',
+    url: `${DEFAULT_PATH}/avatar`,
+    headers: {
+      Authorization: payload.token,
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    data: payload.base64Image,
+  });
+}
+
 module.exports = {
   create,
+  update,
   getMultiple,
   getByAddress,
   getByUsername,
+  uploadProfilePic,
 };

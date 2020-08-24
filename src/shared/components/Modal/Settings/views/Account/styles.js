@@ -13,4 +13,7 @@ export default makeStyles({
     borderTopStyle: 'dashed',
     paddingTop: 18,
   },
+  input: {
+    display: 'none',
+  },
 });

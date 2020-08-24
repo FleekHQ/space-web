@@ -5,6 +5,7 @@ import UploadProgressModal from './UploadProgress';
 import SharingProgressModal from './SharingProgress';
 import SettingsModal from './Settings';
 import SharingModal from './Sharing';
+import PromptModal from './Prompt';
 import CreateFolder from './CreateFolder';
 import useStyles from './styles';
 
@@ -14,6 +15,7 @@ import {
   SHARE_PROGRESS_TOAST,
   SETTINGS_MODAL,
   SHARING_MODAL,
+  PROMPT_MODAL,
   CREATE_FOLDER,
 } from './actions';
 
@@ -22,6 +24,7 @@ const MODALS = {
   [SHARE_PROGRESS_TOAST]: SharingProgressModal,
   [SETTINGS_MODAL]: SettingsModal,
   [SHARING_MODAL]: SharingModal,
+  [PROMPT_MODAL]: PromptModal,
   [CREATE_FOLDER]: CreateFolder,
 };
 

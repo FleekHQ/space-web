@@ -1,9 +1,12 @@
+/* eslint-disable */
 import React from 'react';
 import Avatar from '@ui/Avatar';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { useDispatch, useSelector } from 'react-redux';
 
+import getHandlers from './get-handlers';
 import useStyles from './styles';
 import {
   Body,
@@ -14,10 +17,32 @@ import {
 
 const Account = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const ref = React.useRef(null);
+
+  const {
+    address,
+    username,
+    displayName = '',
+  } = useSelector((state) => state.user);
+
+  const {
+    onChangeImage,
+    onChangeUsername,
+    onSetDisplayName,
+  } = getHandlers(t, dispatch, 'SOME_TOKEN');
 
   return (
     <div className={classes.root}>
+      <input
+        ref={ref}
+        type="file"
+        name="image"
+        onChange={onChangeImage}
+        className={classes.input}
+        accept="image/x-png,image/jpeg"
+      />
       <BaseCard>
         <Header>
           <Section>
@@ -27,7 +52,7 @@ const Account = () => {
           </Section>
           <Section>
             <Avatar size={32} username="Test" />
-            <ButtonBase>
+            <ButtonBase onClick={() => ref.current.click()}>
               <Typography
                 variant="body2"
                 color="textSecondary"
@@ -47,9 +72,9 @@ const Account = () => {
           </Section>
           <Section>
             <Typography variant="body2">
-              Jason Kerro
+              {displayName}
             </Typography>
-            <ButtonBase>
+            <ButtonBase onClick={onSetDisplayName}>
               <Typography
                 variant="body2"
                 color="textSecondary"
@@ -68,7 +93,10 @@ const Account = () => {
             </Typography>
           </Section>
           <Section>
-            <ButtonBase>
+            <Typography variant="body2">
+              {username}
+            </Typography>
+            <ButtonBase onClick={onChangeUsername}>
               <Typography
                 variant="body2"
                 color="textSecondary"
@@ -84,7 +112,7 @@ const Account = () => {
               {t('modals.settings.account.profileId')}
             </Typography>
             <Typography variant="body2" color="secondary">
-              0xd606f05a2a980f58737aa913553c8d6eac8b
+              {address}
             </Typography>
           </div>
         </Body>
