@@ -25,7 +25,11 @@ export const renderRow = (row) => (
       </Typography>
     </TableCell>
     <TableCell>
-      <IconsCell />
+      <IconsCell
+        localStorageActive={row.isLocallyAvailable}
+        spaceStorageActive={row.isAvailableInSpace}
+        sharedCount={row.shareAmount}
+      />
     </TableCell>
   </>
 );

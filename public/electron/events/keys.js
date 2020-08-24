@@ -9,8 +9,11 @@ const GET_PUBLIC_KEY_SUCCESS_EVENT = `${EVENT_PREFIX}:publicKey:success`;
 const DELETE_KEY_PAIR = `${EVENT_PREFIX}:delete`;
 const DELETE_KEY_PAIR_SUCCESS = `${EVENT_PREFIX}:delete:success`;
 const DELETE_KEY_PAIR_ERROR = `${EVENT_PREFIX}:delete:error`;
+const GET_MNEMONIC_SEED_EVENT = `${EVENT_PREFIX}:get_mnemomnic`;
+const GET_MNEMONIC_SEED_ERROR_EVENT = `${EVENT_PREFIX}:get_mnemomnic:error`;
+const GET_MNEMONIC_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:get_mnemomnic:success`;
 
-const registerAuthEvents = (mainWindow) => {
+const registerKeysEvents = (mainWindow) => {
   ipcMain.on(GET_PUBLIC_KEY_EVENT, async () => {
     try {
       const res = await spaceClient.getPublicKey();
@@ -33,6 +36,18 @@ const registerAuthEvents = (mainWindow) => {
       mainWindow.webContents.send(DELETE_KEY_PAIR_ERROR, err);
     }
   });
+
+  ipcMain.on(GET_MNEMONIC_SEED_EVENT, async () => {
+    try {
+      const res = await spaceClient.getStoredMnemonic();
+
+      mainWindow.webContents.send(GET_MNEMONIC_SEED_SUCCESS_EVENT, {
+        mnemonic: res.getMnemonic(),
+      });
+    } catch (err) {
+      mainWindow.webContents.send(GET_MNEMONIC_SEED_ERROR_EVENT, err);
+    }
+  });
 };
 
-module.exports = registerAuthEvents;
+module.exports = registerKeysEvents;

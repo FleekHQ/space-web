@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Security, Account } from './views';
+import { Security, Account, Usage } from './views';
 
 export default (t) => [
   {
@@ -22,7 +22,25 @@ export default (t) => [
   {
     id: 'usage',
     title: t('modals.settings.usage.title'),
-    content: <div>usage</div>,
+    content: (
+      <Usage
+        setBackupStorage={() => {}}
+        backupStorage
+        isFreePlan
+        planName="Free plan"
+        localUsage={{
+          using: 4634563,
+          storage: 923552,
+          transfer: 3544362,
+        }}
+        backupUsage={{
+          storage: 4456352,
+          transfer: 3544362,
+          using: 43426,
+          maxUsing: 435345634,
+        }}
+      />
+    ),
   },
   {
     id: 'referrals',

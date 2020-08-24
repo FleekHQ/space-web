@@ -8,8 +8,11 @@
     "owner": "Owner",
     "save": "Save",
     "done": "Done",
+    "create": "Create",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "on": "on",
+    "off": "off",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -223,14 +226,14 @@
       "security": {
         "title": "Security",
         "password": "Password",
-        "paperKey": "Seed Phrase",
-        "paperKeyTitle": "What is the Seed Phrase?",
-        "downloadPaperKey": "Download Seed Phrase",
+        "paperKey": "Account Recovery Phase",
+        "paperKeyTitle": "What is the Account Recovery Phase?",
+        "downloadPaperKey": "Show Account Recovery Phase",
         "changePassword": "Change Password",
-        "paperKeyInfo": "The generated seed phrase will be necessary in case you want to recover your account.",
+        "paperKeyInfo": "Is a phase where a 12 words mnemonic seed will be created and it's going to be useful to access your account in case you lost your key pair.",
         "seedPhraseModal": {
-          "title": "Seed phrase generated!",
-          "description": "Please take note of your the seed.",
+          "title": "Account Recovery Phase",
+          "description": "Please take note of your 12 words seed phrase.",
           "confirmation": "Yes, I wrote this down."
         }
       },
@@ -238,7 +241,37 @@
         "title": "Notifications"
       },
       "usage": {
-        "title": "Usage"
+        "title": "Usage",
+        "using": "Using <0>{{size}}</0>",
+        "usingOf": "Using <0>{{size}}</0> of <0>{{maxSize}}</0>",
+        "storage": "Storage ({{size}})",
+        "transferMonthly": "Transfer - Resets Monthly ({{size}})",
+        "local": {
+          "diagramTitle": "Local Usage"
+        },
+        "backup": {
+          "switchTitle": "Backup Storage is <0>{{value}}</0>",
+          "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
+        },
+        "info": {
+          "upgrade": {
+            "title": "Upgrade to Space Pro",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "reachingLimit": {
+            "title": "Reaching Backup Limit",
+            "message": "The free {{backupLimit}} backup storage is coming close to being at capacity. Upgrade to Space Pro in order to keep backing up your data.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "backupBenefits": {
+            "title": "Backup Storage Benefits",
+            "message": "Store encrypted backups of your files in Space to ensure you don’t lose your files in case you ever lose your device. Storing encrypted backup copies of your files in Space allows you to access your files from other machines, recover files from a lost machine, and also enables users who you share files with to access those files even if you are offline.",
+            "confirm": "Turn on Backup Storage"
+          }
+        }
       },
       "referrals": {
         "title": "Referrals"
@@ -249,6 +282,10 @@
       "currPassword": "Current Password",
       "newPassword": "New Password",
       "confirmPassword": "Confirm New Password"
+    },
+    "createFolder": {
+      "title": "Create New Folder",
+      "inputLabel": "Folder Name"
     }
   }
 }
