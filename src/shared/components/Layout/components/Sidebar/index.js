@@ -29,7 +29,7 @@ const Sidebar = () => {
           <Avatar
             active
             size={24}
-            imgUrl={user.imgURL}
+            imgUrl={user.avatarUrl}
             username={user.username}
           />
         </div>
