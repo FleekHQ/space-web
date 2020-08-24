@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
 import BaseModal from '@ui/BaseModal';
+import { getMnemonic } from '@events';
+import { MNEMONIC_ACTION_TYPES } from '@reducers/mnemonic';
 
 import useStyles from './styles';
 
@@ -16,7 +21,19 @@ const SeedPhraseModal = ({
   onDone,
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const state = useSelector((s) => s.mnemonic);
   const [confirmed, setConfirm] = React.useState(false);
+
+  React.useEffect(() => {
+    getMnemonic();
+
+    return () => {
+      dispatch({
+        type: MNEMONIC_ACTION_TYPES.ON_RESTART,
+      });
+    };
+  }, []);
 
   return (
     <BaseModal
@@ -40,12 +57,8 @@ const SeedPhraseModal = ({
       <TextField
         multiline
         fullWidth
-        rows={4}
         variant="outlined"
-        value="bear golf art sick donut apple cat
-        fog dog orange pear vanilla cake
-        bear golf art sick donut apple cat
-        fog dog orange pear vanilla cake"
+        value={state.seedphrase || ''}
         InputProps={{
           readOnly: true,
           classes: {
@@ -75,10 +88,14 @@ const SeedPhraseModal = ({
       <br />
       <Button
         variant="contained"
-        disabled={!confirmed}
         onClick={onDone}
+        disabled={!confirmed || state.loading}
       >
-        {t('common.done')}
+        {
+          state.loading ? (
+            <FontAwesomeIcon spin icon={faSpinner} />
+          ) : t('common.done')
+        }
       </Button>
     </BaseModal>
   );

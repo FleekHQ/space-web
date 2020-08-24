@@ -55,11 +55,14 @@ BaseModal.defaultProps = {
 BaseModal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
-  maxWidth: PropTypes.number,
   modalProps: PropTypes.shape({}),
   paperProps: PropTypes.shape({
     className: PropTypes.string,
   }),
+  maxWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 };
 
 export default BaseModal;

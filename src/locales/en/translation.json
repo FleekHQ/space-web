@@ -222,14 +222,14 @@
       "security": {
         "title": "Security",
         "password": "Password",
-        "paperKey": "Seed Phrase",
-        "paperKeyTitle": "What is the Seed Phrase?",
-        "downloadPaperKey": "Download Seed Phrase",
+        "paperKey": "Account Recovery Phase",
+        "paperKeyTitle": "What is the Account Recovery Phase?",
+        "downloadPaperKey": "Show Account Recovery Phase",
         "changePassword": "Change Password",
-        "paperKeyInfo": "The generated seed phrase will be necessary in case you want to recover your account.",
+        "paperKeyInfo": "Is a phase where a 12 words mnemonic seed will be created and it's going to be useful to access your account in case you lost your key pair.",
         "seedPhraseModal": {
-          "title": "Seed phrase generated!",
-          "description": "Please take note of your the seed.",
+          "title": "Account Recovery Phase",
+          "description": "Please take note of your 12 words seed phrase.",
           "confirmation": "Yes, I wrote this down."
         }
       },
