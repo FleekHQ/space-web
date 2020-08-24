@@ -15,7 +15,7 @@ try {
 
 const writeUser = (state, userInfo) => {
   const newUserState = {
-    ...(state && state),
+    ...(state),
     ...userInfo,
   };
 
