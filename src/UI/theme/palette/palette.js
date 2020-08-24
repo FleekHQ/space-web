@@ -13,6 +13,7 @@ const gray11 = '#a2a2a2';
 const gray12 = '#f6f6f6';
 const gray13 = '#edeff5';
 const gray14 = '#dcdcdc';
+const gray15 = '#f1f1f1';
 const white = '#FFFFFF';
 const blue1 = '#006EFF';
 const blue2 = '#4a97ff';
@@ -44,6 +45,7 @@ const palette = {
   gray12,
   gray13,
   gray14,
+  gray15,
   white,
   blue1,
   blue2,

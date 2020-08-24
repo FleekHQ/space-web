@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from './styles';
-import NotificationItem from '../NotificationItem';
+import ShareNotificationItem from '../NotificationItem';
+import BackupNotificationItem from '../BackUpLimitItem';
 
 /* eslint-disable react/jsx-props-no-spreading */
 const NotificationMenu = (props) => {
@@ -18,10 +19,35 @@ const NotificationMenu = (props) => {
     onMarkAsRead,
     onAcceptInvitation,
     onRejectInvitation,
+    upgradeOnClick,
     ...menuProps
   } = props;
 
   const classes = useStyles();
+
+  const getNotificationItem = (item) => {
+    switch (item.type) {
+      case 'share-invite':
+        return (
+          <ShareNotificationItem
+            key={item.id}
+            i18n={i18n}
+            onAccept={() => onAcceptInvitation(item)}
+            onReject={() => onRejectInvitation(item)}
+            {...item}
+          />
+        );
+      case 'backup-limit':
+      default:
+        return (
+          <BackupNotificationItem
+            key={item.id}
+            upgradeOnClick={() => upgradeOnClick(item)}
+            {...item}
+          />
+        );
+    }
+  };
 
   return (
     <Menu
@@ -50,13 +76,7 @@ const NotificationMenu = (props) => {
         </Button>
       </MenuItem>
       {items.length > 0 ? items.map((item) => (
-        <NotificationItem
-          key={item.id}
-          i18n={i18n}
-          onAccept={() => onAcceptInvitation(item)}
-          onReject={() => onRejectInvitation(item)}
-          {...item}
-        />
+        getNotificationItem(item)
       )) : (
         <MenuItem className={classes.menuItem} disableRipple>
           <Typography
@@ -80,6 +100,7 @@ NotificationMenu.defaultProps = {
   onMarkAsRead: () => {},
   onAcceptInvitation: () => {},
   onRejectInvitation: () => {},
+  upgradeOnClick: () => {},
 };
 
 NotificationMenu.propTypes = {
@@ -87,6 +108,7 @@ NotificationMenu.propTypes = {
   onMarkAsRead: PropTypes.func,
   onAcceptInvitation: PropTypes.func,
   onRejectInvitation: PropTypes.func,
+  upgradeOnClick: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([
       PropTypes.number,
