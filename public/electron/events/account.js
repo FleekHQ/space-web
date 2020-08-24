@@ -1,4 +1,5 @@
 const fs = require('fs');
+const get = require('lodash/get');
 const { ipcMain } = require('electron');
 
 const { spaceClient, apiClient } = require('../clients');
@@ -36,12 +37,12 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(UPDATE_IDENTITY_SUCCESS_EVENT, data);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      let message = '';
+      let message = error.message || error.toString();
 
-      if (error.response && error.response.data) {
-        message = error.response.data.message;
+      const statusCode = get(error, 'response.status');
+
+      if (statusCode === 409) {
+        message = error.response.data.error;
       }
 
       mainWindow.webContents.send(UPDATE_IDENTITY_ERROR_EVENT, {
@@ -64,12 +65,12 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(UPLOAD_PROFILE_PIC_SUCCESS_EVENT, data);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      let message = '';
+      let message = error.message || error.toString();
 
-      if (error.response && error.response.data) {
-        message = error.response.data.message;
+      const statusCode = get(error, 'response.status');
+
+      if (statusCode === 409) {
+        message = error.response.data.error;
       }
 
       mainWindow.webContents.send(UPLOAD_PROFILE_PIC_ERROR_EVENT, {
