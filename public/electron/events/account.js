@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { ipcMain } = require('electron');
 
 const { spaceClient, apiClient } = require('../clients');
@@ -42,8 +43,15 @@ const registerAuthEvents = (mainWindow) => {
   });
 
   ipcMain.on(UPLOAD_PROFILE_PIC_EVENT, async (event, payload) => {
+    const { token, imagePath } = payload;
     try {
-      const { data } = await apiClient.identity.uploadProfilePic(payload);
+      const base64Image = fs.readFileSync(imagePath).toString('base64');
+
+      const { data } = await apiClient.identity.uploadProfilePic({
+        token,
+        base64Image,
+      });
+
       mainWindow.webContents.send(UPLOAD_PROFILE_PIC_SUCCESS_EVENT, data);
     } catch (error) {
       let message = '';

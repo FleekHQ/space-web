@@ -1,15 +1,15 @@
+import get from 'lodash/get';
 import { updateIdentity, uploadProfilePic } from '@events/account';
 
 import { openModal, PROMPT_MODAL } from '../../../actions';
 
-export default (t, dispatch, address, token) => {
+export default (t, dispatch, token) => {
   const onSetDisplayName = () => {
     const modalProps = {
       title: t('modals.settings.account.editDisplayName'),
       onSubmit: (newDisplayName, errors, closeModal) => {
         const payload = {
           token,
-          address,
           displayName: newDisplayName,
         };
 
@@ -34,7 +34,6 @@ export default (t, dispatch, address, token) => {
       onSubmit: (newUsername, errors, closeModal) => {
         const payload = {
           token,
-          address,
           username: newUsername,
         };
 
@@ -54,15 +53,11 @@ export default (t, dispatch, address, token) => {
   };
 
   const onChangeImage = (e) => {
-    const image = e.target.files[0];
-
-    const formData = new FormData();
-    formData.append('image', image);
+    const imagePath = get(e, 'target.files[0].path');
 
     uploadProfilePic({
       token,
-      address,
-      formData,
+      imagePath,
     });
   };
 

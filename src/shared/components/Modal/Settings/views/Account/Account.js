@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Avatar from '@ui/Avatar';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +31,7 @@ const Account = () => {
     onChangeImage,
     onChangeUsername,
     onSetDisplayName,
-  } = getHandlers(t, dispatch, address, 'SOME_TOKEN');
+  } = getHandlers(t, dispatch, 'SOME_TOKEN');
 
   return (
     <div className={classes.root}>

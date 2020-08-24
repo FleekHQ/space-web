@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 
-import store from '../store';
-import { UPDATE_USER } from '../reducers/user';
+// import store from '../store';
+// import { UPDATE_USER } from '../reducers/user';
 
 const EVENT_PREFIX = 'account';
 const DELETE_ACCOUNT_EVENT = `${EVENT_PREFIX}:delete`;
@@ -30,10 +30,10 @@ const registerAccountEvents = () => {
 
   ipcRenderer.on(UPDATE_IDENTITY_SUCCESS_EVENT, (event, payload) => {
     console.log('UPDATE_IDENTITY_SUCCESS_EVENT', payload);
-    store.dispatch({
-      type: UPDATE_USER,
-      user: payload,
-    });
+    // store.dispatch({
+    //   type: UPDATE_USER,
+    //   user: payload,
+    // });
   });
 
   ipcRenderer.on(UPLOAD_PROFILE_PIC_ERROR_EVENT, (event, payload) => {
@@ -42,10 +42,10 @@ const registerAccountEvents = () => {
 
   ipcRenderer.on(UPLOAD_PROFILE_PIC_SUCCESS_EVENT, (event, payload) => {
     console.log('UPLOAD_PROFILE_PIC_SUCCESS_EVENT', payload);
-    store.dispatch({
-      type: UPDATE_USER,
-      user: payload,
-    });
+    // store.dispatch({
+    //   type: UPDATE_USER,
+    //   user: payload,
+    // });
   });
 };
 
