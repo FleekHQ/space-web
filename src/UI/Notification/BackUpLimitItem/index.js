@@ -15,10 +15,10 @@ const BackUpLimitNotification = ({
   limitText,
   timestamp,
   upgradeOnClick,
+  logoUrl,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { PUBLIC_URL } = process.env;
   const timeAgo = moment(timestamp).fromNow();
 
   return (
@@ -30,7 +30,7 @@ const BackUpLimitNotification = ({
     >
       <div className={classes.imgAndTitleContainer}>
         <img
-          src={`${PUBLIC_URL}/assets/images/space.svg`}
+          src={logoUrl}
           alt="space logo"
           className={classes.logo}
         />
@@ -79,6 +79,7 @@ BackUpLimitNotification.propTypes = {
   limitText: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
   upgradeOnClick: PropTypes.func.isRequired,
+  logoUrl: PropTypes.string.isRequired,
 };
 
 export default BackUpLimitNotification;

@@ -9,11 +9,14 @@ import BackUpMenuItem from './index';
 const categoryName = 'Notification';
 
 storiesOf(categoryName, module).add('BackUpLimit', () => {
+  const { PUBLIC_URL } = process.env;
+
   const defaultProps = {
     currentAmountText: text('currentAmountText', '997.2 MB'),
     limitText: text('limitText', '1 GB'),
     timestamp: number('timestamp', 1598037893916),
-    upgradeOnClick: action('upgradeOnClick')
+    upgradeOnClick: action('upgradeOnClick'),
+    logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
   };
 
   return (
