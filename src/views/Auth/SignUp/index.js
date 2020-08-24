@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import InputTooltip from '@ui/InputTooltip';
-import { singup, getPublicKey } from '@events';
+import { singup } from '@events';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import helper from './helper';
@@ -53,7 +53,7 @@ const SignUp = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const state = useSelector((_state) => _state.auth.signup);
+  const state = useSelector((s) => s.auth.signup);
 
   const tfClasses = {
     root: classes.textFieldRoot,
@@ -78,26 +78,15 @@ const SignUp = () => {
   }, [state.success]);
 
   React.useEffect(() => {
-    if (state.loading && !state.publicKey) {
-      getPublicKey();
-    } else if (state.publicKey) {
+    if (state.loading) {
       singup({
-        publicKey: state.publicKey,
         username: state.tfUsername.value,
       });
     }
   }, [state.loading]);
 
-  React.useEffect(() => {
-    if (state.publicKey) {
-      singup({
-        publicKey: state.publicKey,
-        username: state.tfUsername.value,
-      });
-    }
-  }, [state.publicKey]);
-
-  React.useEffect(() => {
+  // keep this in case we need to validate username on key press
+  /* React.useEffect(() => {
     let timer;
 
     if (state.tfUsername.value.length > 0) {
@@ -111,7 +100,7 @@ const SignUp = () => {
         clearTimeout(timer);
       }
     };
-  }, [state.tfUsername.value]);
+  }, [state.tfUsername.value]); */
 
   return (
     <div className={classes.signupRoot}>

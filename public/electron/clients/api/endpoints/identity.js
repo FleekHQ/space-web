@@ -12,21 +12,6 @@ const DEFAULT_PATH = '/identity';
 */
 
 /**
- * @this {import('../client.js')}
- * @param {Object} payload - Payload to create an indentity.
- * @param {string} payload.username - Username of the identity.
- * @param {string} payload.publicKey - Public key of the identity.
- * @returns {import('axios').AxiosResponse<Identity>}
- */
-function create(payload) {
-  return this.instance({
-    method: 'post',
-    url: DEFAULT_PATH,
-    data: payload,
-  });
-}
-
-/**
   * @this {import('../client.js')}
   * @param {Object} payload - Payload to get multiple identities.
   * @param {Array.<string>} payload.keys - Array of public keys.
@@ -107,7 +92,6 @@ function uploadProfilePic(payload) {
 }
 
 module.exports = {
-  create,
   update,
   getMultiple,
   getByAddress,

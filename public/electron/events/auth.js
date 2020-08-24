@@ -11,15 +11,21 @@ const CHECK_USERNAME_ERROR_EVENT = `${EVENT_PREFIX}:check_username:error`;
 const CHECK_USERNAME_SUCCESS_EVENT = `${EVENT_PREFIX}:check_username:success`;
 
 const registerAuthEvents = (mainWindow) => {
-  ipcMain.on(SIGNUP_EVENT, async (event, payload) => {
+  ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
-      const { data } = await apiClient.identity.create(payload);
-      mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data);
+      const res = await spaceClient.getAPISessionTokens();
+      const { data } = await apiClient.identity.update({
+        ...payload,
+        token: res.getServicestoken(),
+      });
+      mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
     } catch (error) {
-      let message = '';
+      let message = error.message || '';
 
       if (error.response && error.response.data) {
-        message = error.response.data.message;
+        if (error.response.status === 409) {
+          message = 'modules.signup.errors.username';
+        }
       }
 
       mainWindow.webContents.send(SIGNUP_ERROR_EVENT, {
