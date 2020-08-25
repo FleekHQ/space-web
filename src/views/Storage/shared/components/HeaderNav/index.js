@@ -43,7 +43,7 @@ const HeaderNav = () => {
         className={classes.forwardButton}
         onClick={() => {
           const isFilePath = /^\/storage\/files\/.*/.test(location.pathname);
-          const isStoragePath = /^\/storage\/shared-by\/.*/.test(location.pathname);
+          const isStoragePath = /^\/storage\/shared-by\/?.*/.test(location.pathname);
 
           if (isFilePath || isStoragePath) {
             history.goForward();

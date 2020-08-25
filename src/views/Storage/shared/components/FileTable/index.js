@@ -16,6 +16,7 @@ import getTableHeads from '../../getTableHeads';
 const FileTable = ({
   bucket,
   prefix,
+  baseRedirectUrl,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -64,16 +65,21 @@ const FileTable = ({
       bucket={bucket}
       renderRow={renderRow}
       heads={getTableHeads(t)}
-      getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}
+      getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
     />
   );
 };
 
+FileTable.defaultProps = {
+  baseRedirectUrl: '/storage/files',
+};
+
 FileTable.propTypes = {
   bucket: PropTypes.string.isRequired,
   prefix: PropTypes.string.isRequired,
+  baseRedirectUrl: PropTypes.string,
 };
 
 export default FileTable;

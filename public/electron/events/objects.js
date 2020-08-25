@@ -1,7 +1,11 @@
+/* eslint-disable */
 const { ipcMain, shell } = require('electron');
 const get = require('lodash/get');
 
 const { spaceClient } = require('../clients');
+
+// TODO: remove mock
+const mockSharedObjects = require('./mock-shared-object');
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
@@ -10,6 +14,9 @@ const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const FETCH_DIR_EVENT = `${EVENT_PREFIX}:fetchDir`;
 const SUCCESS_DIR_EVENT = `${EVENT_PREFIX}:successDir`;
+const FETCH_SHARED_OBJECTS_EVENT = `${EVENT_PREFIX}:fetchShared`;
+const FETCH_SHARED_OBJECTS_ERROR_EVENT = `${EVENT_PREFIX}:fetchShared:error`;
+const FETCH_SHARED_OBJECTS_SUCCESS_EVENT = `${EVENT_PREFIX}:fetchShared:success`;
 
 const DEFAULT_BUCKET = 'personal';
 
@@ -22,10 +29,13 @@ const entryToObject = (entry, bucket) => ({
   updated: entry.getUpdated(),
   ipfsHash: entry.getIpfshash(),
   sizeInBytes: entry.getSizeinbytes(),
+  backupCount: entry.getBackupcount(),
   fileExtension: entry.getFileextension(),
   isLocallyAvailable: entry.getIslocallyavailable(),
-  backupCount: entry.getBackupcount(),
-  members: entry.getMembersList(),
+  members: entry.getMembersList().map((member) => ({
+    address: member.getAddress(),
+    publicKey: member.getPublickey(),
+  })),
 });
 
 const listDirectories = async (mainWindow, payload = {}) => {
@@ -94,6 +104,37 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(FETCH_DIR_EVENT, async (event, payload) => {
     await listDirectory(mainWindow, payload);
+  });
+
+  ipcMain.on(FETCH_SHARED_OBJECTS_EVENT, async (event, payload = {}) => {
+    try {
+      // TODO: uncomment once BE release daemon with getSharedWithMeFiles implemented
+      //
+      // const res = await spaceClient.getSharedWithMeFiles({
+      //   seek: '',
+      //   limit: 100,
+      //   ...payload,
+      // });
+
+      // const objects = {
+      //   nextOffset: res.getNextoffset(),
+      //   items: res.getItemsList().map((entry) => entryToObject(entry)),
+      // };
+
+
+      // TODO: remove mock data
+      const objects = {
+        nextOffset: 10,
+        items: mockSharedObjects.data.map((item) => ({
+          bucket: 'shared-with-me',
+          ...item,
+        })),
+      };
+
+      mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, objects);
+    } catch (err) {
+      mainWindow.webContents.send(FETCH_SHARED_OBJECTS_ERROR_EVENT, err);
+    }
   });
 };
 

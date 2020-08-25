@@ -26,22 +26,7 @@ const StorageDetailsPanel = () => {
     let bucket;
 
     const filesMatch = matchPath(location.pathname, { path: '/storage/files/*' });
-    const sharedMatch = matchPath(location.pathname, { path: '/storage/shared-by', exact: true });
-    const sharedBucketMatch = matchPath(location.pathname, { path: '/storage/shared-by/:bucket/*' });
-
-    if (sharedMatch) {
-      // TODO: check if this is the correct way to get a selected bucket
-      const bucketKeySelected = Object.keys(state.storage.buckets).find((key) => (
-        state.storage.buckets[key].selected
-      ));
-
-      return {
-        user: state.user,
-        objectsType: OBJECT_TYPES.members,
-        selectedObjects: bucketKeySelected
-          ? state.storage.buckets[bucketKeySelected].membersList : [],
-      };
-    }
+    const sharedBucketMatch = matchPath(location.pathname, { path: '/storage/shared-by*' });
 
     if (filesMatch) {
       bucket = 'personal';
@@ -50,7 +35,7 @@ const StorageDetailsPanel = () => {
 
     if (sharedBucketMatch) {
       prefix = get(sharedBucketMatch, 'params.0', '') || '';
-      bucket = get(sharedBucketMatch, 'params.bucket', '') || '';
+      bucket = 'shared-with-me';
     }
 
     const objs = objectsSelector(
@@ -64,10 +49,8 @@ const StorageDetailsPanel = () => {
 
     return {
       user: state.user,
-      objectsType: sharedBucketMatch && selectedObjs.length === 0
-        ? OBJECT_TYPES.members : OBJECT_TYPES.files,
-      selectedObjects: sharedBucketMatch && selectedObjs.length === 0
-        ? state.storage.buckets[bucket].membersList : selectedObjs,
+      objectsType: OBJECT_TYPES.files,
+      selectedObjects: selectedObjs,
     };
   });
 
