@@ -36,7 +36,7 @@ const Notifications = () => {
     // fetch stuff
     fetchNotifications({
       seek: 0,
-      limit: 4,
+      limit: 10,
     });
   }, []);
 
@@ -45,7 +45,7 @@ const Notifications = () => {
     if (!notifications.loading) {
       fetchNotifications({
         seek: offset,
-        limit: 4,
+        limit: 10,
       });
     }
   };

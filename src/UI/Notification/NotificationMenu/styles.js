@@ -22,6 +22,7 @@ export default makeStyles((theme) => ({
   },
   popoverPaper: {
     minWidth: 280,
+    maxHeight: 600,
   },
   empty: {
     flex: 1,
