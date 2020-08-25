@@ -69,7 +69,7 @@ const Security = ({ t }) => {
           </Section>
         </Header>
         <Body>
-          <MessageBox title={t('modals.settings.security.paperKeyTitle')}>
+          <MessageBox type="info" title={t('modals.settings.security.paperKeyTitle')}>
             <Typography variant="body2" color="textPrimary">
               {t('modals.settings.security.paperKeyInfo')}
             </Typography>

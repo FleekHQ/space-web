@@ -4,10 +4,13 @@
   "common": {
     "search": "Search",
     "at": "at",
+    "enable": "Enable",
     "remove": "Remove",
     "owner": "Owner",
     "save": "Save",
     "done": "Done",
+    "backup": "Backup",
+    "dismiss": "Dismiss",
     "create": "Create",
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -293,6 +296,21 @@
     "createFolder": {
       "title": "Create New Folder",
       "inputLabel": "Folder Name"
+    }
+  },
+  "welcome": {
+    "remind": "Remind me later",
+    "backup": {
+      "title": "Backup your account",
+      "description": "Write down your Account Recovery Phase to keep your account secure."
+    },
+    "username": {
+      "title": "Create a Username & Password",
+      "description": "To log in & out easier we recommend creating a username & password."
+    },
+    "integrations": {
+      "title": "Explorer Integration",
+      "description": "If you want a local drive mounting for all your Space files, please enable it."
     }
   }
 }
