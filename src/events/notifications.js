@@ -1,4 +1,6 @@
 import { ipcRenderer } from 'electron';
+import store from '../store';
+import { NOTIFICATIONS_ACTION_TYPES } from '../reducers/notifications';
 
 const EVENT_PREFIX = 'notifications';
 const READ_NOTIFICATION_EVENT = `${EVENT_PREFIX}:readNotification`;
@@ -16,7 +18,10 @@ const registerNotificationEvents = () => {
 
   ipcRenderer.on(FETCH_NOTIFICATIONS_SUCCESS, (_, data) => {
     // eslint-disable-next-line no-console
-    console.log(data);
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS_SUCCESS,
+      data,
+    });
   });
 
   ipcRenderer.on(READ_NOTIFICATION_ERROR_EVENT, () => {
