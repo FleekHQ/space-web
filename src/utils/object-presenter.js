@@ -39,6 +39,7 @@ const objectPresenter = (obj = {}) => {
     isAvailableInSpace: backupCount > 0,
     isLocallyAvailable,
     shareAmount: membersArray.length,
+    members: membersArray,
   };
 };
 

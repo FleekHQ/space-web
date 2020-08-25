@@ -9,6 +9,6 @@ export default makeStyles({
     paddingTop: 6,
   },
   breadcrumbs: {
-    margin: '11px 18px',
+    margin: '11px 18px 1px',
   },
 });
