@@ -17,7 +17,6 @@ const registerNotificationEvents = () => {
   });
 
   ipcRenderer.on(FETCH_NOTIFICATIONS_SUCCESS, (_, data) => {
-    // eslint-disable-next-line no-console
     store.dispatch({
       type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS_SUCCESS,
       data,
@@ -37,6 +36,11 @@ export const readNotification = (payload) => {
   ipcRenderer.send(READ_NOTIFICATION_EVENT, payload);
 };
 
-export const fetchNotifications = (payload) => ipcRenderer.send(FETCH_NOTIFICATIONS, payload);
+export const fetchNotifications = (payload) => {
+  store.dispatch({
+    type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS,
+  });
+  ipcRenderer.send(FETCH_NOTIFICATIONS, payload);
+};
 
 export default registerNotificationEvents;

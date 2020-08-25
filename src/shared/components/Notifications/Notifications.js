@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
 import {
   fetchNotifications,
@@ -35,11 +36,19 @@ const Notifications = () => {
     // fetch stuff
     fetchNotifications({
       seek: 0,
-      limit: 2,
+      limit: 4,
     });
-    // TODO: subscription to notifications
-    // TODO: implement infinite scrolling. need more so infinite scrolling works with subcription...
   }, []);
+
+  const loadMore = () => {
+    const offset = get(notifications, 'data.nextOffset');
+    if (!notifications.loading) {
+      fetchNotifications({
+        seek: offset,
+        limit: 4,
+      });
+    }
+  };
 
   return (
     <>
@@ -57,6 +66,7 @@ const Notifications = () => {
           horizontal: 260,
           vertical: -45,
         }}
+        loadMore={loadMore}
       />
     </>
   );

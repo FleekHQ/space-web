@@ -20,6 +20,7 @@ const NotificationMenu = (props) => {
     onAcceptInvitation,
     onRejectInvitation,
     upgradeOnClick,
+    loadMore,
     ...menuProps
   } = props;
 
@@ -49,6 +50,15 @@ const NotificationMenu = (props) => {
     }
   };
 
+  const onScroll = (e) => {
+    const deadband = 20;
+    const scrollDiff = e.target.scrollHeight - e.target.scrollTop - e.target.offsetHeight;
+    const isBottom = scrollDiff <= deadband;
+    if (isBottom) {
+      loadMore();
+    }
+  };
+
   return (
     <Menu
       anchorEl={anchorEl}
@@ -58,6 +68,7 @@ const NotificationMenu = (props) => {
       PopoverClasses={{
         paper: classes.popoverPaper,
       }}
+      onScroll={onScroll}
       {...menuProps}
     >
       <MenuItem className={classes.menuItem} disableRipple>
@@ -101,9 +112,11 @@ NotificationMenu.defaultProps = {
   onAcceptInvitation: () => {},
   onRejectInvitation: () => {},
   upgradeOnClick: () => {},
+  loadMore: () => {},
 };
 
 NotificationMenu.propTypes = {
+  loadMore: PropTypes.func,
   onCloseMenu: PropTypes.func,
   onMarkAsRead: PropTypes.func,
   onAcceptInvitation: PropTypes.func,

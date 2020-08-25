@@ -8,7 +8,7 @@ export const NOTIFICATIONS_ACTION_TYPES = {
 const DEFAULT_STATE = {
   error: null,
   loading: false,
-  data: { },
+  data: { notifications: [] },
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -31,7 +31,13 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         loading: false,
-        data: action.data,
+        data: {
+          ...action.data,
+          notifications: [
+            ...state.data.notifications,
+            ...action.data.notifications,
+          ],
+        },
       };
     }
     case NOTIFICATIONS_ACTION_TYPES.ON_RESTART: {
