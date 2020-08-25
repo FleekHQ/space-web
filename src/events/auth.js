@@ -17,16 +17,8 @@ const registerAuthEvents = () => {
     // eslint-disable-next-line
     console.error('signup error payload: ', error);
 
-    let errorKey = 'modules.signup.errors.';
-    if (error.message.includes('address')) {
-      errorKey += 'address';
-    }
-    if (error.message.includes('username')) {
-      errorKey += 'username';
-    }
-
     store.dispatch({
-      error: errorKey,
+      error: error.message,
       type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
     });
   });

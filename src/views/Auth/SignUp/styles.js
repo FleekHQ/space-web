@@ -114,7 +114,7 @@ export default makeStyles((theme) => ({
   alert: {
     width: 'auto',
     padding: '5px 30px',
-    height: 25,
+    height: 'auto',
     borderRadius: 6,
     margin: '12px 0',
     textAlign: 'center',

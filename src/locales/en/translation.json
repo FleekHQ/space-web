@@ -154,6 +154,7 @@
       "errors": {
         "generic": "Sorry, there was a problem.",
         "username": "Username is taken.",
+        "identity": "Sorry, there was a problem getting your identity.",
         "address": "Sorry, the current address is already registered."
       }
     },
