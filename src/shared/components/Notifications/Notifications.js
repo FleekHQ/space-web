@@ -64,7 +64,6 @@ const Notifications = () => {
         onCloseMenu={onCloseMenu}
         transformOrigin={{
           horizontal: 260,
-          vertical: -45,
         }}
         loadMore={loadMore}
       />
