@@ -20,6 +20,7 @@ storiesOf(categoryName, module).add('Menu', () => {
     items: object('items', [
       {
         id: 1,
+        type: 'share-invite',
         username: 'anonbear',
         timestamp: '2020-07-29T19:46:24.628Z',
         description: 'Shared Branding.zip with you.',
@@ -30,6 +31,7 @@ storiesOf(categoryName, module).add('Menu', () => {
       },
       {
         id: 2,
+        type: 'share-invite',
         username: 'anon334',
         timestamp: '2020-07-29T19:46:24.628Z',
         description: 'Shared resume.pdf with you.',
@@ -38,10 +40,18 @@ storiesOf(categoryName, module).add('Menu', () => {
           ext: 'pdf',
         }],
       },
+      {
+        id: 3,
+        type: 'backup-limit',
+        currentAmountText: '997.2 MB',
+        limitText: '1 GB',
+        timestamp: 1598037893916,
+      },
     ]),
     onMarkAsRead: action('onMarkAsRead'),
     onAcceptInvitation: action('onAcceptInvitation'),
     onRejectInvitation: action('onRejectInvitation'),
+    upgradeOnClick: action('upgradeOnClick'),
   };
 
   const Container = () => {

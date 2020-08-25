@@ -30,7 +30,7 @@ const Sidebar = () => {
             active
             size={24}
             imgUrl={user.avatarUrl}
-            username={user.username || user.address}
+            username={user.username}
           />
         </div>
         <div className={classes.rightPanel}>
