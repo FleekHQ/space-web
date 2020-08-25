@@ -22,7 +22,7 @@ const UIAvatar = ({
       alt={username}
       className={classNames(classes.root, className)}
     >
-      {children || username[0].toUpperCase()}
+      {children}
     </Avatar>
   );
 };

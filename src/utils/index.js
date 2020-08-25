@@ -6,3 +6,4 @@ export { default as stringToColor } from './string-to-color';
 export { default as formatHour } from './format-hour';
 export { default as formatDate } from './format-date';
 export { default as bucketPresenter } from './bucket-presenter';
+export { default as getAddressByPublicKey } from './get-address-by-public-key';

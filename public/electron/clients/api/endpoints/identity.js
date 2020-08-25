@@ -29,32 +29,6 @@ function getMultiple(payload) {
 
 /**
  * @this {import('../client.js')}
- * @param {Object} payload - Payload to get an identity by address.
- * @param {string} payload.address - Address to get identity.
- * @returns {import('axios').AxiosResponse<Identity>}
- */
-function getByAddress(payload) {
-  return this.instance({
-    method: 'get',
-    url: `${DEFAULT_PATH}/address/${payload.address}`,
-  });
-}
-
-/**
- * @this {import('../client.js')}
- * @param {Object} payload - Payload to get an identity by username.
- * @param {string} payload.username - Username to get identity.
- * @returns {import('axios').AxiosResponse<Identity>}
- */
-function getByUsername(payload) {
-  return this.instance({
-    method: 'get',
-    url: `${DEFAULT_PATH}/username/${payload.username}`,
-  });
-}
-
-/**
- * @this {import('../client.js')}
  * @param {Object} payload - Payload to create an indentity.
  * @param {string} payload.token - Auth token
  * @param {string=} payload.username - Username of the identity.
@@ -94,7 +68,5 @@ function uploadProfilePic(payload) {
 module.exports = {
   update,
   getMultiple,
-  getByAddress,
-  getByUsername,
   uploadProfilePic,
 };

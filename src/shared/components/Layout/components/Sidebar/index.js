@@ -30,16 +30,16 @@ const Sidebar = () => {
             active
             size={24}
             imgUrl={user.avatarUrl}
-            username={user.username}
+            username={user.username || user.address}
           />
         </div>
         <div className={classes.rightPanel}>
           <div className={classes.userContent}>
             <Account
               account={{
-                id: user.username,
-                name: user.username,
                 membersNumber: 0,
+                id: user.username,
+                name: user.username || `${user.address.substring(0, 4)}...${user.address.substring(user.address.length - 4, user.address.length)}`,
               }}
             />
             <CreateNewButton />

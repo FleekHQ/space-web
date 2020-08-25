@@ -20,7 +20,6 @@ const registerKeysEvents = (mainWindow) => {
 
       mainWindow.webContents.send(GET_PUBLIC_KEY_SUCCESS_EVENT, {
         publicKey: res.getPublickey(),
-        hubAuthToken: res.getHubauthtoken(),
       });
     } catch (err) {
       mainWindow.webContents.send(GET_PUBLIC_KEY_ERROR_EVENT, err);

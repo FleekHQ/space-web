@@ -14,6 +14,15 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
       const res = await spaceClient.getAPISessionTokens();
+      if (payload.address) {
+        const { data } = await apiClient.identities.getByAddress({
+          ...payload,
+          token: res.getServicestoken(),
+        });
+        mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
+        return;
+      }
+
       const { data } = await apiClient.identity.update({
         ...payload,
         token: res.getServicestoken(),
@@ -23,6 +32,10 @@ const registerAuthEvents = (mainWindow) => {
       let message = error.message || '';
 
       if (error.response && error.response.data) {
+        if (error.response.status === 404) {
+          message = 'modules.signup.errors.identity';
+        }
+
         if (error.response.status === 409) {
           message = 'modules.signup.errors.username';
         }
