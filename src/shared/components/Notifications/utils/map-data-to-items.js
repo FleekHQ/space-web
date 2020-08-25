@@ -1,15 +1,44 @@
 import get from 'lodash/get';
+import { formatBytes } from '@utils';
 
 export const INVITATION = 'INVITATION';
 export const USAGEALERT = 'USAGEALERT';
 export const SHARE_INVITE = 'share-invite';
 export const BACKUP_LIMIT = 'backup-limit';
 
-const mapBackupLimitItem = () => {};
+const mapBackupLimitItem = (item) => {
+  const { PUBLIC_URL } = process.env;
+  const {
+    id,
+    createdAt,
+    relatedObject:
+      {
+        used,
+        limit,
+      },
+  } = item;
+
+  return ({
+    id,
+    type: BACKUP_LIMIT,
+    currentAmountText: formatBytes(used),
+    limitText: formatBytes(limit),
+    timestamp: createdAt,
+    logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
+  });
+};
 
 const mapInvitationItem = (item) => {
-  const { relatedObject: { itemPaths } } = item;
-  // TODO: what are multiple files separated by in the filepaths field
+  const {
+    id,
+    subject,
+    body,
+    createdAt,
+    relatedObject:
+    {
+      itemPaths,
+    },
+  } = item;
   const splitPath = itemPaths.split('/');
   const file = splitPath[splitPath.length - 1];
   /* eslint-disable-next-line */
@@ -18,11 +47,11 @@ const mapInvitationItem = (item) => {
   const fileSplit = file.split('.');
 
   return ({
-    id: item.id,
+    id,
     type: SHARE_INVITE,
-    username: item.subject,
-    timestamp: item.createdAt,
-    description: item.subject,
+    username: subject,
+    timestamp: createdAt,
+    description: body,
     files: [{
       name: file,
       ext: isExtension && fileSplit[fileSplit.length - 1],
@@ -44,7 +73,6 @@ const mapDataToItems = (data) => {
     }
   });
 
-  // console.log('mappeddata', mappedData);
   return mappedData;
 };
 

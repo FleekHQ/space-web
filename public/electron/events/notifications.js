@@ -14,7 +14,7 @@ const notificationsMocks = {
   nextOffset: 1,
   notifications: [
     {
-      id: '1',
+      id: '2',
       subject: 'anon',
       body: 'anon wants to share a file',
       type: 'INVITATION',
@@ -24,6 +24,19 @@ const notificationsMocks = {
         itemPaths: '/item-path/item.pdf',
         // status can also be `ACCEPTED` or `REJECTED`
         status: 'PENDING',
+      },
+      createdAt: 1598299960522,
+      readAt: null,
+    },
+    {
+      id: '1',
+      subject: 'space',
+      body: 'reaching backup limit',
+      type: 'USAGEALERT',
+      relatedObject: {
+        used: 12300000000,
+        limit: 12400000000,
+        message: 'message',
       },
       createdAt: 1598299960522,
       readAt: null,
