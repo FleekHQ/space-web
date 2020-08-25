@@ -1,5 +1,7 @@
 import get from 'lodash/get';
 import { formatBytes } from '@utils';
+import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
+import store from '../../../../store';
 
 export const INVITATION = 'INVITATION';
 export const USAGEALERT = 'USAGEALERT';
@@ -25,6 +27,7 @@ const mapBackupLimitItem = (item) => {
     limitText: formatBytes(limit),
     timestamp: createdAt,
     logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
+    upgradeOnClick: () => store.dispatch(openModal(SETTINGS_MODAL)),
   });
 };
 
