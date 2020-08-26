@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { shareItems } from '@events/share';
 import BaseModal from '@ui/BaseModal';
-import SharingModal from '@shared/components/SharingModal';
-import useStyles from './styles';
 
-const collaboratorsMock = [
+import useStyles from './styles';
+import getOptions from './options';
+import {
+  Header,
+  MemberInput,
+  CollaboratorList,
+} from './components';
+
+const collaborators = [
   {
     id: 'morochroyce@gmail.com',
     mainText: 'Peter Adams',
@@ -47,14 +56,31 @@ const collaboratorsMock = [
   },
 ];
 
-const Sharing = ({ bucket, itemPaths, closeModal }) => {
-  const classes = useStyles();
+/* eslint-disable react/jsx-props-no-spreading */
+const SharingModal = (props) => {
+  const {
+    className,
+    closeModal,
+    selectedObjects,
+  } = props;
 
-  /* eslint-disable no-console */
-  const onShareLinkClick = (...args) => {
-    console.log('onShareLinkClick', ...args);
+  const classes = useStyles();
+  const { t } = useTranslation();
+
+  const [usernames, setUsernames] = useState([]);
+  const i18n = {
+    memberInput: {
+      shareVia: t('modals.sharingModal.shareVia'),
+      to: t('modals.sharingModal.to'),
+      placeholder: t('modals.sharingModal.inputPlaceholder'),
+    },
+    collaboratorList: {
+      owner: t('common.owner'),
+      shareButton: t('modals.sharingModal.shareEmailButton'),
+    },
   };
 
+  /* eslint-disable no-console */
   const onChangeUserPermissions = (...args) => {
     console.log('onChangeUserPermissions', ...args);
   };
@@ -63,18 +89,13 @@ const Sharing = ({ bucket, itemPaths, closeModal }) => {
     console.log('onChangeInputPermissions', ...args);
   };
 
-  const onSendEmailClick = (members, message) => {
-    const payload = {
-      bucket,
-      customMessage: message,
-      invitations: members.map((member) => ({
-        invitationType: 'INVITE_THROUGH_EMAIL',
-        invitationValue: member.id,
-      })),
-      itemPaths: typeof itemPaths === 'string'
-        ? [itemPaths]
-        : itemPaths,
-    };
+  const onClickSettings = () => {
+    console.log('click settings');
+  };
+
+  /* eslint-disable no-unused-vars */
+  const onShare = (members, message) => {
+    const payload = {};
 
     shareItems(payload);
     closeModal();
@@ -82,30 +103,62 @@ const Sharing = ({ bucket, itemPaths, closeModal }) => {
 
   return (
     <BaseModal onClose={closeModal} maxWidth={460}>
-      <SharingModal
-        ext="folder"
-        filename="folder"
-        shareLink={false}
-        className={classes.root}
-        collaborators={collaboratorsMock}
-        onShareLinkClick={onShareLinkClick}
-        onChangeUserPermissions={onChangeUserPermissions}
-        onChangeInputPermissions={onChangeInputPermissions}
-        onSendEmailClick={onSendEmailClick}
-      />
+      <div
+        className={classnames(
+          classes.root,
+          className,
+        )}
+      >
+        <Header
+          ext={get(selectedObjects, '[0].ext', '')}
+          className={classes.header}
+          onClickSettings={onClickSettings}
+        >
+          {get(selectedObjects, '[0].name', '')}
+        </Header>
+        <MemberInput
+          options={getOptions(t)}
+          i18n={i18n.memberInput}
+          className={classes.memberInput}
+          onChange={onChangeInputPermissions}
+          setUsernames={setUsernames}
+          usernames={usernames}
+          collaborators={collaborators}
+        />
+        <CollaboratorList
+          i18n={i18n.collaboratorList}
+          collaborators={collaborators}
+          options={getOptions(t, true)}
+          className={classes.collaboratorList}
+          onChangePermissions={onChangeUserPermissions}
+          onShare={onShare}
+        />
+      </div>
+      <div
+        className={classes.footer}
+      >
+        Implement Share Link
+      </div>
     </BaseModal>
   );
 };
 
-Sharing.defaultProps = {
-  bucket: 'personal',
-  itemPaths: [],
+SharingModal.defaultProps = {
+  className: null,
+  selectedObjects: [],
 };
 
-Sharing.propTypes = {
-  bucket: PropTypes.string,
-  itemPaths: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+SharingModal.propTypes = {
+  className: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
+  selectedObjects: PropTypes.arrayOf(PropTypes.shape({
+    ext: PropTypes.string,
+    name: PropTypes.string,
+    members: PropTypes.arrayOf(PropTypes.shape({
+      address: PropTypes.string,
+      publicKey: PropTypes.string,
+    })),
+  })),
 };
 
-export default Sharing;
+export default SharingModal;

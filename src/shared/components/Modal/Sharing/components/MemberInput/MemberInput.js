@@ -10,8 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
-import Collaborator from '../../../Collaborator';
-import PermissionsDropdown from '../../../PermissionsDropdown';
+import Collaborator from '../../../../Collaborator';
+import PermissionsDropdown from '../../../../PermissionsDropdown';
 import getFilteredOptions from './utils/get-filtered-options';
 
 const MemberInput = (props) => {
