@@ -108,6 +108,14 @@ const SharingModal = (props) => {
     });
   };
 
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_RESET,
+      });
+    }
+  ), []);
+
   React.useEffect(() => {
     if (state.shareFileByPublicKey.loading) {
       shareFilesByPublicKey({

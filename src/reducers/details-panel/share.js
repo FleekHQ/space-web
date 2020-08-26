@@ -17,6 +17,7 @@ export const SHARE_TYPES = {
   ON_GENERATE_LINK_ERROR: 'ON_GENERATE_LINK_ERROR',
   ON_GENERATE_LINK_SUCCESS: 'ON_GENERATE_LINK_SUCCESS',
   ON_SHARE_FILE_BY_PUBLIC_KEY: 'ON_SHARE_FILE_BY_PUBLIC_KEY',
+  ON_SHARE_FILE_BY_PUBLIC_KEY_RESET: 'ON_SHARE_FILE_BY_PUBLIC_KEY_RESET',
   ON_SHARE_FILE_BY_PUBLIC_KEY_ERROR: 'ON_SHARE_FILE_BY_PUBLIC_KEY_ERROR',
   ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS: 'ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS',
 };
@@ -76,8 +77,8 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         shareFileByPublicKey: {
+          ...state.shareFileByPublicKey,
           loading: false,
-          success: false,
           error: action.error,
         },
       };
@@ -86,9 +87,17 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         shareFileByPublicKey: {
-          error: null,
+          ...state.shareFileByPublicKey,
           succes: true,
           loading: false,
+        },
+      };
+    }
+    case SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_RESET: {
+      return {
+        ...state,
+        shareFileByPublicKey: {
+          ...DEFAULT_STATE.shareFileByPublicKey,
         },
       };
     }
