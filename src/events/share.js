@@ -43,12 +43,18 @@ const registerObjectsEvents = () => {
   });
 
   ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, () => {
-    /* eslint-disable-next-line no-console */
-    console.log('share files success');
+    store.dispatch({
+      type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,
+    });
   });
 
   ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, (_, error) => {
     console.error('Error when trying to share files by public key:', error.message);
+
+    store.dispatch({
+      error: error.message,
+      type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_ERROR,
+    });
   });
 };
 
