@@ -1,31 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import BaseModal from '@ui/BaseModal';
-import Typography from '@ui/Typography';
-import Button from '@material-ui/core/Button';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
+
+import { backupKeysByPassphrase } from '@events';
+import BaseModal from '@ui/BaseModal';
+import Typography from '@ui/Typography';
+import PasswordCheckTooltip from '@shared/components/PasswordCheckTooltip';
+
+import helper from './helper';
 import useStyles from './styles';
 
 const ChangePassword = (props) => {
-  const { closeModal, confirm } = props;
+  const { closeModal } = props;
   const classes = useStyles();
   const { t } = useTranslation();
-  const [state, setState] = useState({
-    newPassword: '',
+  const { user, changePassword } = useSelector((s) => ({
+    user: s.user,
+    changePassword: s.changePassword,
+  }));
+  const [state, setState] = React.useState({
     confirmPassword: '',
-    error: 'error',
+    newPassword: {
+      value: '',
+      isFocus: false,
+    },
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    confirm(state);
+    backupKeysByPassphrase({
+      uuid: user.uuid,
+      passphrase: state.newPassword.value,
+    });
   };
+
+  React.useEffect(() => {
+    if (changePassword.success) {
+      closeModal();
+    }
+  }, [changePassword.success]);
 
   return (
     <BaseModal
@@ -38,7 +60,7 @@ const ChangePassword = (props) => {
           <Typography variant="h6" weight="medium">
             {t('modals.changePassword.title')}
           </Typography>
-          <ButtonBase onClick={closeModal} disableRipple>
+          <ButtonBase disableRipple onClick={() => closeModal()}>
             <FontAwesomeIcon
               icon={faTimes}
               className={classes.closeIcon}
@@ -46,20 +68,42 @@ const ChangePassword = (props) => {
           </ButtonBase>
         </div>
         <form onSubmit={onSubmit} className={classes.bodyContainer}>
-          <TextField
-            inputProps={{
-              autocomplete: 'new-password',
-            }}
-            className={classes.row}
-            label={t('modals.changePassword.newPassword')}
-            variant="outlined"
-            type="password"
-            value={state.newPassword}
-            onChange={(event) => setState({
-              ...state,
-              newPassword: event.target.value,
-            })}
-          />
+          <PasswordCheckTooltip
+            open={state.newPassword.isFocus}
+            password={state.newPassword.value}
+          >
+            <TextField
+              inputProps={{
+                autocomplete: 'new-password',
+              }}
+              className={classes.row}
+              label={t('modals.changePassword.newPassword')}
+              variant="outlined"
+              type="password"
+              value={state.newPassword.value}
+              onFocus={() => setState({
+                ...state,
+                newPassword: {
+                  ...state.newPassword,
+                  isFocus: true,
+                },
+              })}
+              onBlur={() => setState({
+                ...state,
+                newPassword: {
+                  ...state.newPassword,
+                  isFocus: false,
+                },
+              })}
+              onChange={(event) => setState({
+                ...state,
+                newPassword: {
+                  ...state.newPassword,
+                  value: event.target.value,
+                },
+              })}
+            />
+          </PasswordCheckTooltip>
           <TextField
             inputProps={{
               autocomplete: 'off',
@@ -75,29 +119,45 @@ const ChangePassword = (props) => {
             })}
           />
           <div className={`${classes.footer} ${classes.row}`}>
-            <Button onClick={closeModal} variant="outlined" color="secondary">
+            <Button
+              variant="outlined"
+              color="secondary"
+              disabled={changePassword.loading}
+              onClick={() => closeModal()}
+            >
               {t('common.cancel')}
             </Button>
             <Button
               type="submit"
-              className={classes.confirmBtn}
               variant="contained"
+              className={classes.confirmBtn}
+              disabled={(
+                !helper.verifyFormValidation(state.newPassword.value, state.confirmPassword)
+                || changePassword.loading
+              )}
             >
-              {t('common.confirm')}
+              {
+                changePassword.loading ? (
+                  <FontAwesomeIcon spin icon={faSpinner} />
+                ) : t('common.confirm')
+              }
             </Button>
           </div>
         </form>
       </Paper>
-      <Typography className={classes.error} variant="body2">
-        {state.error}
-      </Typography>
+      {
+        changePassword.error && (
+          <Typography className={classes.error} variant="body2">
+            {changePassword.error}
+          </Typography>
+        )
+      }
     </BaseModal>
   );
 };
 
 ChangePassword.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  confirm: PropTypes.func.isRequired,
 };
 
 export default ChangePassword;

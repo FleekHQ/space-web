@@ -4,33 +4,27 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import MessageBox from '@ui/MessageBox';
-
+import SeedPhraseModal from '../../../SeedPhrase';
+import ChangePasswordModal from '../../../ChangePassword';
 import {
   Body,
   Header,
   Section,
   BaseCard,
-  SeedPhraseModal,
 } from '../../components';
 
-const handleChangePassword = (event) => {
-  event.preventDefault();
-
-  // eslint-disable-next-line no-console
-  console.log('TODO: Change password integration');
-};
-
-const handleSeedPhrase = ({ setState }) => (event) => {
+const handleModals = ({ setState }) => (event) => {
   event.preventDefault();
 
   setState((prevState) => ({
     ...prevState,
-    showSeedPhraseModal: true,
+    [event.currentTarget.id]: true,
   }));
 };
 
 const Security = ({ t }) => {
   const [state, setState] = React.useState({
+    showPasswordModal: true,
     showSeedPhraseModal: false,
   });
 
@@ -44,7 +38,10 @@ const Security = ({ t }) => {
             </Typography>
           </Section>
           <Section>
-            <ButtonBase onClick={handleChangePassword}>
+            <ButtonBase
+              id="showPasswordModal"
+              onClick={handleModals({ setState })}
+            >
               <Typography variant="body2" color="textSecondary">
                 {t('modals.settings.security.changePassword')}
               </Typography>
@@ -61,7 +58,10 @@ const Security = ({ t }) => {
             </Typography>
           </Section>
           <Section>
-            <ButtonBase onClick={handleSeedPhrase({ setState })}>
+            <ButtonBase
+              id="showSeedPhraseModal"
+              onClick={handleModals({ setState })}
+            >
               <Typography variant="body2" color="textSecondary">
                 {t('modals.settings.security.downloadPaperKey')}
               </Typography>
@@ -81,6 +81,15 @@ const Security = ({ t }) => {
           <SeedPhraseModal
             t={t}
             onDone={() => setState((prevState) => ({ ...prevState, showSeedPhraseModal: false }))}
+          />
+        )
+      }
+      {
+        state.showPasswordModal && (
+          <ChangePasswordModal
+            closeModal={() => (
+              setState((prevState) => ({ ...prevState, showPasswordModal: false }))
+            )}
           />
         )
       }

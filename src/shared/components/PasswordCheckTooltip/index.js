@@ -14,7 +14,7 @@ const PasswordCheckTooltip = ({
   return (
     <InputTooltip
       type="info"
-      bgColor="secondary"
+      bgColor="primary"
       title={t('modules.shared.passwordCheck.title')}
       tooltip={{
         open,
