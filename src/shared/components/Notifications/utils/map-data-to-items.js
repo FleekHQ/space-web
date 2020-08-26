@@ -44,7 +44,7 @@ const mapInvitationItem = (item) => {
   } = item;
   const splitPath = itemPaths.split('/');
   const file = splitPath[splitPath.length - 1];
-  /* eslint-disable-next-line */
+  /* eslint-disable-next-line no-useless-escape */
   const testIsExtension = /^[\w\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+\.[\w]+$/;
   const isExtension = testIsExtension.test(file);
   const fileSplit = file.split('.');

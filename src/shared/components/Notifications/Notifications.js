@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
 import {
   fetchNotifications,
@@ -41,10 +40,9 @@ const Notifications = () => {
   }, []);
 
   const loadMore = () => {
-    const offset = get(notifications, 'data.nextOffset');
-    if (!notifications.loading) {
+    if (!notifications.loading && notifications.data.nextOffset) {
       fetchNotifications({
-        seek: offset,
+        seek: notifications.data.nextOffset,
         limit: 10,
       });
     }

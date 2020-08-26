@@ -8,7 +8,7 @@ export const NOTIFICATIONS_ACTION_TYPES = {
 const DEFAULT_STATE = {
   error: null,
   loading: false,
-  data: { notifications: [] },
+  data: { nextOffset: null, notifications: [] },
 };
 
 export default (state = DEFAULT_STATE, action) => {
