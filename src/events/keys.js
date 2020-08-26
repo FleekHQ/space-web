@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 import { MNEMONIC_ACTION_TYPES } from '@reducers/mnemonic';
+import { UPDATE_USER } from '@reducers/user';
 
 import store from '../store';
 
@@ -23,15 +24,20 @@ const registerKeysEvents = () => {
 
     store.dispatch({
       error: error.message,
-      type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
+      type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY_ERROR,
     });
   });
 
   ipcRenderer.on(GET_PUBLIC_KEY_SUCCESS_EVENT, (_, data) => {
     store.dispatch({
-      type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY,
+      type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY_SUCCESS,
       publicKey: data.publicKey,
-      hubAuthToken: data.hubAuthToken,
+    });
+    store.dispatch({
+      type: UPDATE_USER,
+      user: {
+        publicKey: data.publicKey,
+      },
     });
   });
 

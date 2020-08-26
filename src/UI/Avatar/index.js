@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Avatar from '@material-ui/core/Avatar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/pro-light-svg-icons/faUser';
 
 import useStyles from './styles';
 
@@ -22,7 +24,9 @@ const UIAvatar = ({
       alt={username}
       className={classNames(classes.root, className)}
     >
-      {children || username[0].toUpperCase()}
+      {children || (
+        <FontAwesomeIcon className={classes.icon} icon={faUser} />
+      )}
     </Avatar>
   );
 };
@@ -33,7 +37,7 @@ UIAvatar.defaultProps = {
   active: false,
   children: null,
   className: '',
-  username: ' ',
+  username: '',
 };
 
 UIAvatar.propTypes = {

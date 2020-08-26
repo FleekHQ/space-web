@@ -8,6 +8,7 @@ import detailsPanelReducer from './details-panel';
 import createFolderReducer from './create-folder';
 import mnemonicReducer from './mnemonic';
 import notificationsReducer from './notifications';
+import identitiesReducer from './identities';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   createFolder: createFolderReducer,
   mnemonic: mnemonicReducer,
   notifications: notificationsReducer,
+  identities: identitiesReducer,
 });
 
 export default rootReducer;

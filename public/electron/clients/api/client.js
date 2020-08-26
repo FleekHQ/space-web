@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const identityEndpoints = require('./endpoints/identity');
+const identitiesEndpoints = require('./endpoints/identities');
 
 /**
  * @class
@@ -41,6 +42,16 @@ function ApiClient({
   this.identity = Object.keys(identityEndpoints).reduce((identityMethods, key) => ({
     ...identityMethods,
     [key]: identityEndpoints[key].bind(this),
+  }), {});
+
+  /**
+   * Identities endpoints.
+   * @name ApiClient#identities
+   * @type {import('./endpoints/identities.js')}
+   */
+  this.identities = Object.keys(identitiesEndpoints).reduce((identitiesMethods, key) => ({
+    ...identitiesMethods,
+    [key]: identitiesEndpoints[key].bind(this),
   }), {});
 }
 

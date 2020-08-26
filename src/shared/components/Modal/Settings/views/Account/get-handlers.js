@@ -3,13 +3,12 @@ import { updateIdentity, uploadProfilePic } from '@events/account';
 
 import { openModal, PROMPT_MODAL } from '../../../actions';
 
-export default (t, dispatch, token) => {
+export default (t, dispatch) => {
   const onSetDisplayName = () => {
     const modalProps = {
       title: t('modals.settings.account.editDisplayName'),
       onSubmit: (newDisplayName, errors, closeModal) => {
         const payload = {
-          token,
           displayName: newDisplayName,
         };
 
@@ -33,7 +32,6 @@ export default (t, dispatch, token) => {
       title: t('modals.settings.account.editUsername'),
       onSubmit: (newUsername, errors, closeModal) => {
         const payload = {
-          token,
           username: newUsername,
         };
 
@@ -56,7 +54,6 @@ export default (t, dispatch, token) => {
     const imagePath = get(e, 'target.files[0].path');
 
     uploadProfilePic({
-      token,
       imagePath,
     });
   };

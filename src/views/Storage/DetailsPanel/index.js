@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
 
-import { objectsSelector } from '@utils';
+import { objectsSelector, getShortAddress } from '@utils';
 import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
 import DetailsPanel, {
   Empty,
@@ -26,22 +26,7 @@ const StorageDetailsPanel = () => {
     let bucket;
 
     const filesMatch = matchPath(location.pathname, { path: '/storage/files/*' });
-    const sharedMatch = matchPath(location.pathname, { path: '/storage/shared-by', exact: true });
-    const sharedBucketMatch = matchPath(location.pathname, { path: '/storage/shared-by/:bucket/*' });
-
-    if (sharedMatch) {
-      // TODO: check if this is the correct way to get a selected bucket
-      const bucketKeySelected = Object.keys(state.storage.buckets).find((key) => (
-        state.storage.buckets[key].selected
-      ));
-
-      return {
-        user: state.user,
-        objectsType: OBJECT_TYPES.members,
-        selectedObjects: bucketKeySelected
-          ? state.storage.buckets[bucketKeySelected].membersList : [],
-      };
-    }
+    const sharedBucketMatch = matchPath(location.pathname, { path: '/storage/shared-by*' });
 
     if (filesMatch) {
       bucket = 'personal';
@@ -50,7 +35,7 @@ const StorageDetailsPanel = () => {
 
     if (sharedBucketMatch) {
       prefix = get(sharedBucketMatch, 'params.0', '') || '';
-      bucket = get(sharedBucketMatch, 'params.bucket', '') || '';
+      bucket = 'shared-with-me';
     }
 
     const objs = objectsSelector(
@@ -64,10 +49,8 @@ const StorageDetailsPanel = () => {
 
     return {
       user: state.user,
-      objectsType: sharedBucketMatch && selectedObjs.length === 0
-        ? OBJECT_TYPES.members : OBJECT_TYPES.files,
-      selectedObjects: sharedBucketMatch && selectedObjs.length === 0
-        ? state.storage.buckets[bucket].membersList : selectedObjs,
+      objectsType: OBJECT_TYPES.files,
+      selectedObjects: selectedObjs,
     };
   });
 
@@ -91,15 +74,28 @@ const StorageDetailsPanel = () => {
                 objectsType === OBJECT_TYPES.files ? <Header objects={selectedObjects} /> : (
                   <AvatarHeader objects={selectedObjects} />
                 )
-              }
+            }
             <Divider />
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <ObjectDetails {...selectedObjects[0]} />
-            <Divider />
-            <SharePanel
-              onShare={handleShare}
-              collaborators={[{ username: user.username }]}
-            />
+            {
+              selectedObjects.length === 1 && (
+                <>
+                  <Divider />
+                  <SharePanel
+                    onShare={handleShare}
+                    members={[user, ...selectedObjects[0].members].map((member) => {
+                      const m = { ...member };
+                      if (m.username.length === 0) {
+                        m.username = getShortAddress(m.address);
+                      }
+
+                      return m;
+                    })}
+                  />
+                </>
+              )
+            }
           </>
         )
       }

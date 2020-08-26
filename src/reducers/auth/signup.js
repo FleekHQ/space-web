@@ -2,8 +2,12 @@ const DEFAULT_STATE = {
   error: null,
   success: false,
   loading: false,
-  publicKey: null,
   showPassword: false,
+  publicKey: {
+    key: null,
+    error: null,
+    loading: false,
+  },
   tfUsername: {
     value: '',
     isValid: false,
@@ -17,6 +21,8 @@ export const SIGNUP_ACTION_TYPES = {
   ON_SUBMIT_ERROR: 'SIGNUP_ON_SUBMIT_ERROR',
   ON_SUBMIT_SUCCESS: 'SIGNUP_ON_SUBMIT_SUCCESS',
   ON_GET_PUBLIC_KEY: 'SIGNUP_ON_GET_PUBLIC_KEY',
+  ON_GET_PUBLIC_KEY_ERROR: 'SIGNUP_ON_GET_PUBLIC_KEY_ERROR',
+  ON_GET_PUBLIC_KEY_SUCCESS: 'SIGNUP_ON_GET_PUBLIC_KEY_SUCCESS',
   ON_INPUT_FOCUS_BLUR: 'SIGNUP_ON_INPUT_FOCUS_BLUR',
 };
 
@@ -53,6 +59,10 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         error: action.error,
+        publicKey: {
+          ...state.publicKey,
+          loading: false,
+        },
       };
     }
     case SIGNUP_ACTION_TYPES.ON_SUBMIT_SUCCESS: {
@@ -60,12 +70,41 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         success: true,
+        publicKey: {
+          ...state.publicKey,
+          loading: false,
+        },
       };
     }
     case SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY: {
       return {
         ...state,
-        publicKey: action.publicKey,
+        error: null,
+        publicKey: {
+          key: null,
+          error: null,
+          loading: true,
+        },
+      };
+    }
+    case SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY_ERROR: {
+      return {
+        ...state,
+        publicKey: {
+          key: null,
+          loading: false,
+          error: action.error,
+        },
+      };
+    }
+    case SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY_SUCCESS: {
+      return {
+        ...state,
+        publicKey: {
+          ...state.publicKey,
+          error: null,
+          key: action.publicKey,
+        },
       };
     }
     default: {

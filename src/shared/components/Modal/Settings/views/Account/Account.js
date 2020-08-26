@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import Avatar from '@ui/Avatar';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +14,7 @@ import {
   BaseCard,
 } from '../../components';
 
+/* eslint-disable react/jsx-props-no-spreading */
 const Account = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -24,6 +24,7 @@ const Account = () => {
   const {
     address,
     username,
+    avatarUrl,
     displayName = '',
   } = useSelector((state) => state.user);
 
@@ -31,7 +32,7 @@ const Account = () => {
     onChangeImage,
     onChangeUsername,
     onSetDisplayName,
-  } = getHandlers(t, dispatch, 'SOME_TOKEN');
+  } = getHandlers(t, dispatch);
 
   return (
     <div className={classes.root}>
@@ -51,7 +52,11 @@ const Account = () => {
             </Typography>
           </Section>
           <Section>
-            <Avatar size={32} username="Test" />
+            <Avatar
+              size={32}
+              username="Test"
+              {...(avatarUrl && avatarUrl !== '' && { imgUrl: avatarUrl })}
+            />
             <ButtonBase onClick={() => ref.current.click()}>
               <Typography
                 variant="body2"
