@@ -9,7 +9,7 @@ import Avatar from '@ui/Avatar';
 
 import useStyles from './styles';
 
-const RESIZE_DEBOUNCE_TIME = 300;
+const RESIZE_DEBOUNCE_MS_TIME = 300;
 const COLLABORATOR_ITEM_HEIGHT = 27;
 
 const SharePanel = ({
@@ -44,8 +44,8 @@ const SharePanel = ({
     return (
       <Avatar
         size={21}
-        imgUrl={null}
         className={classes.avatar}
+        imgUrl={collaborator.avatarUrl}
         username={collaborator.username}
       />
     );
@@ -64,7 +64,7 @@ const SharePanel = ({
           ...state,
           currentDocBodyHeight: window.innerHeight,
         });
-      }, RESIZE_DEBOUNCE_TIME);
+      }, RESIZE_DEBOUNCE_MS_TIME);
     };
 
     window.addEventListener('resize', handleResizeWindow);
@@ -81,9 +81,9 @@ const SharePanel = ({
     if (state.currentDocBodyHeight > 0) {
       const { currentDocBodyHeight } = state;
       const { offsetTop } = collaboratorList.current;
-      const detailPaneltTotalHeight = offsetTop + (collaborators.length * COLLABORATOR_ITEM_HEIGHT);
+      const detailPanelTotalHeight = offsetTop + (collaborators.length * COLLABORATOR_ITEM_HEIGHT);
       const isCollaboratorListExceedingDocHeight = currentDocBodyHeight
-        - detailPaneltTotalHeight < 0;
+        - detailPanelTotalHeight < 0;
 
       if (isCollaboratorListExceedingDocHeight) {
         const maxCollaborators = Math.round(
@@ -134,8 +134,8 @@ const SharePanel = ({
             return newArray;
           }, [])
           .map((collaborator, index, arr) => (
-            /* eslint-disable react/prop-types */
-            <div key={collaborator.username} className={classes.user}>
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={index} className={classes.user}>
               {
                 getAvatar({
                   collaborator,
@@ -146,7 +146,6 @@ const SharePanel = ({
                 {`${collaborator.username}${index === 0 ? t('detailsPanel.share.you') : ''}`}
               </Typography>
             </div>
-            /* eslint-enable react/prop-types */
           ))
       }
     </div>
@@ -160,7 +159,9 @@ SharePanel.defaultProps = {
 SharePanel.propTypes = {
   t: PropTypes.func.isRequired,
   collaborators: PropTypes.arrayOf(PropTypes.shape({
+    address: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
+    publicKey: PropTypes.string.isRequired,
   }).isRequired),
 };
 

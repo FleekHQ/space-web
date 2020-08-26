@@ -18,7 +18,7 @@ const objectPresenter = (obj = {}) => {
   const size = parseInt(get(obj, 'sizeInBytes', 0), 10);
   const bytesSize = formatBytes(size);
 
-  const membersArray = get(obj, 'members', []);
+  const members = get(obj, 'members', []);
   const backupCount = get(obj, 'backupCount', 0);
   const isLocallyAvailable = get(obj, 'isLocallyAvailable', false);
 
@@ -29,17 +29,17 @@ const objectPresenter = (obj = {}) => {
     name,
     size,
     bucket,
+    members,
     created,
     bytesSize,
     lastModified,
+    isLocallyAvailable,
     selected: false,
     id: `${bucket}${key}`,
     fullKey: `${bucket}${key}`,
     ipfsHash: get(obj, 'ipfsHash'),
     isAvailableInSpace: backupCount > 0,
-    isLocallyAvailable,
-    shareAmount: membersArray.length,
-    members: membersArray,
+    shareAmount: members.length,
   };
 };
 

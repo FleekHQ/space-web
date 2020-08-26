@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-import { stringToColor } from '@utils';
-
 const DEFAULT_SIZE = 38;
 
 const getSize = ({ size }) => size || DEFAULT_SIZE;
@@ -11,12 +9,7 @@ export default makeStyles((theme) => ({
     width: getSize,
     height: getSize,
     boxSizing: 'initial',
-    backgroundColor: ({ username }) => (stringToColor(username)),
-    color: ({ username }) => {
-      const color = stringToColor(username);
-
-      return theme.palette.getContrastText(color);
-    },
+    backgroundColor: theme.palette.palette.gray10,
     border: ({ active }) => {
       if (!active) {
         return null;
@@ -24,5 +17,9 @@ export default makeStyles((theme) => ({
 
       return '2px solid black';
     },
+  },
+  icon: {
+    color: 'black',
+    fontSize: '0.8em',
   },
 }));

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
 
-import { objectsSelector } from '@utils';
+import { objectsSelector, getShortAddress } from '@utils';
 import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
 import DetailsPanel, {
   Empty,
@@ -74,15 +74,28 @@ const StorageDetailsPanel = () => {
                 objectsType === OBJECT_TYPES.files ? <Header objects={selectedObjects} /> : (
                   <AvatarHeader objects={selectedObjects} />
                 )
-              }
+            }
             <Divider />
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <ObjectDetails {...selectedObjects[0]} />
-            <Divider />
-            <SharePanel
-              onShare={handleShare}
-              collaborators={[{ username: user.username }]}
-            />
+            {
+              selectedObjects.length === 1 && (
+                <>
+                  <Divider />
+                  <SharePanel
+                    onShare={handleShare}
+                    members={[user, ...selectedObjects[0].members].map((member) => {
+                      const m = { ...member };
+                      if (m.username.length === 0) {
+                        m.username = getShortAddress(m.address);
+                      }
+
+                      return m;
+                    })}
+                  />
+                </>
+              )
+            }
           </>
         )
       }
