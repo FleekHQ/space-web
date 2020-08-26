@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  fetchNotifications,
+} from '@events';
 import {
   NotificationMenu,
   NotificationButton,
 } from '@ui/Notification';
+import { useSelector } from 'react-redux';
+import mapDataToItems from './utils/map-data-to-items';
 
 import useStyles from './styles';
 
@@ -16,12 +21,31 @@ const Notifications = () => {
   const onCloseMenu = () => setAnchorEl(null);
   const onClickHandler = (event) => setAnchorEl(event.currentTarget);
 
+  const notifications = useSelector((state) => state.notifications);
+
   const i18n = {
     empty: t('notifications.empty'),
     accept: t('notifications.accept'),
     reject: t('notifications.reject'),
     markAsRead: t('notifications.markAsRead'),
     notifications: t('notifications.notifications'),
+  };
+
+  useEffect(() => {
+    // fetch stuff
+    fetchNotifications({
+      seek: 0,
+      limit: 10,
+    });
+  }, []);
+
+  const loadMore = () => {
+    if (!notifications.loading && notifications.data.nextOffset) {
+      fetchNotifications({
+        seek: notifications.data.nextOffset,
+        limit: 10,
+      });
+    }
   };
 
   return (
@@ -33,13 +57,13 @@ const Notifications = () => {
       />
       <NotificationMenu
         i18n={i18n}
-        items={[]}
+        items={mapDataToItems(notifications)}
         anchorEl={anchorEl}
         onCloseMenu={onCloseMenu}
         transformOrigin={{
           horizontal: 260,
-          vertical: -45,
         }}
+        loadMore={loadMore}
       />
     </>
   );

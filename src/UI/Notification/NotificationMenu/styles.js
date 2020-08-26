@@ -22,6 +22,10 @@ export default makeStyles((theme) => ({
   },
   popoverPaper: {
     minWidth: 280,
+    maxHeight: 600,
+    // Do not use transform origin to position the top of the popover
+    // since it will make the paper jump when loading more notifications
+    top: '47px !important',
   },
   empty: {
     flex: 1,
