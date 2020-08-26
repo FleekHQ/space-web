@@ -1,6 +1,8 @@
+const get = require('lodash/get');
+const isArray = require('lodash/isArray');
 const { ipcMain } = require('electron');
 
-const { spaceClient } = require('../clients');
+const { spaceClient, apiClient } = require('../clients');
 
 const EVENT_PREFIX = 'share';
 const GENERATE_LINK_EVENT = `${EVENT_PREFIX}:generateLink`;
@@ -36,8 +38,46 @@ const registerShareEvents = (mainWindow) => {
 
   ipcMain.on(SHARE_FILES_BY_PUBLIC_KEY_EVENT, async (event, payload) => {
     try {
-      await spaceClient.shareFilesViaPublicKey(payload);
-      mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT);
+      let usersNotFound = [];
+      let usernamesPubKeys = [];
+
+      const paths = get(payload, 'paths', []) || [];
+      const usernames = get(payload, 'usernames', []) || [];
+      const publicKeys = get(payload, 'publicKeys', []) || [];
+
+      if (usernames.length > 0) {
+        const apiTokens = await spaceClient.getAPISessionTokens();
+        const { data } = await apiClient.identities.getByUsername({
+          usernames,
+          token: apiTokens.getServicestoken(),
+        });
+
+        const identities = isArray(data.data) ? data.data : [data.data];
+
+        usersNotFound = usernames.reduce((acc, user) => {
+          const userExist = identities.findIndex((identity) => {
+            const username = get(identity, 'username');
+            return username === user;
+          }) >= 0;
+
+          if (!userExist) return [...acc, user];
+          return acc;
+        }, []);
+
+        usernamesPubKeys = identities
+          .filter((identity) => identity)
+          .map((identity) => identity.publicKey);
+      }
+
+      await spaceClient.shareFilesViaPublicKey({
+        paths,
+        publicKeys: [
+          ...publicKeys,
+          ...usernamesPubKeys,
+        ],
+      });
+
+      mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, { usersNotFound });
     } catch (err) {
       mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, err);
     }
