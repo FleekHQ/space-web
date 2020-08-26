@@ -1,6 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, select, object, boolean } from '@storybook/addon-knobs';
+import {
+  text, select, object, boolean,
+} from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import SharingModal from './index';
@@ -65,10 +67,11 @@ storiesOf(categoryName, module).add('default', () => {
     shareLinkProps: {
       step: 0,
       defaultStep: 0,
-      url: 'xyx.com'
+      url: 'xyx.com',
     },
   };
 
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div
       style={{
