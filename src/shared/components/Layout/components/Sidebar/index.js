@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import Divider from '@material-ui/core/Divider';
-import Typography from '@ui/Typography';
+
 import Avatar from '@ui/Avatar';
-import CreateNewButton from '../CreateNewButton';
+import Typography from '@ui/Typography';
+import { getShortAddress } from '@utils';
+
 import Account from '../Account';
+import CreateNewButton from '../CreateNewButton';
+
 import useStyles from './styles';
 import { useNavigations } from './hooks';
 
@@ -39,7 +44,7 @@ const Sidebar = () => {
               account={{
                 membersNumber: 0,
                 id: user.username,
-                name: user.username || `${user.address.substring(0, 4)}...${user.address.substring(user.address.length - 4, user.address.length)}`,
+                name: user.username || getShortAddress(user.address),
               }}
             />
             <CreateNewButton />

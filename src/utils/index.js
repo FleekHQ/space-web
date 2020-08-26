@@ -7,3 +7,4 @@ export { default as formatHour } from './format-hour';
 export { default as formatDate } from './format-date';
 export { default as bucketPresenter } from './bucket-presenter';
 export { default as getAddressByPublicKey } from './get-address-by-public-key';
+export { default as getShortAddress } from './get-short-address';
