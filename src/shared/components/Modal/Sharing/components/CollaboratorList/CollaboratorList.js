@@ -5,19 +5,19 @@ import classnames from 'classnames';
 import Button from '@material-ui/core/Button';
 
 import useStyles from './styles';
-import Collaborator from '../../../Collaborator';
-import PermissionsDropdown from '../../../PermissionsDropdown';
+import Collaborator from '../../../../Collaborator';
+import PermissionsDropdown from '../../../../PermissionsDropdown';
 
 const DATA_REF = 'permissions-dropdown';
 
 const CollaboratorList = (props) => {
   const {
     i18n,
+    onShare,
     options,
     className,
     collaborators,
     onChangePermissions,
-    onSendEmailClick,
   } = props;
 
   const classes = useStyles();
@@ -99,7 +99,7 @@ const CollaboratorList = (props) => {
       </div>
       <div className={classes.shareButtonContainer}>
         <Button
-          onClick={onSendEmailClick}
+          onClick={onShare}
           variant="contained"
           color="primary"
           className={classes.shareButton}
@@ -116,7 +116,7 @@ CollaboratorList.defaultProps = {
   className: null,
   collaborators: [],
   onChangePermissions: () => {},
-  onSendEmailClick: () => {},
+  onShare: () => {},
 };
 
 CollaboratorList.propTypes = {
@@ -140,7 +140,7 @@ CollaboratorList.propTypes = {
     owner: PropTypes.string,
     shareButton: PropTypes.string,
   }).isRequired,
-  onSendEmailClick: PropTypes.func,
+  onShare: PropTypes.func,
 };
 
 export default CollaboratorList;

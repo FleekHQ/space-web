@@ -55,9 +55,7 @@ const StorageDetailsPanel = () => {
   });
 
   const handleShare = () => {
-    const bucket = get(selectedObjects, '[0].bucket');
-    const itemPaths = selectedObjects.map((item) => item.key);
-    dispatch(openModal(SHARING_MODAL, { bucket, itemPaths }));
+    dispatch(openModal(SHARING_MODAL, { selectedObjects }));
   };
 
   return (
