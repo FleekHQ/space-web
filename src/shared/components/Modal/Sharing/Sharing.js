@@ -18,7 +18,7 @@ const collaboratorsMock = [
     id: 'morochgfx@gmail.com',
     mainText: 'morochgfx@gmail.com',
     secondaryText: 'Outside of Team',
-    permissionsId: 'view',
+    permissionsId: 'edit',
   },
   {
     id: 'maria.mart@gmail.com',
@@ -37,7 +37,7 @@ const collaboratorsMock = [
     id: 'asd123@gmail.com',
     mainText: 'asd123@gmail.com',
     secondaryText: 'Outside of Team',
-    permissionsId: 'view',
+    permissionsId: 'edit',
   },
   {
     id: 'mon.kallen@gmail.com4',
