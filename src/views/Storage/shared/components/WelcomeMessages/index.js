@@ -35,6 +35,10 @@ const WelcomeMessages = () => {
     hideUsername: s.welcome.hideUsername || s.user.username.length !== 0,
   }));
 
+  if (state.hideBackup && state.hideUsername && state.hideIntegration) {
+    return null;
+  }
+
   return (
     <div className={classes.rootWelcome}>
       {
