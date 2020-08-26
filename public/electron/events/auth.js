@@ -9,6 +9,9 @@ const SIGNUP_SUCCESS_EVENT = `${EVENT_PREFIX}:signup:success`;
 const CHECK_USERNAME_EVENT = `${EVENT_PREFIX}:check_username`;
 const CHECK_USERNAME_ERROR_EVENT = `${EVENT_PREFIX}:check_username:error`;
 const CHECK_USERNAME_SUCCESS_EVENT = `${EVENT_PREFIX}:check_username:success`;
+const RESTORE_KEYS_MNEMONIC_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic`;
+const RESTORE_KEYS_MNEMONIC_ERROR_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:error`;
+const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:success`;
 
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
@@ -55,6 +58,19 @@ const registerAuthEvents = (mainWindow) => {
       });
     } catch (err) {
       mainWindow.webContents.send(CHECK_USERNAME_ERROR_EVENT, err);
+    }
+  });
+
+  ipcMain.on(RESTORE_KEYS_MNEMONIC_EVENT, async (event, payload) => {
+    try {
+      await spaceClient.restoreKeyPairViaMnemonic(payload);
+      const res = await spaceClient.getPublicKey();
+      mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT, {
+        publicKey: res.getPublickey(),
+        hubAuthToken: res.getHubauthtoken(),
+      });
+    } catch (err) {
+      mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_ERROR_EVENT, err);
     }
   });
 };

@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
     height: 238,
   },
   form: {
-    width: 282,
+    width: 300,
     display: 'inherit',
     flexDirection: 'column',
     '& > *': {

@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import InputTooltip from '@ui/InputTooltip';
-
+import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from '@reducers/auth/restoreKeysMnemonic';
+import { restoreKeyPairViaMnemonic } from '@events';
 import useStyles from './styles';
 
-const RecoverAccount = () => {
+const RestoreKeysMnemonic = () => {
   const { t } = useTranslation();
-  // eslint-disable-next-line no-unused-vars
+  const dispatch = useDispatch();
+  const state = useSelector((_state) => _state.auth.restoreKeysMnemonic);
+  const isSuccess = useSelector((_state) => _state.user.publicKey);
   const history = useHistory();
-  const [state, setState] = useState({
-    key: '',
-    error: null,
-    loading: false,
-  });
   const classes = useStyles({ isError: !!state.error });
   const tfClasses = {
     root: classes.textFieldRoot,
@@ -31,19 +30,21 @@ const RecoverAccount = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setState({
-      ...state,
-      loading: true,
+    dispatch({ type: RESTORE_KEYS_MNEMONIC_ACTION_TYPES.ON_SUBMIT });
+    restoreKeyPairViaMnemonic({
+      mnemonic: state.mnemonic,
     });
-    // pretend sending data to BE
-    setTimeout(() => {
-      setState({
-        ...state,
-        loading: false,
-        error: t('modules.recoverAccount.keyNotFound'),
-      });
-    }, 2000);
   };
+
+  useEffect(() => {
+    dispatch({ type: RESTORE_KEYS_MNEMONIC_ACTION_TYPES.CLEAR_STATE });
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      history.push('/storage');
+    }
+  }, [isSuccess]);
 
   return (
     <div className={classes.root}>
@@ -51,7 +52,7 @@ const RecoverAccount = () => {
         <InputTooltip
           type="danger"
           bgColor="secondary"
-          title={state.error}
+          title={t('modules.restoreKeysMnemonic.keyNotFound')}
           tooltip={{
             arrow: true,
             open: !!state.error,
@@ -64,16 +65,15 @@ const RecoverAccount = () => {
             rows={4}
             fullWidth
             variant="outlined"
-            value={state.key}
-            label={t('modules.recoverAccount.inputLabel')}
+            value={state.mnemonic}
+            label={t('modules.restoreKeysMnemonic.inputLabel')}
             classes={tfClasses}
             InputProps={InputProps}
-            onChange={(event) => setState({
-              ...state,
-              key: event.target.value,
-              error: null,
-            })}
             disabled={state.loading}
+            onChange={(event) => dispatch({
+              type: RESTORE_KEYS_MNEMONIC_ACTION_TYPES.ON_INPUT_CHANGE,
+              payload: event.target.value,
+            })}
           />
         </InputTooltip>
         <Button
@@ -82,12 +82,12 @@ const RecoverAccount = () => {
           color="primary"
           variant="contained"
           classes={{ root: classes.buttonRoot }}
-          disabled={state.loading || !state.key}
+          disabled={state.loading || !state.mnemonic}
         >
           {
             state.loading ? (
               <FontAwesomeIcon spin icon={faSpinner} size="lg" />
-            ) : t('modules.recoverAccount.submit')
+            ) : t('modules.restoreKeysMnemonic.submit')
           }
         </Button>
       </form>
@@ -103,4 +103,4 @@ const RecoverAccount = () => {
   );
 };
 
-export default RecoverAccount;
+export default RestoreKeysMnemonic;

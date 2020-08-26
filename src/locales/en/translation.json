@@ -158,8 +158,8 @@
         "address": "Sorry, the current address is already registered."
       }
     },
-    "recoverAccount": {
-      "inputLabel": "Type your paper key",
+    "restoreKeysMnemonic": {
+      "inputLabel": "Enter 12 Word Account Recovery Phase",
       "keyNotFound": "No key found.",
       "submit": "Import Key"
     },
