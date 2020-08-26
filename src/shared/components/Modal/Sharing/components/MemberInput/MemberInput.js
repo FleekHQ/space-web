@@ -53,7 +53,14 @@ const MemberInput = (props) => {
     onChange(option);
   };
 
-  const filteredOptions = getFilteredOptions(usernames, collaborators);
+  const filteredOptions = getFilteredOptions(usernames, [
+    ...(usernameInput && usernameInput !== '' && [{
+      id: usernameInput,
+      mainText: usernameInput,
+      username: usernameInput,
+    }]),
+    ...collaborators,
+  ]);
 
   const filterOptions = createFilterOptions({
     stringify: (option) => `${option.mainText} ${option.secondaryText}`,

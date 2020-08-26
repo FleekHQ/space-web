@@ -12,8 +12,8 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
   },
   title: {
     marginLeft: 8,

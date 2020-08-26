@@ -5,56 +5,19 @@ import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { shareItems } from '@events/share';
 import BaseModal from '@ui/BaseModal';
+import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
 import getOptions from './options';
+import {
+  getCollaboratorsInfo,
+  mapIdentitiesToCollaborators,
+} from './helpers';
 import {
   Header,
   MemberInput,
   CollaboratorList,
 } from './components';
-
-const collaborators = [
-  {
-    id: 'morochroyce@gmail.com',
-    mainText: 'Peter Adams',
-    secondaryText: 'morochroyce@gmail.com',
-    imageSrc: 'https://cdn.theatlantic.com/thumbor/55coU3IJRzsQ16uvkFvYoLl3Pkc=/200x200/filters:format(png)/media/None/image/original.png',
-    permissionsId: 'edit',
-    isOwner: true,
-  },
-  {
-    id: 'morochgfx@gmail.com',
-    mainText: 'morochgfx@gmail.com',
-    secondaryText: 'Outside of Team',
-    permissionsId: 'edit',
-  },
-  {
-    id: 'maria.mart@gmail.com',
-    mainText: 'Maria Martinez',
-    secondaryText: 'maria.mart@gmail.com',
-    imageSrc: 'https://aboutfaceskincare.com/wp-content/uploads/2019/11/About-Face-Skincare1172_pp-1-e1574785727292.jpg',
-    permissionsId: 'edit',
-  },
-  {
-    id: 'morochroyce@gmail.com2',
-    mainText: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus recusandae est nobis quia exercitationem error harum ex laborum molestiae beatae molestias itaque voluptas soluta, eos dignissimos! In inventore autem asperiores!',
-    secondaryText: 'morochroyceconsecteturadipisicing@gmail.com',
-    permissionsId: 'edit',
-  },
-  {
-    id: 'asd123@gmail.com',
-    mainText: 'asd123@gmail.com',
-    secondaryText: 'Outside of Team',
-    permissionsId: 'edit',
-  },
-  {
-    id: 'mon.kallen@gmail.com4',
-    mainText: 'Mon Kallen',
-    secondaryText: 'mon.kallen@gmail.com4',
-    permissionsId: 'edit',
-  },
-];
 
 /* eslint-disable react/jsx-props-no-spreading */
 const SharingModal = (props) => {
@@ -67,7 +30,19 @@ const SharingModal = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const { user, identities } = useSelector((state) => ({
+    user: state.user,
+    identities: Object.values(state.identities.identities),
+  }));
+
+  const collaborators = getCollaboratorsInfo(
+    get(selectedObjects, '[0].members', []) || [],
+    user,
+    identities,
+  );
+
   const [usernames, setUsernames] = useState([]);
+
   const i18n = {
     memberInput: {
       shareVia: t('modals.sharingModal.shareVia'),
@@ -123,7 +98,7 @@ const SharingModal = (props) => {
           onChange={onChangeInputPermissions}
           setUsernames={setUsernames}
           usernames={usernames}
-          collaborators={collaborators}
+          collaborators={mapIdentitiesToCollaborators(identities)}
         />
         <CollaboratorList
           i18n={i18n.collaboratorList}
