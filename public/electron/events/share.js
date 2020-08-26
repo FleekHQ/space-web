@@ -9,6 +9,9 @@ const GENERATE_LINK_SUCCESS_EVENT = `${EVENT_PREFIX}:generateLink:success`;
 const SHARE_ITEMS_EVENT = `${EVENT_PREFIX}:items`;
 const SHARE_ITEMS_ERROR_EVENT = `${EVENT_PREFIX}:itemsError`;
 const SHARE_ITEMS_SUCCESS_EVENT = `${EVENT_PREFIX}:itemsSuccess`;
+const SHARE_FILES_BY_PUBLIC_KEY_EVENT = `${EVENT_PREFIX}:shareFiles`;
+const SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT = `${EVENT_PREFIX}:shareFiles:error`;
+const SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT = `${EVENT_PREFIX}:shareFiles:success`;
 
 const registerShareEvents = (mainWindow) => {
   ipcMain.on(GENERATE_LINK_EVENT, async (event, payload) => {
@@ -28,6 +31,15 @@ const registerShareEvents = (mainWindow) => {
       mainWindow.webContents.send(SHARE_ITEMS_SUCCESS_EVENT);
     } catch (err) {
       mainWindow.webContents.send(SHARE_ITEMS_ERROR_EVENT, err);
+    }
+  });
+
+  ipcMain.on(SHARE_FILES_BY_PUBLIC_KEY_EVENT, async (event, payload) => {
+    try {
+      await spaceClient.shareFilesViaPublicKey(payload);
+      mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT);
+    } catch (err) {
+      mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, err);
     }
   });
 };
