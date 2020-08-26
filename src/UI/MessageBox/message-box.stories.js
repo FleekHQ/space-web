@@ -18,7 +18,8 @@ storiesOf(categoryName, module).add('MessageBox', () => {
       'info',
       'danger',
       'upgrade',
-    ], 'info'),
+      null,
+    ], null),
   };
 
   return (

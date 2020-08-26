@@ -10,15 +10,17 @@ import { useTranslation } from 'react-i18next';
 import useStyles from './styles';
 import getContent from './get-content';
 
-const Settings = (props) => {
-  const { closeModal } = props;
+const Settings = ({
+  closeModal,
+  defaultItem,
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const contentItems = getContent(t);
-  const defaultItem = contentItems.find((item) => item.default);
+  const contentItems = getContent(t, defaultItem);
+  const dItem = contentItems.find((item) => item.default);
 
-  const [contentId, setContentId] = useState(defaultItem.id);
+  const [contentId, setContentId] = useState(dItem.id);
 
   const selectedContentItem = contentItems.find((item) => item.id === contentId);
 
@@ -62,7 +64,12 @@ const Settings = (props) => {
   );
 };
 
+Settings.defaultProps = {
+  defaultItem: 'account',
+};
+
 Settings.propTypes = {
+  defaultItem: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
 };
 

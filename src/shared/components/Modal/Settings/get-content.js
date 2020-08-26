@@ -2,25 +2,28 @@ import React from 'react';
 
 import { Security, Account, Usage } from './views';
 
-export default (t) => [
+export default (t, defaultItem) => [
   {
     id: 'account',
-    default: true,
+    default: defaultItem === 'account',
     title: t('modals.settings.account.title'),
     content: <Account />,
   },
   {
     id: 'security',
+    default: defaultItem === 'security',
     title: t('modals.settings.security.title'),
     content: <Security t={t} />,
   },
   {
     id: 'notifications',
+    default: defaultItem === 'notifications',
     title: t('modals.settings.notifications.title'),
     content: <div>notifications</div>,
   },
   {
     id: 'usage',
+    default: defaultItem === 'usage',
     title: t('modals.settings.usage.title'),
     content: (
       <Usage
@@ -44,6 +47,7 @@ export default (t) => [
   },
   {
     id: 'referrals',
+    default: defaultItem === 'referrals',
     title: t('modals.settings.referrals.title'),
     content: <div>referrals</div>,
   },

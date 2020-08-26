@@ -35,7 +35,7 @@ export default makeStyles((theme) => ({
     position: 'relative',
     flexDirection: 'column',
     padding: '12px 25px 12px 30px',
-    backgroundColor: bgColor ? getBgColor(bgColor) : 'transparent',
+    backgroundColor: bgColor ? getBgColor(bgColor) : theme.palette.palette.white,
     border: `1px solid ${bgColor ? getBgBorderColor(bgColor, theme) : getColorByType(type, theme)}`,
   }),
   titleContainer: {

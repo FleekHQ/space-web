@@ -8,6 +8,7 @@ import detailsPanelReducer from './details-panel';
 import createFolderReducer from './create-folder';
 import mnemonicReducer from './mnemonic';
 import notificationsReducer from './notifications';
+import welcomeReducer from './welcome';
 import identitiesReducer from './identities';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   createFolder: createFolderReducer,
   mnemonic: mnemonicReducer,
   notifications: notificationsReducer,
+  welcome: welcomeReducer,
   identities: identitiesReducer,
 });
 

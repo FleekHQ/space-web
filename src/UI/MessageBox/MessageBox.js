@@ -16,7 +16,7 @@ const getIconByType = (type) => {
     danger: faExclamationCircle,
   };
 
-  return icons[type] || icons.info;
+  return icons[type] || null;
 };
 
 const MessageBox = (props) => {
@@ -40,12 +40,16 @@ const MessageBox = (props) => {
       )}
     >
       <div className={classes.titleContainer}>
-        <FontAwesomeIcon
-          icon={icon}
-          className={classes.icon}
-        />
+        {
+          icon && (
+            <FontAwesomeIcon
+              icon={icon}
+              className={classes.icon}
+            />
+          )
+        }
         {typeof title === 'string' ? (
-          <Typography variant="body2" weight="medium">
+          <Typography variant="body2" weight="bold">
             {title}
           </Typography>
         ) : title}
@@ -58,8 +62,8 @@ const MessageBox = (props) => {
 };
 
 MessageBox.defaultProps = {
+  type: null,
   title: null,
-  type: 'info',
   bgColor: null,
   children: null,
   className: null,
