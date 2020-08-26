@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { shareItems } from '@events/share';
+import { useDispatch, useSelector } from 'react-redux';
+
 import BaseModal from '@ui/BaseModal';
+import { shareFilesByPublicKey } from '@events/share';
+import { SHARE_TYPES } from '@reducers/details-panel/share';
 
 import useStyles from './styles';
 import getOptions from './options';
@@ -30,6 +33,7 @@ const collaborators = [
     permissionsId: 'edit',
   },
   {
+    address: '',
     id: 'maria.mart@gmail.com',
     mainText: 'Maria Martinez',
     secondaryText: 'maria.mart@gmail.com',
@@ -65,9 +69,11 @@ const SharingModal = (props) => {
   } = props;
 
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const state = useSelector((s) => s.detailsPanel.share);
 
-  const [usernames, setUsernames] = useState([]);
+  const [usernames, setUsernames] = React.useState([]);
   const i18n = {
     memberInput: {
       shareVia: t('modals.sharingModal.shareVia'),
@@ -94,12 +100,36 @@ const SharingModal = (props) => {
   };
 
   /* eslint-disable no-unused-vars */
-  const onShare = (members, message) => {
-    const payload = {};
+  const onShare = (event) => {
+    event.preventDefault();
 
-    shareItems(payload);
-    closeModal();
+    dispatch({
+      type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY,
+    });
   };
+
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_RESET,
+      });
+    }
+  ), []);
+
+  React.useEffect(() => {
+    if (state.shareFileByPublicKey.loading) {
+      shareFilesByPublicKey({
+        publicKeys: [],
+        paths: selectedObjects.map((obj) => obj.key),
+      });
+    }
+  }, [state.shareFileByPublicKey.loading]);
+
+  React.useEffect(() => {
+    if (state.shareFileByPublicKey.success) {
+      closeModal();
+    }
+  }, [state.shareFileByPublicKey.success]);
 
   return (
     <BaseModal onClose={closeModal} maxWidth={460}>
@@ -152,6 +182,7 @@ SharingModal.propTypes = {
   className: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
   selectedObjects: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
     ext: PropTypes.string,
     name: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({
