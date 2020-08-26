@@ -1,21 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Button from '@material-ui/core/Button';
 
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
+import { getIdentitiesByAddress } from '@events';
+
 import CollaboratorList from '../CollaboratorList';
 
 import useStyles from './styles';
 
 const SharePanel = (props) => {
   const {
-    collaborators,
+    members,
     onShare,
   } = props;
 
   const classes = useStyles();
   const { t } = useTranslation();
+  const state = useSelector((s) => s.identities);
+
+  React.useEffect(() => {
+    const addresses = members.slice(1).reduce((addrs, member) => {
+      if (!state.identities[member.publicKey]) {
+        return addrs.concat(member.address);
+      }
+
+      return addrs;
+    }, []);
+
+    if (addresses.length > 0) {
+      getIdentitiesByAddress({ addresses });
+    }
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -34,18 +53,31 @@ const SharePanel = (props) => {
           {t('detailsPanel.share.manage')}
         </Typography>
       </div>
-      <CollaboratorList collaborators={collaborators} t={t} />
+      <CollaboratorList
+        t={t}
+        collaborators={members.map((member) => {
+          if (state.identities[member.publicKey]) {
+            return {
+              ...member,
+              ...state.identities[member.publicKey],
+            };
+          }
+          return member;
+        })}
+      />
     </div>
   );
 };
 
 SharePanel.defaultProps = {
-  collaborators: [],
+  members: [],
 };
 
 SharePanel.propTypes = {
-  collaborators: PropTypes.arrayOf(PropTypes.shape({
+  members: PropTypes.arrayOf(PropTypes.shape({
+    address: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
+    publicKey: PropTypes.string.isRequired,
   }).isRequired),
   onShare: PropTypes.func.isRequired,
 };

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
 
-import { objectsSelector } from '@utils';
+import { objectsSelector, getShortAddress } from '@utils';
 import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
 import DetailsPanel, {
   Empty,
@@ -60,6 +60,16 @@ const StorageDetailsPanel = () => {
     dispatch(openModal(SHARING_MODAL, { bucket, itemPaths }));
   };
 
+  if (selectedObjects.length > 0) {
+    selectedObjects[0].members = [
+      {
+        username: '',
+        address: '0x1b11b7f2f924523c2d92fed28af389dc88ce',
+        publicKey: 'ae4b2ab658fbb77221404d657c6b742d2ef7c526b6a5a9c200ccf93fca1dce63',
+      },
+    ];
+  }
+
   return (
     <DetailsPanel id="storage-detail-panel">
       {
@@ -74,15 +84,28 @@ const StorageDetailsPanel = () => {
                 objectsType === OBJECT_TYPES.files ? <Header objects={selectedObjects} /> : (
                   <AvatarHeader objects={selectedObjects} />
                 )
-              }
+            }
             <Divider />
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <ObjectDetails {...selectedObjects[0]} />
-            <Divider />
-            <SharePanel
-              onShare={handleShare}
-              collaborators={[{ username: user.username }]}
-            />
+            {
+              selectedObjects.length === 1 && (
+                <>
+                  <Divider />
+                  <SharePanel
+                    onShare={handleShare}
+                    members={[user, ...selectedObjects[0].members].map((member) => {
+                      const m = { ...member };
+                      if (m.username.length === 0) {
+                        m.username = getShortAddress(m.address);
+                      }
+
+                      return m;
+                    })}
+                  />
+                </>
+              )
+            }
           </>
         )
       }

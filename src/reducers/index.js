@@ -7,6 +7,7 @@ import modalsReducer from './modals';
 import detailsPanelReducer from './details-panel';
 import createFolderReducer from './create-folder';
 import mnemonicReducer from './mnemonic';
+import identitiesReducer from './identities';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   detailsPanel: detailsPanelReducer,
   createFolder: createFolderReducer,
   mnemonic: mnemonicReducer,
+  identities: identitiesReducer,
 });
 
 export default rootReducer;
