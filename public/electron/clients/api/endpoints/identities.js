@@ -10,7 +10,7 @@ const DEFAULT_PATH = '/identities';
 function getByAddress(payload) {
   return this.instance({
     method: 'get',
-    url: `${DEFAULT_PATH}`,
+    url: DEFAULT_PATH,
     headers: {
       Authorization: payload.token,
     },
@@ -30,12 +30,12 @@ function getByAddress(payload) {
 function getByUsername(payload) {
   return this.instance({
     method: 'get',
-    url: `${DEFAULT_PATH}?username=${payload.username}`,
+    url: DEFAULT_PATH,
     headers: {
       Authorization: payload.token,
     },
     params: {
-      address: payload.addresses,
+      username: payload.usernames.join(','),
     },
   });
 }

@@ -15,8 +15,8 @@ const registerIdentitiesEvents = (mainWindow) => {
         token: res.getServicestoken(),
         addresses: payload.addresses,
       });
-      const identities = Array.isArray(data.data) ? data.data : [data.data];
 
+      const identities = Array.isArray(data.data) ? data.data : [data.data];
       mainWindow.webContents.send(GET_IDENTITIES_BY_ADDRESS_SUCCESS_EVENT, { identities });
     } catch (error) {
       let message = error.message || '';

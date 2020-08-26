@@ -60,16 +60,6 @@ const StorageDetailsPanel = () => {
     dispatch(openModal(SHARING_MODAL, { bucket, itemPaths }));
   };
 
-  if (selectedObjects.length > 0) {
-    selectedObjects[0].members = [
-      {
-        username: '',
-        address: '0x1b11b7f2f924523c2d92fed28af389dc88ce',
-        publicKey: 'ae4b2ab658fbb77221404d657c6b742d2ef7c526b6a5a9c200ccf93fca1dce63',
-      },
-    ];
-  }
-
   return (
     <DetailsPanel id="storage-detail-panel">
       {

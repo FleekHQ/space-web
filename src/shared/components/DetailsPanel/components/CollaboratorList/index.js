@@ -114,7 +114,7 @@ const SharePanel = ({
         collaborators
           .reduce((newArray, collaborator, index) => {
             if (state.maxCollaborators === 0) {
-              return [].concat(newArray, { ...collaborator });
+              return newArray.concat({ ...collaborator });
             }
 
             if (index <= state.maxCollaborators - 1) {
@@ -123,7 +123,7 @@ const SharePanel = ({
                   username: t('detailsPanel.share.group', { number: index - state.maxCollaborators + 2 }),
                 });
               }
-              return [].concat(newArray, { ...collaborator });
+              return newArray.concat({ ...collaborator });
             }
 
             if (newArray.length) {
