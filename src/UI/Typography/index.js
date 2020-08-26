@@ -24,7 +24,7 @@ FleekTypography.defaultProps = {
 };
 
 FleekTypography.propTypes = {
-  weight: PropTypes.oneOf(['medium']),
+  weight: PropTypes.oneOf(['medium', 'bold']),
   children: PropTypes.node,
 };
 
