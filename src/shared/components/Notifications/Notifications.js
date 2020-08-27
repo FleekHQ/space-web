@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   fetchNotifications,
+  acceptFilesInvitation,
+  rejectFilesInvitation,
 } from '@events';
 import {
   NotificationMenu,
@@ -27,6 +29,8 @@ const Notifications = () => {
     empty: t('notifications.empty'),
     accept: t('notifications.accept'),
     reject: t('notifications.reject'),
+    accepted: t('notifications.accepted'),
+    rejected: t('notifications.rejected'),
     markAsRead: t('notifications.markAsRead'),
     notifications: t('notifications.notifications'),
   };
@@ -48,6 +52,32 @@ const Notifications = () => {
     }
   };
 
+  const onAcceptInvitation = (item) => {
+    const notificationItems = notifications.data.notifications;
+    const acceptedNotification = notificationItems.find(
+      (notificationItem) => (notificationItem.id === item.id),
+    );
+    if (acceptedNotification) {
+      acceptFilesInvitation({
+        id: item.id,
+        invitationId: acceptedNotification.relatedObject.invitationId,
+      });
+    }
+  };
+
+  const onRejectInvitation = (item) => {
+    const notificationItems = notifications.data.notifications;
+    const acceptedNotification = notificationItems.find(
+      (notificationItem) => (notificationItem.id === item.id),
+    );
+    if (acceptedNotification) {
+      rejectFilesInvitation({
+        id: item.id,
+        invitationId: acceptedNotification.relatedObject.invitationId,
+      });
+    }
+  };
+
   return (
     <>
       <NotificationButton
@@ -64,6 +94,8 @@ const Notifications = () => {
           horizontal: 260,
         }}
         loadMore={loadMore}
+        onAcceptInvitation={onAcceptInvitation}
+        onRejectInvitation={onRejectInvitation}
       />
     </>
   );

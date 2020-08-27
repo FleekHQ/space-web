@@ -21,9 +21,42 @@ const NotificationItem = (props) => {
     description,
     onAccept,
     onReject,
+    status,
   } = props;
 
   const classes = useStyles();
+
+  const getButtons = () => {
+    switch (status) {
+      case 'PENDING':
+        return (
+          <>
+            <Button
+              onClick={onAccept}
+              variant="contained"
+              className={classes.button}
+            >
+              {i18n.accept}
+            </Button>
+            <Button
+              onClick={onReject}
+              variant="outlined"
+              className={classnames(
+                classes.button,
+                classes.rejectButton,
+              )}
+            >
+              {i18n.reject}
+            </Button>
+          </>
+        );
+      case 'ACCEPTED':
+        return i18n.accepted;
+      case 'REJECTED':
+      default:
+        return i18n.rejected;
+    }
+  };
 
   return (
     <MenuItem
@@ -57,23 +90,7 @@ const NotificationItem = (props) => {
           {moment(timestamp).fromNow()}
         </Typography>
         <div className={classes.buttonContainer}>
-          <Button
-            onClick={onAccept}
-            variant="contained"
-            className={classes.button}
-          >
-            {i18n.accept}
-          </Button>
-          <Button
-            onClick={onReject}
-            variant="outlined"
-            className={classnames(
-              classes.button,
-              classes.rejectButton,
-            )}
-          >
-            {i18n.reject}
-          </Button>
+          {getButtons()}
         </div>
       </div>
     </MenuItem>
@@ -88,6 +105,7 @@ NotificationItem.defaultProps = {
   timestamp: '',
   onAccept: () => {},
   onReject: () => {},
+  status: 'PENDING',
 };
 
 NotificationItem.propTypes = {
@@ -104,7 +122,10 @@ NotificationItem.propTypes = {
   i18n: PropTypes.shape({
     accept: PropTypes.string.isRequired,
     reject: PropTypes.string.isRequired,
+    accepted: PropTypes.string.isRequired,
+    rejected: PropTypes.string.isRequired,
   }).isRequired,
+  status: PropTypes.string,
 };
 
 export default NotificationItem;
