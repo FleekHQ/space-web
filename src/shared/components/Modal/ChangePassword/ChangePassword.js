@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -11,9 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
-import { backupKeysByPassphrase } from '@events';
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
+import { backupKeysByPassphrase } from '@events';
+import { CHANGE_PASSWORD_ACTION_TYPES } from '@reducers/change-password';
 import PasswordCheckTooltip from '@shared/components/PasswordCheckTooltip';
 
 import helper from './helper';
@@ -22,6 +23,7 @@ import useStyles from './styles';
 const ChangePassword = (props) => {
   const { closeModal } = props;
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { user, changePassword } = useSelector((s) => ({
     user: s.user,
@@ -42,6 +44,14 @@ const ChangePassword = (props) => {
       passphrase: state.newPassword.value,
     });
   };
+
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: CHANGE_PASSWORD_ACTION_TYPES.ON_RESET,
+      });
+    }
+  ), []);
 
   React.useEffect(() => {
     if (changePassword.success) {
