@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import BaseModal from '@ui/BaseModal';
 import { shareFiles } from '@events/share';
+import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 
 import useStyles from './styles';
@@ -81,13 +82,15 @@ const SharingModal = (props) => {
     });
   };
 
-  React.useEffect(() => (
-    () => {
+  React.useEffect(() => {
+    fetchRecentlyMembers();
+
+    return () => {
       dispatch({
         type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_RESET,
       });
-    }
-  ), []);
+    };
+  }, []);
 
   /* eslint-disable no-underscore-dangle */
   React.useEffect(() => {
