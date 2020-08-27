@@ -9,6 +9,12 @@ const READ_NOTIFICATION_SUCCESS_EVENT = `${EVENT_PREFIX}:readNotification:succes
 const FETCH_NOTIFICATIONS = `${EVENT_PREFIX}:fetch`;
 const FETCH_NOTIFICATIONS_ERROR = `${EVENT_PREFIX}:fetch:error`;
 const FETCH_NOTIFICATIONS_SUCCESS = `${EVENT_PREFIX}:fetch:success`;
+const ACCEPT_FILES_INVITATION = `${EVENT_PREFIX}:acceptFilesInvitation`;
+const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:success`;
+const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
+const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
+const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
+const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
 
 const registerNotificationEvents = () => {
   ipcRenderer.on(FETCH_NOTIFICATIONS_ERROR, (_, error) => {
@@ -42,5 +48,29 @@ export const fetchNotifications = (payload) => {
   });
   ipcRenderer.send(FETCH_NOTIFICATIONS, payload);
 };
+
+export const acceptFilesInvitation = (payload) => {
+  ipcRenderer.send(ACCEPT_FILES_INVITATION, payload);
+};
+
+ipcRenderer.on(ACCEPT_FILES_INVITATION_SUCCESS, (_, data) => {
+  console.log(data);
+});
+
+ipcRenderer.on(ACCEPT_FILES_INVITATION_ERROR, () => {
+  // TODO: do something
+});
+
+export const rejectFilesInvitation = (payload) => {
+  ipcRenderer.send(REJECT_FILES_INVITATION, payload);
+};
+
+ipcRenderer.on(REJECT_FILES_INVITATION_SUCCESS, () => {
+  // TODO: do something
+});
+
+ipcRenderer.on(REJECT_FILES_INVITATION_ERROR, () => {
+  // TODO: do something
+});
 
 export default registerNotificationEvents;

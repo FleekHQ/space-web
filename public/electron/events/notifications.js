@@ -9,6 +9,12 @@ const READ_NOTIFICATION_SUCCESS_EVENT = `${EVENT_PREFIX}:readNotification:succes
 const FETCH_NOTIFICATIONS = `${EVENT_PREFIX}:fetch`;
 const FETCH_NOTIFICATIONS_ERROR = `${EVENT_PREFIX}:fetch:error`;
 const FETCH_NOTIFICATIONS_SUCCESS = `${EVENT_PREFIX}:fetch:success`;
+const ACCEPT_FILES_INVITATION = `${EVENT_PREFIX}:acceptFilesInvitation`;
+const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:success`;
+const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
+const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
+const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
+const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
 
 const notificationsMocks = {
   nextOffset: 1,
@@ -118,6 +124,32 @@ const registerNotificationsEvents = (mainWindow) => {
       });
 
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_ERROR, err);
+    }
+  });
+
+  ipcMain.on(ACCEPT_FILES_INVITATION, async (event, payload) => {
+    try {
+      await spaceClient.acceptFilesInvitation(payload);
+
+      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
+    } catch (err) {
+      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_ERROR, {
+        ...payload,
+        err,
+      });
+    }
+  });
+
+  ipcMain.on(REJECT_FILES_INVITATION, async (event, payload) => {
+    try {
+      await spaceClient.rejectFilesInvitation(payload);
+
+      mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
+    } catch (err) {
+      mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
+        ...payload,
+        err,
+      });
     }
   });
 };
