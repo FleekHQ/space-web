@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import BaseModal from '@ui/BaseModal';
+import Paper from '@material-ui/core/Paper';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-
-import BaseModal from '@ui/BaseModal';
-import { shareFiles } from '@events/share';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
+import { shareFiles, generatePublicFileLink } from '@events/share';
+import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 
 import useStyles from './styles';
 import getOptions from './options';
@@ -18,6 +19,7 @@ import {
 } from './helpers';
 import {
   Header,
+  ShareLink,
   MemberInput,
   CollaboratorList,
 } from './components';
@@ -34,10 +36,16 @@ const SharingModal = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { user, state, identities } = useSelector((s) => ({
+  const {
+    user,
+    state,
+    linkInfo,
+    identities,
+  } = useSelector((s) => ({
     user: s.user,
     state: s.detailsPanel.share,
     identities: Object.values(s.identities.identities),
+    linkInfo: s.publicFileLink.linkInfo,
   }));
 
   const collaborators = getCollaboratorsInfo(
@@ -46,7 +54,8 @@ const SharingModal = (props) => {
     identities,
   );
 
-  const [usernames, setUsernames] = React.useState([]);
+  const [step, setStep] = useState(0);
+  const [usernames, setUsernames] = useState([]);
 
   const i18n = {
     memberInput: {
@@ -82,12 +91,32 @@ const SharingModal = (props) => {
     });
   };
 
+  const onSave = (password) => {
+    const payload = {
+      password,
+      bucket: get(selectedObjects, '[0].bucket', ''),
+      itemPaths: selectedObjects.map((obj) => obj.key),
+    };
+
+    generatePublicFileLink(payload);
+  };
+
+  React.useEffect(() => {
+    if (linkInfo.link) {
+      setStep(2);
+    }
+  }, [linkInfo.link]);
+
   React.useEffect(() => {
     fetchRecentlyMembers();
 
     return () => {
       dispatch({
         type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_RESET,
+      });
+
+      dispatch({
+        type: PUBLIC_LINK_ACTION_TYPES.ON_RESTART,
       });
     };
   }, []);
@@ -118,8 +147,15 @@ const SharingModal = (props) => {
   }, [state.shareFileByPublicKey.success]);
 
   return (
-    <BaseModal onClose={closeModal} maxWidth={460}>
-      <div
+    <BaseModal
+      onClose={closeModal}
+      maxWidth={460}
+      paperProps={{
+        className: classes.paperModal,
+        elevation: 0,
+      }}
+    >
+      <Paper
         className={classnames(
           classes.root,
           className,
@@ -149,12 +185,20 @@ const SharingModal = (props) => {
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
         />
-      </div>
-      <div
+      </Paper>
+      <Paper
         className={classes.footer}
       >
-        Implement Share Link
-      </div>
+        <ShareLink
+          url={get(linkInfo, 'link')}
+          step={step}
+          onSave={onSave}
+          defaultStep={step}
+          onCreateLink={() => setStep(1)}
+          onCancel={() => setStep(0)}
+          onReset={() => setStep(1)}
+        />
+      </Paper>
     </BaseModal>
   );
 };
@@ -171,6 +215,7 @@ SharingModal.propTypes = {
     key: PropTypes.string,
     ext: PropTypes.string,
     name: PropTypes.string,
+    bucket: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
       publicKey: PropTypes.string,

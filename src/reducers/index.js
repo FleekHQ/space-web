@@ -11,6 +11,7 @@ import notificationsReducer from './notifications';
 import welcomeReducer from './welcome';
 import identitiesReducer from './identities';
 import changePasswordReducer from './change-password';
+import publicFileLinkReducer from './public-file-link';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   welcome: welcomeReducer,
   identities: identitiesReducer,
   changePassword: changePasswordReducer,
+  publicFileLink: publicFileLinkReducer,
 });
 
 export default rootReducer;
