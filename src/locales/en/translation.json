@@ -4,6 +4,7 @@
   "common": {
     "search": "Search",
     "at": "at",
+    "yes": "Yes",
     "enable": "Enable",
     "remove": "Remove",
     "owner": "Owner",
@@ -298,6 +299,10 @@
     "createFolder": {
       "title": "Create New Folder",
       "inputLabel": "Folder Name"
+    },
+    "deleteAccount": {
+      "title": "Delete Account",
+      "description": "Are you sure you want to delete this account?"
     }
   },
   "welcome": {

@@ -1,6 +1,5 @@
 import { ipcRenderer } from 'electron';
 
-import { UPDATE_USER } from '@reducers/user';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 import { MNEMONIC_ACTION_TYPES } from '@reducers/mnemonic';
 import { CHANGE_PASSWORD_ACTION_TYPES } from '@reducers/change-password';
@@ -36,12 +35,6 @@ const registerKeysEvents = () => {
     store.dispatch({
       type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY_SUCCESS,
       publicKey: data.publicKey,
-    });
-    store.dispatch({
-      type: UPDATE_USER,
-      user: {
-        publicKey: data.publicKey,
-      },
     });
   });
 

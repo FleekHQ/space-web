@@ -3,6 +3,9 @@ import electronStore from '@electron-store';
 import { SIGNUP_ACTION_TYPES } from './auth/signup';
 
 export const UPDATE_USER = 'UPDATE_USER';
+export const USER_ACTION_TYPES = {
+  ON_USER_LOGOUT: 'ON_USER_LOGOUT',
+};
 
 let user;
 const USER_KEY = '_u';
@@ -32,6 +35,11 @@ export default (state = user, action) => {
 
     case UPDATE_USER: {
       return writeUser(state, action.user);
+    }
+
+    case USER_ACTION_TYPES.ON_USER_LOGOUT: {
+      electronStore.clear();
+      return null;
     }
 
     default: {

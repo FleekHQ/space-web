@@ -17,7 +17,7 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
       const res = await spaceClient.getAPISessionTokens();
-      if (payload.address) {
+      if (payload.addresses) {
         const { data } = await apiClient.identities.getByAddress({
           ...payload,
           token: res.getServicestoken(),

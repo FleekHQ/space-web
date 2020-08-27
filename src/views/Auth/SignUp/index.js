@@ -105,7 +105,7 @@ const SignUp = () => {
       const address = getAddressByPublicKey(state.publicKey.key);
 
       singup({
-        address,
+        addresses: [address],
       });
     }
   }, [state.publicKey.key]);

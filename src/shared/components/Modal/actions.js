@@ -11,6 +11,7 @@ export const SETTINGS_MODAL = 'SETTINGS_MODAL';
 export const SHARING_MODAL = 'SHARING_MODAL';
 export const PROMPT_MODAL = 'PROMPT_MODAL';
 export const CREATE_FOLDER = 'CREATE_FOLDER';
+export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 
 /* Action creators */
 export const openModal = (modalType, props = {}) => (dispatch) => {
