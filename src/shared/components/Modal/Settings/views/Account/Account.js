@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@ui/Avatar';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
@@ -15,7 +16,9 @@ import {
 } from '../../components';
 
 /* eslint-disable react/jsx-props-no-spreading */
-const Account = () => {
+const Account = ({
+  closeMainModal,
+}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -30,9 +33,14 @@ const Account = () => {
 
   const {
     onChangeImage,
+    onDeleteAccount,
     onChangeUsername,
     onSetDisplayName,
-  } = getHandlers(t, dispatch);
+  } = getHandlers({
+    t,
+    dispatch,
+    closeMainModal,
+  });
 
   return (
     <div className={classes.root}>
@@ -134,6 +142,7 @@ const Account = () => {
               <Typography
                 variant="body2"
                 color="error"
+                onClick={onDeleteAccount}
               >
                 {t('modals.settings.account.deleteAccount')}
               </Typography>
@@ -143,6 +152,10 @@ const Account = () => {
       </BaseCard>
     </div>
   );
+};
+
+Account.propTypes = {
+  closeMainModal: PropTypes.func.isRequired,
 };
 
 export default Account;

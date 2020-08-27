@@ -17,7 +17,11 @@ const Settings = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const contentItems = getContent(t, defaultItem);
+  const contentItems = getContent({
+    t,
+    closeModal,
+    defaultItem,
+  });
   const dItem = contentItems.find((item) => item.default);
 
   const [contentId, setContentId] = useState(dItem.id);
