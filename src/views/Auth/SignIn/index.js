@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 import useStyles from './styles';
 
@@ -18,35 +17,28 @@ const SignUp = () => {
         <Button
           fullWidth
           type="button"
+          color="primary"
           variant="contained"
-          onClick={() => history.push('/auth/signin/username')}
+          onClick={() => history.push('/auth/singup')}
           classes={{
             root: classes.buttonRoot,
-            contained: classes.buttonContained,
           }}
         >
-          {t('modules.signin.withUsername')}
+          {t('modules.signin.createAnAccount')}
         </Button>
         <Button
           fullWidth
           type="button"
           variant="outlined"
+          onClick={() => history.push('/auth/signin/username')}
           classes={{
             root: classes.buttonRoot,
             outlined: classes.buttonOutlined,
           }}
         >
-          {t('modules.signin.withPrivateKey')}
+          {t('modules.signin.login')}
         </Button>
       </div>
-      <Typography
-        color="inherit"
-        to="/auth/signup"
-        component={Link}
-        className={classes.link}
-      >
-        {t('modules.signin.link')}<strong>&nbsp;{t('modules.signup.title')}</strong>
-      </Typography>
     </div>
   );
 };

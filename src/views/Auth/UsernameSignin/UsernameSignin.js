@@ -104,10 +104,10 @@ const UsernameSignin = () => {
         </Button>
       </form>
       <Link
-        to="/auth/forgot-password"
+        to="/auth/restore-keys-mnemonic"
         className={classes.forgotPasswordLink}
       >
-        {t('modules.signup.forgotPassword')}
+        {t('modules.signin.recover')}
       </Link>
       <Typography
         color="inherit"

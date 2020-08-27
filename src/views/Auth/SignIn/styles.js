@@ -25,17 +25,12 @@ export default makeStyles((theme) => ({
   },
   buttonRoot: {
     height: 39,
+    width: 282,
     borderRadius: 3,
     fontWeight: 600,
-  },
-  buttonContained: {
-    color: '#000000',
-    backgroundColor: theme.palette.palette.white,
+    textTransform: 'none',
   },
   buttonOutlined: {
     color: theme.palette.palette.white,
-    '&&&': {
-      border: 'none',
-    },
   },
 }));
