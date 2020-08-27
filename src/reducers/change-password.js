@@ -1,4 +1,5 @@
 export const CHANGE_PASSWORD_ACTION_TYPES = {
+  ON_RESET: 'CHANGE_PASSWORD_ON_RESET',
   ON_REQUEST: 'CHANGE_PASSWORD_ON_REQUEST',
   ON_REQUEST_ERROR: 'CHANGE_PASSWORD_ON_REQUEST_ERROR',
   ON_REQUEST_SUCCESS: 'CHANGE_PASSWORD_ON_REQUEST_SUCCESS',
@@ -12,6 +13,11 @@ const DEFAULT_STATE = {
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
+    case CHANGE_PASSWORD_ACTION_TYPES.ON_RESET: {
+      return {
+        ...DEFAULT_STATE,
+      };
+    }
     case CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST: {
       return {
         ...state,

@@ -24,7 +24,7 @@ const handleModals = ({ setState }) => (event) => {
 
 const Security = ({ t }) => {
   const [state, setState] = React.useState({
-    showPasswordModal: true,
+    showPasswordModal: false,
     showSeedPhraseModal: false,
   });
 

@@ -23,6 +23,9 @@ export default makeStyles((theme) => ({
   footer: {
     display: 'flex',
     justifyContent: 'flex-end',
+    '& > button': {
+      width: 94,
+    },
   },
   closeIcon: {
     fontSize: 12,
