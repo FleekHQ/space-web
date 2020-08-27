@@ -84,7 +84,8 @@ const StorageDetailsPanel = () => {
                     onShare={handleShare}
                     members={[user, ...selectedObjects[0].members].map((member) => {
                       const m = { ...member };
-                      if (m.username.length === 0) {
+
+                      if (!m.username || (m.username && m.username.length === 0)) {
                         m.username = getShortAddress(m.address);
                       }
 

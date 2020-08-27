@@ -11,7 +11,12 @@ module.exports = {
       fileExtension: 'pptx',
       isLocallyAvailable: false,
       backupCount: 0,
-      members: [],
+      members: [
+        {
+          address: '0x1b11b7f2f924523c2d92fed28af389dc88ce',
+          publicKey: 'ae4b2ab658fbb77221404d657c6b742d2ef7c526b6a5a9c200ccf93fca1dce63',
+        },
+      ],
     },
     {
       path: '/image-s.jpg',
@@ -24,7 +29,12 @@ module.exports = {
       fileExtension: 'jpg',
       isLocallyAvailable: false,
       backupCount: 0,
-      members: [],
+      members: [
+        {
+          address: '0x1b11b7f2f924523c2d92fed28af389dc88ce',
+          publicKey: 'ae4b2ab658fbb77221404d657c6b742d2ef7c526b6a5a9c200ccf93fca1dce63',
+        },
+      ],
     },
     {
       path: '/list_of_things-s.txt',
@@ -37,7 +47,12 @@ module.exports = {
       fileExtension: 'txt',
       isLocallyAvailable: false,
       backupCount: 0,
-      members: [],
+      members: [
+        {
+          address: '0x1b11b7f2f924523c2d92fed28af389dc88ce',
+          publicKey: 'ae4b2ab658fbb77221404d657c6b742d2ef7c526b6a5a9c200ccf93fca1dce63',
+        },
+      ],
     },
     {
       path: '/subfolder-s',

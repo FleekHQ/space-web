@@ -71,7 +71,7 @@ export const shareItems = (payload) => ipcRenderer.send(SHARE_ITEMS_EVENT, paylo
  * @param {Array.<string>} payload.paths
  * @param {Array.<string>} payload.publicKeys
  */
-export const shareFilesByPublicKey = (payload) => {
+export const shareFiles = (payload) => {
   ipcRenderer.send(SHARE_FILES_BY_PUBLIC_KEY_EVENT, payload);
 };
 
