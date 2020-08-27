@@ -83,9 +83,6 @@ const ChangePassword = (props) => {
             password={state.newPassword.value}
           >
             <TextField
-              inputProps={{
-                autocomplete: 'new-password',
-              }}
               className={classes.row}
               label={t('modals.changePassword.newPassword')}
               variant="outlined"
@@ -115,9 +112,6 @@ const ChangePassword = (props) => {
             />
           </PasswordCheckTooltip>
           <TextField
-            inputProps={{
-              autocomplete: 'off',
-            }}
             className={classes.row}
             label={t('modals.changePassword.confirmPassword')}
             variant="outlined"
