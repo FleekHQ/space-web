@@ -29,6 +29,8 @@ const Notifications = () => {
     empty: t('notifications.empty'),
     accept: t('notifications.accept'),
     reject: t('notifications.reject'),
+    accepted: t('notifications.accepted'),
+    rejected: t('notifications.rejected'),
     markAsRead: t('notifications.markAsRead'),
     notifications: t('notifications.notifications'),
   };

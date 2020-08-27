@@ -11,10 +11,10 @@ const FETCH_NOTIFICATIONS_ERROR = `${EVENT_PREFIX}:fetch:error`;
 const FETCH_NOTIFICATIONS_SUCCESS = `${EVENT_PREFIX}:fetch:success`;
 const ACCEPT_FILES_INVITATION = `${EVENT_PREFIX}:acceptFilesInvitation`;
 const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:success`;
-const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
+// const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
 const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
 const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
-const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
+// const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
 
 const notificationsMocks = {
   nextOffset: 1,
@@ -133,10 +133,12 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
-      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_ERROR, {
-        ...payload,
-        err,
-      });
+      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
+      // TODO: uncomment when integrated
+      // mainWindow.webContents.send(ACCEPT_FILES_INVITATION_ERROR, {
+      //   ...payload,
+      //   err,
+      // });
     }
   });
 
@@ -146,10 +148,12 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
-      mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
-        ...payload,
-        err,
-      });
+      mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
+      // TODO: uncomment when integrated
+      // mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
+      //   ...payload,
+      //   err,
+      // });
     }
   });
 };

@@ -54,7 +54,11 @@ export const acceptFilesInvitation = (payload) => {
 };
 
 ipcRenderer.on(ACCEPT_FILES_INVITATION_SUCCESS, (_, data) => {
-  console.log(data);
+  store.dispatch({
+    type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
+    status: 'ACCEPTED',
+    ...data,
+  });
 });
 
 ipcRenderer.on(ACCEPT_FILES_INVITATION_ERROR, () => {
@@ -65,8 +69,12 @@ export const rejectFilesInvitation = (payload) => {
   ipcRenderer.send(REJECT_FILES_INVITATION, payload);
 };
 
-ipcRenderer.on(REJECT_FILES_INVITATION_SUCCESS, () => {
-  // TODO: do something
+ipcRenderer.on(REJECT_FILES_INVITATION_SUCCESS, (_, data) => {
+  store.dispatch({
+    type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
+    status: 'REJECTED',
+    ...data,
+  });
 });
 
 ipcRenderer.on(REJECT_FILES_INVITATION_ERROR, () => {

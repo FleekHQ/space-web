@@ -42,6 +42,8 @@
   "notifications": {
     "accept": "Accept",
     "reject": "Reject",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
     "markAsRead": "Mark all as read",
     "notifications": "Notifications",
     "empty": "No notifications",

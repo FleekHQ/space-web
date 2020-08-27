@@ -40,6 +40,7 @@ const mapInvitationItem = (item) => {
     relatedObject:
     {
       itemPaths,
+      status,
     },
   } = item;
   const splitPath = itemPaths.split('/');
@@ -59,6 +60,7 @@ const mapInvitationItem = (item) => {
       name: file,
       ext: isExtension && fileSplit[fileSplit.length - 1],
     }],
+    status,
   });
 };
 

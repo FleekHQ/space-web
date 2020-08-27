@@ -23,6 +23,8 @@ storiesOf(categoryName, module).add('MenuItem', () => {
     i18n: {
       accept: 'Accept',
       reject: 'Reject',
+      accepted: 'Accepted',
+      rejected: 'Rejected',
     },
   };
 
