@@ -139,8 +139,7 @@
       "link": "Don't have an account?",
       "errors": {
         "generic": "Sorry, there was a problem.",
-        "username": "Sorry, this username is already taken.",
-        "address": "Sorry, the current address is already registered."
+        "invalid": "Invalid username or password."
       },
       "username": "Username",
       "password": "Password",
