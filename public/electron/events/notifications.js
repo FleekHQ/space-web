@@ -27,7 +27,7 @@ const notificationsMocks = {
       relatedObject: {
         inviterPublicKey: '123',
         invitationId: '12',
-        itemPaths: '/item-path/item.pdf',
+        itemPaths: ['/item-path/item.pdf'],
         // status can also be `ACCEPTED` or `REJECTED`
         status: 'PENDING',
       },
