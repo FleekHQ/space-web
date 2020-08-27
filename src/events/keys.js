@@ -1,8 +1,9 @@
 import { ipcRenderer } from 'electron';
 
+import { UPDATE_USER } from '@reducers/user';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 import { MNEMONIC_ACTION_TYPES } from '@reducers/mnemonic';
-import { UPDATE_USER } from '@reducers/user';
+import { CHANGE_PASSWORD_ACTION_TYPES } from '@reducers/change-password';
 
 import store from '../store';
 
@@ -16,6 +17,9 @@ const DELETE_KEY_PAIR_ERROR = `${EVENT_PREFIX}:delete:error`;
 const GET_MNEMONIC_SEED_EVENT = `${EVENT_PREFIX}:get_mnemomnic`;
 const GET_MNEMONIC_SEED_ERROR_EVENT = `${EVENT_PREFIX}:get_mnemomnic:error`;
 const GET_MNEMONIC_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:get_mnemomnic:success`;
+const BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT = `${EVENT_PREFIX}:backupByPassphrase`;
+const BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT = `${EVENT_PREFIX}:backupByPassphrase:error`;
+const BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:backupByPassphrase:success`;
 
 /* eslint-disable no-console */
 const registerKeysEvents = () => {
@@ -64,6 +68,21 @@ const registerKeysEvents = () => {
       type: MNEMONIC_ACTION_TYPES.ON_GET_MNEMONIC_SUCCESS,
     });
   });
+
+  ipcRenderer.on(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, (_, error) => {
+    console.error('Error when trying to backup keys by passphrase: ', error.message);
+
+    store.dispatch({
+      error: error.message,
+      type: CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST_ERROR,
+    });
+  });
+
+  ipcRenderer.on(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT, () => {
+    store.dispatch({
+      type: CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST_SUCCESS,
+    });
+  });
 };
 
 export const getPublicKey = () => {
@@ -75,5 +94,17 @@ export const getMnemonic = () => {
 };
 
 export const deleteKeyPair = () => ipcRenderer.send(DELETE_KEY_PAIR);
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.uuid
+ * @param {string} payload.passphrase
+ */
+export const backupKeysByPassphrase = (payload) => {
+  store.dispatch({
+    type: CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST,
+  });
+  ipcRenderer.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT, payload);
+};
 
 export default registerKeysEvents;

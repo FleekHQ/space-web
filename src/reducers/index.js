@@ -10,6 +10,7 @@ import mnemonicReducer from './mnemonic';
 import notificationsReducer from './notifications';
 import welcomeReducer from './welcome';
 import identitiesReducer from './identities';
+import changePasswordReducer from './change-password';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   notifications: notificationsReducer,
   welcome: welcomeReducer,
   identities: identitiesReducer,
+  changePassword: changePasswordReducer,
 });
 
 export default rootReducer;

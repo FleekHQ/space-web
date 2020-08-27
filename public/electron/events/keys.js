@@ -12,6 +12,9 @@ const DELETE_KEY_PAIR_ERROR = `${EVENT_PREFIX}:delete:error`;
 const GET_MNEMONIC_SEED_EVENT = `${EVENT_PREFIX}:get_mnemomnic`;
 const GET_MNEMONIC_SEED_ERROR_EVENT = `${EVENT_PREFIX}:get_mnemomnic:error`;
 const GET_MNEMONIC_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:get_mnemomnic:success`;
+const BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT = `${EVENT_PREFIX}:backupByPassphrase`;
+const BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT = `${EVENT_PREFIX}:backupByPassphrase:error`;
+const BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:backupByPassphrase:success`;
 
 const registerKeysEvents = (mainWindow) => {
   ipcMain.on(GET_PUBLIC_KEY_EVENT, async () => {
@@ -45,6 +48,16 @@ const registerKeysEvents = (mainWindow) => {
       });
     } catch (err) {
       mainWindow.webContents.send(GET_MNEMONIC_SEED_ERROR_EVENT, err);
+    }
+  });
+
+  ipcMain.on(BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT, async (_, payload) => {
+    try {
+      await spaceClient.backupKeysByPassphrase(payload);
+
+      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
+    } catch (err) {
+      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, err);
     }
   });
 };
