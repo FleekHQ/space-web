@@ -100,6 +100,12 @@ export const signin = (payload) => {
   ipcRenderer.send(SIGNIN_EVENT, payload);
 };
 
+/**
+ * User signup
+ * @param {Object} payload
+ * @param {string=} payload.address
+ * @param {string=} payload.username
+ */
 export const singup = (payload) => {
   ipcRenderer.send(SIGNUP_EVENT, payload);
 };
