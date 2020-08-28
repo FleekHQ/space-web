@@ -20,6 +20,7 @@ try {
 
 const writeUser = (state, userInfo) => {
   const newUserState = {
+    username: '',
     ...(state),
     ...userInfo,
   };
