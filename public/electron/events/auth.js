@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron');
-
+const { getAddressByPublicKey } = require('../utils');
 const { apiClient, spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'auth';
@@ -96,11 +96,14 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(RESTORE_KEYS_MNEMONIC_EVENT, async (event, payload) => {
     try {
       await spaceClient.restoreKeyPairViaMnemonic(payload);
-      const res = await spaceClient.getPublicKey();
-      mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT, {
-        publicKey: res.getPublickey(),
-        hubAuthToken: res.getHubauthtoken(),
+      const publicKeyResponse = await spaceClient.getPublicKey();
+      const sessionTokensResponse = await spaceClient.getAPISessionTokens();
+      const address = getAddressByPublicKey(publicKeyResponse.getPublickey());
+      const { data } = await apiClient.identities.getByAddress({
+        addresses: [address],
+        token: sessionTokensResponse.getServicestoken(),
       });
+      mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT, data.data);
     } catch (err) {
       mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_ERROR_EVENT, err);
     }
