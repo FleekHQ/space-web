@@ -135,13 +135,13 @@
     },
     "signin": {
       "title": "Sign In",
-      "withUsername": "Sign In with Username",
-      "withPrivateKey": "Sign In with Private key",
+      "createAnAccount": "Create an account",
+      "login": "Log In",
+      "recover": "Recover Account",
       "link": "Don't have an account?",
       "errors": {
         "generic": "Sorry, there was a problem.",
-        "username": "Sorry, this username is already taken.",
-        "address": "Sorry, the current address is already registered."
+        "invalid": "Invalid username or password."
       },
       "username": "Username",
       "password": "Password",

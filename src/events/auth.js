@@ -1,11 +1,15 @@
 import { ipcRenderer } from 'electron';
 
 import store from '../store';
-import { SIGNUP_ACTION_TYPES } from '../reducers/auth/signup';
-import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from '../reducers/auth/restoreKeysMnemonic';
 import { UPDATE_USER } from '../reducers/user';
+import { SIGNUP_ACTION_TYPES } from '../reducers/auth/signup';
+import { SIGNIN_ACTION_TYPES } from '../reducers/auth/signin';
+import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from '../reducers/auth/restoreKeysMnemonic';
 
 const EVENT_PREFIX = 'auth';
+const SIGNIN_EVENT = `${EVENT_PREFIX}:signin`;
+const SIGNIN_ERROR_EVENT = `${EVENT_PREFIX}:signin:error`;
+const SIGNIN_SUCCESS_EVENT = `${EVENT_PREFIX}:signin:success`;
 const SIGNUP_EVENT = `${EVENT_PREFIX}:signup`;
 const SIGNUP_ERROR_EVENT = `${EVENT_PREFIX}:signup:error`;
 const SIGNUP_SUCCESS_EVENT = `${EVENT_PREFIX}:signup:success`;
@@ -17,6 +21,25 @@ const RESTORE_KEYS_MNEMONIC_ERROR_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic
 const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:success`;
 
 const registerAuthEvents = () => {
+  /* Signin events */
+  ipcRenderer.on(SIGNIN_ERROR_EVENT, (_, error) => {
+    // eslint-disable-next-line
+    console.error('signin error payload: ', error);
+
+    store.dispatch({
+      error: error.message,
+      type: SIGNIN_ACTION_TYPES.ON_SUBMIT_ERROR,
+    });
+  });
+
+  ipcRenderer.on(SIGNIN_SUCCESS_EVENT, (_, data) => {
+    store.dispatch({
+      user: data,
+      type: SIGNIN_ACTION_TYPES.ON_SUBMIT_SUCCESS,
+    });
+  });
+  /* End Signin events */
+
   /* Signup events */
   ipcRenderer.on(SIGNUP_ERROR_EVENT, (_, error) => {
     // eslint-disable-next-line
@@ -34,6 +57,7 @@ const registerAuthEvents = () => {
       user: data,
     });
   });
+  /* End Signup events */
 
   ipcRenderer.on(RESTORE_KEYS_MNEMONIC_ERROR_EVENT, (event, payload) => {
     store.dispatch({
@@ -63,6 +87,25 @@ const registerAuthEvents = () => {
   });
 };
 
+/**
+ * User signin
+ * @param {Object} payload
+ * @param {string} payload.username
+ * @param {string} payload.password
+ */
+export const signin = (payload) => {
+  store.dispatch({
+    type: SIGNIN_ACTION_TYPES.ON_SUBMIT,
+  });
+  ipcRenderer.send(SIGNIN_EVENT, payload);
+};
+
+/**
+ * User signup
+ * @param {Object} payload
+ * @param {string=} payload.address
+ * @param {string=} payload.username
+ */
 export const singup = (payload) => {
   ipcRenderer.send(SIGNUP_EVENT, payload);
 };

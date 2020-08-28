@@ -65,7 +65,6 @@ export default makeStyles((theme) => ({
   submitButton: {
     height: 39,
     fontWeight: 600,
-    backgroundColor: '#a2a2a2',
   },
   forgotPasswordLink: {
     fontSize: 14,
@@ -81,5 +80,15 @@ export default makeStyles((theme) => ({
     '&:hover': {
       textDecoration: 'underline',
     },
+  },
+  alert: {
+    width: '100%',
+    padding: '5px 30px',
+    height: 'auto',
+    borderRadius: 6,
+    margin: '12px 0',
+    textAlign: 'center',
+    color: theme.palette.palette.white,
+    backgroundColor: theme.palette.palette.red,
   },
 }));

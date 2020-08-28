@@ -105,7 +105,7 @@ const SignUp = () => {
       const address = getAddressByPublicKey(state.publicKey.key);
 
       singup({
-        addresses: [address],
+        address,
       });
     }
   }, [state.publicKey.key]);
@@ -188,7 +188,7 @@ const SignUp = () => {
         }
       </form>
       <Typography
-        to="/auth/signin"
+        to="/auth/signin/username"
         component={Link}
         className={classes.link}
       >

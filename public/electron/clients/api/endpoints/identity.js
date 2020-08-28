@@ -4,11 +4,13 @@ const DEFAULT_PATH = '/identity';
 
 /**
  * @typedef {Object} Identity
+ * @property {string} uuid
  * @property {string} address
  * @property {string} username
  * @property {string} publicKey
  * @property {string} createdAt
- * @property {string=} profilePicture
+ * @property {string} avatarUrl
+ * @property {string} displayName
 */
 
 /**

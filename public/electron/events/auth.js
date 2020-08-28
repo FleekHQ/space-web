@@ -3,6 +3,9 @@ const { ipcMain } = require('electron');
 const { apiClient, spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'auth';
+const SIGNIN_EVENT = `${EVENT_PREFIX}:signin`;
+const SIGNIN_ERROR_EVENT = `${EVENT_PREFIX}:signin:error`;
+const SIGNIN_SUCCESS_EVENT = `${EVENT_PREFIX}:signin:success`;
 const SIGNUP_EVENT = `${EVENT_PREFIX}:signup`;
 const SIGNUP_ERROR_EVENT = `${EVENT_PREFIX}:signup:error`;
 const SIGNUP_SUCCESS_EVENT = `${EVENT_PREFIX}:signup:success`;
@@ -14,12 +17,41 @@ const RESTORE_KEYS_MNEMONIC_ERROR_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic
 const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:success`;
 
 const registerAuthEvents = (mainWindow) => {
+  ipcMain.on(SIGNIN_EVENT, async (_, payload) => {
+    try {
+      const res = await spaceClient.getAPISessionTokens();
+      const { data } = await apiClient.identities.getByUsername({
+        usernames: [payload.username],
+        token: res.getServicestoken(),
+      });
+      await spaceClient.recoverKeysByPassphrase({
+        uuid: data.data.uuid,
+        passphrase: payload.password,
+      });
+
+      mainWindow.webContents.send(SIGNIN_SUCCESS_EVENT, data.data);
+    } catch (error) {
+      let message = error.message || '';
+
+      if (
+        (error.code && error.code === 2)
+        || (error.response && error.response.data)
+      ) {
+        message = 'modules.signin.errors.invalid';
+      }
+
+      mainWindow.webContents.send(SIGNIN_ERROR_EVENT, {
+        message,
+      });
+    }
+  });
+
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
       const res = await spaceClient.getAPISessionTokens();
-      if (payload.addresses) {
+      if (payload.address) {
         const { data } = await apiClient.identities.getByAddress({
-          ...payload,
+          addresses: [payload.address],
           token: res.getServicestoken(),
         });
         mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
