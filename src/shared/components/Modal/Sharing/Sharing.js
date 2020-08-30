@@ -94,7 +94,8 @@ const SharingModal = (props) => {
   const onSave = (password) => {
     const payload = {
       password,
-      bucket: get(selectedObjects, '[0].bucket', ''),
+      dbId: get(selectedObjects, '[0].dbId', ''),
+      bucket: get(selectedObjects, '[0].sourceBucket', ''),
       itemPaths: selectedObjects.map((obj) => obj.key),
     };
 
@@ -214,8 +215,10 @@ SharingModal.propTypes = {
   selectedObjects: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
     ext: PropTypes.string,
+    dbId: PropTypes.string,
     name: PropTypes.string,
     bucket: PropTypes.string,
+    sourceBucket: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
       publicKey: PropTypes.string,
