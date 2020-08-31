@@ -14,9 +14,11 @@ const Prompt = (props) => {
   const {
     i18n,
     title,
+    message,
     onSubmit,
     validate,
     closeModal,
+    textFieldProps,
     validateOnChange,
     validateOnSubmit,
   } = props;
@@ -64,6 +66,11 @@ const Prompt = (props) => {
           />
         </ButtonBase>
       </div>
+      {message && (
+        <Typography variant="body2" className={classes.message}>
+          {message}
+        </Typography>
+      )}
       <div>
         <form onSubmit={onSubmitForm}>
           <TextField
@@ -73,6 +80,8 @@ const Prompt = (props) => {
             onChange={onChange}
             error={!!error}
             className={classes.textField}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...textFieldProps}
           />
           {error && (
             <Typography variant="body2" color="secondary" className={classes.errorMessage}>
@@ -102,15 +111,18 @@ const Prompt = (props) => {
 
 Prompt.defaultProps = {
   title: '',
+  message: '',
   validate: () => null,
   onSubmit: () => {},
   closeModal: () => {},
   validateOnChange: false,
   validateOnSubmit: true,
+  textFieldProps: {},
 };
 
 Prompt.propTypes = {
   title: PropTypes.string,
+  message: PropTypes.string,
   validate: PropTypes.func,
   onSubmit: PropTypes.func,
   closeModal: PropTypes.func,
@@ -121,6 +133,7 @@ Prompt.propTypes = {
     cancel: PropTypes.string,
     submit: PropTypes.string,
   }).isRequired,
+  textFieldProps: PropTypes.shape({}),
 };
 
 export default Prompt;

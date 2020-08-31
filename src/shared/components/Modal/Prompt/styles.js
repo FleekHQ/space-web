@@ -29,4 +29,7 @@ export default makeStyles((theme) => ({
     fontSize: 12,
     color: theme.palette.palette.gray1,
   },
+  message: {
+    marginTop: 12,
+  },
 }));

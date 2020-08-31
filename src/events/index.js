@@ -11,6 +11,7 @@ import registerNotificationsEvents from './notifications';
 import registerAccountEvents from './account';
 import registerFolderEvents from './folder';
 import registerIdentitiesEvents from './identities';
+import registerUsageEvents from './usage';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -26,6 +27,7 @@ const registerEvents = () => {
   registerAccountEvents();
   registerFolderEvents();
   registerIdentitiesEvents();
+  registerUsageEvents();
 };
 
 export default registerEvents;
@@ -39,3 +41,4 @@ export * from './notifications';
 export * from './account';
 export * from './folder';
 export * from './identities';
+export * from './usage';

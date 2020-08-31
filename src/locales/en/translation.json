@@ -266,6 +266,14 @@
           "switchTitle": "Backup Storage is <0>{{value}}</0>",
           "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
         },
+        "confirmModal": {
+          "title": "Turn Backup Storage Off",
+          "message": "Turning off backup storage will delete your backed up files. This is non reversible. If you would like to continue please enter your password.",
+          "label": "Enter Password",
+          "error": {
+            "requiredPassword": "Password is required."
+          }
+        },
         "info": {
           "upgrade": {
             "title": "Upgrade to Space Pro",

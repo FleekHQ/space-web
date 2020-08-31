@@ -12,6 +12,7 @@ import welcomeReducer from './welcome';
 import identitiesReducer from './identities';
 import changePasswordReducer from './change-password';
 import deleteAccountReducer from './delete-account';
+import settingsReducer from './settings';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   identities: identitiesReducer,
   changePassword: changePasswordReducer,
   deleteAccount: deleteAccountReducer,
+  settings: settingsReducer,
 });
 
 export default rootReducer;

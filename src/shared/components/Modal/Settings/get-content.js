@@ -30,23 +30,7 @@ export default ({
     default: defaultItem === 'usage',
     title: t('modals.settings.usage.title'),
     content: (
-      <Usage
-        setBackupStorage={() => {}}
-        backupStorage
-        isFreePlan
-        planName="Free plan"
-        localUsage={{
-          using: 4634563,
-          storage: 923552,
-          transfer: 3544362,
-        }}
-        backupUsage={{
-          storage: 4456352,
-          transfer: 3544362,
-          using: 43426,
-          maxUsing: 435345634,
-        }}
-      />
+      <Usage />
     ),
   },
   {
