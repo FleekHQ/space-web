@@ -37,4 +37,18 @@ export default makeStyles((theme) => ({
     flex: 1,
     marginLeft: 8,
   },
+  statusChip: {
+    fontSize: 12,
+    borderRadius: 3,
+    padding: '6px 10px',
+    display: 'inline-block',
+  },
+  accepted: {
+    color: theme.palette.palette.green2,
+    backgroundColor: theme.palette.palette.green5,
+  },
+  rejected: {
+    color: theme.palette.palette.red,
+    backgroundColor: theme.palette.palette.red2,
+  },
 }));

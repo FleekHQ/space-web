@@ -51,10 +51,18 @@ const NotificationItem = (props) => {
           </>
         );
       case 'ACCEPTED':
-        return i18n.accepted;
+        return (
+          <Typography className={classnames(classes.statusChip, classes.accepted)}>
+            {i18n.accepted}
+          </Typography>
+        );
       case 'REJECTED':
       default:
-        return i18n.rejected;
+        return (
+          <Typography className={classnames(classes.statusChip, classes.rejected)}>
+            {i18n.rejected}
+          </Typography>
+        );
     }
   };
 
