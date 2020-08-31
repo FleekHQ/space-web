@@ -22,13 +22,11 @@ const blue4 = '#b2d3ff';
 const blue5 = '#e9e8f9';
 const blue6 = '#0771ff';
 const red = '#ef6a6e';
-const red2 = 'rgba(239, 106, 110, 0.36)';
 const yellow = '#FFD700';
 const green = '#00a83e';
 const green2 = '#00c9a7';
 const green3 = '#00edc5';
 const green4 = '#009078';
-const green5 = 'rgba(0, 201, 167, 0.15)';
 const pink = '#ed54ea';
 
 const palette = {
@@ -56,13 +54,11 @@ const palette = {
   blue5,
   blue6,
   red,
-  red2,
   yellow,
   green,
   green2,
   green3,
   green4,
-  green5,
   pink,
 };
 

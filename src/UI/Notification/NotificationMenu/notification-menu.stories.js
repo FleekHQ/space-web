@@ -16,7 +16,6 @@ storiesOf(categoryName, module).add('Menu', () => {
       empty: 'No notifications',
       accept: 'Accept',
       reject: 'Reject',
-      markAsRead: 'Mark all as read',
       notifications: 'Notifications',
       accepted: 'Accepted',
       rejected: 'Rejected',
@@ -33,6 +32,7 @@ storiesOf(categoryName, module).add('Menu', () => {
           ext: 'zip',
         }],
         status: 'ACCEPTED',
+        highlighted: true,
       },
       {
         id: 2,

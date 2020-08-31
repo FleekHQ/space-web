@@ -22,6 +22,7 @@ const NotificationItem = (props) => {
     onAccept,
     onReject,
     status,
+    highlighted,
   } = props;
 
   const classes = useStyles();
@@ -71,6 +72,9 @@ const NotificationItem = (props) => {
       disableRipple
       className={classnames(
         classes.root,
+        {
+          [classes.highlighted]: highlighted,
+        },
         className,
       )}
     >
@@ -114,6 +118,7 @@ NotificationItem.defaultProps = {
   onAccept: () => {},
   onReject: () => {},
   status: 'PENDING',
+  highlighted: false,
 };
 
 NotificationItem.propTypes = {
@@ -134,6 +139,7 @@ NotificationItem.propTypes = {
     rejected: PropTypes.string.isRequired,
   }).isRequired,
   status: PropTypes.string,
+  highlighted: PropTypes.bool,
 };
 
 export default NotificationItem;
