@@ -8,6 +8,7 @@ import SharingModal from './Sharing';
 import PromptModal from './Prompt';
 import CreateFolder from './CreateFolder';
 import DeleteAccountConfirmation from './DeleteAccountConfirmation';
+import SignoutConfirmation from './SignoutConfirmation';
 import useStyles from './styles';
 
 import {
@@ -19,6 +20,7 @@ import {
   PROMPT_MODAL,
   CREATE_FOLDER,
   DELETE_ACCOUNT,
+  SIGNOUT_CONFIRMATION,
 } from './actions';
 
 const MODALS = {
@@ -29,6 +31,7 @@ const MODALS = {
   [PROMPT_MODAL]: PromptModal,
   [CREATE_FOLDER]: CreateFolder,
   [DELETE_ACCOUNT]: DeleteAccountConfirmation,
+  [SIGNOUT_CONFIRMATION]: SignoutConfirmation,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {

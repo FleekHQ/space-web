@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { SIGNOUT_ACTION_TYPES } from '@reducers/auth/signout';
 import { MNEMONIC_ACTION_TYPES } from '@reducers/mnemonic';
 import { CHANGE_PASSWORD_ACTION_TYPES } from '@reducers/change-password';
 
@@ -83,11 +84,16 @@ const registerKeysEvents = () => {
   ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT, (_, error) => {
     console.error('Error when trying to test keys by passphrase: ', error.message);
 
-    // TODO: signout error integration
+    store.dispatch({
+      error: error.message,
+      type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_ERROR,
+    });
   });
 
   ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT, () => {
-    // TODO: signout success integration
+    store.dispatch({
+      type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_SUCCESS,
+    });
   });
 };
 
@@ -119,6 +125,9 @@ export const backupKeysByPassphrase = (payload) => {
  * @param {string} payload.passphrase
  */
 export const testKeys = (payload) => {
+  store.dispatch({
+    type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT,
+  });
   ipcRenderer.send(TEST_KEYS_BY_PASSPHRASE_EVENT, payload);
 };
 

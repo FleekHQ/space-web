@@ -311,6 +311,11 @@
     "deleteAccount": {
       "title": "Delete Account",
       "description": "Are you sure you want to delete this account?"
+    },
+    "signoutConfirmation": {
+      "title": "Do you know your password?",
+      "description": "If you don't have a password or written down mnemonic then you might not get back access to your files.",
+      "passwordLabel": "Enter your password"
     }
   },
   "welcome": {
