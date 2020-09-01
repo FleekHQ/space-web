@@ -24,12 +24,18 @@ const Account = ({
   const { t } = useTranslation();
   const ref = React.useRef(null);
 
+  const { user, account } = useSelector((state) => ({
+    user: state.user,
+    account: state.settings.account,
+  }));
+
   const {
     address,
     username,
     avatarUrl,
+    uploadingAvatar,
     displayName = '',
-  } = useSelector((state) => state.user);
+  } = user;
 
   const {
     onChangeImage,
@@ -62,7 +68,8 @@ const Account = ({
           <Section>
             <Avatar
               size={32}
-              username="Test"
+              username={username}
+              isLoading={uploadingAvatar}
               {...(avatarUrl && avatarUrl !== '' && { imgUrl: avatarUrl })}
             />
             <ButtonBase onClick={() => ref.current.click()}>
@@ -150,6 +157,13 @@ const Account = ({
           </Section>
         </Header>
       </BaseCard>
+      {
+        account.error && (
+          <Typography className={classes.error} variant="body2">
+            {account.error}
+          </Typography>
+        )
+      }
     </div>
   );
 };
