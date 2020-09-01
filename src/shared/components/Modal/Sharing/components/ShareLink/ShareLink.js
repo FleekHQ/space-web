@@ -13,6 +13,7 @@ const ShareLink = (props) => {
     step,
     onSave,
     onReset,
+    loading,
     onCancel,
     onCreateLink,
   } = props;
@@ -24,6 +25,7 @@ const ShareLink = (props) => {
     url,
     step,
     onSave,
+    loading,
     onReset,
     onCancel,
     onCreateLink,
@@ -52,10 +54,12 @@ const ShareLink = (props) => {
 
 ShareLink.defaultProps = {
   url: null,
+  loading: false,
 };
 
 ShareLink.propTypes = {
   url: PropTypes.string,
+  loading: PropTypes.bool,
   step: PropTypes.number.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,

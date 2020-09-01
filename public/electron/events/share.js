@@ -96,7 +96,7 @@ const registerShareEvents = (mainWindow) => {
 
       mainWindow.webContents.send(GENERATE_PUBLIC_LINK_SUCCESS_EVENT, linkInfo);
     } catch (error) {
-      mainWindow.webContents.send(GENERATE_PUBLIC_LINK_ERROR_EVENT, error);
+      mainWindow.webContents.send(GENERATE_PUBLIC_LINK_ERROR_EVENT, error.message);
     }
   });
 };

@@ -20,6 +20,7 @@ import {
 import {
   Header,
   ShareLink,
+  ErrorCard,
   MemberInput,
   CollaboratorList,
 } from './components';
@@ -39,13 +40,13 @@ const SharingModal = (props) => {
   const {
     user,
     state,
-    linkInfo,
     identities,
+    publicFileLink,
   } = useSelector((s) => ({
     user: s.user,
     state: s.detailsPanel.share,
     identities: Object.values(s.identities.identities),
-    linkInfo: s.publicFileLink.linkInfo,
+    publicFileLink: s.publicFileLink,
   }));
 
   const collaborators = getCollaboratorsInfo(
@@ -56,6 +57,8 @@ const SharingModal = (props) => {
 
   const [step, setStep] = useState(0);
   const [usernames, setUsernames] = useState([]);
+
+  const error = get(state, 'shareFileByPublicKey.error') || publicFileLink.error;
 
   const i18n = {
     memberInput: {
@@ -103,10 +106,10 @@ const SharingModal = (props) => {
   };
 
   React.useEffect(() => {
-    if (linkInfo.link) {
+    if (publicFileLink.linkInfo.link) {
       setStep(2);
     }
-  }, [linkInfo.link]);
+  }, [publicFileLink.linkInfo.link]);
 
   React.useEffect(() => {
     fetchRecentlyMembers();
@@ -176,6 +179,7 @@ const SharingModal = (props) => {
           onChange={onChangeInputPermissions}
           setUsernames={setUsernames}
           usernames={usernames}
+          loading={get(state, 'shareFileByPublicKey.loading', false)}
           collaborators={mapIdentitiesToCollaborators(identities)}
         />
         <CollaboratorList
@@ -185,21 +189,34 @@ const SharingModal = (props) => {
           className={classes.collaboratorList}
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
+          loading={get(state, 'shareFileByPublicKey.loading', false)}
         />
       </Paper>
       <Paper
         className={classes.footer}
       >
         <ShareLink
-          url={get(linkInfo, 'link')}
           step={step}
           onSave={onSave}
           defaultStep={step}
-          onCreateLink={() => setStep(1)}
-          onCancel={() => setStep(0)}
           onReset={() => setStep(1)}
+          onCreateLink={() => setStep(1)}
+          loading={get(publicFileLink, 'loading')}
+          url={get(publicFileLink, 'linkInfo.link')}
+          onCancel={() => {
+            setStep(0);
+            dispatch({
+              type: PUBLIC_LINK_ACTION_TYPES.ON_RESTART,
+            });
+          }}
         />
       </Paper>
+      {error && (
+        <ErrorCard
+          className={classes.error}
+          message={error}
+        />
+      )}
     </BaseModal>
   );
 };
