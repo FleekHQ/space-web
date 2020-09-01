@@ -9,6 +9,12 @@ export default makeStyles((theme) => ({
       backgroundColor: 'transparent',
     },
   },
+  highlighted: {
+    backgroundColor: `${theme.palette.palette.blue1}26`,
+    '&:hover': {
+      backgroundColor: `${theme.palette.palette.blue1}26`,
+    },
+  },
   button: {
     fontSize: 12,
     height: 26,
@@ -36,5 +42,19 @@ export default makeStyles((theme) => ({
   content: {
     flex: 1,
     marginLeft: 8,
+  },
+  statusChip: {
+    fontSize: 12,
+    borderRadius: 3,
+    padding: '6px 10px',
+    display: 'inline-block',
+  },
+  accepted: {
+    color: theme.palette.palette.green2,
+    backgroundColor: `${theme.palette.palette.green2}25`,
+  },
+  rejected: {
+    color: theme.palette.palette.red,
+    backgroundColor: `${theme.palette.palette.red}6c`,
   },
 }));
