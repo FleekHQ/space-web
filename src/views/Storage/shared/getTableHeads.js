@@ -4,15 +4,15 @@ import { IconsTooltip } from '@ui/Table';
 
 export default (t) => [
   {
-    width: '41%',
+    width: '40%',
     title: t('modules.storage.fileTable.head.name'),
   },
   {
-    width: '29%',
+    width: '20%',
     title: t('modules.storage.fileTable.head.size'),
   },
   {
-    width: 'auto',
+    width: '32%',
     title: t('modules.storage.fileTable.head.lastModified'),
   },
   {
