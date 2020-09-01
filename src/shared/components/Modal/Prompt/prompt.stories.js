@@ -10,6 +10,7 @@ const categoryName = 'Modal';
 storiesOf(categoryName, module).add('Prompt', () => {
   const defaultProps = {
     title: text('title', 'Pick a Username'),
+    message: text('message', 'Turning off backup storage will delete your backed up files.'),
     validate: (value) => {
       console.log('validating...');
 
@@ -24,6 +25,9 @@ storiesOf(categoryName, module).add('Prompt', () => {
       cancel: 'Cancel',
       submit: 'Confirm',
       label: 'Enter Username',
+    }),
+    textFieldProps: object('textFieldProps', {
+      type: 'password',
     }),
   };
 

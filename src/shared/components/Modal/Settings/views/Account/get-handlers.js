@@ -1,9 +1,13 @@
 import get from 'lodash/get';
 import { updateIdentity, uploadProfilePic } from '@events/account';
 
-import { openModal, PROMPT_MODAL } from '../../../actions';
+import { openModal, PROMPT_MODAL, DELETE_ACCOUNT } from '../../../actions';
 
-export default (t, dispatch) => {
+export default ({
+  t,
+  dispatch,
+  closeMainModal,
+}) => {
   const onSetDisplayName = () => {
     const modalProps = {
       title: t('modals.settings.account.editDisplayName'),
@@ -58,8 +62,15 @@ export default (t, dispatch) => {
     });
   };
 
+  const onDeleteAccount = (e) => {
+    e.preventDefault();
+
+    dispatch(openModal(DELETE_ACCOUNT, { closeMainModal }));
+  };
+
   return {
     onChangeImage,
+    onDeleteAccount,
     onSetDisplayName,
     onChangeUsername,
   };

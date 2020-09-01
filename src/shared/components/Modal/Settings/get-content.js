@@ -2,12 +2,16 @@ import React from 'react';
 
 import { Security, Account, Usage } from './views';
 
-export default (t, defaultItem) => [
+export default ({
+  t,
+  closeModal,
+  defaultItem,
+}) => [
   {
     id: 'account',
     default: defaultItem === 'account',
     title: t('modals.settings.account.title'),
-    content: <Account />,
+    content: <Account closeMainModal={closeModal} />,
   },
   {
     id: 'security',
@@ -26,23 +30,7 @@ export default (t, defaultItem) => [
     default: defaultItem === 'usage',
     title: t('modals.settings.usage.title'),
     content: (
-      <Usage
-        setBackupStorage={() => {}}
-        backupStorage
-        isFreePlan
-        planName="Free plan"
-        localUsage={{
-          using: 4634563,
-          storage: 923552,
-          transfer: 3544362,
-        }}
-        backupUsage={{
-          storage: 4456352,
-          transfer: 3544362,
-          using: 43426,
-          maxUsing: 435345634,
-        }}
-      />
+      <Usage />
     ),
   },
   {

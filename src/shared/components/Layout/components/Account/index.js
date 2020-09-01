@@ -14,7 +14,7 @@ import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
 
 import MenuDropdown from '@ui/MenuDropdown';
-import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
+import { openModal, SETTINGS_MODAL, SIGNOUT_CONFIRMATION } from '@shared/components/Modal/actions';
 
 import { MENU_DROPDOWN_ITEMS } from './constants';
 import useStyles, { useUserBtnStyles } from './styles';
@@ -41,6 +41,11 @@ const Account = ({ account }) => {
     setAnchorEl(null);
     if (item.id === MENU_DROPDOWN_ITEMS.settings) {
       dispatch(openModal(SETTINGS_MODAL));
+      return;
+    }
+
+    if (item.id === MENU_DROPDOWN_ITEMS.signout) {
+      dispatch(openModal(SIGNOUT_CONFIRMATION));
       return;
     }
     // TODO: handle rest of item click

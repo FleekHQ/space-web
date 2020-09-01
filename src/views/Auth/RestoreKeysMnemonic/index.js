@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import InputTooltip from '@ui/InputTooltip';
-import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from '@reducers/auth/restoreKeysMnemonic';
+import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from '@reducers/auth/restore-keys-mnemonic';
 import { restoreKeyPairViaMnemonic } from '@events';
 import useStyles from './styles';
 
@@ -16,7 +16,6 @@ const RestoreKeysMnemonic = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const state = useSelector((_state) => _state.auth.restoreKeysMnemonic);
-  const isSuccess = useSelector((_state) => _state.user.publicKey);
   const history = useHistory();
   const classes = useStyles({ isError: !!state.error });
   const tfClasses = {
@@ -41,10 +40,10 @@ const RestoreKeysMnemonic = () => {
   }, []);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (state.success) {
       history.push('/storage');
     }
-  }, [isSuccess]);
+  }, [state.success]);
 
   return (
     <div className={classes.root}>

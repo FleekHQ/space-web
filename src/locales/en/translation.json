@@ -4,6 +4,7 @@
   "common": {
     "search": "Search",
     "at": "at",
+    "yes": "Yes",
     "enable": "Enable",
     "remove": "Remove",
     "owner": "Owner",
@@ -134,13 +135,13 @@
     },
     "signin": {
       "title": "Sign In",
-      "withUsername": "Sign In with Username",
-      "withPrivateKey": "Sign In with Private key",
+      "createAnAccount": "Create an account",
+      "login": "Log In",
+      "recover": "Recover Account",
       "link": "Don't have an account?",
       "errors": {
         "generic": "Sorry, there was a problem.",
-        "username": "Sorry, this username is already taken.",
-        "address": "Sorry, the current address is already registered."
+        "invalid": "Invalid username or password."
       },
       "username": "Username",
       "password": "Password",
@@ -265,6 +266,14 @@
           "switchTitle": "Backup Storage is <0>{{value}}</0>",
           "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
         },
+        "confirmModal": {
+          "title": "Turn Backup Storage Off",
+          "message": "Turning off backup storage will delete your backed up files. This is non reversible. If you would like to continue please enter your password.",
+          "label": "Enter Password",
+          "error": {
+            "requiredPassword": "Password is required."
+          }
+        },
         "info": {
           "upgrade": {
             "title": "Upgrade to Space Pro",
@@ -298,6 +307,15 @@
     "createFolder": {
       "title": "Create New Folder",
       "inputLabel": "Folder Name"
+    },
+    "deleteAccount": {
+      "title": "Delete Account",
+      "description": "Are you sure you want to delete this account?"
+    },
+    "signoutConfirmation": {
+      "title": "Do you know your password?",
+      "description": "If you don't have a password or written down mnemonic then you might not get back access to your files.",
+      "passwordLabel": "Enter your password"
     }
   },
   "welcome": {

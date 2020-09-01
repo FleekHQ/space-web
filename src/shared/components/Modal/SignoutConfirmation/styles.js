@@ -9,27 +9,39 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  textField: {
-    marginTop: 15,
+    marginBottom: 10,
   },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginTop: 16,
+    '& > button': {
+      width: 84,
+    },
     '& > *:not(:last-child)': {
       marginRight: 10,
     },
   },
   errorMessage: {
     marginTop: 5,
+    color: theme.palette.palette.red,
   },
   icon: {
     fontSize: 12,
     color: theme.palette.palette.gray1,
   },
-  message: {
-    marginTop: 12,
+  error: {
+    marginTop: 10,
+    backgroundColor: theme.palette.palette.red,
+    color: theme.palette.palette.white,
+    textAlign: 'center',
+    padding: '6px 0',
+    borderRadius: 6,
+    minHeight: 25,
+    '&:empty': {
+      opacity: 0,
+      pointerEvents: 'none',
+    },
   },
 }));

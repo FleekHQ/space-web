@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 
 import store from '../store';
 import { UPDATE_USER } from '../reducers/user';
+import { DELETE_ACCOUNT_ACTION_TYPES } from '../reducers/delete-account';
 
 const EVENT_PREFIX = 'account';
 const DELETE_ACCOUNT_EVENT = `${EVENT_PREFIX}:delete`;
@@ -16,12 +17,20 @@ const UPLOAD_PROFILE_PIC_ERROR_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:error`;
 const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
 
 const registerAccountEvents = () => {
-  ipcRenderer.on(DELETE_ACCOUNT_ERROR_EVENT, () => {
-    // TODO: do something.
+  ipcRenderer.on(DELETE_ACCOUNT_ERROR_EVENT, (_, error) => {
+    // eslint-disable-next-line no-console
+    console.error('Error when trying to delete the account', error.message);
+
+    store.dispatch({
+      error: error.message,
+      type: DELETE_ACCOUNT_ACTION_TYPES.ON_DELETE_ACCOUNT_ERROR,
+    });
   });
 
   ipcRenderer.on(DELETE_ACCOUNT_SUCCESS_EVENT, () => {
-    // TODO: do something.
+    store.dispatch({
+      type: DELETE_ACCOUNT_ACTION_TYPES.ON_DELETE_ACCOUNT_SUCCESS,
+    });
   });
 
   /* eslint-disable no-console */

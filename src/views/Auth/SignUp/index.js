@@ -188,7 +188,7 @@ const SignUp = () => {
         }
       </form>
       <Typography
-        to="/auth/signin"
+        to="/auth/signin/username"
         component={Link}
         className={classes.link}
       >

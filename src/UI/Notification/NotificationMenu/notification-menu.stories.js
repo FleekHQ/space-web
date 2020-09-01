@@ -8,14 +8,17 @@ import NotificationMenu from './index';
 
 const categoryName = 'Notification';
 
+const { PUBLIC_URL } = process.env;
+
 storiesOf(categoryName, module).add('Menu', () => {
   const defaultProps = {
     i18n: object('i18n', {
       empty: 'No notifications',
       accept: 'Accept',
       reject: 'Reject',
-      markAsRead: 'Mark all as read',
       notifications: 'Notifications',
+      accepted: 'Accepted',
+      rejected: 'Rejected',
     }),
     items: object('items', [
       {
@@ -28,6 +31,8 @@ storiesOf(categoryName, module).add('Menu', () => {
           name: 'Branding.zip',
           ext: 'zip',
         }],
+        status: 'ACCEPTED',
+        highlighted: true,
       },
       {
         id: 2,
@@ -39,13 +44,27 @@ storiesOf(categoryName, module).add('Menu', () => {
           name: 'resume.pdf',
           ext: 'pdf',
         }],
+        status: 'REJECTED',
       },
       {
         id: 3,
+        type: 'share-invite',
+        username: 'anon334',
+        timestamp: '2020-07-29T19:46:24.628Z',
+        description: 'Shared resume.pdf with you.',
+        files: [{
+          name: 'resume.pdf',
+          ext: 'pdf',
+        }],
+        status: 'PENDING',
+      },
+      {
+        id: 4,
         type: 'backup-limit',
         currentAmountText: '997.2 MB',
         limitText: '1 GB',
         timestamp: 1598037893916,
+        logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
       },
     ]),
     onMarkAsRead: action('onMarkAsRead'),

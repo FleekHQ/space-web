@@ -12,6 +12,8 @@ import welcomeReducer from './welcome';
 import identitiesReducer from './identities';
 import changePasswordReducer from './change-password';
 import publicFileLinkReducer from './public-file-link';
+import deleteAccountReducer from './delete-account';
+import settingsReducer from './settings';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   identities: identitiesReducer,
   changePassword: changePasswordReducer,
   publicFileLink: publicFileLinkReducer,
+  deleteAccount: deleteAccountReducer,
+  settings: settingsReducer,
 });
 
 export default rootReducer;

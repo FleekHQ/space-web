@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 
-import { UPDATE_USER } from '@reducers/user';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { SIGNOUT_ACTION_TYPES } from '@reducers/auth/signout';
 import { MNEMONIC_ACTION_TYPES } from '@reducers/mnemonic';
 import { CHANGE_PASSWORD_ACTION_TYPES } from '@reducers/change-password';
 
@@ -20,6 +20,9 @@ const GET_MNEMONIC_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:get_mnemomnic:success`;
 const BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT = `${EVENT_PREFIX}:backupByPassphrase`;
 const BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT = `${EVENT_PREFIX}:backupByPassphrase:error`;
 const BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:backupByPassphrase:success`;
+const TEST_KEYS_BY_PASSPHRASE_EVENT = `${EVENT_PREFIX}:testKeys`;
+const TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT = `${EVENT_PREFIX}:testKeys:error`;
+const TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT = `${EVENT_PREFIX}:testKeys:success`;
 
 /* eslint-disable no-console */
 const registerKeysEvents = () => {
@@ -36,12 +39,6 @@ const registerKeysEvents = () => {
     store.dispatch({
       type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY_SUCCESS,
       publicKey: data.publicKey,
-    });
-    store.dispatch({
-      type: UPDATE_USER,
-      user: {
-        publicKey: data.publicKey,
-      },
     });
   });
 
@@ -83,6 +80,21 @@ const registerKeysEvents = () => {
       type: CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST_SUCCESS,
     });
   });
+
+  ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT, (_, error) => {
+    console.error('Error when trying to test keys by passphrase: ', error.message);
+
+    store.dispatch({
+      error: error.message,
+      type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_ERROR,
+    });
+  });
+
+  ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT, () => {
+    store.dispatch({
+      type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_SUCCESS,
+    });
+  });
 };
 
 export const getPublicKey = () => {
@@ -105,6 +117,18 @@ export const backupKeysByPassphrase = (payload) => {
     type: CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST,
   });
   ipcRenderer.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT, payload);
+};
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.uuid
+ * @param {string} payload.passphrase
+ */
+export const testKeys = (payload) => {
+  store.dispatch({
+    type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT,
+  });
+  ipcRenderer.send(TEST_KEYS_BY_PASSPHRASE_EVENT, payload);
 };
 
 export default registerKeysEvents;

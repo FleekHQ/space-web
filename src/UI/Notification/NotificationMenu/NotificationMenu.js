@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import Menu from '@material-ui/core/Menu';
-import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from './styles';
@@ -75,16 +74,6 @@ const NotificationMenu = (props) => {
         <Typography variant="body2">
           {i18n.notifications}
         </Typography>
-        <Button
-          color="primary"
-          onClick={onMarkAsRead}
-          disabled={items.length < 1}
-          className={classes.markAsReadButton}
-        >
-          <Typography variant="body2" color="inherit">
-            {i18n.markAsRead}
-          </Typography>
-        </Button>
       </MenuItem>
       {items.length > 0 ? items.map((item) => (
         getNotificationItem(item)
@@ -139,7 +128,6 @@ NotificationMenu.propTypes = {
     empty: PropTypes.string.isRequired,
     accept: PropTypes.string.isRequired,
     reject: PropTypes.string.isRequired,
-    markAsRead: PropTypes.string.isRequired,
     notifications: PropTypes.string.isRequired,
   }),
   anchorEl: PropTypes.oneOfType([

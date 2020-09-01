@@ -22,6 +22,7 @@ const NotificationItem = (props) => {
     onAccept,
     onReject,
     status,
+    highlighted,
   } = props;
 
   const classes = useStyles();
@@ -51,10 +52,18 @@ const NotificationItem = (props) => {
           </>
         );
       case 'ACCEPTED':
-        return i18n.accepted;
+        return (
+          <Typography className={classnames(classes.statusChip, classes.accepted)}>
+            {i18n.accepted}
+          </Typography>
+        );
       case 'REJECTED':
       default:
-        return i18n.rejected;
+        return (
+          <Typography className={classnames(classes.statusChip, classes.rejected)}>
+            {i18n.rejected}
+          </Typography>
+        );
     }
   };
 
@@ -63,6 +72,9 @@ const NotificationItem = (props) => {
       disableRipple
       className={classnames(
         classes.root,
+        {
+          [classes.highlighted]: highlighted,
+        },
         className,
       )}
     >
@@ -106,6 +118,7 @@ NotificationItem.defaultProps = {
   onAccept: () => {},
   onReject: () => {},
   status: 'PENDING',
+  highlighted: false,
 };
 
 NotificationItem.propTypes = {
@@ -126,6 +139,7 @@ NotificationItem.propTypes = {
     rejected: PropTypes.string.isRequired,
   }).isRequired,
   status: PropTypes.string,
+  highlighted: PropTypes.bool,
 };
 
 export default NotificationItem;
