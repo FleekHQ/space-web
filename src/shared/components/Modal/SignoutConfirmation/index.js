@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
@@ -10,30 +13,39 @@ import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
-import { deleteAccount } from '@events';
+import { testKeys } from '@events';
 import { USER_ACTION_TYPES } from '@reducers/user';
+import { SIGNOUT_ACTION_TYPES } from '@reducers/auth/signout';
 
 import useStyles from './styles';
 
-const DeleteAccountConfirmation = ({
-  closeModal,
-  closeMainModal,
-}) => {
+const SignoutConfirmation = ({ closeModal }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const state = useSelector((s) => s.deleteAccount);
+  const [password, setPassword] = React.useState('');
+  const { user, signoutState } = useSelector((s) => ({
+    user: s.user,
+    signoutState: s.auth.signout,
+  }));
 
   React.useEffect(() => {
-    if (state.success) {
+    if (signoutState.success) {
       closeModal();
-      closeMainModal();
 
       dispatch({
         type: USER_ACTION_TYPES.ON_USER_LOGOUT,
       });
     }
-  }, [state.success]);
+  }, [signoutState.success]);
+
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_RESET,
+      });
+    }
+  ), []);
 
   return (
     <BaseModal
@@ -44,7 +56,7 @@ const DeleteAccountConfirmation = ({
     >
       <div className={classes.header}>
         <Typography variant="h6">
-          {t('modals.deleteAccount.title')}
+          {t('modals.signoutConfirmation.title')}
         </Typography>
         <ButtonBase onClick={closeModal}>
           <FontAwesomeIcon
@@ -54,12 +66,30 @@ const DeleteAccountConfirmation = ({
         </ButtonBase>
       </div>
       <Typography variant="body1">
-        {t('modals.deleteAccount.description')}
+        {t('modals.signoutConfirmation.description')}
       </Typography>
+      <Box my={2}>
+        <form
+          id="password-form"
+          onSubmit={() => testKeys({
+            uuid: user.uuid,
+            passphrase: password,
+          })}
+        >
+          <TextField
+            fullWidth
+            type="password"
+            value={password}
+            variant="outlined"
+            label={t('modals.signoutConfirmation.passwordLabel')}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </form>
+      </Box>
       {
-        state.error && (
+        signoutState.error && (
           <Typography className={classes.error} variant="body2">
-            {state.error}
+            {signoutState.error}
           </Typography>
         )
       }
@@ -68,19 +98,24 @@ const DeleteAccountConfirmation = ({
           onClick={closeModal}
           color="secondary"
           variant="outlined"
-          disabled={state.loading}
+          disabled={signoutState.loading}
         >
           {t('common.cancel')}
         </Button>
         <Button
+          type="submit"
           variant="contained"
-          disabled={state.loading}
-          onClick={() => deleteAccount()}
+          form="password-form"
+          disabled={signoutState.loading}
+          onClick={() => testKeys({
+            uuid: user.uuid,
+            passphrase: password,
+          })}
         >
           {
-            state.loading ? (
+            signoutState.loading ? (
               <FontAwesomeIcon spin icon={faSpinner} />
-            ) : t('common.yes')
+            ) : t('common.confirm')
           }
         </Button>
       </div>
@@ -88,10 +123,8 @@ const DeleteAccountConfirmation = ({
   );
 };
 
-DeleteAccountConfirmation.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
+SignoutConfirmation.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  closeMainModal: PropTypes.func.isRequired,
 };
 
-export default DeleteAccountConfirmation;
+export default SignoutConfirmation;

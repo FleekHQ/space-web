@@ -67,10 +67,13 @@ const registerKeysEvents = (mainWindow) => {
   ipcMain.on(TEST_KEYS_BY_PASSPHRASE_EVENT, async (_, payload) => {
     try {
       await spaceClient.testKeysPassphrase(payload);
+      await spaceClient.deleteKeyPair();
 
       mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT);
-    } catch (err) {
-      mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT, err);
+    } catch (error) {
+      mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT, {
+        message: error.message,
+      });
     }
   });
 };
