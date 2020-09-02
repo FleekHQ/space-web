@@ -10,6 +10,7 @@ const categoryName = 'ElementalComponents';
 storiesOf(categoryName, module).add('UsageBars', () => {
   const defaultProps = {
     disabled: boolean('disabled', false),
+    loading: boolean('loading', false),
     title: text('title', 'Local Usage'),
     using: <span>Using <span style={{ color: 'black' }}>997.2 MB</span></span>,
   };

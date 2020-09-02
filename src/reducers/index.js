@@ -11,6 +11,7 @@ import notificationsReducer from './notifications';
 import welcomeReducer from './welcome';
 import identitiesReducer from './identities';
 import changePasswordReducer from './change-password';
+import publicFileLinkReducer from './public-file-link';
 import deleteAccountReducer from './delete-account';
 import settingsReducer from './settings';
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   welcome: welcomeReducer,
   identities: identitiesReducer,
   changePassword: changePasswordReducer,
+  publicFileLink: publicFileLinkReducer,
   deleteAccount: deleteAccountReducer,
   settings: settingsReducer,
 });

@@ -11,6 +11,7 @@ const getContent = (props) => {
     url,
     step,
     onSave,
+    loading,
     onCancel,
     onCreateLink,
   } = props;
@@ -20,6 +21,7 @@ const getContent = (props) => {
   const passwordLinkForm = (
     <PasswordLinkForm
       onCancel={onCancel}
+      loading={loading}
       onSave={onSave}
     />
   );

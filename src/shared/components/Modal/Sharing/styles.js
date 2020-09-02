@@ -5,10 +5,13 @@ export default makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: theme.palette.palette.white,
+    // backgroundColor: theme.palette.palette.white,
     '& > *:not(:last-child)': {
       borderBottom: `1px solid ${theme.palette.palette.gray4}`,
     },
+  },
+  paperModal: {
+    backgroundColor: 'transparent',
   },
   header: {
     padding: '10px 25px',
@@ -29,10 +32,12 @@ export default makeStyles((theme) => ({
     },
   },
   footer: {
-    padding: '14px 25px 23px',
-    backgroundColor: 'white',
-    position: 'relative',
-    top: 20,
-    borderRadius: 6,
+    marginTop: 10,
+    marginBottom: 2,
+    padding: '12px 25px',
+  },
+  error: {
+    marginTop: 10,
+    marginBottom: 2,
   },
 }));

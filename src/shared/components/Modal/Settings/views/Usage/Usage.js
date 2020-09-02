@@ -42,12 +42,14 @@ const Usage = () => {
   return (
     <>
       <UsageVisual
+        // state.usageData.success to avoid showing skeleton when there is any data
+        loading={state.loading && !state.usageData.success}
         backupStorage={state.backupEnabled}
         setBackupStorage={onChangeBackup}
         isFreePlan
         planName={state.planName}
-        localUsage={state.localUsage}
-        backupUsage={state.backupUsage}
+        localUsage={state.usageData.localUsage}
+        backupUsage={state.usageData.backupUsage}
       />
       {isModalShown && (
         <Prompt
