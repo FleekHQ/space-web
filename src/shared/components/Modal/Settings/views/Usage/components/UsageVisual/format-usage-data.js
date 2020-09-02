@@ -2,20 +2,20 @@ import { formatBytes } from '@utils';
 
 const formatUsageData = (localUsage, backupUsage) => {
   const localUsageFormatted = {
-    using: formatBytes(localUsage.using),
+    combinedUsage: formatBytes(localUsage.combinedUsage),
     storage: formatBytes(localUsage.storage),
-    storagePercent: (localUsage.storage / (localUsage.storage + localUsage.transfer)) * 100,
-    transfer: formatBytes(localUsage.transfer),
-    transferPercent: (localUsage.transfer / (localUsage.storage + localUsage.transfer)) * 100,
+    storagePercent: (localUsage.storage / (localUsage.storage + localUsage.bandwidth)) * 100,
+    bandwidth: formatBytes(localUsage.bandwidth),
+    bandwidthPercent: (localUsage.bandwidth / (localUsage.storage + localUsage.bandwidth)) * 100,
   };
 
   const backupUsageFormatted = {
-    using: formatBytes(backupUsage.using),
-    maxUsing: formatBytes(backupUsage.maxUsing),
+    combinedUsage: formatBytes(backupUsage.combinedUsage),
+    limit: formatBytes(backupUsage.limit),
     storage: formatBytes(backupUsage.storage),
-    storagePercent: (backupUsage.storage / (backupUsage.storage + backupUsage.transfer)) * 100,
-    transfer: formatBytes(backupUsage.transfer),
-    transferPercent: (backupUsage.transfer / (backupUsage.storage + backupUsage.transfer)) * 100,
+    storagePercent: (backupUsage.storage / (backupUsage.storage + backupUsage.bandwidth)) * 100,
+    bandwidth: formatBytes(backupUsage.bandwidth),
+    bandwidthPercent: (backupUsage.bandwidth / (backupUsage.storage + backupUsage.bandwidth)) * 100,
   };
 
   return {

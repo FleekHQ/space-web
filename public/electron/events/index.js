@@ -12,6 +12,7 @@ const registerNotificationsEvents = require('./notifications');
 const registerAccountEvents = require('./account');
 const registerFolderEvents = require('./folder');
 const registerIdentitiesEvents = require('./identities');
+const registerUsageEvents = require('./usage');
 
 const registerEvents = ({
   app,
@@ -32,6 +33,7 @@ const registerEvents = ({
   registerAccountEvents(mainWindow);
   registerFolderEvents(mainWindow);
   registerIdentitiesEvents(mainWindow);
+  registerUsageEvents(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });

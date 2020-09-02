@@ -8,17 +8,22 @@ export const USAGE_SETTINGS_ACTION_TYPES = {
 };
 
 const defaultState = {
+  loading: false,
+  error: null,
   planName: 'Free plan',
-  localUsage: {
-    storage: 0,
-    bandwidth: 0,
-    combinedUsage: 0,
-  },
-  backupUsage: {
-    storage: 0,
-    bandwidth: 0,
-    combinedUsage: 0,
-    limit: 0,
+  usageData: {
+    success: false,
+    localUsage: {
+      storage: 0,
+      bandwidth: 0,
+      combinedUsage: 0,
+    },
+    backupUsage: {
+      storage: 0,
+      bandwidth: 0,
+      combinedUsage: 0,
+      limit: 0,
+    },
   },
   backupEnabled: undefined, // to show optimistic response
   backupEnabledPrevValue: undefined, // if error, revert to old value
@@ -29,21 +34,26 @@ export default (state = defaultState, action) => {
     case USAGE_SETTINGS_ACTION_TYPES.FETCH_USAGE_INFO: {
       return {
         ...state,
-        ...action.payload,
+        loading: true,
       };
     }
 
     case USAGE_SETTINGS_ACTION_TYPES.FETCH_USAGE_INFO_ERROR: {
       return {
         ...state,
-        ...action.payload,
+        error: action.payload,
+        loading: false,
       };
     }
 
     case USAGE_SETTINGS_ACTION_TYPES.FETCH_USAGE_INFO_SUCCESS: {
       return {
         ...state,
-        ...action.payload,
+        usageData: {
+          success: true,
+          ...action.payload,
+        },
+        loading: false,
       };
     }
 
@@ -67,6 +77,12 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         backupEnabledPrevValue: undefined,
+        ...!state.backupEnabled && {
+          usageData: {
+            ...state.usageData,
+            backupUsage: defaultState.usageData.backupUsage,
+          },
+        },
       };
     }
 

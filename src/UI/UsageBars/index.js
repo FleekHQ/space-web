@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
 import classnames from 'classnames';
 import LegendItem from './components/LegendItem';
 import ChartBarItem from './components/ChartBarItem';
@@ -14,6 +15,7 @@ const UsageBars = ({
   using,
   borderColor,
   items,
+  loading,
 }) => {
   const classes = useStyles({ borderColor });
 
@@ -41,15 +43,20 @@ const UsageBars = ({
     <>
       <div className={classes.titleContainer}>
         <Typography className={classes.titleText}>
-          {title}
+          {loading ? <Skeleton width={160} /> : title}
         </Typography>
         <Typography className={classes.usingText}>
-          {using}
+          {loading ? <Skeleton width={80} /> : using}
         </Typography>
       </div>
-      {getBar()}
+      {loading ? <Skeleton height={20} /> : getBar()}
       <div className={classes.legendContainer}>
-        {items.map((item) => (
+        {loading ? (
+          <>
+            <Skeleton width={120} />
+            <Skeleton width={170} className={classes.legendSkeleton} />
+          </>
+        ) : items.map((item) => (
           <LegendItem {...item} borderColor={borderColor} disabled={disabled} />
         ))}
       </div>
@@ -62,6 +69,7 @@ UsageBars.defaultProps = {
   title: '',
   disabled: false,
   items: [],
+  loading: false,
 };
 
 UsageBars.propTypes = {
@@ -74,6 +82,7 @@ UsageBars.propTypes = {
     color: PropTypes.string.isRequired,
   })),
   disabled: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default UsageBars;

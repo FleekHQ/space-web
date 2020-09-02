@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Trans, useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Skeleton from '@material-ui/lab/Skeleton';
 import SwitchButton from '@shared/components/SwitchButton';
 import UsageBars from '@ui/UsageBars';
 import palette from '@ui/theme/palette';
@@ -23,6 +24,8 @@ const getUsageComponent = (size, isShownMaxSize, maxSize) => (
 );
 
 const Usage = ({
+  // eslint-disable-next-line no-unused-vars
+  loading,
   setBackupStorage,
   backupStorage,
   isFreePlan,
@@ -48,6 +51,7 @@ const Usage = ({
         <Header>
           <div className={classes.usageBarsWrapper}>
             <UsageBars
+              loading={loading}
               title={t('modals.settings.usage.local.diagramTitle')}
               borderColor={palette.palette.blue4}
               items={[
@@ -62,16 +66,16 @@ const Usage = ({
                 {
                   key: 'transfer',
                   text: t('modals.settings.usage.transferMonthly', {
-                    size: localUsageFormatted.transfer,
+                    size: localUsageFormatted.bandwidth,
                   }),
                   color: palette.palette.blue3,
-                  width: localUsageFormatted.transferPercent,
+                  width: localUsageFormatted.bandwidthPercent,
                 },
               ]}
               using={getUsageComponent(
-                localUsageFormatted.using,
+                localUsageFormatted.combinedUsage,
                 false,
-                localUsageFormatted.maxUsing,
+                localUsageFormatted.limit,
               )}
             />
           </div>
@@ -81,21 +85,25 @@ const Usage = ({
         <Header>
           <Section>
             <Typography variant="body1" weight="medium" component="span">
-              <Trans
-                i18nKey="modals.settings.usage.backup.switchTitle"
-                values={{ value: backupStorage ? switchBtnI18n.enable : switchBtnI18n.disable }}
-                components={[
-                  <Box fontWeight="600" component="span" className={classes.backupValue} />,
-                ]}
-              />
+              {loading ? <Skeleton width={150} /> : (
+                <Trans
+                  i18nKey="modals.settings.usage.backup.switchTitle"
+                  values={{ value: backupStorage ? switchBtnI18n.enable : switchBtnI18n.disable }}
+                  components={[
+                    <Box fontWeight="600" component="span" className={classes.backupValue} />,
+                  ]}
+                />
+              )}
             </Typography>
           </Section>
           <Section>
-            <SwitchButton
-              value={backupStorage ? 'on' : 'off'}
-              onChange={setBackupStorage}
-              i18n={switchBtnI18n}
-            />
+            {loading ? <Skeleton width={90} height={22} /> : (
+              <SwitchButton
+                value={backupStorage ? 'on' : 'off'}
+                onChange={setBackupStorage}
+                i18n={switchBtnI18n}
+              />
+            )}
           </Section>
         </Header>
       </BaseCard>
@@ -103,9 +111,10 @@ const Usage = ({
         <Header>
           <div className={classes.usageBarsWrapper}>
             <UsageBars
+              loading={loading}
               disabled={!backupStorage}
               title={t('modals.settings.usage.backup.diagramTitle', {
-                size: backupUsageFormatted.maxUsing,
+                size: backupUsageFormatted.limit,
                 plan: planName,
               })}
               borderColor={palette.palette.green3}
@@ -121,22 +130,22 @@ const Usage = ({
                 {
                   key: 'transfer',
                   text: t('modals.settings.usage.transferMonthly', {
-                    size: backupUsageFormatted.transfer,
+                    size: backupUsageFormatted.bandwidth,
                   }),
                   color: palette.palette.green4,
-                  width: backupUsageFormatted.transferPercent,
+                  width: backupUsageFormatted.bandwidthPercent,
                 },
               ]}
               using={getUsageComponent(
-                backupUsageFormatted.using,
+                backupUsageFormatted.combinedUsage,
                 isFreePlan && backupStorage,
-                backupUsageFormatted.maxUsing,
+                backupUsageFormatted.limit,
               )}
             />
             {showInfo === 'upgrade' && <UpgradeAccount />}
             {showInfo === 'backupBenefits' && <BackupBenefits />}
             {showInfo === 'backupLimit' && (
-              <BackupLimit backupLimit={backupUsageFormatted.maxUsing} />
+              <BackupLimit backupLimit={backupUsageFormatted.limit} />
             )}
           </div>
         </Header>
@@ -148,18 +157,19 @@ const Usage = ({
 Usage.propTypes = {
   setBackupStorage: PropTypes.func.isRequired,
   backupStorage: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   isFreePlan: PropTypes.bool.isRequired,
   planName: PropTypes.string.isRequired,
   localUsage: PropTypes.shape({
-    using: PropTypes.number.isRequired,
+    combinedUsage: PropTypes.number.isRequired,
     storage: PropTypes.number.isRequired,
-    transfer: PropTypes.number.isRequired,
+    bandwidth: PropTypes.number.isRequired,
   }).isRequired,
   backupUsage: PropTypes.shape({
-    using: PropTypes.number.isRequired,
-    maxUsing: PropTypes.number.isRequired,
+    combinedUsage: PropTypes.number.isRequired,
+    limit: PropTypes.number.isRequired,
     storage: PropTypes.number.isRequired,
-    transfer: PropTypes.number.isRequired,
+    bandwidth: PropTypes.number.isRequired,
   }).isRequired,
   showInfo: PropTypes.oneOf([[undefined, 'upgrade', 'backupBenefits', 'backupLimit']]).isRequired,
 };

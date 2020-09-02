@@ -29,4 +29,7 @@ export default makeStyles((theme) => ({
     display: 'inline-block',
     width: '100%',
   },
+  legendSkeleton: {
+    marginLeft: 20,
+  },
 }));
