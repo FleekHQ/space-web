@@ -6,7 +6,11 @@ import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from './auth/restore-keys-mnemonic
 
 export const UPDATE_USER = 'UPDATE_USER';
 export const USER_ACTION_TYPES = {
+  UPDATE_USER: 'UPDATE_USER',
   ON_USER_LOGOUT: 'ON_USER_LOGOUT',
+  ON_UPDATE_AVATAR: 'ON_UPDATE_AVATAR',
+  ON_UPDATE_AVATAR_ERROR: 'ON_UPDATE_AVATAR_ERROR',
+  ON_UPDATE_AVATAR_SUCCESS: 'ON_UPDATE_AVATAR_SUCCESS',
 };
 
 let user;
@@ -45,6 +49,27 @@ export default (state = user, action) => {
     case USER_ACTION_TYPES.ON_USER_LOGOUT: {
       electronStore.clear();
       return null;
+    }
+
+    case USER_ACTION_TYPES.ON_UPDATE_AVATAR: {
+      return {
+        ...state,
+        uploadingAvatar: true,
+      };
+    }
+
+    case USER_ACTION_TYPES.ON_UPDATE_AVATAR_ERROR: {
+      return {
+        ...state,
+        uploadingAvatar: false,
+      };
+    }
+
+    case USER_ACTION_TYPES.ON_UPDATE_AVATAR_SUCCESS: {
+      return writeUser(state, {
+        ...action.user,
+        uploadingAvatar: false,
+      });
     }
 
     default: {

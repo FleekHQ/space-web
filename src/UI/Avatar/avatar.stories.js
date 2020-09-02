@@ -9,9 +9,10 @@ const categoryName = 'Avatar';
 storiesOf(categoryName, module).add('Avatar', () => {
 
   const defaultProps = {
-    size: number('size', 80),
+    size: number('size', 50),
     imgUrl: text('imgUrl', null),
     active: boolean('active', false),
+    isLoading: boolean('isLoading', false),
     username: text('username', 'someuser'),
   };
 

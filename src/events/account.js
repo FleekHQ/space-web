@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import { ipcRenderer } from 'electron';
 
 import store from '../store';
-import { UPDATE_USER } from '../reducers/user';
+import { USER_ACTION_TYPES } from '../reducers/user';
 import { DELETE_ACCOUNT_ACTION_TYPES } from '../reducers/delete-account';
 
 const EVENT_PREFIX = 'account';
@@ -43,12 +43,17 @@ const registerAccountEvents = () => {
 
     store.dispatch({
       user,
-      type: UPDATE_USER,
+      type: USER_ACTION_TYPES.UPDATE_USER,
     });
   });
 
-  ipcRenderer.on(UPLOAD_PROFILE_PIC_ERROR_EVENT, (event, payload) => {
-    console.log('UPLOAD_PROFILE_PIC_ERROR_EVENT', payload);
+  ipcRenderer.on(UPLOAD_PROFILE_PIC_ERROR_EVENT, (event, error) => {
+    console.error('Error when updating avatar', error);
+
+    store.dispatch({
+      error: error.message,
+      type: USER_ACTION_TYPES.ON_UPDATE_AVATAR_ERROR,
+    });
   });
 
   ipcRenderer.on(UPLOAD_PROFILE_PIC_SUCCESS_EVENT, (event, payload) => {
@@ -56,7 +61,7 @@ const registerAccountEvents = () => {
 
     store.dispatch({
       user,
-      type: UPDATE_USER,
+      type: USER_ACTION_TYPES.ON_UPDATE_AVATAR_SUCCESS,
     });
   });
 };
@@ -66,6 +71,10 @@ export const deleteAccount = () => {
 };
 
 export const uploadProfilePic = (payload) => {
+  store.dispatch({
+    type: USER_ACTION_TYPES.ON_UPDATE_AVATAR,
+  });
+
   ipcRenderer.send(UPLOAD_PROFILE_PIC_EVENT, payload);
 };
 
