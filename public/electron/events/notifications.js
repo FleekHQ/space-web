@@ -15,8 +15,12 @@ const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:s
 const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
 const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
 // const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeenAt`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
+// const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
 const notificationsMocks = {
+  lastSeenAt: 1598299960521,
   nextOffset: 1,
   notifications: [
     {
@@ -31,7 +35,7 @@ const notificationsMocks = {
         // status can also be `ACCEPTED` or `REJECTED`
         status: 'PENDING',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960523,
       readAt: null,
     },
     {
@@ -57,7 +61,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960520,
       readAt: null,
     },
     {
@@ -70,7 +74,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960520,
       readAt: null,
     },
     {
@@ -83,7 +87,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960520,
       readAt: null,
     },
   ],
@@ -149,6 +153,21 @@ const registerNotificationsEvents = (mainWindow) => {
       mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
       mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
+      // TODO: uncomment when integrated
+      // mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
+      //   ...payload,
+      //   err,
+      // });
+    }
+  });
+
+  ipcMain.on(SET_NOTIFICATIONS_LAST_SEEN_AT, async (event, payload) => {
+    try {
+      await spaceClient.setNotificationsLastSeenAt(payload);
+
+      mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, payload);
+    } catch (err) {
+      mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, payload);
       // TODO: uncomment when integrated
       // mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
       //   ...payload,

@@ -15,6 +15,9 @@ const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:err
 const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
 const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
 const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeenAt`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
 const registerNotificationEvents = () => {
   ipcRenderer.on(FETCH_NOTIFICATIONS_ERROR, (_, error) => {
@@ -79,6 +82,21 @@ ipcRenderer.on(REJECT_FILES_INVITATION_SUCCESS, (_, data) => {
 
 ipcRenderer.on(REJECT_FILES_INVITATION_ERROR, () => {
   // TODO: do something
+});
+
+export const setNotificationsLastSeenAt = (payload) => {
+  ipcRenderer.send(SET_NOTIFICATIONS_LAST_SEEN_AT, payload);
+};
+
+ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, (_, data) => {
+  store.dispatch({
+    type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
+    lastSeenAt: data.timestamp,
+  });
+});
+
+ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR, (_, err) => {
+  console.error(err);
 });
 
 export default registerNotificationEvents;

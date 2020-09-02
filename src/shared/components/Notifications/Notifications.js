@@ -4,6 +4,7 @@ import {
   fetchNotifications,
   acceptFilesInvitation,
   rejectFilesInvitation,
+  setNotificationsLastSeenAt,
 } from '@events';
 import {
   NotificationMenu,
@@ -20,10 +21,29 @@ const Notifications = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const onCloseMenu = () => setAnchorEl(null);
+  const notifications = useSelector((state) => state.notifications);
+
+  const onCloseMenu = () => {
+    setNotificationsLastSeenAt({
+      timestamp: Date.now(),
+    });
+    setAnchorEl(null);
+  };
+
   const onClickHandler = (event) => setAnchorEl(event.currentTarget);
 
-  const notifications = useSelector((state) => state.notifications);
+  const hideNewNotifications = () => {
+    const { data: { lastSeenAt, notifications: notificationsData } } = notifications;
+    if (notificationsData.length === 0) {
+      return true;
+    }
+
+    if (notificationsData[0].createdAt > lastSeenAt) {
+      return false;
+    }
+
+    return true;
+  };
 
   const i18n = {
     empty: t('notifications.empty'),
@@ -81,7 +101,7 @@ const Notifications = () => {
   return (
     <>
       <NotificationButton
-        badgeInvisible={false}
+        badgeInvisible={hideNewNotifications()}
         onClick={onClickHandler}
         className={classes.root}
       />

@@ -6,16 +6,26 @@ export const NOTIFICATIONS_ACTION_TYPES = {
   ON_FETCH_NOTIFICATIONS_ERROR: 'ON_FETCH_NOTIFICATIONS_ERROR',
   ON_FETCH_NOTIFICATIONS_SUCCESS: 'ON_FETCH_NOTIFICATIONS_SUCCESS',
   ON_UPDATE_INVITATION_STATUS: 'ON_UPDATE_INVITATION_STATUS',
+  SET_NOTIFICATIONS_LAST_SEEN_AT: 'SET_NOTIFICATIONS_LAST_SEEN_AT',
 };
 
 const DEFAULT_STATE = {
   error: null,
   loading: false,
-  data: { nextOffset: null, notifications: [] },
+  data: { lastSeenAt: 0, nextOffset: null, notifications: [] },
 };
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
+    case NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT: {
+      return ({
+        ...state,
+        data: {
+          ...state.data,
+          lastSeenAt: action.lastSeenAt,
+        },
+      });
+    }
     case NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS: {
       const { id, status } = action;
       const { data: { notifications } } = state;

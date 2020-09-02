@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import { formatBytes } from '@utils';
 import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 import store from '../../../../store';
@@ -8,7 +7,9 @@ export const USAGEALERT = 'USAGEALERT';
 export const SHARE_INVITE = 'share-invite';
 export const BACKUP_LIMIT = 'backup-limit';
 
-const mapBackupLimitItem = (item) => {
+const getHighlighted = (item, lastSeenAt) => (item.createdAt > lastSeenAt);
+
+const mapBackupLimitItem = (item, lastSeenAt) => {
   const { PUBLIC_URL } = process.env;
   const {
     id,
@@ -28,10 +29,11 @@ const mapBackupLimitItem = (item) => {
     timestamp: createdAt,
     logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
     upgradeOnClick: () => store.dispatch(openModal(SETTINGS_MODAL)),
+    highlighted: getHighlighted(item, lastSeenAt),
   });
 };
 
-const mapInvitationItem = (item) => {
+const mapInvitationItem = (item, lastSeenAt) => {
   const {
     id,
     subject,
@@ -60,20 +62,21 @@ const mapInvitationItem = (item) => {
       ext: isExtension && fileSplit[fileSplit.length - 1],
     }],
     status,
+    highlighted: getHighlighted(item, lastSeenAt),
   });
 };
 
 const mapDataToItems = (data) => {
-  const notifications = get(data, 'data.notifications', []);
+  const { data: { notifications, lastSeenAt } } = data;
 
   const mappedData = notifications.map((item) => {
     const { type } = item;
     switch (type) {
       case USAGEALERT:
-        return mapBackupLimitItem(item);
+        return mapBackupLimitItem(item, lastSeenAt);
       case INVITATION:
       default:
-        return mapInvitationItem(item);
+        return mapInvitationItem(item, lastSeenAt);
     }
   });
 
