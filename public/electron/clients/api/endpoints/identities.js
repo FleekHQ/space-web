@@ -32,7 +32,7 @@ function getByUsername(payload) {
     method: 'get',
     url: DEFAULT_PATH,
     headers: {
-      Authorization: payload.token,
+      Authorization: payload.token || '',
     },
     params: {
       username: payload.usernames.join(','),

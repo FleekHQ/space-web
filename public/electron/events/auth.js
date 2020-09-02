@@ -16,13 +16,13 @@ const RESTORE_KEYS_MNEMONIC_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic`;
 const RESTORE_KEYS_MNEMONIC_ERROR_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:error`;
 const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:success`;
 
+const GET_PUBLIC_KEY_ERROR = ['Key not found', 'No key pair found in the local db.'];
+
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNIN_EVENT, async (_, payload) => {
     try {
-      const res = await spaceClient.getAPISessionTokens();
       const { data } = await apiClient.identities.getByUsername({
         usernames: [payload.username],
-        token: res.getServicestoken(),
       });
       await spaceClient.recoverKeysByPassphrase({
         uuid: data.data.uuid,
@@ -48,20 +48,38 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
-      const res = await spaceClient.getAPISessionTokens();
-      if (payload.address) {
-        const { data } = await apiClient.identities.getByAddress({
-          addresses: [payload.address],
-          token: res.getServicestoken(),
+      let publicKeyRes = await spaceClient
+        .getPublicKey()
+        .catch((error) => {
+          if (error && !GET_PUBLIC_KEY_ERROR.includes(error.message)) {
+            throw error;
+          }
+          return null;
         });
+
+      if (!publicKeyRes) {
+        await spaceClient.generateKeyPairWithForce();
+        publicKeyRes = await spaceClient.getPublicKey();
+      }
+
+      const apiSessionRes = await spaceClient.getAPISessionTokens();
+
+      if (!payload) {
+        const address = getAddressByPublicKey(publicKeyRes.getPublickey());
+        const { data } = await apiClient.identities.getByAddress({
+          addresses: [address],
+          token: apiSessionRes.getServicestoken(),
+        });
+
         mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
         return;
       }
 
       const { data } = await apiClient.identity.update({
         ...payload,
-        token: res.getServicestoken(),
+        token: apiSessionRes.getServicestoken(),
       });
+
       mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
     } catch (error) {
       let message = error.message || '';

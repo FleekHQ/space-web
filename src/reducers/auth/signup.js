@@ -2,6 +2,7 @@ const DEFAULT_STATE = {
   error: null,
   success: false,
   loading: false,
+  loadingLater: false,
   showPassword: false,
   publicKey: {
     key: null,
@@ -16,6 +17,7 @@ const DEFAULT_STATE = {
 };
 
 export const SIGNUP_ACTION_TYPES = {
+  ON_RESET: 'SIGNUP_ON_RESET',
   ON_SUBMIT: 'SIGNUP_ON_SUBMIT',
   ON_INPUT_CHANGE: 'SIGNUP_ON_INPUT_CHANGE',
   ON_SUBMIT_ERROR: 'SIGNUP_ON_SUBMIT_ERROR',
@@ -51,13 +53,15 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         error: null,
-        loading: true,
+        loading: action.withUsername,
+        loadingLater: !action.withUsername,
       };
     }
     case SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR: {
       return {
         ...state,
         loading: false,
+        loadingLater: false,
         error: action.error,
         publicKey: {
           ...state.publicKey,
@@ -69,6 +73,7 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         loading: false,
+        loadingLater: false,
         success: true,
         publicKey: {
           ...state.publicKey,
@@ -105,6 +110,11 @@ export default (state = DEFAULT_STATE, action) => {
           error: null,
           key: action.publicKey,
         },
+      };
+    }
+    case SIGNUP_ACTION_TYPES.ON_RESET: {
+      return {
+        ...DEFAULT_STATE,
       };
     }
     default: {

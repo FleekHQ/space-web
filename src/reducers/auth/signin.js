@@ -5,6 +5,7 @@ const DEFAULT_STATE = {
 };
 
 export const SIGNIN_ACTION_TYPES = {
+  ON_RESET: 'SIGNIN_ON_RESET',
   ON_SUBMIT: 'SIGNIN_ON_SIGNIN',
   ON_SUBMIT_ERROR: 'SIGNIN_ON_SUBMIT_ERROR',
   ON_SUBMIT_SUCCESS: 'SIGNIN_ON_SUBMIT_SUCCESS',
@@ -31,6 +32,11 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         success: true,
+      };
+    }
+    case SIGNIN_ACTION_TYPES.ON_RESET: {
+      return {
+        ...DEFAULT_STATE,
       };
     }
     default: {
