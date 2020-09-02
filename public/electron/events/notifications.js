@@ -9,12 +9,9 @@ const READ_NOTIFICATION_SUCCESS_EVENT = `${EVENT_PREFIX}:readNotification:succes
 const FETCH_NOTIFICATIONS = `${EVENT_PREFIX}:fetch`;
 const FETCH_NOTIFICATIONS_ERROR = `${EVENT_PREFIX}:fetch:error`;
 const FETCH_NOTIFICATIONS_SUCCESS = `${EVENT_PREFIX}:fetch:success`;
-const ACCEPT_FILES_INVITATION = `${EVENT_PREFIX}:acceptFilesInvitation`;
-const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:success`;
-// const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
-const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
-const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
-// const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
+const HANDLE_FILES_INVITATION = `${EVENT_PREFIX}:handleFilesInvitation`;
+const HANDLE_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:handleFilesInvitation:success`;
+// const HANDLE_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:handleFilesInvitation:error`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeenAt`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
 // const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
@@ -48,7 +45,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960523,
       readAt: null,
     },
     {
@@ -131,33 +128,15 @@ const registerNotificationsEvents = (mainWindow) => {
     }
   });
 
-  ipcMain.on(ACCEPT_FILES_INVITATION, async (event, payload) => {
+  ipcMain.on(HANDLE_FILES_INVITATION, async (event, payload) => {
     try {
-      await spaceClient.acceptFilesInvitation(payload);
+      await spaceClient.handleFilesInvitation(payload);
 
-      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
+      mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
-      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
+      mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
       // TODO: uncomment when integrated
-      // mainWindow.webContents.send(ACCEPT_FILES_INVITATION_ERROR, {
-      //   ...payload,
-      //   err,
-      // });
-    }
-  });
-
-  ipcMain.on(REJECT_FILES_INVITATION, async (event, payload) => {
-    try {
-      await spaceClient.rejectFilesInvitation(payload);
-
-      mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
-    } catch (err) {
-      mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
-      // TODO: uncomment when integrated
-      // mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
-      //   ...payload,
-      //   err,
-      // });
+      // mainWindow.webContents.send(HANDLE_FILES_INVITATION_ERROR, err);
     }
   });
 

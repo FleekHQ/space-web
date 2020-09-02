@@ -57,5 +57,12 @@ export default makeStyles((theme) => ({
     display: 'inline-block',
     padding: '9px 11px 9px 14px',
     border: `1px solid ${theme.palette.palette.gray15}`,
+    backgroundColor: theme.palette.palette.white,
+  },
+  highlighted: {
+    backgroundColor: `${theme.palette.palette.blue1}26`,
+    '&:hover': {
+      backgroundColor: `${theme.palette.palette.blue1}26`,
+    },
   },
 }));

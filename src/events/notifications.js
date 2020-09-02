@@ -9,12 +9,9 @@ const READ_NOTIFICATION_SUCCESS_EVENT = `${EVENT_PREFIX}:readNotification:succes
 const FETCH_NOTIFICATIONS = `${EVENT_PREFIX}:fetch`;
 const FETCH_NOTIFICATIONS_ERROR = `${EVENT_PREFIX}:fetch:error`;
 const FETCH_NOTIFICATIONS_SUCCESS = `${EVENT_PREFIX}:fetch:success`;
-const ACCEPT_FILES_INVITATION = `${EVENT_PREFIX}:acceptFilesInvitation`;
-const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:success`;
-const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
-const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
-const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
-const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
+const HANDLE_FILES_INVITATION = `${EVENT_PREFIX}:handleFilesInvitation`;
+const HANDLE_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:handleFilesInvitation:success`;
+const HANDLE_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:handleFilesInvitation:error`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeenAt`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
@@ -52,36 +49,20 @@ export const fetchNotifications = (payload) => {
   ipcRenderer.send(FETCH_NOTIFICATIONS, payload);
 };
 
-export const acceptFilesInvitation = (payload) => {
-  ipcRenderer.send(ACCEPT_FILES_INVITATION, payload);
+export const handleFilesInvitation = (payload) => {
+  ipcRenderer.send(HANDLE_FILES_INVITATION, payload);
 };
 
-ipcRenderer.on(ACCEPT_FILES_INVITATION_SUCCESS, (_, data) => {
+ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, (_, data) => {
   store.dispatch({
     type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
-    status: 'ACCEPTED',
+    status: data.accept ? 'ACCEPTED' : 'REJECTED',
     ...data,
   });
 });
 
-ipcRenderer.on(ACCEPT_FILES_INVITATION_ERROR, () => {
-  // TODO: do something
-});
-
-export const rejectFilesInvitation = (payload) => {
-  ipcRenderer.send(REJECT_FILES_INVITATION, payload);
-};
-
-ipcRenderer.on(REJECT_FILES_INVITATION_SUCCESS, (_, data) => {
-  store.dispatch({
-    type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
-    status: 'REJECTED',
-    ...data,
-  });
-});
-
-ipcRenderer.on(REJECT_FILES_INVITATION_ERROR, () => {
-  // TODO: do something
+ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, err) => {
+  console.error(err);
 });
 
 export const setNotificationsLastSeenAt = (payload) => {

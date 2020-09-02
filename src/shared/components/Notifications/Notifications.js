@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   fetchNotifications,
-  acceptFilesInvitation,
-  rejectFilesInvitation,
+  handleFilesInvitation,
   setNotificationsLastSeenAt,
 } from '@events';
 import {
@@ -72,28 +71,16 @@ const Notifications = () => {
     }
   };
 
-  const onAcceptInvitation = (item) => {
+  const handleInvitationStatus = (accept) => (item) => {
     const notificationItems = notifications.data.notifications;
     const acceptedNotification = notificationItems.find(
       (notificationItem) => (notificationItem.id === item.id),
     );
     if (acceptedNotification) {
-      acceptFilesInvitation({
+      handleFilesInvitation({
         id: item.id,
-        invitationId: acceptedNotification.relatedObject.invitationId,
-      });
-    }
-  };
-
-  const onRejectInvitation = (item) => {
-    const notificationItems = notifications.data.notifications;
-    const acceptedNotification = notificationItems.find(
-      (notificationItem) => (notificationItem.id === item.id),
-    );
-    if (acceptedNotification) {
-      rejectFilesInvitation({
-        id: item.id,
-        invitationId: acceptedNotification.relatedObject.invitationId,
+        invitationID: acceptedNotification.relatedObject.invitationId,
+        accept,
       });
     }
   };
@@ -114,8 +101,8 @@ const Notifications = () => {
           horizontal: 260,
         }}
         loadMore={loadMore}
-        onAcceptInvitation={onAcceptInvitation}
-        onRejectInvitation={onRejectInvitation}
+        onAcceptInvitation={handleInvitationStatus(true)}
+        onRejectInvitation={handleInvitationStatus(false)}
       />
     </>
   );
