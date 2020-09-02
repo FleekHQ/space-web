@@ -3,6 +3,7 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import BaseModal from '@ui/BaseModal';
+import ErrorCard from '@ui/ErrorCard';
 import Paper from '@material-ui/core/Paper';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +21,6 @@ import {
 import {
   Header,
   ShareLink,
-  ErrorCard,
   MemberInput,
   CollaboratorList,
 } from './components';
