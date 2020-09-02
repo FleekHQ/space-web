@@ -45,7 +45,7 @@ const registerObjectsEvents = () => {
   ipcRenderer.on(GENERATE_PUBLIC_LINK_SUCCESS_EVENT, (_, payload) => {
     store.dispatch({
       payload,
-      type: PUBLIC_LINK_ACTION_TYPES.ON_SUCCESS,
+      type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_SUCCESS,
     });
   });
 
@@ -54,7 +54,7 @@ const registerObjectsEvents = () => {
 
     store.dispatch({
       payload: error,
-      type: PUBLIC_LINK_ACTION_TYPES.ON_ERROR,
+      type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_ERROR,
     });
   });
 };
@@ -65,7 +65,7 @@ export const generatePublicFileLink = (payload) => {
   ipcRenderer.send(GENERATE_PUBLIC_LINK_EVENT, payload);
 
   store.dispatch({
-    type: PUBLIC_LINK_ACTION_TYPES.ON_GET,
+    type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_GET,
   });
 };
 

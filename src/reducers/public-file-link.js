@@ -1,8 +1,8 @@
 export const PUBLIC_LINK_ACTION_TYPES = {
-  ON_SUCCESS: 'ON_SUCCESS',
-  ON_GET: 'ON_GET',
-  ON_ERROR: 'ON_ERROR',
-  ON_RESTART: 'ON_RESTART',
+  PUBLIC_LINK_ON_SUCCESS: 'PUBLIC_LINK_ON_SUCCESS',
+  PUBLIC_LINK_ON_GET: 'PUBLIC_LINK_ON_GET',
+  PUBLIC_LINK_ON_ERROR: 'PUBLIC_LINK_ON_ERROR',
+  PUBLIC_LINK_ON_RESTART: 'PUBLIC_LINK_ON_RESTART',
 };
 
 const DEFAULT_STATE = {
@@ -13,7 +13,7 @@ const DEFAULT_STATE = {
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
-    case PUBLIC_LINK_ACTION_TYPES.ON_GET: {
+    case PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_GET: {
       return {
         ...state,
         error: null,
@@ -21,7 +21,7 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-    case PUBLIC_LINK_ACTION_TYPES.ON_SUCCESS: {
+    case PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_SUCCESS: {
       return {
         ...state,
         loading: false,
@@ -30,7 +30,7 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-    case PUBLIC_LINK_ACTION_TYPES.ON_ERROR: {
+    case PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_ERROR: {
       return {
         ...state,
         loading: false,
@@ -39,7 +39,7 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-    case PUBLIC_LINK_ACTION_TYPES.ON_RESTART: {
+    case PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_RESTART: {
       return {
         ...DEFAULT_STATE,
       };

@@ -120,7 +120,7 @@ const SharingModal = (props) => {
       });
 
       dispatch({
-        type: PUBLIC_LINK_ACTION_TYPES.ON_RESTART,
+        type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_RESTART,
       });
     };
   }, []);
@@ -206,7 +206,7 @@ const SharingModal = (props) => {
           onCancel={() => {
             setStep(0);
             dispatch({
-              type: PUBLIC_LINK_ACTION_TYPES.ON_RESTART,
+              type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_RESTART,
             });
           }}
         />
