@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@ui/Avatar';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { useDispatch, useSelector } from 'react-redux';
+
+import Avatar from '@ui/Avatar';
+import ErrorCard from '@ui/ErrorCard';
 
 import getHandlers from './get-handlers';
 import useStyles from './styles';
@@ -159,9 +162,7 @@ const Account = ({
       </BaseCard>
       {
         account.error && (
-          <Typography className={classes.error} variant="body2">
-            {account.error}
-          </Typography>
+          <ErrorCard message={account.error} />
         )
       }
     </div>
