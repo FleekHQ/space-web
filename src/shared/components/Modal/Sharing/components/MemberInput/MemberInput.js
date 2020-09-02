@@ -19,6 +19,7 @@ const MemberInput = (props) => {
     i18n,
     onChange,
     className,
+    loading,
     options: defaultOptions,
     setUsernames,
     usernames,
@@ -83,6 +84,7 @@ const MemberInput = (props) => {
           {i18n.to}
         </Typography>
         <Autocomplete
+          disabled={loading}
           filterOptions={filterOptions}
           multiple
           value={usernames}
@@ -155,10 +157,12 @@ MemberInput.defaultProps = {
   className: null,
   collaborators: [],
   usernames: [],
+  loading: false,
 };
 
 MemberInput.propTypes = {
   className: PropTypes.string,
+  loading: PropTypes.bool,
   i18n: PropTypes.shape({
     to: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,

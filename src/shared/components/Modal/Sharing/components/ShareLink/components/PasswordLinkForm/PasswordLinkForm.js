@@ -13,10 +13,9 @@ import useStyles from './styles';
 import PasswordTooltip from '../PasswordTooltip';
 
 const PasswordLinkForm = (props) => {
-  const { onSave, onCancel } = props;
+  const { onSave, onCancel, loading } = props;
 
   const [password, setPassword] = useState();
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const classes = useStyles();
@@ -65,8 +64,7 @@ const PasswordLinkForm = (props) => {
       </PasswordTooltip>
       <Button
         onClick={() => {
-          setLoading(true);
-          onSave(password, setLoading);
+          onSave(password);
         }}
         variant="contained"
         disabled={loading}
@@ -77,7 +75,6 @@ const PasswordLinkForm = (props) => {
       <Button
         variant="outlined"
         onClick={() => {
-          setLoading(false);
           onCancel();
         }}
         disabled={loading}
@@ -89,7 +86,12 @@ const PasswordLinkForm = (props) => {
   );
 };
 
+PasswordLinkForm.defaultProps = {
+  loading: false,
+};
+
 PasswordLinkForm.propTypes = {
+  loading: PropTypes.bool,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
