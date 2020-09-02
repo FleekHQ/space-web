@@ -45,7 +45,7 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         shareFileByPublicKey: {
           ...state.shareFileByPublicKey,
-          succes: true,
+          success: true,
           loading: false,
         },
       };
