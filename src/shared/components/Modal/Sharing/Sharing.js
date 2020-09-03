@@ -135,7 +135,11 @@ const SharingModal = (props) => {
       shareFiles({
         usernames: _usernames,
         publicKeys: _publicKeys,
-        paths: selectedObjects.map((obj) => obj.key),
+        paths: selectedObjects.map((obj) => ({
+          path: obj.key,
+          dbId: obj.dbId,
+          bucket: obj.sourceBucket || obj.bucket,
+        })),
       });
     }
   }, [state.shareFileByPublicKey.loading]);
