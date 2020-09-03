@@ -50,6 +50,7 @@ const Usage = () => {
         planName={state.planName}
         localUsage={state.usageData.localUsage}
         backupUsage={state.usageData.backupUsage}
+        showInfo="backupLimitReached"
       />
       {isModalShown && (
         <Prompt

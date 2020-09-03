@@ -8,13 +8,18 @@ import SwitchButton from '@shared/components/SwitchButton';
 import UsageBars from '@ui/UsageBars';
 import palette from '@ui/theme/palette';
 import formatUsageData from './format-usage-data';
-import { UpgradeAccount, BackupBenefits, BackupLimit } from '../InfoBoxes';
+import {
+  UpgradeAccount,
+  BackupBenefits,
+  BackupLimitReaching,
+  BackupLimitReached,
+} from '../InfoBoxes';
 
 import useStyles from './styles';
 import { BaseCard, Header, Section } from '../../../../components';
 
 const getUsageComponent = (size, isShownMaxSize, maxSize) => (
-  <Typography variant="body2" color="secondary">
+  <Typography variant="body2" color="secondary" component="span">
     <Trans
       i18nKey={`modals.settings.usage.${isShownMaxSize ? 'usingOf' : 'using'}`}
       values={{ size, maxSize }}
@@ -144,8 +149,11 @@ const Usage = ({
             />
             {showInfo === 'upgrade' && <UpgradeAccount />}
             {showInfo === 'backupBenefits' && <BackupBenefits />}
-            {showInfo === 'backupLimit' && (
-              <BackupLimit backupLimit={backupUsageFormatted.limit} />
+            {showInfo === 'backupLimitReaching' && (
+              <BackupLimitReaching backupLimit={backupUsageFormatted.limit} />
+            )}
+            {showInfo === 'backupLimitReached' && (
+              <BackupLimitReached backupLimit={backupUsageFormatted.limit} />
             )}
           </div>
         </Header>
@@ -154,12 +162,19 @@ const Usage = ({
   );
 };
 
+Usage.defaultProps = {
+  showInfo: undefined,
+  backupStorage: false,
+  isFreePlan: false,
+  planName: '',
+};
+
 Usage.propTypes = {
   setBackupStorage: PropTypes.func.isRequired,
-  backupStorage: PropTypes.bool.isRequired,
+  backupStorage: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
-  isFreePlan: PropTypes.bool.isRequired,
-  planName: PropTypes.string.isRequired,
+  isFreePlan: PropTypes.bool,
+  planName: PropTypes.string,
   localUsage: PropTypes.shape({
     combinedUsage: PropTypes.number.isRequired,
     storage: PropTypes.number.isRequired,
@@ -171,7 +186,12 @@ Usage.propTypes = {
     storage: PropTypes.number.isRequired,
     bandwidth: PropTypes.number.isRequired,
   }).isRequired,
-  showInfo: PropTypes.oneOf([[undefined, 'upgrade', 'backupBenefits', 'backupLimit']]).isRequired,
+  showInfo: PropTypes.oneOf([
+    'upgrade',
+    'backupBenefits',
+    'backupLimitReaching',
+    'backupLimitReached',
+  ]),
 };
 
 export default Usage;

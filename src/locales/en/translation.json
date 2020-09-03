@@ -289,6 +289,12 @@
             "confirm": "Upgrade to Space Pro",
             "openBrowser": "Opens in browser"
           },
+          "reachedLimit": {
+            "title": "Backup Limit Reached",
+            "message": "The free {{backupLimit}} backup storage is at capacity. Upgrade to Space Pro in order to keep backing up your data. Any new files will not be backed up.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
           "backupBenefits": {
             "title": "Backup Storage Benefits",
             "message": "Store encrypted backups of your files in Space to ensure you don’t lose your files in case you ever lose your device. Storing encrypted backup copies of your files in Space allows you to access your files from other machines, recover files from a lost machine, and also enables users who you share files with to access those files even if you are offline.",

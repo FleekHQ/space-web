@@ -17,14 +17,14 @@ const BackupLimit = ({ backupLimit }) => {
     <InfoBoxBase
       warning
       icon={faExclamationCircle}
-      title={t('modals.settings.usage.info.reachingLimit.title')}
-      message={t('modals.settings.usage.info.reachingLimit.message', { backupLimit })}
-      buttonText={t('modals.settings.usage.info.reachingLimit.confirm')}
+      title={t('modals.settings.usage.info.reachedLimit.title')}
+      message={t('modals.settings.usage.info.reachedLimit.message', { backupLimit })}
+      buttonText={t('modals.settings.usage.info.reachedLimit.confirm')}
     >
       <Button color="secondary">
         <Typography variant="body2" color="inherit">
           <FontAwesomeIcon icon={faLongArrowLeft} className={classes.longArrowIcon} />
-          {t('modals.settings.usage.info.upgrade.openBrowser')}
+          {t('modals.settings.usage.info.reachedLimit.openBrowser')}
         </Typography>
       </Button>
     </InfoBoxBase>
