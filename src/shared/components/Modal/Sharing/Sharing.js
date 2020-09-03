@@ -81,10 +81,6 @@ const SharingModal = (props) => {
     console.log('onChangeInputPermissions', ...args);
   };
 
-  const onClickSettings = () => {
-    console.log('click settings');
-  };
-
   /* eslint-disable no-unused-vars */
   const onShare = (event) => {
     event.preventDefault();
@@ -168,7 +164,6 @@ const SharingModal = (props) => {
         <Header
           ext={get(selectedObjects, '[0].ext', '')}
           className={classes.header}
-          onClickSettings={onClickSettings}
         >
           {get(selectedObjects, '[0].name', '')}
         </Header>
