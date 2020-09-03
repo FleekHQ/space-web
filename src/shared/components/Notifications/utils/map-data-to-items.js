@@ -61,7 +61,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
           values={{
             file: fileName,
           }}
-          components={[<span className={classes.bold}>FILE</span>]}
+          components={[<span className={classes.bold} />]}
         />
       );
     }
@@ -72,7 +72,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
         values={{
           file: t('notifications.files', { amount }),
         }}
-        components={[<span className={classes.bold}>FILE</span>]}
+        components={[<span className={classes.bold} />]}
       />
     );
   };
