@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import authReducer from './auth';
-import userReducer from './user';
+import userReducer, { USER_ACTION_TYPES } from './user';
 import storageReducer from './storage';
 import modalsReducer from './modals';
 import detailsPanelReducer from './details-panel';
@@ -32,4 +32,12 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
 });
 
-export default rootReducer;
+/* eslint-disable no-param-reassign */
+export default (state, action) => {
+  // Reset to default state when user log out
+  if (action.type === USER_ACTION_TYPES.ON_USER_LOGOUT) {
+    state = undefined;
+  }
+
+  return rootReducer(state, action);
+};
