@@ -3,6 +3,7 @@ import cloneDeep from 'lodash/cloneDeep';
 export const NOTIFICATIONS_ACTION_TYPES = {
   ON_RESTART: 'ON_FETCH_NOTIFICATIONS_RESTART',
   ON_FETCH_NOTIFICATIONS: 'ON_FETCH_NOTIFICATIONS',
+  ON_NEW_NOTIFICATION: 'ON_NEW_NOTIFICATION',
   ON_FETCH_NOTIFICATIONS_ERROR: 'ON_FETCH_NOTIFICATIONS_ERROR',
   ON_FETCH_NOTIFICATIONS_SUCCESS: 'ON_FETCH_NOTIFICATIONS_SUCCESS',
   ON_UPDATE_INVITATION_STATUS: 'ON_UPDATE_INVITATION_STATUS',
@@ -17,6 +18,18 @@ const DEFAULT_STATE = {
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
+    case NOTIFICATIONS_ACTION_TYPES.ON_NEW_NOTIFICATION: {
+      return ({
+        ...state,
+        data: {
+          ...state.data,
+          notifications: [
+            action.notification,
+            ...state.data.notifications,
+          ],
+        },
+      });
+    }
     case NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT: {
       return ({
         ...state,

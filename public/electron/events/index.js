@@ -13,6 +13,7 @@ const registerAccountEvents = require('./account');
 const registerFolderEvents = require('./folder');
 const registerIdentitiesEvents = require('./identities');
 const registerUsageEvents = require('./usage');
+const registerNotificationNotificationSuscribe = require('./notifications-subscribe');
 
 const registerEvents = ({
   app,
@@ -21,6 +22,7 @@ const registerEvents = ({
 }) => {
   const stream = registerEventStream(mainWindow);
   const txlStream = registerTxlSubscribe(mainWindow);
+  const notificationStream = registerNotificationNotificationSuscribe(mainWindow);
 
   registerAuthEvents(mainWindow);
   // registerModalEvents(mainWindow);
@@ -42,6 +44,7 @@ const registerEvents = ({
   return () => {
     stream.destroy();
     txlStream.destroy();
+    notificationStream.desdtroy();
   };
 };
 
