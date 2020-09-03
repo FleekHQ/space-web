@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   fetchNotifications,
-  acceptFilesInvitation,
-  rejectFilesInvitation,
+  handleFilesInvitation,
+  setNotificationsLastSeenAt,
 } from '@events';
 import {
   NotificationMenu,
@@ -20,10 +20,29 @@ const Notifications = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const onCloseMenu = () => setAnchorEl(null);
+  const notifications = useSelector((state) => state.notifications);
+
+  const onCloseMenu = () => {
+    setNotificationsLastSeenAt({
+      timestamp: Date.now(),
+    });
+    setAnchorEl(null);
+  };
+
   const onClickHandler = (event) => setAnchorEl(event.currentTarget);
 
-  const notifications = useSelector((state) => state.notifications);
+  const hideNewNotifications = () => {
+    const { data: { lastSeenAt, notifications: notificationsData } } = notifications;
+    if (notificationsData.length === 0) {
+      return true;
+    }
+
+    if (notificationsData[0].createdAt > lastSeenAt) {
+      return false;
+    }
+
+    return true;
+  };
 
   const i18n = {
     empty: t('notifications.empty'),
@@ -52,28 +71,16 @@ const Notifications = () => {
     }
   };
 
-  const onAcceptInvitation = (item) => {
+  const handleInvitationStatus = (accept) => (item) => {
     const notificationItems = notifications.data.notifications;
     const acceptedNotification = notificationItems.find(
       (notificationItem) => (notificationItem.id === item.id),
     );
     if (acceptedNotification) {
-      acceptFilesInvitation({
+      handleFilesInvitation({
         id: item.id,
-        invitationId: acceptedNotification.relatedObject.invitationId,
-      });
-    }
-  };
-
-  const onRejectInvitation = (item) => {
-    const notificationItems = notifications.data.notifications;
-    const acceptedNotification = notificationItems.find(
-      (notificationItem) => (notificationItem.id === item.id),
-    );
-    if (acceptedNotification) {
-      rejectFilesInvitation({
-        id: item.id,
-        invitationId: acceptedNotification.relatedObject.invitationId,
+        invitationID: acceptedNotification.relatedObject.invitationId,
+        accept,
       });
     }
   };
@@ -81,21 +88,21 @@ const Notifications = () => {
   return (
     <>
       <NotificationButton
-        badgeInvisible={false}
+        badgeInvisible={hideNewNotifications()}
         onClick={onClickHandler}
         className={classes.root}
       />
       <NotificationMenu
         i18n={i18n}
-        items={mapDataToItems(notifications)}
+        items={mapDataToItems(notifications, Trans, t, classes)}
         anchorEl={anchorEl}
         onCloseMenu={onCloseMenu}
         transformOrigin={{
           horizontal: 260,
         }}
         loadMore={loadMore}
-        onAcceptInvitation={onAcceptInvitation}
-        onRejectInvitation={onRejectInvitation}
+        onAcceptInvitation={handleInvitationStatus(true)}
+        onRejectInvitation={handleInvitationStatus(false)}
       />
     </>
   );

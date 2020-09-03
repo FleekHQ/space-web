@@ -16,6 +16,7 @@ const BackUpLimitNotification = ({
   timestamp,
   upgradeOnClick,
   logoUrl,
+  highlighted,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -24,9 +25,12 @@ const BackUpLimitNotification = ({
   return (
     <MenuItem
       disableRipple
-      classes={{
-        root: classes.root,
-      }}
+      className={classnames(
+        classes.root,
+        {
+          [classes.highlighted]: highlighted,
+        },
+      )}
     >
       <div className={classes.imgAndTitleContainer}>
         <img
@@ -74,12 +78,17 @@ const BackUpLimitNotification = ({
   );
 };
 
+BackUpLimitNotification.defaultProps = {
+  highlighted: false,
+};
+
 BackUpLimitNotification.propTypes = {
   currentAmountText: PropTypes.string.isRequired,
   limitText: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
   upgradeOnClick: PropTypes.func.isRequired,
   logoUrl: PropTypes.string.isRequired,
+  highlighted: PropTypes.bool,
 };
 
 export default BackUpLimitNotification;
