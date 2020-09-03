@@ -116,9 +116,9 @@ NotificationMenu.propTypes = {
       PropTypes.number,
       PropTypes.string,
     ]).isRequired,
-    username: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
+    username: PropTypes.string,
+    description: PropTypes.element,
+    timestamp: PropTypes.number.isRequired,
     files: PropTypes.arrayOf(PropTypes.shape({
       ext: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,

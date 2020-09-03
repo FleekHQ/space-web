@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Avatar from '@ui/Avatar';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { useDispatch, useSelector } from 'react-redux';
+
+import Avatar from '@ui/Avatar';
+import ErrorCard from '@ui/ErrorCard';
 
 import getHandlers from './get-handlers';
 import useStyles from './styles';
@@ -24,12 +27,18 @@ const Account = ({
   const { t } = useTranslation();
   const ref = React.useRef(null);
 
+  const { user, account } = useSelector((state) => ({
+    user: state.user,
+    account: state.settings.account,
+  }));
+
   const {
     address,
     username,
     avatarUrl,
+    uploadingAvatar,
     displayName = '',
-  } = useSelector((state) => state.user);
+  } = user;
 
   const {
     onChangeImage,
@@ -62,7 +71,8 @@ const Account = ({
           <Section>
             <Avatar
               size={32}
-              username="Test"
+              username={username}
+              isLoading={uploadingAvatar}
               {...(avatarUrl && avatarUrl !== '' && { imgUrl: avatarUrl })}
             />
             <ButtonBase onClick={() => ref.current.click()}>
@@ -150,6 +160,11 @@ const Account = ({
           </Section>
         </Header>
       </BaseCard>
+      {
+        account.error && (
+          <ErrorCard message={account.error} />
+        )
+      }
     </div>
   );
 };

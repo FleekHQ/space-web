@@ -15,6 +15,7 @@ const CollaboratorList = (props) => {
     i18n,
     onShare,
     options,
+    loading,
     className,
     collaborators,
     onChangePermissions,
@@ -102,6 +103,7 @@ const CollaboratorList = (props) => {
           onClick={onShare}
           variant="contained"
           color="primary"
+          disabled={loading}
           className={classes.shareButton}
         >
           {i18n.shareButton}
@@ -117,11 +119,13 @@ CollaboratorList.defaultProps = {
   collaborators: [],
   onChangePermissions: () => {},
   onShare: () => {},
+  loading: false,
 };
 
 CollaboratorList.propTypes = {
   className: PropTypes.string,
   onChangePermissions: PropTypes.func,
+  loading: PropTypes.bool,
   collaborators: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     isOwner: PropTypes.bool,

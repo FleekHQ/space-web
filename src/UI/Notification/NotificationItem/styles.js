@@ -25,6 +25,7 @@ export default makeStyles((theme) => ({
   rejectButton: {
     borderColor: theme.palette.palette.red,
     color: theme.palette.palette.red,
+    backgroundColor: `${theme.palette.palette.white} !important`,
   },
   files: {
     margin: '6px 0',

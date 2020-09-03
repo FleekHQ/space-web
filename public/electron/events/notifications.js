@@ -9,18 +9,19 @@ const READ_NOTIFICATION_SUCCESS_EVENT = `${EVENT_PREFIX}:readNotification:succes
 const FETCH_NOTIFICATIONS = `${EVENT_PREFIX}:fetch`;
 const FETCH_NOTIFICATIONS_ERROR = `${EVENT_PREFIX}:fetch:error`;
 const FETCH_NOTIFICATIONS_SUCCESS = `${EVENT_PREFIX}:fetch:success`;
-const ACCEPT_FILES_INVITATION = `${EVENT_PREFIX}:acceptFilesInvitation`;
-const ACCEPT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:acceptFilesInvitation:success`;
-// const ACCEPT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:acceptFilesInvitation:error`;
-const REJECT_FILES_INVITATION = `${EVENT_PREFIX}:rejectFilesInvitation`;
-const REJECT_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:rejectFilesInvitation:success`;
-// const REJECT_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:rejectFilesInvitation:error`;
+const HANDLE_FILES_INVITATION = `${EVENT_PREFIX}:handleFilesInvitation`;
+const HANDLE_FILES_INVITATION_SUCCESS = `${EVENT_PREFIX}:handleFilesInvitation:success`;
+// const HANDLE_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:handleFilesInvitation:error`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeenAt`;
+const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
+// const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
 const notificationsMocks = {
+  lastSeenAt: 1598299960521,
   nextOffset: 1,
   notifications: [
     {
-      id: '2',
+      id: '3',
       subject: 'anon',
       body: 'anon wants to share a file',
       type: 'INVITATION',
@@ -31,7 +32,22 @@ const notificationsMocks = {
         // status can also be `ACCEPTED` or `REJECTED`
         status: 'PENDING',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960523,
+      readAt: null,
+    },
+    {
+      id: '2',
+      subject: 'anon',
+      body: 'anon wants to share a file',
+      type: 'INVITATION',
+      relatedObject: {
+        inviterPublicKey: '123',
+        invitationId: '12',
+        itemPaths: ['/item-path/item.pdf', '/item-path/item2.pdf'],
+        // status can also be `ACCEPTED` or `REJECTED`
+        status: 'PENDING',
+      },
+      createdAt: 1598299960523,
       readAt: null,
     },
     {
@@ -44,7 +60,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960523,
       readAt: null,
     },
     {
@@ -57,7 +73,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
+      createdAt: 1598299960520,
       readAt: null,
     },
     {
@@ -70,20 +86,7 @@ const notificationsMocks = {
         limit: 12400000000,
         message: 'message',
       },
-      createdAt: 1598299960522,
-      readAt: null,
-    },
-    {
-      id: '1',
-      subject: 'space',
-      body: 'reaching backup limit',
-      type: 'USAGEALERT',
-      relatedObject: {
-        used: 12300000000,
-        limit: 12400000000,
-        message: 'message',
-      },
-      createdAt: 1598299960522,
+      createdAt: 1598299960520,
       readAt: null,
     },
   ],
@@ -127,28 +130,25 @@ const registerNotificationsEvents = (mainWindow) => {
     }
   });
 
-  ipcMain.on(ACCEPT_FILES_INVITATION, async (event, payload) => {
+  ipcMain.on(HANDLE_FILES_INVITATION, async (event, payload) => {
     try {
-      await spaceClient.acceptFilesInvitation(payload);
+      await spaceClient.handleFilesInvitation(payload);
 
-      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
+      mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
-      mainWindow.webContents.send(ACCEPT_FILES_INVITATION_SUCCESS, payload);
+      mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
       // TODO: uncomment when integrated
-      // mainWindow.webContents.send(ACCEPT_FILES_INVITATION_ERROR, {
-      //   ...payload,
-      //   err,
-      // });
+      // mainWindow.webContents.send(HANDLE_FILES_INVITATION_ERROR, err);
     }
   });
 
-  ipcMain.on(REJECT_FILES_INVITATION, async (event, payload) => {
+  ipcMain.on(SET_NOTIFICATIONS_LAST_SEEN_AT, async (event, payload) => {
     try {
-      await spaceClient.rejectFilesInvitation(payload);
+      await spaceClient.setNotificationsLastSeenAt(payload);
 
-      mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
+      mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, payload);
     } catch (err) {
-      mainWindow.webContents.send(REJECT_FILES_INVITATION_SUCCESS, payload);
+      mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, payload);
       // TODO: uncomment when integrated
       // mainWindow.webContents.send(REJECT_FILES_INVITATION_ERROR, {
       //   ...payload,

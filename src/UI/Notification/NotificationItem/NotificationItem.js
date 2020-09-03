@@ -124,8 +124,8 @@ NotificationItem.defaultProps = {
 NotificationItem.propTypes = {
   username: PropTypes.string,
   className: PropTypes.string,
-  description: PropTypes.string,
-  timestamp: PropTypes.string,
+  description: PropTypes.element,
+  timestamp: PropTypes.number,
   onAccept: PropTypes.func,
   onReject: PropTypes.func,
   files: PropTypes.arrayOf(PropTypes.shape({

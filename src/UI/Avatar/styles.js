@@ -20,6 +20,7 @@ export default makeStyles((theme) => ({
   },
   icon: {
     color: 'black',
-    fontSize: '0.8em',
+    fontSize: '1vmax',
+    width: ({ size }) => `${(size || DEFAULT_SIZE) - 10}px !important`,
   },
 }));

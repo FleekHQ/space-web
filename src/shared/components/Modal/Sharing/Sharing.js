@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import BaseModal from '@ui/BaseModal';
+import ErrorCard from '@ui/ErrorCard';
+import Paper from '@material-ui/core/Paper';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-
-import BaseModal from '@ui/BaseModal';
-import { shareFiles } from '@events/share';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
+import { shareFiles, generatePublicFileLink } from '@events/share';
+import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 
 import useStyles from './styles';
 import getOptions from './options';
@@ -18,6 +20,7 @@ import {
 } from './helpers';
 import {
   Header,
+  ShareLink,
   MemberInput,
   CollaboratorList,
 } from './components';
@@ -34,10 +37,16 @@ const SharingModal = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { user, state, identities } = useSelector((s) => ({
+  const {
+    user,
+    state,
+    identities,
+    publicFileLink,
+  } = useSelector((s) => ({
     user: s.user,
     state: s.detailsPanel.share,
     identities: Object.values(s.identities.identities),
+    publicFileLink: s.publicFileLink,
   }));
 
   const collaborators = getCollaboratorsInfo(
@@ -46,7 +55,10 @@ const SharingModal = (props) => {
     identities,
   );
 
-  const [usernames, setUsernames] = React.useState([]);
+  const [step, setStep] = useState(0);
+  const [usernames, setUsernames] = useState([]);
+
+  const error = get(state, 'shareFileByPublicKey.error') || publicFileLink.error;
 
   const i18n = {
     memberInput: {
@@ -82,12 +94,33 @@ const SharingModal = (props) => {
     });
   };
 
+  const onSave = (password) => {
+    const payload = {
+      password,
+      dbId: get(selectedObjects, '[0].dbId', ''),
+      bucket: get(selectedObjects, '[0].sourceBucket', ''),
+      itemPaths: selectedObjects.map((obj) => obj.key),
+    };
+
+    generatePublicFileLink(payload);
+  };
+
+  React.useEffect(() => {
+    if (publicFileLink.linkInfo.link) {
+      setStep(2);
+    }
+  }, [publicFileLink.linkInfo.link]);
+
   React.useEffect(() => {
     fetchRecentlyMembers();
 
     return () => {
       dispatch({
         type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_RESET,
+      });
+
+      dispatch({
+        type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_RESTART,
       });
     };
   }, []);
@@ -118,8 +151,15 @@ const SharingModal = (props) => {
   }, [state.shareFileByPublicKey.success]);
 
   return (
-    <BaseModal onClose={closeModal} maxWidth={460}>
-      <div
+    <BaseModal
+      onClose={closeModal}
+      maxWidth={460}
+      paperProps={{
+        className: classes.paperModal,
+        elevation: 0,
+      }}
+    >
+      <Paper
         className={classnames(
           classes.root,
           className,
@@ -139,6 +179,7 @@ const SharingModal = (props) => {
           onChange={onChangeInputPermissions}
           setUsernames={setUsernames}
           usernames={usernames}
+          loading={get(state, 'shareFileByPublicKey.loading', false)}
           collaborators={mapIdentitiesToCollaborators(identities)}
         />
         <CollaboratorList
@@ -148,13 +189,34 @@ const SharingModal = (props) => {
           className={classes.collaboratorList}
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
+          loading={get(state, 'shareFileByPublicKey.loading', false)}
         />
-      </div>
-      <div
+      </Paper>
+      <Paper
         className={classes.footer}
       >
-        Implement Share Link
-      </div>
+        <ShareLink
+          step={step}
+          onSave={onSave}
+          defaultStep={step}
+          onReset={() => setStep(1)}
+          onCreateLink={() => setStep(1)}
+          loading={get(publicFileLink, 'loading')}
+          url={get(publicFileLink, 'linkInfo.link')}
+          onCancel={() => {
+            setStep(0);
+            dispatch({
+              type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_RESTART,
+            });
+          }}
+        />
+      </Paper>
+      {error && (
+        <ErrorCard
+          className={classes.error}
+          message={error}
+        />
+      )}
     </BaseModal>
   );
 };
@@ -170,7 +232,10 @@ SharingModal.propTypes = {
   selectedObjects: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
     ext: PropTypes.string,
+    dbId: PropTypes.string,
     name: PropTypes.string,
+    bucket: PropTypes.string,
+    sourceBucket: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
       publicKey: PropTypes.string,
