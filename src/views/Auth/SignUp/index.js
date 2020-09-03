@@ -77,7 +77,6 @@ const SignUp = () => {
 
   React.useEffect(() => {
     if (state.success) {
-      console.log('THIS IS BADDD');
       history.push('/storage');
     }
   }, [state.success]);
