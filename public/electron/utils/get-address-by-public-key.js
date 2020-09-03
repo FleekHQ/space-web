@@ -9,7 +9,7 @@ const getAddressByPublicKey = (pubKey) => {
   const hash = new SHA3(256);
 
   // Compute the SHA3-256 hash of the public key
-  hash.update(pubKey);
+  hash.update(pubKey, 'hex');
 
   // Get the hex representation of the SHA3-256 hash
   const hexHash = hash.digest('hex');

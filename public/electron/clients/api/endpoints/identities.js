@@ -23,7 +23,7 @@ function getByAddress(payload) {
 /**
  * @this {import('../client.js')}
  * @param {Object} payload - Payload to get an identity by username.
- * @param {string} payload.token - Services token.
+ * @param {string=} payload.token - Services token.
  * @param {Array.<string>} payload.usernames - Username to get identity.
  * @returns {import('axios').AxiosResponse<{ data: import('./identity').Identity }>}
  */
@@ -32,7 +32,7 @@ function getByUsername(payload) {
     method: 'get',
     url: DEFAULT_PATH,
     headers: {
-      Authorization: payload.token,
+      Authorization: payload.token || '',
     },
     params: {
       username: payload.usernames.join(','),

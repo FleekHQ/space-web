@@ -9,20 +9,17 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+import { singup } from '@events';
 import InputTooltip from '@ui/InputTooltip';
-import { getAddressByPublicKey } from '@utils';
-import { singup, getPublicKey } from '@events';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import helper from './helper';
 import useStyles from './styles';
 
-const handleSubmit = ({ dispatch }) => (event) => {
+const handleSubmit = ({ username }) => (event) => {
   event.preventDefault();
 
-  dispatch({
-    type: SIGNUP_ACTION_TYPES.ON_SUBMIT,
-  });
+  singup({ username });
 };
 
 const handleInputChange = ({ dispatch }) => (event) => {
@@ -49,12 +46,10 @@ const handleInputFocusAndBlur = ({ dispatch }) => (event) => {
   });
 };
 
-const handleDoThisLater = ({ dispatch }) => (event) => {
+const handleDoThisLater = (event) => {
   event.preventDefault();
 
-  dispatch({
-    type: SIGNUP_ACTION_TYPES.ON_GET_PUBLIC_KEY,
-  });
+  singup();
 };
 
 const SignUp = () => {
@@ -82,37 +77,22 @@ const SignUp = () => {
 
   React.useEffect(() => {
     if (state.success) {
+      console.log('THIS IS BADDD');
       history.push('/storage');
     }
   }, [state.success]);
 
-  React.useEffect(() => {
-    if (state.loading) {
-      singup({
-        username: state.tfUsername.value,
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: SIGNUP_ACTION_TYPES.ON_RESET,
       });
     }
-  }, [state.loading]);
-
-  React.useEffect(() => {
-    if (state.publicKey.loading) {
-      getPublicKey();
-    }
-  }, [state.publicKey.loading]);
-
-  React.useEffect(() => {
-    if (state.publicKey.key) {
-      const address = getAddressByPublicKey(state.publicKey.key);
-
-      singup({
-        address,
-      });
-    }
-  }, [state.publicKey.key]);
+  ), []);
 
   return (
     <div className={classes.signupRoot}>
-      <form className={classes.form} onSubmit={handleSubmit({ dispatch })} autoComplete="off">
+      <form className={classes.form} onSubmit={handleSubmit({ username: state.tfUsername.value })} autoComplete="off">
         <InputTooltip
           type="danger"
           bgColor="secondary"
@@ -154,7 +134,7 @@ const SignUp = () => {
           color="primary"
           variant="contained"
           classes={{ root: classes.buttonRoot }}
-          disabled={state.loading || !helper.formValidation(state) || state.publicKey.loading}
+          disabled={state.loading || !helper.formValidation(state) || state.loadingLater}
         >
           {
             state.loading ? (
@@ -167,21 +147,21 @@ const SignUp = () => {
           id="do-this-later-btn"
           type="button"
           variant="outlined"
-          disabled={state.loading || state.publicKey.loading}
+          disabled={state.loading || state.loadingLater}
           classes={{ root: classes.buttonContained }}
-          onClick={handleDoThisLater({ dispatch })}
+          onClick={handleDoThisLater}
         >
           {
-            state.publicKey.loading ? (
+            state.loadingLater ? (
               <FontAwesomeIcon spin icon={faSpinner} size="lg" />
             ) : t('modules.signup.doLater')
           }
         </Button>
         {
-          (state.publicKey.error || (state.error && state.error.includes('identity'))) && (
+          state.error && !state.error.includes('username') && (
             <div className={classes.alert}>
               <Typography color="inherit" variant="body2">
-                {t(state.publicKey.error || state.error, { defaultValue: t('modules.signup.errors.generic') })}
+                {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
               </Typography>
             </div>
           )

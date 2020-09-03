@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -14,12 +14,14 @@ import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons/faEyeSlash';
 
 import { signin } from '@events';
+import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 
 import useStyles from './styles';
 
 const UsernameSignin = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const siginState = useSelector((s) => s.auth.signin);
@@ -52,6 +54,14 @@ const UsernameSignin = () => {
       history.push('/storage');
     }
   }, [siginState.success]);
+
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: SIGNIN_ACTION_TYPES.ON_RESET,
+      });
+    }
+  ), []);
 
   const endAdornment = (
     <InputAdornment position="end">

@@ -35,9 +35,11 @@ const RestoreKeysMnemonic = () => {
     });
   };
 
-  useEffect(() => {
-    dispatch({ type: RESTORE_KEYS_MNEMONIC_ACTION_TYPES.CLEAR_STATE });
-  }, []);
+  useEffect(() => (
+    () => {
+      dispatch({ type: RESTORE_KEYS_MNEMONIC_ACTION_TYPES.CLEAR_STATE });
+    }
+  ), []);
 
   useEffect(() => {
     if (state.success) {
