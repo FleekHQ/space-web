@@ -19,12 +19,13 @@ export default ({
     title: t('modals.settings.security.title'),
     content: <Security t={t} />,
   },
-  {
-    id: 'notifications',
-    default: defaultItem === 'notifications',
-    title: t('modals.settings.notifications.title'),
-    content: <div>notifications</div>,
-  },
+  // TODO: uncomment after integration
+  // {
+  //   id: 'notifications',
+  //   default: defaultItem === 'notifications',
+  //   title: t('modals.settings.notifications.title'),
+  //   content: <div>notifications</div>,
+  // },
   {
     id: 'usage',
     default: defaultItem === 'usage',
@@ -33,10 +34,11 @@ export default ({
       <Usage />
     ),
   },
-  {
-    id: 'referrals',
-    default: defaultItem === 'referrals',
-    title: t('modals.settings.referrals.title'),
-    content: <div>referrals</div>,
-  },
+  // TODO: uncomment after integration
+  // {
+  //   id: 'referrals',
+  //   default: defaultItem === 'referrals',
+  //   title: t('modals.settings.referrals.title'),
+  //   content: <div>referrals</div>,
+  // },
 ];

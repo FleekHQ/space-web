@@ -35,15 +35,17 @@ const Header = ({
           {children}
         </Typography>
       </div>
-      <ButtonBase
-        onClickSettings={onClickSettings}
-        className={classes.settingsButton}
-      >
-        <FontAwesomeIcon
-          icon={faCog}
-          className={classes.settingsIcon}
-        />
-      </ButtonBase>
+      {onClickSettings && (
+        <ButtonBase
+          onClickSettings={onClickSettings}
+          className={classes.settingsButton}
+        >
+          <FontAwesomeIcon
+            icon={faCog}
+            className={classes.settingsIcon}
+          />
+        </ButtonBase>
+      )}
     </div>
   );
 };
@@ -52,7 +54,7 @@ Header.defaultProps = {
   children: '',
   ext: 'default',
   className: null,
-  onClickSettings: () => {},
+  onClickSettings: null,
 };
 
 Header.propTypes = {

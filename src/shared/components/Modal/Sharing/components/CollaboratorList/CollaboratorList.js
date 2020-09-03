@@ -82,6 +82,7 @@ const CollaboratorList = (props) => {
             options={collaboratorOptions}
             data-ref={DATA_REF}
             disableBorder
+            disabled
           />
         )}
       </div>
