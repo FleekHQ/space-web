@@ -1,3 +1,4 @@
+import React from 'react';
 import { formatBytes } from '@utils';
 import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 import store from '../../../../store';
@@ -33,11 +34,10 @@ const mapBackupLimitItem = (item, lastSeenAt) => {
   });
 };
 
-const mapInvitationItem = (item, lastSeenAt) => {
+const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
   const {
     id,
     subject,
-    body,
     createdAt,
     relatedObject:
     {
@@ -51,12 +51,38 @@ const mapInvitationItem = (item, lastSeenAt) => {
   const isExtension = testIsExtension.test(file);
   const fileSplit = file.split('.');
 
+  const getDescription = () => {
+    const filePathSplit = file.split('/');
+    const fileName = filePathSplit[filePathSplit.length - 1];
+    if (itemPaths.length === 1) {
+      return (
+        <Trans
+          i18nKey="notifications.shared"
+          values={{
+            file: fileName,
+          }}
+          components={[<span className={classes.bold}>FILE</span>]}
+        />
+      );
+    }
+    const amount = itemPaths.length;
+    return (
+      <Trans
+        i18nKey="notifications.shared"
+        values={{
+          file: t('notifications.files', { amount }),
+        }}
+        components={[<span className={classes.bold}>FILE</span>]}
+      />
+    );
+  };
+
   return ({
     id,
     type: SHARE_INVITE,
     username: subject,
     timestamp: createdAt,
-    description: body,
+    description: getDescription(),
     files: [{
       name: file,
       ext: isExtension && fileSplit[fileSplit.length - 1],
@@ -66,7 +92,7 @@ const mapInvitationItem = (item, lastSeenAt) => {
   });
 };
 
-const mapDataToItems = (data) => {
+const mapDataToItems = (data, Trans, t, classes) => {
   const { data: { notifications, lastSeenAt } } = data;
 
   const mappedData = notifications.map((item) => {
@@ -76,7 +102,7 @@ const mapDataToItems = (data) => {
         return mapBackupLimitItem(item, lastSeenAt);
       case INVITATION:
       default:
-        return mapInvitationItem(item, lastSeenAt);
+        return mapInvitationItem(item, lastSeenAt, Trans, t, classes);
     }
   });
 

@@ -21,7 +21,7 @@ const notificationsMocks = {
   nextOffset: 1,
   notifications: [
     {
-      id: '2',
+      id: '3',
       subject: 'anon',
       body: 'anon wants to share a file',
       type: 'INVITATION',
@@ -29,6 +29,21 @@ const notificationsMocks = {
         inviterPublicKey: '123',
         invitationId: '12',
         itemPaths: ['/item-path/item.pdf'],
+        // status can also be `ACCEPTED` or `REJECTED`
+        status: 'PENDING',
+      },
+      createdAt: 1598299960523,
+      readAt: null,
+    },
+    {
+      id: '2',
+      subject: 'anon',
+      body: 'anon wants to share a file',
+      type: 'INVITATION',
+      relatedObject: {
+        inviterPublicKey: '123',
+        invitationId: '12',
+        itemPaths: ['/item-path/item.pdf', '/item-path/item2.pdf'],
         // status can also be `ACCEPTED` or `REJECTED`
         status: 'PENDING',
       },
@@ -46,19 +61,6 @@ const notificationsMocks = {
         message: 'message',
       },
       createdAt: 1598299960523,
-      readAt: null,
-    },
-    {
-      id: '1',
-      subject: 'space',
-      body: 'reaching backup limit',
-      type: 'USAGEALERT',
-      relatedObject: {
-        used: 12300000000,
-        limit: 12400000000,
-        message: 'message',
-      },
-      createdAt: 1598299960520,
       readAt: null,
     },
     {

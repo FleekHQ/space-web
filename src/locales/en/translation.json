@@ -48,6 +48,8 @@
     "markAsRead": "Mark all as read",
     "notifications": "Notifications",
     "empty": "No notifications",
+    "shared": "Shared <0>{{file}}</0> with you.",
+    "files": "{{amount}} files",
     "backupLimit": {
       "title": "Space",
       "warning": "Reaching backup limit.",

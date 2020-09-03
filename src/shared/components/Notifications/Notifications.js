@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   fetchNotifications,
   handleFilesInvitation,
@@ -94,7 +94,7 @@ const Notifications = () => {
       />
       <NotificationMenu
         i18n={i18n}
-        items={mapDataToItems(notifications)}
+        items={mapDataToItems(notifications, Trans, t, classes)}
         anchorEl={anchorEl}
         onCloseMenu={onCloseMenu}
         transformOrigin={{
