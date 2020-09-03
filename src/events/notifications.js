@@ -62,6 +62,7 @@ ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, (_, data) => {
 });
 
 ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, err) => {
+  /* eslint-disable-next-line no-console */
   console.error(err);
 });
 
@@ -77,6 +78,7 @@ ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, (_, data) => {
 });
 
 ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR, (_, err) => {
+  /* eslint-disable-next-line no-console */
   console.error(err);
 });
 
