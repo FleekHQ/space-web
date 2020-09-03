@@ -25,7 +25,11 @@ const NotificationItem = (props) => {
     highlighted,
   } = props;
 
-  const classes = useStyles();
+  const FILE_STACK_MAX = 5;
+
+  const classes = useStyles({
+    stackedItems: Math.min(files.length, FILE_STACK_MAX),
+  });
 
   const getButtons = () => {
     switch (status) {
@@ -67,6 +71,14 @@ const NotificationItem = (props) => {
     }
   };
 
+  const getTooltip = () => {
+    let tooltip = '';
+    files.forEach((file) => {
+      tooltip += `${file.name}\n`;
+    });
+    return tooltip;
+  };
+
   return (
     <MenuItem
       disableRipple
@@ -89,16 +101,30 @@ const NotificationItem = (props) => {
         <Typography variant="body2">
           {description}
         </Typography>
-        <div className={classes.files}>
-          {files.map((file, index) => (
-            <FileCard
-              key={index}
-              ext={file.ext}
-              name={file.name}
-            />
-          ))}
+        <div className={classes.filesContainer}>
+          <div className={classes.filesStack}>
+            {files.map((_, index) => {
+              if (index > FILE_STACK_MAX - 1) {
+                return null;
+              }
+
+              const showTooltip = index === 0 && files.length > 1;
+
+              return (
+                <FileCard
+                  key={index}
+                  stackPosition={index}
+                  ext={files[0].ext}
+                  name={files[0].name}
+                  showBadge={showTooltip}
+                  badgeTooltip={getTooltip()}
+                  badgeNumber={files.length}
+                />
+              );
+            })}
+          </div>
         </div>
-        <Typography variant="body2" color="secondary">
+        <Typography variant="body2" color="secondary" className={classes.timestamp}>
           {moment(timestamp).fromNow()}
         </Typography>
         <div className={classes.buttonContainer}>

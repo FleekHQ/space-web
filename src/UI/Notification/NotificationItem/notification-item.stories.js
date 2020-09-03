@@ -19,6 +19,29 @@ storiesOf(categoryName, module).add('MenuItem', () => {
       {
         name: 'Branding.zip',
         ext: 'zip',
+      },
+      {
+        name: 'Branding5552.zip',
+        ext: 'zip',
+      },
+      {
+        name: 'Branding222.zip',
+        ext: 'zip',
+      },      {
+        name: 'Branding2555.zip',
+        ext: 'zip',
+      },
+      {
+        name: 'Branding2.zip',
+        ext: 'zip',
+      },
+      {
+        name: 'Branding5552.zip',
+        ext: 'zip',
+      },
+      {
+        name: 'Branding552.zip',
+        ext: 'zip',
       }
     ]),
     i18n: {
