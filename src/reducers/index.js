@@ -15,8 +15,6 @@ import publicFileLinkReducer from './public-file-link';
 import deleteAccountReducer from './delete-account';
 import settingsReducer from './settings';
 
-export const RESET_STORE = 'RESET_STORE';
-
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
