@@ -18,7 +18,7 @@ export default makeStyles({
     },
   },
   openBtn: {
-    minWidth: 120,
+    width: '100%',
   },
   menuBtn: {
     fontSize: 18,
