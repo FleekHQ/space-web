@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Security, Account, Usage } from './views';
+import { Security, Account } from './views';
 
 export default ({
   t,
@@ -26,14 +26,15 @@ export default ({
   //   title: t('modals.settings.notifications.title'),
   //   content: <div>notifications</div>,
   // },
-  {
-    id: 'usage',
-    default: defaultItem === 'usage',
-    title: t('modals.settings.usage.title'),
-    content: (
-      <Usage />
-    ),
-  },
+  // TODO: uncomment after integration
+  // {
+  //   id: 'usage',
+  //   default: defaultItem === 'usage',
+  //   title: t('modals.settings.usage.title'),
+  //   content: (
+  //     <Usage />
+  //   ),
+  // },
   // TODO: uncomment after integration
   // {
   //   id: 'referrals',

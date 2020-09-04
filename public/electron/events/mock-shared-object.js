@@ -1,7 +1,7 @@
 module.exports = {
   data: [
     {
-      path: '/Presentation-s.pptx',
+      path: 'Presentation-s.pptx',
       name: 'Presentation-s.pptx',
       isDir: false,
       created: '2020-08-25T10:17:16-04:00',
@@ -19,7 +19,7 @@ module.exports = {
       ],
     },
     {
-      path: '/image-s.jpg',
+      path: 'image-s.jpg',
       name: 'image-s.jpg',
       isDir: false,
       created: '2020-08-25T10:17:16-04:00',
@@ -37,7 +37,7 @@ module.exports = {
       ],
     },
     {
-      path: '/list_of_things-s.txt',
+      path: 'list_of_things-s.txt',
       name: 'list_of_things-s.txt',
       isDir: false,
       created: '2020-08-25T10:17:16-04:00',
@@ -55,7 +55,7 @@ module.exports = {
       ],
     },
     {
-      path: '/subfolder-s',
+      path: 'subfolder-s',
       name: 'subfolder-s',
       isDir: true,
       created: '2020-08-25T10:17:16-04:00',
@@ -68,7 +68,7 @@ module.exports = {
       members: [],
     },
     {
-      path: '/subfolder-s/.keep',
+      path: 'subfolder-s/.keep',
       name: '.keep',
       isDir: false,
       created: '2020-08-25T10:17:20-04:00',
@@ -81,7 +81,7 @@ module.exports = {
       members: [],
     },
     {
-      path: '/subfolder-s/List-s.xlsx',
+      path: 'subfolder-s/List-s.xlsx',
       name: 'List-s.xlsx',
       isDir: false,
       created: '2020-08-25T10:17:20-04:00',
@@ -94,7 +94,7 @@ module.exports = {
       members: [],
     },
     {
-      path: '/subfolder-s/sub-s',
+      path: 'subfolder-s/sub-s',
       name: 'sub-s',
       isDir: true,
       created: '2020-08-25T10:17:20-04:00',
@@ -107,7 +107,7 @@ module.exports = {
       members: [],
     },
     {
-      path: '/subfolder-s/sub-s/.keep',
+      path: 'subfolder-s/sub-s/.keep',
       name: '.keep',
       isDir: false,
       created: '2020-08-25T10:17:24-04:00',
@@ -120,7 +120,7 @@ module.exports = {
       members: [],
     },
     {
-      path: '/subfolder-s/sub-s/data-s.json',
+      path: 'subfolder-s/sub-s/data-s.json',
       name: 'data-s.json',
       isDir: false,
       created: '2020-08-25T10:17:24-04:00',
@@ -133,7 +133,7 @@ module.exports = {
       members: [],
     },
     {
-      path: '/subfolder-s/sub-s/key-s.txt',
+      path: 'subfolder-s/sub-s/key-s.txt',
       name: 'key-s.txt',
       isDir: false,
       created: '2020-08-25T10:17:24-04:00',
