@@ -46,10 +46,6 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
     },
   } = item;
   const file = itemPaths[0];
-  /* eslint-disable-next-line no-useless-escape */
-  const testIsExtension = /^[\w\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+\.[\w]+$/;
-  const isExtension = testIsExtension.test(file);
-  const fileSplit = file.split('.');
 
   const getDescription = () => {
     const filePathSplit = file.split('/');
@@ -83,10 +79,17 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
     username: subject,
     timestamp: createdAt,
     description: getDescription(),
-    files: [{
-      name: file,
-      ext: isExtension && fileSplit[fileSplit.length - 1],
-    }],
+    files: itemPaths.map((itemPath) => {
+      const currentFileSplitPath = itemPath.split('/');
+      const currentFile = currentFileSplitPath[currentFileSplitPath.length - 1];
+      const currentFileExtension = currentFile.split('.');
+      const testIsExtension = /^[\w!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+\.[\w]+$/;
+      const isExtension = testIsExtension.test(currentFile);
+      return ({
+        name: currentFile,
+        ext: isExtension && currentFileExtension[currentFileExtension.length - 1],
+      });
+    }),
     status,
     highlighted: getHighlighted(item, lastSeenAt),
   });

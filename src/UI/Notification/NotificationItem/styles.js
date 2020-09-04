@@ -27,14 +27,17 @@ export default makeStyles((theme) => ({
     color: theme.palette.palette.red,
     backgroundColor: `${theme.palette.palette.white} !important`,
   },
-  files: {
+  filesContainer: {
+    marginLeft: (props) => 3 * (props.stackedItems - 1),
     margin: '6px 0',
     '& > *:not(:last-child)': {
       marginBottom: 5,
     },
   },
+  filesStack: {
+    position: 'relative',
+  },
   buttonContainer: {
-    marginTop: 6,
     display: 'flex',
     '& > *:not(:last-child)': {
       marginRight: 5,
@@ -57,5 +60,9 @@ export default makeStyles((theme) => ({
   rejected: {
     color: theme.palette.palette.red,
     backgroundColor: `${theme.palette.palette.red}6c`,
+  },
+  timestamp: {
+    marginTop: (props) => (16 + 3 * (props.stackedItems - 1)),
+    marginBottom: 6,
   },
 }));

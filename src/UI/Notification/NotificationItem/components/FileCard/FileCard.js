@@ -2,28 +2,62 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FileIcon from '@ui/FileIcon';
 import Typography from '@ui/Typography';
+import Badge from '@material-ui/core/Badge';
 
 import useStyles from './styles';
 
 const FileCard = (props) => {
-  const { ext, name } = props;
-  const classes = useStyles();
+  const {
+    ext,
+    name,
+    showBadge,
+    badgeNumber,
+    badgeTooltip,
+  } = props;
+  const classes = useStyles(props);
 
   return (
     <div className={classes.root}>
-      <div className={classes.iconContainer}>
-        <FileIcon ext={ext} />
+      <div className={classes.container}>
+        <Badge
+          invisible={!showBadge}
+          badgeContent={(
+            <Typography className={classes.badgeContent} title={badgeTooltip}>
+              {badgeNumber}
+            </Typography>
+          )}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          classes={{
+            badge: classes.badge,
+          }}
+        >
+          <div className={classes.iconContainer}>
+            <FileIcon ext={ext} />
+          </div>
+          <Typography variant="body2">
+            { name }
+          </Typography>
+        </Badge>
       </div>
-      <Typography variant="body2">
-        { name }
-      </Typography>
     </div>
   );
+};
+
+FileCard.defaultProps = {
+  showBadge: false,
+  badgeNumber: 0,
+  badgeTooltip: '',
 };
 
 FileCard.propTypes = {
   ext: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  showBadge: PropTypes.bool,
+  badgeNumber: PropTypes.number,
+  badgeTooltip: PropTypes.string,
 };
 
 export default FileCard;
