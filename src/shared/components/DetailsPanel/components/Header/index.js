@@ -1,11 +1,10 @@
 import React from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
-import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
 import FileIcon from '@ui/FileIcon';
+import { openObject } from '@events';
 import Typography from '@ui/Typography';
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
@@ -14,6 +13,13 @@ const DetailsPanel = ({ objects }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const allFolders = objects.filter((obj) => obj.type === 'folder');
+
+  const onClickOpen = () => {
+    const file = get(objects, '[0]', {}) || {};
+    const fileBucket = file.sourceBucket || file.bucket;
+
+    openObject(file.key, fileBucket);
+  };
 
   return (
     <div className={classes.root}>
@@ -44,14 +50,10 @@ const DetailsPanel = ({ objects }) => {
       </Typography>
       <div className={classes.buttonsGroup}>
         {objects.length === 1 && (
-          <Button variant="outlined" className={classes.openBtn}>
+          <Button variant="outlined" className={classes.openBtn} onClick={onClickOpen}>
             {t('detailsPanel.open')}
-            <FontAwesomeIcon className={classes.arrowIcon} icon={faChevronDown} />
           </Button>
         )}
-        <Button variant="outlined" className={classes.menuBtn}>
-          <FontAwesomeIcon icon={faEllipsisH} />
-        </Button>
       </div>
     </div>
   );

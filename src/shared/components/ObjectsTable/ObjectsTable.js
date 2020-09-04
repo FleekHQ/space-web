@@ -85,7 +85,8 @@ const ObjectsTable = ({
         selected: false,
       }));
     } else if (row.type === 'file') {
-      openObject(row.key);
+      const rowBucket = row.sourceBucket || row.bucket;
+      openObject(row.key, rowBucket);
 
       newRows = rows.map((_row) => ({
         ..._row,
