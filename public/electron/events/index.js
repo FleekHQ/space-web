@@ -44,7 +44,7 @@ const registerEvents = ({
   return () => {
     stream.destroy();
     txlStream.destroy();
-    notificationStream.desdtroy();
+    notificationStream.destroy();
   };
 };
 
