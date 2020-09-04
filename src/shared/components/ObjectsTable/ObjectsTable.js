@@ -22,6 +22,8 @@ const ObjectsTable = ({
   getRedirectUrl,
   onOutsideClick,
   onDropzoneDrop,
+  loading,
+  renderLoadingRows,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -148,6 +150,8 @@ const ObjectsTable = ({
             head={withRowOptions ? [...heads, { width: 43 }] : heads}
             rows={rows}
             className={classes.root}
+            renderLoadingRows={renderLoadingRows}
+            loading={loading}
             renderHead={({ head = [] }) => (
               <TableRow>
                 {head.map(({ width, title }) => (
@@ -198,6 +202,8 @@ ObjectsTable.defaultProps = {
   onDropzoneDrop: null,
   withRowOptions: false,
   onOutsideClick: () => null,
+  renderLoadingRows: () => null,
+  loading: false,
 };
 
 ObjectsTable.propTypes = {
@@ -209,6 +215,8 @@ ObjectsTable.propTypes = {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   })).isRequired,
   renderRow: PropTypes.func.isRequired,
+  renderLoadingRows: PropTypes.func,
+  loading: PropTypes.bool,
   getRedirectUrl: PropTypes.func.isRequired,
   withRowOptions: PropTypes.bool,
 };

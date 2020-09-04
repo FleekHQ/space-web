@@ -54,6 +54,11 @@ const registerObjectsEvents = () => {
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
+      payload: false,
+      type: SET_LOADING_STATE,
+    });
+
+    store.dispatch({
       payload: objects,
       type: STORE_DIR,
     });

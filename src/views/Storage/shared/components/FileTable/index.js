@@ -12,6 +12,7 @@ import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
 import { renderRow } from '../../renderRow';
 import getTableHeads from '../../getTableHeads';
+import renderLoadingRows from '../../renderLoadingRows';
 
 const FileTable = ({
   bucket,
@@ -30,6 +31,8 @@ const FileTable = ({
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
   ]);
+
+  const { loading } = useSelector((state) => state.storage);
 
   const handleTableOutsideClick = (target) => {
     // avoid unselecting if user interact with detail panel
@@ -64,6 +67,8 @@ const FileTable = ({
       rows={rows}
       bucket={bucket}
       renderRow={renderRow}
+      loading={loading}
+      renderLoadingRows={renderLoadingRows}
       heads={getTableHeads(t)}
       getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}
