@@ -103,11 +103,7 @@ const NotificationItem = (props) => {
         </Typography>
         <div className={classes.filesContainer}>
           <div className={classes.filesStack}>
-            {files.map((_, index) => {
-              if (index > FILE_STACK_MAX - 1) {
-                return null;
-              }
-
+            {files.slice(0, FILE_STACK_MAX).map((_, index) => {
               const showTooltip = index === 0 && files.length > 1;
 
               return (
