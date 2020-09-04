@@ -11,7 +11,12 @@ const registerNotificationSubscribe = (mainWindow) => {
   });
 
   eventStream.on('error', (error) => {
-    mainWindow.webContents.send(NOTIFICATION_SUBSCRIBE_ERROR, error);
+    try {
+      mainWindow.webContents.send(NOTIFICATION_SUBSCRIBE_ERROR, error);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    }
   });
 
   return eventStream;
