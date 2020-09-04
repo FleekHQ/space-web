@@ -80,7 +80,9 @@ const Security = ({ t }) => {
         state.showSeedPhraseModal && (
           <SeedPhraseModal
             t={t}
-            onDone={() => setState((prevState) => ({ ...prevState, showSeedPhraseModal: false }))}
+            closeModal={() => (
+              setState((prevState) => ({ ...prevState, showSeedPhraseModal: false }))
+            )}
           />
         )
       }

@@ -18,7 +18,7 @@ import useStyles from './styles';
 
 const SeedPhraseModal = ({
   t,
-  onDone,
+  closeModal,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -37,6 +37,7 @@ const SeedPhraseModal = ({
 
   return (
     <BaseModal
+      onClose={closeModal}
       paperProps={{
         className: classes.paper,
       }}
@@ -45,7 +46,7 @@ const SeedPhraseModal = ({
       }}
     >
       <Typography align="center" variant="h6">
-        <Box fontWeight={600}>
+        <Box component="span" fontWeight={600}>
           {t('modals.settings.security.seedPhraseModal.title')}
         </Box>
       </Typography>
@@ -58,6 +59,7 @@ const SeedPhraseModal = ({
         multiline
         fullWidth
         variant="outlined"
+        rows={3}
         value={state.seedphrase || ''}
         InputProps={{
           readOnly: true,
@@ -88,7 +90,7 @@ const SeedPhraseModal = ({
       <br />
       <Button
         variant="contained"
-        onClick={onDone}
+        onClick={() => closeModal()}
         disabled={!confirmed || state.loading}
       >
         {
@@ -103,7 +105,7 @@ const SeedPhraseModal = ({
 
 SeedPhraseModal.propTypes = {
   t: PropTypes.func.isRequired,
-  onDone: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default SeedPhraseModal;
