@@ -73,7 +73,19 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-    case SET_UPLOAD_ERROR_STATE:
+    case SET_UPLOAD_ERROR_STATE: {
+      return {
+        ...state,
+        uploadsList: {
+          ...state.uploadsList,
+          [action.payload.id]: {
+            ...state.uploadsList[action.payload.id],
+            errorMessage: action.payload.payload.message,
+          },
+        },
+      };
+    }
+
     case SET_UPLOAD_SUCCESS_STATE: {
       return {
         ...state,
