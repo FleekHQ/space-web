@@ -41,6 +41,8 @@ const registerIdentitiesEvents = (mainWindow) => {
         .getMembersList()
         .map((member) => ({ address: member.getAddress() }));
 
+      if (membersAddresses.length < 1) return;
+
       const apiTokens = await spaceClient.getAPISessionTokens();
 
       const { data } = await apiClient.identities.getByAddress({
