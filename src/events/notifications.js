@@ -36,6 +36,31 @@ const registerNotificationEvents = () => {
   ipcRenderer.on(READ_NOTIFICATION_SUCCESS_EVENT, () => {
     // TODO: do something
   });
+
+  ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, (_, data) => {
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
+      status: data.accept ? 'ACCEPTED' : 'REJECTED',
+      ...data,
+    });
+  });
+
+  ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, err) => {
+    /* eslint-disable-next-line no-console */
+    console.error(err);
+  });
+
+  ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, (_, data) => {
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
+      lastSeenAt: data.timestamp,
+    });
+  });
+
+  ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR, (_, err) => {
+    /* eslint-disable-next-line no-console */
+    console.error(err);
+  });
 };
 
 export const readNotification = (payload) => {
@@ -53,33 +78,8 @@ export const handleFilesInvitation = (payload) => {
   ipcRenderer.send(HANDLE_FILES_INVITATION, payload);
 };
 
-ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, (_, data) => {
-  store.dispatch({
-    type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
-    status: data.accept ? 'ACCEPTED' : 'REJECTED',
-    ...data,
-  });
-});
-
-ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, err) => {
-  /* eslint-disable-next-line no-console */
-  console.error(err);
-});
-
 export const setNotificationsLastSeenAt = (payload) => {
   ipcRenderer.send(SET_NOTIFICATIONS_LAST_SEEN_AT, payload);
 };
-
-ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, (_, data) => {
-  store.dispatch({
-    type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
-    lastSeenAt: data.timestamp,
-  });
-});
-
-ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR, (_, err) => {
-  /* eslint-disable-next-line no-console */
-  console.error(err);
-});
 
 export default registerNotificationEvents;
