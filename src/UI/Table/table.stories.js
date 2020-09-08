@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Typography from '@material-ui/core/Typography';
 import { object, boolean } from '@storybook/addon-knobs';
-import LoadingCell from './components/LoadingCell';
+
 import Table from './index';
 import {
   FileCell,
@@ -54,25 +54,6 @@ const renderRow = ({ row }) => (
   </TableRow>
 );
 
-const renderLoadingRows = () => [...Array(20)].map((_, index) => (
-  <TableRow
-    key={index}
-  >
-    <TableCell>
-      <LoadingCell isIconCell />
-    </TableCell>
-    <TableCell>
-      <LoadingCell />
-    </TableCell>
-    <TableCell>
-      <LoadingCell />
-    </TableCell>
-    <TableCell>
-      <LoadingCell isLastCell/>
-    </TableCell>
-  </TableRow>
-));
-
 storiesOf(categoryName, module).add('Table', () => {
   const defaultProps = {
     head: object('head', [
@@ -81,7 +62,6 @@ storiesOf(categoryName, module).add('Table', () => {
       'Last Modified',
       '',
     ]),
-    loading: boolean('loading', true),
     rows: object('rows', [
       {
         id: 'a1',
@@ -153,7 +133,7 @@ storiesOf(categoryName, module).add('Table', () => {
     onDoubleClickRow: action('onDoubleClickRow'),
     renderRow,
     renderHead,
-    renderLoadingRows,
+    // renderLoadingRows,
   };
 
   return (

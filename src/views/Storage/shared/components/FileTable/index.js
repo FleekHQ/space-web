@@ -12,7 +12,6 @@ import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
 import { renderRow } from '../../renderRow';
 import getTableHeads from '../../getTableHeads';
-import renderLoadingRows from '../../render-loading-rows';
 
 const FileTable = ({
   bucket,
@@ -23,7 +22,7 @@ const FileTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [rows, isSharingModalVisible, loading, error] = useSelector((state) => [
+  const [rows, isSharingModalVisible, error] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
@@ -31,7 +30,6 @@ const FileTable = ({
       '/',
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
-    state.storage.loading,
     state.storage.error,
   ]);
 
@@ -68,12 +66,10 @@ const FileTable = ({
       rows={rows}
       bucket={bucket}
       renderRow={renderRow}
-      loading={loading}
       error={!!error}
       errorMessage={t('modules.storage.fileTable.error.message')}
       buttonErrorMessage={t('modules.storage.fileTable.error.buttonText')}
       fetchObjects={fetchObjects}
-      renderLoadingRows={renderLoadingRows}
       heads={getTableHeads(t)}
       getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}

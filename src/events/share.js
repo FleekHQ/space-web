@@ -1,6 +1,8 @@
+import get from 'lodash/get';
 import { ipcRenderer } from 'electron';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
+import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
 
 import store from '../store';
 
@@ -27,10 +29,28 @@ const registerObjectsEvents = () => {
     console.error(error);
   });
 
-  ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, () => {
+  ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, (_, payload) => {
+    const usersNotFound = get(payload, 'usersNotFound', []) || [];
+
     store.dispatch({
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,
     });
+
+    if (usersNotFound.length > 0) {
+      const props = {
+        i18nKey: 'errorModal.usersNotFound',
+        i18nValues: { usernames: usersNotFound.join(', ') },
+      };
+
+      store.dispatch({
+        type: OPEN_MODAL,
+        payload: {
+          id: 'not-found-usernames',
+          type: ERROR_MODAL_TOAST,
+          props,
+        },
+      });
+    }
   });
 
   ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, (_, error) => {

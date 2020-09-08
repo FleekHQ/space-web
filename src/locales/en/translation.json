@@ -193,6 +193,9 @@
     "dismiss": "Dismiss",
     "defaultMessage": "Upload in progress..."
   },
+  "errorModal": {
+    "usersNotFound": "Some usernames that you are trying to share with doesn't exists: <0>{{usernames}}</0>"
+  },
   "sharingProgressModal": {
     "message": "Shared <0>{{fileName}}",
     "inProgress": "Sharing <0>{{fileName}}...",
