@@ -39,7 +39,7 @@ const registerIdentitiesEvents = (mainWindow) => {
       const res = await spaceClient.getRecentlySharedWith();
       const membersAddresses = res
         .getMembersList()
-        .map((member) => ({ address: member.getAddress() }));
+        .map((member) => member.getAddress());
 
       if (membersAddresses.length < 1) return;
 
