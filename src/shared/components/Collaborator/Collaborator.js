@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/pro-light-svg-icons/faUser';
+import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 
 import useStyles from './styles';
 
