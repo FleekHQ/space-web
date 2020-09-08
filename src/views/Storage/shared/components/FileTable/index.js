@@ -18,11 +18,12 @@ const FileTable = ({
   bucket,
   prefix,
   baseRedirectUrl,
+  fetchObjects,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [rows, isSharingModalVisible, loading] = useSelector((state) => [
+  const [rows, isSharingModalVisible, loading, error] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
@@ -31,6 +32,7 @@ const FileTable = ({
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
     state.storage.loading,
+    state.storage.error,
   ]);
 
   const handleTableOutsideClick = (target) => {
@@ -67,6 +69,10 @@ const FileTable = ({
       bucket={bucket}
       renderRow={renderRow}
       loading={loading}
+      error={!!error}
+      errorMessage={t('modules.storage.fileTable.error.message')}
+      buttonErrorMessage={t('modules.storage.fileTable.error.buttonText')}
+      fetchObjects={fetchObjects}
       renderLoadingRows={renderLoadingRows}
       heads={getTableHeads(t)}
       getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
@@ -78,12 +84,14 @@ const FileTable = ({
 
 FileTable.defaultProps = {
   baseRedirectUrl: '/storage/files',
+  fetchObjects: () => {},
 };
 
 FileTable.propTypes = {
   bucket: PropTypes.string.isRequired,
   prefix: PropTypes.string.isRequired,
   baseRedirectUrl: PropTypes.string,
+  fetchObjects: PropTypes.func,
 };
 
 export default FileTable;

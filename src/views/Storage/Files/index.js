@@ -27,7 +27,11 @@ const StorageMainView = () => {
       <Typography variant="h6" className={classes.title} weight="medium">
         {t('navigation.files')}
       </Typography>
-      <FileTable bucket="personal" prefix={prefix} />
+      <FileTable
+        bucket="personal"
+        prefix={prefix}
+        fetchObjects={() => fetchDir(prefix)}
+      />
     </div>
   );
 };
