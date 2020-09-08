@@ -8,7 +8,7 @@ import { addItems } from '@events';
 import { objectsSelector } from '@utils';
 import { renderRow } from '../../../shared/renderRow';
 import getTableHeads from '../../../shared/getTableHeads';
-import renderLoadingRows from '../../../shared/renderLoadingRows';
+import renderLoadingRows from '../../../shared/render-loading-rows';
 
 const FileTable = ({ bucket, prefix }) => {
   const { t } = useTranslation();

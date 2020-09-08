@@ -8,6 +8,8 @@ const LoadingCell = (props) => {
 
   const { isLastCell, isIconCell } = props;
   const cellWidth = isLastCell ? '100%' : 'calc(100% - 25px)';
+  const ANIMATION = 'wave';
+  const VARIANT = 'rect';
 
   return (
     <>
@@ -17,23 +19,23 @@ const LoadingCell = (props) => {
             width={23}
             height={23}
             className={classes.iconCell}
-            animation="wave"
-            variant="rect"
+            animation={ANIMATION}
+            variant={VARIANT}
           />
           <Skeleton
             width="calc(100% - 29px - 25px)"
             height={23}
             className={classes.cell}
-            animation="wave"
-            variant="rect"
+            animation={ANIMATION}
+            variant={VARIANT}
           />
         </div>
       ) : (
         <Skeleton
           width={cellWidth}
           height={23}
-          animation="wave"
-          variant="rect"
+          animation={ANIMATION}
+          variant={VARIANT}
         />
       )}
     </>
