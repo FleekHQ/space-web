@@ -8,20 +8,18 @@ import { addItems } from '@events';
 import { objectsSelector } from '@utils';
 import { renderRow } from '../../../shared/renderRow';
 import getTableHeads from '../../../shared/getTableHeads';
-import renderLoadingRows from '../../../shared/render-loading-rows';
 
 const FileTable = ({ bucket, prefix }) => {
   const { t } = useTranslation();
 
-  const [rows, loading] = useSelector((state) => [
+  const rows = useSelector((state) => (
     objectsSelector(
       state,
       bucket,
       prefix,
       '/',
-    ),
-    state.storage.loading,
-  ]);
+    )
+  ));
 
   const onDropzoneDrop = (files) => {
     addItems({
@@ -32,11 +30,9 @@ const FileTable = ({ bucket, prefix }) => {
 
   return (
     <ObjectsTable
-      loading={loading}
       rows={rows}
       heads={getTableHeads(t)}
       renderRow={renderRow}
-      renderLoadingRows={renderLoadingRows}
       withRowOptions
       onDropzoneDrop={onDropzoneDrop}
       getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}
