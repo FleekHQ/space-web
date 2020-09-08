@@ -13,12 +13,13 @@ const TRANSITION_TIMEOUT = 300;
 const UploadProgress = ({ id, closeModal }) => {
   const [timeoutId, setTimeoutId] = useState(null);
   const { t } = useTranslation();
-  const { completedFiles = 0, totalFiles = 0 } = useSelector((state) => (
+  const { completedFiles = 0, totalFiles = 0, errorMessage } = useSelector((state) => (
     state.storage.uploadsList[id] || {}
   ));
 
   const classes = useStyles({
     progress: completedFiles / totalFiles || 0,
+    error: !!errorMessage,
   });
 
   const onClickDismiss = () => {
@@ -45,17 +46,19 @@ const UploadProgress = ({ id, closeModal }) => {
     <Grow in={!timeoutId} timeout={TRANSITION_TIMEOUT}>
       <div className={classes.root}>
         <div className={classes.info}>
-          <Typography variant="body2">
-            <Trans
-              i18nKey={isShownDefaultMsg
-                ? 'uploadProgressModal.defaultMessage'
-                : 'uploadProgressModal.message'}
-              values={{
-                uploadedNumber: completedFiles,
-                totalNumber: totalFiles,
-              }}
-              components={[<Box fontWeight="600" component="span" />]}
-            />
+          <Typography variant="body2" className={classes.message}>
+            {errorMessage || (
+              <Trans
+                i18nKey={isShownDefaultMsg
+                  ? 'uploadProgressModal.defaultMessage'
+                  : 'uploadProgressModal.message'}
+                values={{
+                  uploadedNumber: completedFiles,
+                  totalNumber: totalFiles,
+                }}
+                components={[<Box fontWeight="600" component="span" />]}
+              />
+            )}
           </Typography>
           <Button
             color="secondary"
