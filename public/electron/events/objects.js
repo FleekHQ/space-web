@@ -1,11 +1,7 @@
-/* eslint-disable */
 const { ipcMain, shell } = require('electron');
 const get = require('lodash/get');
 
 const { spaceClient } = require('../clients');
-
-// TODO: remove mock
-const mockSharedObjects = require('./mock-shared-object');
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
@@ -108,37 +104,23 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(FETCH_SHARED_OBJECTS_EVENT, async (event, payload = {}) => {
     try {
-      // TODO: uncomment once BE release daemon with getSharedWithMeFiles implemented
+      const res = await spaceClient.getSharedWithMeFiles({
+        seek: '',
+        limit: 100,
+        ...payload,
+      });
 
-      // const res = await spaceClient.getSharedWithMeFiles({
-      //   seek: '',
-      //   limit: 100,
-      //   ...payload,
-      // });
-
-      // const objects = {
-      //   nextOffset: res.getNextoffset(),
-      //   items: res.getItemsList().map((item) => {
-      //     const entry = item.getEntry();
-
-      //     return {
-      //       dbId: item.getDbid(),
-      //       sourceBucket: item.getBucket(),
-      //       ...entryToObject(entry, 'shared-with-me'),
-      //     };
-      //   }),
-      // };
-
-
-      // TODO: remove mock data
       const objects = {
-        nextOffset: 10,
-        items: mockSharedObjects.data.map((item, index) => ({
-          dbId: `db-id-${index}`,
-          bucket: 'shared-with-me',
-          sourceBucket: `source-bucket-${index}`,
-          ...item,
-        })),
+        nextOffset: res.getNextoffset(),
+        items: res.getItemsList().map((item) => {
+          const entry = item.getEntry();
+
+          return {
+            dbId: item.getDbid(),
+            sourceBucket: item.getBucket(),
+            ...entryToObject(entry, 'shared-with-me'),
+          };
+        }),
       };
 
       mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, objects);
