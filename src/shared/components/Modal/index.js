@@ -9,6 +9,7 @@ import PromptModal from './Prompt';
 import CreateFolder from './CreateFolder';
 import DeleteAccountConfirmation from './DeleteAccountConfirmation';
 import SignoutConfirmation from './SignoutConfirmation';
+import ErrorModal from './Error';
 import useStyles from './styles';
 
 import {
@@ -21,6 +22,7 @@ import {
   CREATE_FOLDER,
   DELETE_ACCOUNT,
   SIGNOUT_CONFIRMATION,
+  ERROR_MODAL_TOAST,
 } from './actions';
 
 const MODALS = {
@@ -32,6 +34,7 @@ const MODALS = {
   [CREATE_FOLDER]: CreateFolder,
   [DELETE_ACCOUNT]: DeleteAccountConfirmation,
   [SIGNOUT_CONFIRMATION]: SignoutConfirmation,
+  [ERROR_MODAL_TOAST]: ErrorModal,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {
