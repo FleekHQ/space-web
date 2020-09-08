@@ -12,7 +12,7 @@ import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
 import { renderRow } from '../../renderRow';
 import getTableHeads from '../../getTableHeads';
-import renderLoadingRows from '../../renderLoadingRows';
+import renderLoadingRows from '../../render-loading-rows';
 
 const FileTable = ({
   bucket,
@@ -22,7 +22,7 @@ const FileTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [rows, isSharingModalVisible] = useSelector((state) => [
+  const [rows, isSharingModalVisible, loading] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
@@ -30,9 +30,8 @@ const FileTable = ({
       '/',
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
+    state.storage.loading,
   ]);
-
-  const { loading } = useSelector((state) => state.storage);
 
   const handleTableOutsideClick = (target) => {
     // avoid unselecting if user interact with detail panel

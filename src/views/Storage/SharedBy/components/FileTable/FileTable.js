@@ -13,16 +13,15 @@ import renderLoadingRows from '../../../shared/renderLoadingRows';
 const FileTable = ({ bucket, prefix }) => {
   const { t } = useTranslation();
 
-  const rows = useSelector((state) => (
+  const [rows, loading] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
       prefix,
       '/',
-    )
-  ));
-
-  const { loading } = useSelector((state) => (state.storage));
+    ),
+    state.storage.loading,
+  ]);
 
   const onDropzoneDrop = (files) => {
     addItems({
