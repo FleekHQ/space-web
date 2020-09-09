@@ -1,6 +1,9 @@
+const { InvitationStatus, NotificationType } = require('@fleekhq/space-client/dist/definitions/space_pb');
+
 const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
+const { swapKeyValue } = require('../utils');
 
 const EVENT_PREFIX = 'notifications';
 const READ_NOTIFICATION_EVENT = `${EVENT_PREFIX}:readNotification`;
@@ -15,17 +18,6 @@ const HANDLE_FILES_INVITATION_ERROR = `${EVENT_PREFIX}:handleFilesInvitation:err
 const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeenAt`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
-
-const indexToType = [
-  'INVITATION',
-  'USAGEALERT',
-];
-
-const indexToInvitationStatus = [
-  'PENDING',
-  'ACCEPTED',
-  'REJECTED',
-];
 
 const registerNotificationsEvents = (mainWindow) => {
   ipcMain.on(READ_NOTIFICATION_EVENT, async (event, payload) => {
@@ -42,6 +34,9 @@ const registerNotificationsEvents = (mainWindow) => {
     try {
       const res = await spaceClient.getNotifications(payload);
 
+      const invitationStatusByIndex = swapKeyValue(InvitationStatus);
+      const notificationTypeByIndex = swapKeyValue(NotificationType);
+
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
         nextOffset: res.getNextoffset(),
         notifications: res.getNotificationsList().map((notification) => {
@@ -54,7 +49,7 @@ const registerNotificationsEvents = (mainWindow) => {
             id: notification.getId(),
             subject: notification.getSubject(),
             body: notification.getBody(),
-            type: indexToType[notification.getType()],
+            type: notificationTypeByIndex[notification.getType()],
             createdAt: notification.getCreatedat(),
             readAt: notification.getReadat(),
             relatedObject: notification.getRelatedobjectCase(),
@@ -67,7 +62,7 @@ const registerNotificationsEvents = (mainWindow) => {
                 })),
                 inviterPublicKey: invitationValue.getInviterpublickey(),
                 invitationID: invitationValue.getInvitationid(),
-                status: indexToInvitationStatus[invitationValue.getStatus()],
+                status: invitationStatusByIndex[invitationValue.getStatus()],
               },
             }),
             ...(relatedObject === 5 && {
@@ -82,7 +77,7 @@ const registerNotificationsEvents = (mainWindow) => {
                 invitationID: invitationAccept.getInvitationid(),
               },
             }),
-          })
+          });
         }),
       });
     } catch (err) {
