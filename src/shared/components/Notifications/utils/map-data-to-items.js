@@ -15,7 +15,7 @@ const mapBackupLimitItem = (item, lastSeenAt) => {
   const {
     id,
     createdAt,
-    relatedObject:
+    usageAlert:
       {
         used,
         limit,
@@ -39,13 +39,13 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
     id,
     subject,
     createdAt,
-    relatedObject:
+    invitationValue:
     {
       itemPaths,
       status,
     },
   } = item;
-  const file = itemPaths[0];
+  const file = itemPaths[0].path;
 
   const getDescription = () => {
     const filePathSplit = file.split('/');
@@ -80,7 +80,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
     timestamp: createdAt,
     description: getDescription(),
     files: itemPaths.map((itemPath) => {
-      const currentFileSplitPath = itemPath.split('/');
+      const currentFileSplitPath = itemPath.path.split('/');
       const currentFile = currentFileSplitPath[currentFileSplitPath.length - 1];
       const currentFileExtension = currentFile.split('.');
       const testIsExtension = /^[\w!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+\.[\w]+$/;
@@ -100,12 +100,14 @@ const mapDataToItems = (data, Trans, t, classes) => {
 
   const mappedData = notifications.map((item) => {
     const { type } = item;
+
     switch (type) {
       case USAGEALERT:
         return mapBackupLimitItem(item, lastSeenAt);
       case INVITATION:
-      default:
         return mapInvitationItem(item, lastSeenAt, Trans, t, classes);
+      default:
+        return null;
     }
   });
 

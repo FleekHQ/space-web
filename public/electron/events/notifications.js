@@ -16,6 +16,17 @@ const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeen
 const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
+const indexToType = [
+  'INVITATION',
+  'USAGEALERT',
+];
+
+const indexToInvitationStatus = [
+  'PENDING',
+  'ACCEPTED',
+  'REJECTED',
+];
+
 const registerNotificationsEvents = (mainWindow) => {
   ipcMain.on(READ_NOTIFICATION_EVENT, async (event, payload) => {
     try {
@@ -33,15 +44,46 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
         nextOffset: res.getNextoffset(),
-        notifications: res.getNotificationsList().map((notification) => ({
-          id: notification.getId(),
-          subject: notification.getSubject(),
-          body: notification.getBody(),
-          type: notification.getType(),
-          createdAt: notification.getCreatedat(),
-          readAt: notification.getReadat(),
-          relatedObject: notification.getRelatedobjectCase(),
-        })),
+        notifications: res.getNotificationsList().map((notification) => {
+          const relatedObject = notification.getRelatedobjectCase();
+          const invitationValue = notification.getInvitationvalue();
+          const usageAlert = notification.getUsagealert();
+          const invitationAccept = notification.getInvitationaccept();
+
+          return ({
+            id: notification.getId(),
+            subject: notification.getSubject(),
+            body: notification.getBody(),
+            type: indexToType[notification.getType()],
+            createdAt: notification.getCreatedat(),
+            readAt: notification.getReadat(),
+            relatedObject: notification.getRelatedobjectCase(),
+            ...(relatedObject === 4 && {
+              invitationValue: {
+                itemPaths: invitationValue.getItempathsList().map((itemPath) => ({
+                  dbId: itemPath.getDbid(),
+                  bucket: itemPath.getBucket(),
+                  path: itemPath.getPath(),
+                })),
+                inviterPublicKey: invitationValue.getInviterpublickey(),
+                invitationID: invitationValue.getInvitationid(),
+                status: indexToInvitationStatus[invitationValue.getStatus()],
+              },
+            }),
+            ...(relatedObject === 5 && {
+              usageAlert: {
+                used: usageAlert.getUsed(),
+                limit: usageAlert.getLimit(),
+                message: usageAlert.getMessage(),
+              },
+            }),
+            ...(relatedObject === 6 && {
+              invitationAccept: {
+                invitationID: invitationAccept.getInvitationid(),
+              },
+            }),
+          })
+        }),
       });
     } catch (err) {
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_ERROR, err);

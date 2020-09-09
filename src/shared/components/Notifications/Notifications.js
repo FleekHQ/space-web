@@ -73,13 +73,13 @@ const Notifications = () => {
 
   const handleInvitationStatus = (accept) => (item) => {
     const notificationItems = notifications.data.notifications;
-    const acceptedNotification = notificationItems.find(
+    const foundNotification = notificationItems.find(
       (notificationItem) => (notificationItem.id === item.id),
     );
-    if (acceptedNotification) {
+    if (foundNotification) {
       handleFilesInvitation({
         id: item.id,
-        invitationID: acceptedNotification.relatedObject.invitationId,
+        invitationID: foundNotification.invitationValue.invitationID,
         accept,
       });
     }
