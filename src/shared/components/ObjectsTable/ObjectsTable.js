@@ -86,7 +86,7 @@ const ObjectsTable = ({
       }));
     } else if (row.type === 'file') {
       const rowBucket = row.sourceBucket || row.bucket;
-      openObject(row.key, rowBucket);
+      openObject(row.key, row.dbId, rowBucket);
 
       newRows = rows.map((_row) => ({
         ..._row,
