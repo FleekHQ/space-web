@@ -18,7 +18,7 @@ const DetailsPanel = ({ objects }) => {
     const file = get(objects, '[0]', {}) || {};
     const fileBucket = file.sourceBucket || file.bucket;
 
-    openObject(file.key, fileBucket);
+    openObject(file.key, file.dbId, fileBucket);
   };
 
   return (
