@@ -1320,10 +1320,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@fleekhq/space-client@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.0.0.tgz#1dd680d4b0ba6be213bcb0e150b9fd6c54d1986c"
-  integrity sha512-dcOHYIPafHEfKnAjAGCGDq3dV3rfWw99NZ1PKSCXCE+MjFX7MIVvYeIFH7TE/Vj/7qOlL2AcxTb6ifMBQ+6a5A==
+"@fleekhq/space-client@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.0.1.tgz#07022bb9e6155469271fdd15f2aa799d326638fc"
+  integrity sha512-Euefm7MmCvOnwkexwe1Gq6tcgdAzdJrdl2yrhXKgfHusHlvuvfemVLPplRpZzwfhIS33ite5Nn4lFOVtRXBdNA==
   dependencies:
     "@types/google-protobuf" "^3.7.2"
     google-protobuf "^3.12.2"
