@@ -19,6 +19,7 @@ const CollaboratorList = (props) => {
     className,
     collaborators,
     onChangePermissions,
+    usernames,
   } = props;
 
   const classes = useStyles();
@@ -104,7 +105,7 @@ const CollaboratorList = (props) => {
           onClick={onShare}
           variant="contained"
           color="primary"
-          disabled={loading}
+          disabled={loading || usernames.length === 0}
           className={classes.shareButton}
         >
           {i18n.shareButton}
@@ -121,8 +122,8 @@ CollaboratorList.defaultProps = {
   onChangePermissions: () => {},
   onShare: () => {},
   loading: false,
+  usernames: [],
 };
-
 CollaboratorList.propTypes = {
   className: PropTypes.string,
   onChangePermissions: PropTypes.func,
@@ -146,6 +147,11 @@ CollaboratorList.propTypes = {
     shareButton: PropTypes.string,
   }).isRequired,
   onShare: PropTypes.func,
+  usernames: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    mainText: PropTypes.string,
+    username: PropTypes.srting,
+  })),
 };
 
 export default CollaboratorList;
