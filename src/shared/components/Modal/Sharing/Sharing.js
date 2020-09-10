@@ -58,6 +58,8 @@ const SharingModal = (props) => {
   const [step, setStep] = useState(0);
   const [usernames, setUsernames] = useState([]);
 
+  const hasUsers = usernames.length > 0;
+
   const error = get(state, 'shareFileByPublicKey.error') || publicFileLink.error;
 
   const i18n = {
@@ -189,7 +191,7 @@ const SharingModal = (props) => {
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
           loading={get(state, 'shareFileByPublicKey.loading', false)}
-          usernames={usernames}
+          hasUsers={hasUsers}
         />
       </Paper>
       <Paper
