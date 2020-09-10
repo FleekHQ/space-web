@@ -1,3 +1,4 @@
+import uniqBy from 'lodash/uniqBy';
 import cloneDeep from 'lodash/cloneDeep';
 
 export const NOTIFICATIONS_ACTION_TYPES = {
@@ -81,10 +82,10 @@ export default (state = DEFAULT_STATE, action) => {
         loading: false,
         data: {
           ...action.data,
-          notifications: [
+          notifications: uniqBy([
             ...state.data.notifications,
             ...action.data.notifications,
-          ],
+          ], 'id'),
         },
       };
     }
