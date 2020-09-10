@@ -37,16 +37,15 @@ const registerNotificationEvents = () => {
     // TODO: do something
   });
 
-  ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, (_, data) => {
-    store.dispatch({
-      type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
-      status: data.accept ? 'ACCEPTED' : 'REJECTED',
-      ...data,
-    });
+  ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, () => {
   });
 
-  ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, err) => {
-    /* eslint-disable-next-line no-console */
+  ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, payload, err) => {
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
+      status: 'PENDING',
+      ...payload,
+    });
     console.error(err);
   });
 
@@ -75,6 +74,11 @@ export const fetchNotifications = (payload) => {
 };
 
 export const handleFilesInvitation = (payload) => {
+  store.dispatch({
+    type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
+    status: payload.accept ? 'ACCEPTED' : 'REJECTED',
+    ...payload,
+  });
   ipcRenderer.send(HANDLE_FILES_INVITATION, payload);
 };
 
