@@ -50,11 +50,7 @@ const registerNotificationEvents = () => {
     console.error(err);
   });
 
-  ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, (_, data) => {
-    store.dispatch({
-      type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
-      lastSeenAt: data.timestamp,
-    });
+  ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, () => {
   });
 
   ipcRenderer.on(SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR, (_, err) => {
@@ -84,6 +80,10 @@ export const handleFilesInvitation = (payload) => {
 };
 
 export const setNotificationsLastSeenAt = (payload) => {
+  store.dispatch({
+    type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
+    lastSeenAt: payload.timestamp,
+  });
   ipcRenderer.send(SET_NOTIFICATIONS_LAST_SEEN_AT, payload);
 };
 
