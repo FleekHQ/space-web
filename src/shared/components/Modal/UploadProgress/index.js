@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grow from '@material-ui/core/Grow';
+import { addItems } from '@events/add-items-subscribe';
 import useStyles from './styles';
 
 const TRANSITION_TIMEOUT = 300;
@@ -13,10 +14,10 @@ const TRANSITION_TIMEOUT = 300;
 const UploadProgress = ({ id, closeModal }) => {
   const [timeoutId, setTimeoutId] = useState(null);
   const { t } = useTranslation();
-  const { completedFiles = 0, totalFiles = 0, errorMessage } = useSelector((state) => (
-    state.storage.uploadsList[id] || {}
+  const state = useSelector((s) => (
+    s.storage.uploadsList[id] || {}
   ));
-
+  const { completedFiles = 0, totalFiles = 0, errorMessage } = state;
   const classes = useStyles({
     progress: completedFiles / totalFiles || 0,
     error: !!errorMessage,
@@ -40,6 +41,18 @@ const UploadProgress = ({ id, closeModal }) => {
 
   useEffect(() => () => clearTimeout(timeoutId), []);
 
+  const retry = () => {
+    const sourcePaths = Object.entries(state.wasUploaded)
+      .filter(([, wasUploaded]) => !wasUploaded)
+      .map(([key]) => key);
+
+    addItems({
+      sourcePaths,
+      targetPath: state.targetPath,
+    });
+    onClickDismiss();
+  };
+
   const isShownDefaultMsg = completedFiles === 0 && totalFiles === 0;
 
   return (
@@ -60,14 +73,25 @@ const UploadProgress = ({ id, closeModal }) => {
               />
             )}
           </Typography>
-          <Button
-            color="secondary"
-            className={classes.button}
-            onClick={onClickDismiss}
-            disableRipple
-          >
-            {t('uploadProgressModal.dismiss')}
-          </Button>
+          {errorMessage ? (
+            <Button
+              color="primary"
+              className={classes.button}
+              onClick={retry}
+              disableRipple
+            >
+              {t('uploadProgressModal.retry')}
+            </Button>
+          ) : (
+            <Button
+              color="secondary"
+              className={classes.button}
+              onClick={onClickDismiss}
+              disableRipple
+            >
+              {t('uploadProgressModal.dismiss')}
+            </Button>
+          )}
         </div>
         <div className={classes.progressBar} />
       </div>

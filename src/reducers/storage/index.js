@@ -33,6 +33,7 @@ export const SEARCH_TERM_CHANGE = 'SEARCH_TERM_CHANGE';
 export const SET_UPLOAD_ERROR_STATE = 'SET_UPLOAD_ERROR_STATE';
 export const SET_BUCKETS_LIST_ERROR_STATE = 'SET_BUCKETS_LIST_ERROR_STATE';
 export const SET_UPLOAD_SUCCESS_STATE = 'SET_UPLOAD_SUCCESS_STATE';
+export const INIT_UPLOAD_STATE = 'INIT_UPLOAD_STATE';
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
@@ -73,6 +74,22 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
+    case INIT_UPLOAD_STATE: {
+      return {
+        ...state,
+        uploadsList: {
+          ...state.uploadsList,
+          [action.payload.id]: {
+            targetPath: action.payload.targetPath,
+            wasUploaded: action.payload.sourcePaths.reduce((result, path) => ({
+              ...result,
+              [path]: false,
+            }), {}),
+          },
+        },
+      };
+    }
+
     case SET_UPLOAD_ERROR_STATE: {
       return {
         ...state,
@@ -87,11 +104,26 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     case SET_UPLOAD_SUCCESS_STATE: {
+      const currUploadListState = state.uploadsList[action.payload.id];
+      if (!currUploadListState) {
+        return state; // user has closed the modal
+      }
+      const { completedFiles, totalFiles, result } = action.payload.payload;
+      const wasNewFileUploaded = currUploadListState.completedFiles < completedFiles;
+
       return {
         ...state,
         uploadsList: {
           ...state.uploadsList,
-          [action.payload.id]: action.payload.payload,
+          [action.payload.id]: {
+            ...currUploadListState,
+            totalFiles,
+            completedFiles,
+            wasUploaded: {
+              ...currUploadListState.wasUploaded,
+              [result.sourcePath]: wasNewFileUploaded,
+            },
+          },
         },
       };
     }

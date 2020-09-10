@@ -187,7 +187,8 @@
   "uploadProgressModal": {
     "message": "<0>{{uploadedNumber}}</0> out of <0>{{totalNumber}}</0> files uploaded",
     "dismiss": "Dismiss",
-    "defaultMessage": "Upload in progress..."
+    "defaultMessage": "Upload in progress...",
+    "retry": "Try again"
   },
   "errorModal": {
     "usersNotFound": "Some usernames that you are trying to share with doesn't exists: <0>{{usernames}}</0>"
