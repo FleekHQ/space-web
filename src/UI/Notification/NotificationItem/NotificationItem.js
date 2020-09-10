@@ -24,6 +24,7 @@ const NotificationItem = (props) => {
     status,
     highlighted,
   } = props;
+
   const FILE_STACK_MAX = 5;
 
   const classes = useStyles({
