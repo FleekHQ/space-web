@@ -44,6 +44,6 @@ export default makeStyles({
     },
   },
   rootPopover: {
-    top: '30px !important',
+    top: '80px !important',
   },
 });
