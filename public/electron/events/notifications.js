@@ -91,7 +91,7 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
-      mainWindow.webContents.send(HANDLE_FILES_INVITATION_ERROR, err);
+      mainWindow.webContents.send(HANDLE_FILES_INVITATION_ERROR, payload, err);
     }
   });
 
