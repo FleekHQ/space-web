@@ -49,6 +49,33 @@ const listDirectories = async (mainWindow, payload = {}) => {
   }
 };
 
+const listSharedFiles = async (mainWindow, payload = {}) => {
+  try {
+    const res = await spaceClient.getSharedWithMeFiles({
+      seek: '',
+      limit: 100,
+      ...payload,
+    });
+
+    const objects = {
+      nextOffset: res.getNextoffset(),
+      items: res.getItemsList().map((item) => {
+        const entry = item.getEntry();
+
+        return {
+          dbId: item.getDbid(),
+          sourceBucket: item.getBucket(),
+          ...entryToObject(entry, 'shared-with-me'),
+        };
+      }),
+    };
+
+    mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, objects);
+  } catch (err) {
+    mainWindow.webContents.send(FETCH_SHARED_OBJECTS_ERROR_EVENT, err);
+  }
+};
+
 const listDirectory = async (
   mainWindow,
   payload = { path: '', fetchSubFolders: true },
@@ -103,30 +130,7 @@ const registerObjectsEvents = (mainWindow) => {
   });
 
   ipcMain.on(FETCH_SHARED_OBJECTS_EVENT, async (event, payload = {}) => {
-    try {
-      const res = await spaceClient.getSharedWithMeFiles({
-        seek: '',
-        limit: 100,
-        ...payload,
-      });
-
-      const objects = {
-        nextOffset: res.getNextoffset(),
-        items: res.getItemsList().map((item) => {
-          const entry = item.getEntry();
-
-          return {
-            dbId: item.getDbid(),
-            sourceBucket: item.getBucket(),
-            ...entryToObject(entry, 'shared-with-me'),
-          };
-        }),
-      };
-
-      mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, objects);
-    } catch (err) {
-      mainWindow.webContents.send(FETCH_SHARED_OBJECTS_ERROR_EVENT, err);
-    }
+    listSharedFiles(mainWindow, payload);
   });
 };
 
@@ -134,4 +138,5 @@ module.exports = {
   default: registerObjectsEvents,
   listDirectories,
   listDirectory,
+  listSharedFiles,
 };
