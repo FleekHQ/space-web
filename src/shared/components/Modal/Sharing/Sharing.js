@@ -189,6 +189,7 @@ const SharingModal = (props) => {
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
           loading={get(state, 'shareFileByPublicKey.loading', false)}
+          hasUsers={usernames.length > 0}
         />
       </Paper>
       <Paper
