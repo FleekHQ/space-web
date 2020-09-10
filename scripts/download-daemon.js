@@ -16,11 +16,17 @@ async function getDaemon() {
     binaryPlatform = 'Windows';
   }
 
-  const daemonURL = `https://github.com/FleekHQ/space-poc/releases/latest/download/space_${binaryPlatform}_x86_64`;
+  const daemonURL = `https://github.com/FleekHQ/space-poc/releases/latest/download/space_${binaryPlatform}_x86_64${binaryPlatform === 'Windows' ? '.exe' : ''}`;
   const { data, headers } = await axios({
     method: 'GET',
     responseType: 'stream',
     url: daemonURL,
+  }).catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error(`\nError when trying to download the daemon binary from: ${daemonURL}`);
+    // eslint-disable-next-line no-console
+    console.error(`Error : ${error.stack || error.message}`);
+    process.exit(1);
   });
 
   const totalLength = headers['content-length'];
