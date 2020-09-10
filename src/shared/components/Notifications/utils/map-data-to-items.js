@@ -98,18 +98,18 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
 const mapDataToItems = (data, Trans, t, classes) => {
   const { data: { notifications, lastSeenAt } } = data;
 
-  const mappedData = notifications.map((item) => {
+  const mappedData = notifications.reduce((arr, item) => {
     const { type } = item;
-
-    switch (type) {
-      case USAGEALERT:
-        return mapBackupLimitItem(item, lastSeenAt);
-      case INVITATION:
-        return mapInvitationItem(item, lastSeenAt, Trans, t, classes);
-      default:
-        return null;
+    if (type === USAGEALERT) {
+      return arr.concat(mapBackupLimitItem(item, lastSeenAt));
     }
-  });
+
+    if (type === INVITATION) {
+      return arr.concat(mapInvitationItem(item, lastSeenAt, Trans, t, classes));
+    }
+
+    return arr;
+  }, []);
 
   return mappedData;
 };
