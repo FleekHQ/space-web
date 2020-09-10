@@ -130,7 +130,7 @@ const registerObjectsEvents = (mainWindow) => {
   });
 
   ipcMain.on(FETCH_SHARED_OBJECTS_EVENT, async (event, payload = {}) => {
-    listSharedFiles(mainWindow, payload);
+    await listSharedFiles(mainWindow, payload);
   });
 };
 
