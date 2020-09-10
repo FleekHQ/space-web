@@ -46,6 +46,7 @@ const registerNotificationEvents = () => {
       status: 'PENDING',
       ...payload,
     });
+    /* eslint-disable-next-line no-console */
     console.error(err);
   });
 
