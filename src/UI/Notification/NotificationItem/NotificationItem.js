@@ -24,7 +24,6 @@ const NotificationItem = (props) => {
     status,
     highlighted,
   } = props;
-
   const FILE_STACK_MAX = 5;
 
   const classes = useStyles({
@@ -121,7 +120,7 @@ const NotificationItem = (props) => {
           </div>
         </div>
         <Typography variant="body2" color="secondary" className={classes.timestamp}>
-          {moment(timestamp).fromNow()}
+          {moment.unix(timestamp).fromNow()}
         </Typography>
         <div className={classes.buttonContainer}>
           {getButtons()}
