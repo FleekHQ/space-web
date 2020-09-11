@@ -4,7 +4,9 @@ import {
   fetchNotifications,
   handleFilesInvitation,
   setNotificationsLastSeenAt,
+  getIdentitiesByAddress,
 } from '@events';
+import { getAddressByPublicKey } from '@utils';
 import {
   NotificationMenu,
   NotificationButton,
@@ -20,7 +22,26 @@ const Notifications = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const notifications = useSelector((state) => state.notifications);
+  const [notifications, identities] = useSelector(
+    (state) => [state.notifications, state.identities.identities],
+  );
+
+  useEffect(() => {
+    const addresses = notifications.data.notifications.reduce((addrs, notification) => {
+      const { invitationValue } = notification;
+      if (invitationValue && !identities[invitationValue.inviterPublicKey]) {
+        const address = getAddressByPublicKey(invitationValue.inviterPublicKey);
+        if (!addrs.includes(address)) {
+          return addrs.concat(address);
+        }
+      }
+
+      return addrs;
+    }, []);
+    if (addresses.length > 0) {
+      getIdentitiesByAddress({ addresses });
+    }
+  }, [notifications.data.notifications.length]);
 
   const onCloseMenu = () => {
     setNotificationsLastSeenAt({
@@ -94,7 +115,7 @@ const Notifications = () => {
       />
       <NotificationMenu
         i18n={i18n}
-        items={mapDataToItems(notifications, Trans, t, classes)}
+        items={mapDataToItems(notifications, Trans, t, classes, identities)}
         anchorEl={anchorEl}
         onCloseMenu={onCloseMenu}
         transformOrigin={{
