@@ -34,15 +34,15 @@ const mapBackupLimitItem = (item, lastSeenAt) => {
   });
 };
 
-const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
+const mapInvitationItem = (item, lastSeenAt, Trans, t, classes, identities) => {
   const {
     id,
-    subject,
     createdAt,
     invitationValue:
     {
       itemPaths,
       status,
+      inviterPublicKey,
     },
   } = item;
   const file = itemPaths[0].path;
@@ -76,7 +76,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
   return ({
     id,
     type: SHARE_INVITE,
-    username: subject,
+    username: identities[inviterPublicKey] && identities[inviterPublicKey].username,
     timestamp: createdAt,
     description: getDescription(),
     files: itemPaths.map((itemPath) => {
@@ -95,7 +95,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes) => {
   });
 };
 
-const mapDataToItems = (data, Trans, t, classes) => {
+const mapDataToItems = (data, Trans, t, classes, identities) => {
   const { data: { notifications, lastSeenAt } } = data;
 
   const mappedData = notifications.reduce((arr, item) => {
@@ -105,7 +105,7 @@ const mapDataToItems = (data, Trans, t, classes) => {
     }
 
     if (type === INVITATION) {
-      return arr.concat(mapInvitationItem(item, lastSeenAt, Trans, t, classes));
+      return arr.concat(mapInvitationItem(item, lastSeenAt, Trans, t, classes, identities));
     }
 
     return arr;
