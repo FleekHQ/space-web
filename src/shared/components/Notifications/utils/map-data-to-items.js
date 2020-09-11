@@ -77,6 +77,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes, identities) => {
     id,
     type: SHARE_INVITE,
     username: identities[inviterPublicKey] && identities[inviterPublicKey].username,
+    imgUrl: identities[inviterPublicKey] && identities[inviterPublicKey].avatarUrl,
     timestamp: createdAt,
     description: getDescription(),
     files: itemPaths.map((itemPath) => {

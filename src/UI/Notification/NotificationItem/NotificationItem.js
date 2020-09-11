@@ -23,6 +23,7 @@ const NotificationItem = (props) => {
     onReject,
     status,
     highlighted,
+    imgUrl,
   } = props;
 
   const FILE_STACK_MAX = 5;
@@ -91,6 +92,7 @@ const NotificationItem = (props) => {
       )}
     >
       <Avatar
+        imgUrl={imgUrl}
         username={username}
         size={32}
       />
@@ -141,6 +143,7 @@ NotificationItem.defaultProps = {
   onReject: () => {},
   status: 'PENDING',
   highlighted: false,
+  imgUrl: null,
 };
 
 NotificationItem.propTypes = {
@@ -162,6 +165,7 @@ NotificationItem.propTypes = {
   }).isRequired,
   status: PropTypes.string,
   highlighted: PropTypes.bool,
+  imgUrl: PropTypes.string,
 };
 
 export default NotificationItem;
