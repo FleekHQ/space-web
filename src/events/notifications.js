@@ -1,4 +1,5 @@
 import { ipcRenderer } from 'electron';
+import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
 import store from '../store';
 import { NOTIFICATIONS_ACTION_TYPES } from '../reducers/notifications';
 
@@ -46,6 +47,20 @@ const registerNotificationEvents = () => {
       status: 'PENDING',
       ...payload,
     });
+
+    const props = {
+      i18nKey: 'errorModal.handleInvitationFailed',
+    };
+
+    store.dispatch({
+      type: OPEN_MODAL,
+      payload: {
+        id: 'handle-invitation-failed',
+        type: ERROR_MODAL_TOAST,
+        props,
+      },
+    });
+
     /* eslint-disable-next-line no-console */
     console.error(err);
   });
