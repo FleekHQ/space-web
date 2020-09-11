@@ -35,9 +35,9 @@ const Notifications = () => {
           return addrs.concat(address);
         }
       }
-
       return addrs;
     }, []);
+
     if (addresses.length > 0) {
       getIdentitiesByAddress({ addresses });
     }
