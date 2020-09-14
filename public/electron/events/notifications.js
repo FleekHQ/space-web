@@ -1,9 +1,7 @@
-const { InvitationStatus, NotificationType } = require('@fleekhq/space-client/dist/definitions/space_pb');
-
 const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
-const { swapKeyValue } = require('../utils');
+const { mapNotification } = require('../utils');
 
 const EVENT_PREFIX = 'notifications';
 const READ_NOTIFICATION_EVENT = `${EVENT_PREFIX}:readNotification`;
@@ -34,51 +32,11 @@ const registerNotificationsEvents = (mainWindow) => {
     try {
       const res = await spaceClient.getNotifications(payload);
 
-      const invitationStatusByIndex = swapKeyValue(InvitationStatus);
-      const notificationTypeByIndex = swapKeyValue(NotificationType);
-
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
         nextOffset: res.getNextoffset(),
-        notifications: res.getNotificationsList().map((notification) => {
-          const relatedObject = notification.getRelatedobjectCase();
-          const invitationValue = notification.getInvitationvalue();
-          const usageAlert = notification.getUsagealert();
-          const invitationAccept = notification.getInvitationaccept();
-
-          return ({
-            id: notification.getId(),
-            subject: notification.getSubject(),
-            body: notification.getBody(),
-            type: notificationTypeByIndex[notification.getType()],
-            createdAt: notification.getCreatedat(),
-            readAt: notification.getReadat(),
-            relatedObject: notification.getRelatedobjectCase(),
-            ...(relatedObject === 4 && {
-              invitationValue: {
-                itemPaths: invitationValue.getItempathsList().map((itemPath) => ({
-                  dbId: itemPath.getDbid(),
-                  bucket: itemPath.getBucket(),
-                  path: itemPath.getPath(),
-                })),
-                inviterPublicKey: invitationValue.getInviterpublickey(),
-                invitationID: invitationValue.getInvitationid(),
-                status: invitationStatusByIndex[invitationValue.getStatus()],
-              },
-            }),
-            ...(relatedObject === 5 && {
-              usageAlert: {
-                used: usageAlert.getUsed(),
-                limit: usageAlert.getLimit(),
-                message: usageAlert.getMessage(),
-              },
-            }),
-            ...(relatedObject === 6 && {
-              invitationAccept: {
-                invitationID: invitationAccept.getInvitationid(),
-              },
-            }),
-          });
-        }),
+        notifications: res.getNotificationsList().map(
+          (notification) => mapNotification(notification),
+        ),
       });
     } catch (err) {
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_ERROR, err);

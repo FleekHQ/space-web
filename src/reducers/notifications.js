@@ -25,7 +25,7 @@ export default (state = DEFAULT_STATE, action) => {
         data: {
           ...state.data,
           notifications: [
-            action.notification,
+            { ...action.notification },
             ...state.data.notifications,
           ],
         },

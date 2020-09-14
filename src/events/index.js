@@ -12,6 +12,7 @@ import registerAccountEvents from './account';
 import registerFolderEvents from './folder';
 import registerIdentitiesEvents from './identities';
 import registerUsageEvents from './usage';
+import registerNotificationSubscribe from './notifications-subscribe';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -28,6 +29,7 @@ const registerEvents = () => {
   registerFolderEvents();
   registerIdentitiesEvents();
   registerUsageEvents();
+  registerNotificationSubscribe();
 };
 
 export default registerEvents;
