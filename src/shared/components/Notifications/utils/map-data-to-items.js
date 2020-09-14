@@ -8,7 +8,7 @@ export const USAGEALERT = 'USAGEALERT';
 export const SHARE_INVITE = 'share-invite';
 export const BACKUP_LIMIT = 'backup-limit';
 
-const getHighlighted = (item, lastSeenAt) => (item.createdAt > lastSeenAt);
+const getHighlighted = (item, lastSeenAt) => (item.createdAt > lastSeenAt * 1000);
 
 const mapBackupLimitItem = (item, lastSeenAt) => {
   const { PUBLIC_URL } = process.env;
