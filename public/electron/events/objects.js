@@ -117,7 +117,8 @@ const registerObjectsEvents = (mainWindow) => {
 
       shell.openItem(location);
     } catch (err) {
-      mainWindow.webContents.send(ERROR_EVENT, err);
+      /* eslint-disable no-console */
+      console.error(err);
     }
   });
 
