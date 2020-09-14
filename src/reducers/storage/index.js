@@ -48,6 +48,7 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         loading: action.payload,
+        error: null,
       };
     }
 

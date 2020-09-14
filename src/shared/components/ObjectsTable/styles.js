@@ -36,4 +36,11 @@ export default makeStyles((theme) => ({
     minHeight: 0,
     overflow: 'auto',
   },
+  errorCardContainer: {
+    position: 'absolute',
+    bottom: 12,
+    // The margins of the table container must be substracted
+    // 6px * 2 = 12px
+    width: 'calc(100% - 12px)',
+  },
 }));
