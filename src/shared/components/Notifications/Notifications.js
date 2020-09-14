@@ -58,7 +58,7 @@ const Notifications = () => {
       return true;
     }
 
-    if (notificationsData[0].createdAt > lastSeenAt) {
+    if (notificationsData[0].createdAt * 1000 > lastSeenAt) {
       return false;
     }
 
