@@ -23,7 +23,7 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
-    "@fleekhq/space-client": "^1.0.2",
+    "@fleekhq/space-client": "^1.0.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
