@@ -100,7 +100,13 @@ const mapDataToItems = (data, Trans, t, classes, identities) => {
   const { data: { notifications, lastSeenAt } } = data;
 
   const mappedData = notifications.reduce((arr, item) => {
-    const { type } = item;
+    const { type, relatedObject } = item;
+
+    //  a bug occured on the backend
+    if (relatedObject === 0) {
+      return arr;
+    }
+
     if (type === USAGEALERT) {
       return arr.concat(mapBackupLimitItem(item, lastSeenAt));
     }
