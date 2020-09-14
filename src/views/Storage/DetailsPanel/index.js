@@ -82,15 +82,22 @@ const StorageDetailsPanel = () => {
                   <Divider />
                   <SharePanel
                     onShare={handleShare}
-                    members={[user, ...selectedObjects[0].members].map((member) => {
-                      const m = { ...member };
+                    members={(
+                      [
+                        user,
+                        ...selectedObjects[0].members.filter((member) => (
+                          member.address !== user.address
+                        )),
+                      ].map((member) => {
+                        const m = { ...member };
 
-                      if (!m.username || (m.username && m.username.length === 0)) {
-                        m.username = getShortAddress(m.address);
-                      }
+                        if (!m.username || (m.username && m.username.length === 0)) {
+                          m.username = getShortAddress(m.address);
+                        }
 
-                      return m;
-                    })}
+                        return m;
+                      })
+                    )}
                   />
                 </>
               )
