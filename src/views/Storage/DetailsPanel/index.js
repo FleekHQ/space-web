@@ -58,8 +58,6 @@ const StorageDetailsPanel = () => {
     dispatch(openModal(SHARING_MODAL, { selectedObjects }));
   };
 
-  console.log('selectedObjects', selectedObjects);
-
   return (
     <DetailsPanel id="storage-detail-panel">
       {
