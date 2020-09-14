@@ -11,7 +11,7 @@ const registerNotificationSubscribe = (mainWindow) => {
     const notification = data.getNotification();
 
     const mappedNotification = mapNotification(notification);
-    console.log('mapped notification....', mappedNotification);
+
     mainWindow.webContents.send(NOTIFICATION_SUBSCRIBE_SUCCESS, mappedNotification);
   });
 
