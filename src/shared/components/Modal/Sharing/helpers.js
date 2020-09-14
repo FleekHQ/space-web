@@ -13,16 +13,17 @@ export const getCollaboratorsInfo = (collaborators, owner, members) => {
   });
 
   const ownerAvatar = get(owner, 'avatarUrl');
+  const ownerId = get(owner, 'publicKey', 'owner');
 
   return [
     {
-      id: get(owner, 'publicKey', 'owner'),
+      id: ownerId,
       permissionsId: 'edit',
       isOwner: true,
       mainText: get(owner, 'username', 'You'),
       ...(ownerAvatar && { imageSrc: ownerAvatar }),
     },
-    ...items,
+    ...items.filter((item) => item.id !== ownerId),
   ];
 };
 
