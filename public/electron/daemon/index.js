@@ -35,9 +35,11 @@ class DaemonProcess {
   start() {
     if (this.childProcess) return;
 
+    const ext = process.platform === 'win32' ? '.exe' : '';
+
     const daemonPath = isDev
       ? DAEMON_PATH
-      : path.join(process.resourcesPath, 'space');
+      : path.join(process.resourcesPath, `space${ext}`);
 
     this.childProcess = spawn(daemonPath);
 

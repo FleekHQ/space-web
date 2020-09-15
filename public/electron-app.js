@@ -1,6 +1,7 @@
 require('dotenv').config();
 global.XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
+const url = require('url');
 const path = require('path');
 const { app, Tray } = require('electron');
 const isDev = require('electron-is-dev');
@@ -18,9 +19,36 @@ const daemon = new DaemonProcess();
 
 const enableDevDaemon = process.env.DEV_DAEMON === 'true';
 
+const isSingleInstance = app.requestSingleInstanceLock();
+
+// Close second instance
+if (!isSingleInstance) {
+  app.quit();
+  return;
+}
+
+const restoreWindow = (windowInstance) => {
+  if (!windowInstance) {
+    mainWindow = createMainWindow();
+
+    destroyStream = registerEvents({
+      app,
+      isDev,
+      mainWindow,
+    });
+  } else {
+    windowInstance.show();
+    windowInstance.focus();
+  }
+};
+
 /**
  * App events
  */
+app.on('second-instance', () => {
+  restoreWindow(mainWindow);
+});
+
 app.on('window-all-closed', () => {
   // eslint-disable-next-line no-console
   console.log('All windows are closed...');
@@ -32,17 +60,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (!mainWindow) {
-    mainWindow = createMainWindow();
-
-    destroyStream = registerEvents({
-      app,
-      isDev,
-      mainWindow,
-    });
-  } else {
-    mainWindow.show();
-  }
+  restoreWindow(mainWindow);
 });
 
 app.on('before-quit', () => {
@@ -59,15 +77,24 @@ app.on('ready', () => {
 
   appIcon = new Tray(trayIcon);
   appIcon.setContextMenu(contextMenu);
+
+  appIcon.on('double-click', () => {
+    restoreWindow(mainWindow);
+  });
 });
 
 /**
  * Daemon Event handlers
  */
 daemon.on('ready', () => {
+  const fileUrl = url.format({
+    protocol: 'file',
+    pathname: path.resolve(__dirname, '../build/index.html'),
+  });
+
   mainWindow.loadURL(isDev
     ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, '../build/index.html')}`);
+    : fileUrl);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -101,4 +128,5 @@ if (isDev && !enableDevDaemon) {
   daemon.startDev();
   return;
 }
+
 daemon.start();
