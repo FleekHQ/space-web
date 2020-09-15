@@ -27,7 +27,6 @@ if (!isSingleInstance) {
   return;
 }
 
-
 const restoreWindow = (windowInstance) => {
   if (!windowInstance) {
     mainWindow = createMainWindow();
@@ -81,7 +80,7 @@ app.on('ready', () => {
 
   appIcon.on('double-click', () => {
     restoreWindow(mainWindow);
-  })
+  });
 });
 
 /**
