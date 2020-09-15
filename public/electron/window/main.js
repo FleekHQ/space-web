@@ -1,3 +1,4 @@
+const url = require('url');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const { BrowserWindow } = require('electron');
@@ -5,9 +6,15 @@ const { BrowserWindow } = require('electron');
 const isMac = process.platform === 'darwin';
 
 const createWindow = () => {
-  const url = isDev
+  const fileUrl = url.format({
+    protocol: 'file',
+    hash: 'splash',
+    pathname: path.resolve(__dirname, '../../../build/index.html'),
+  });
+
+  const splashUrl = isDev
     ? 'http://localhost:3000/#/splash'
-    : `file://${path.join(__dirname, '../../../build/index.html#/splash')}`;
+    : fileUrl;
 
   const win = new BrowserWindow({
     width: 1200,
@@ -24,7 +31,7 @@ const createWindow = () => {
     },
   });
 
-  win.loadURL(url);
+  win.loadURL(splashUrl);
 
   if (isDev) {
     // Add ReactDevTools

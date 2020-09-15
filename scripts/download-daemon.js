@@ -8,15 +8,17 @@ async function getDaemon() {
   const resourcesPath = path.resolve(cwd(), 'resources');
 
   let binaryPlatform = 'Linux';
+  let ext = '';
 
   if (platform === 'darwin') {
     binaryPlatform = 'Darwin';
   }
   if (platform === 'win32' || platform === 'win64') {
     binaryPlatform = 'Windows';
+    ext = '.exe';
   }
 
-  const daemonURL = `https://github.com/FleekHQ/space-poc/releases/latest/download/space_${binaryPlatform}_x86_64${binaryPlatform === 'Windows' ? '.exe' : ''}`;
+  const daemonURL = `https://github.com/FleekHQ/space-poc/releases/latest/download/space_${binaryPlatform}_x86_64${ext}`;
   const { data, headers } = await axios({
     method: 'GET',
     responseType: 'stream',
@@ -43,7 +45,7 @@ async function getDaemon() {
 
   fs.mkdirSync(resourcesPath);
   // save space-daemon on ./resources/
-  const writer = fs.createWriteStream(path.join(resourcesPath, 'space'), { mode: 0o755 });
+  const writer = fs.createWriteStream(path.join(resourcesPath, `space${ext}`), { mode: 0o755 });
 
   data.on('data', (chunk) => (
     progressBar.tick(chunk.length)
