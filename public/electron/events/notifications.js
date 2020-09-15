@@ -34,6 +34,7 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
         nextOffset: res.getNextoffset(),
+        lastSeenAt: res.getLastseenat(),
         notifications: res.getNotificationsList().map(
           (notification) => mapNotification(notification),
         ),
