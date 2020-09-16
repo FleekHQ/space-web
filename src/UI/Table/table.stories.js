@@ -10,6 +10,7 @@ import {
   TableRow,
   TableCell,
   IconsCell,
+  LoadingCell,
 } from './components';
 
 const categoryName = 'ElementalComponents/Table';
@@ -54,6 +55,25 @@ const renderRow = ({ row }) => (
   </TableRow>
 );
 
+const renderLoadingRows = () => [...Array(20)].map((_, index) => (
+  <TableRow
+    key={index}
+  >
+    <TableCell>
+      <LoadingCell isIconCell />
+    </TableCell>
+    <TableCell>
+      <LoadingCell />
+    </TableCell>
+    <TableCell>
+      <LoadingCell />
+    </TableCell>
+    <TableCell>
+      <LoadingCell isLastCell/>
+    </TableCell>
+  </TableRow>
+));
+
 storiesOf(categoryName, module).add('Table', () => {
   const defaultProps = {
     head: object('head', [
@@ -62,6 +82,7 @@ storiesOf(categoryName, module).add('Table', () => {
       'Last Modified',
       '',
     ]),
+    loading: boolean('loading', true),
     rows: object('rows', [
       {
         id: 'a1',
@@ -133,7 +154,7 @@ storiesOf(categoryName, module).add('Table', () => {
     onDoubleClickRow: action('onDoubleClickRow'),
     renderRow,
     renderHead,
-    // renderLoadingRows,
+    renderLoadingRows,
   };
 
   return (

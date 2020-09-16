@@ -6,20 +6,22 @@ import { useSelector } from 'react-redux';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import { addItems } from '@events';
 import { objectsSelector } from '@utils';
+import renderLoadingRows from '../../../shared/render-loading-rows';
 import { renderRow } from '../../../shared/renderRow';
 import getTableHeads from '../../../shared/getTableHeads';
 
 const FileTable = ({ bucket, prefix }) => {
   const { t } = useTranslation();
 
-  const rows = useSelector((state) => (
+  const [rows, loading] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
       prefix,
       '/',
-    )
-  ));
+    ),
+    state.storage.loading,
+  ]);
 
   const onDropzoneDrop = (files) => {
     addItems({
@@ -33,6 +35,8 @@ const FileTable = ({ bucket, prefix }) => {
       rows={rows}
       heads={getTableHeads(t)}
       renderRow={renderRow}
+      renderLoadingRows={renderLoadingRows}
+      loading={loading}
       withRowOptions
       onDropzoneDrop={onDropzoneDrop}
       getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}

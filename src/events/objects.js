@@ -27,6 +27,11 @@ const registerObjectsEvents = () => {
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
+      payload: false,
+      type: SET_LOADING_STATE,
+    });
+
+    store.dispatch({
       payload: objects,
       type: STORE_OBJECTS,
     });
@@ -37,12 +42,22 @@ const registerObjectsEvents = () => {
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
+      payload: false,
+      type: SET_LOADING_STATE,
+    });
+
+    store.dispatch({
       payload: objects,
       type: STORE_DIR,
     });
   });
 
   ipcRenderer.on(ERROR_EVENT, (event, payload) => {
+    store.dispatch({
+      payload: false,
+      type: SET_LOADING_STATE,
+    });
+
     store.dispatch({
       payload,
       type: SET_ERROR_STATE,
@@ -54,12 +69,22 @@ const registerObjectsEvents = () => {
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
+      payload: false,
+      type: SET_LOADING_STATE,
+    });
+
+    store.dispatch({
       payload: objects,
       type: STORE_DIR,
     });
   });
 
   ipcRenderer.on(FETCH_SHARED_OBJECTS_ERROR_EVENT, (event, payload) => {
+    store.dispatch({
+      payload: false,
+      type: SET_LOADING_STATE,
+    });
+
     store.dispatch({
       payload,
       type: SET_ERROR_STATE,
