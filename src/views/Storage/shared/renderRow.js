@@ -3,10 +3,22 @@ import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 import { formatBytes } from '@utils';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
+import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 // eslint-disable-next-line import/prefer-default-export
 export const renderRow = (row) => {
   const shareAmount = row.shareAmount - 1;
+
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const iconsCellI18n = {
+    warning: t('modules.storage.fileTable.storageLimitReached.warning'),
+    description: t('modules.storage.fileTable.storageLimitReached.description'),
+    button: t('modules.storage.fileTable.storageLimitReached.button'),
+  };
 
   return (
     <>
@@ -32,6 +44,12 @@ export const renderRow = (row) => {
           localStorageActive={row.isLocallyAvailable}
           spaceStorageActive={row.isAvailableInSpace}
           sharedCount={shareAmount < 0 ? 0 : shareAmount}
+          storageLimitWarning={false}
+          upgradeOnClick={(e) => {
+            e.stopPropagation();
+            dispatch(openModal(SETTINGS_MODAL));
+          }}
+          i18n={iconsCellI18n}
         />
       </TableCell>
     </>

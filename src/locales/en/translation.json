@@ -124,6 +124,11 @@
         "error": {
           "message": "We had an issue loading your files, please try refreshing.",
           "buttonText": "Refresh Files"
+        },
+        "storageLimitReached": {
+          "warning": "Backup Limit Reached",
+          "description": "This file is not backed up, upgrade to Space Pro to back up this file.",
+          "button": "Upgrade to Space Pro"
         }
       },
       "sharedBy": {

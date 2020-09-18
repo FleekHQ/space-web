@@ -10,32 +10,41 @@ import useStyles from './styles';
 const UpgradeTooltip = ({
   i18n,
   onClick,
+  ...restProps
 }) => {
   const classes = useStyles();
 
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
-    <Paper className={classes.paper}>
-      <div className={classes.warningContainer}>
-        <FontAwesomeIcon icon={faExclamationCircle} className={classes.warningIcon} />
+    <div
+      className={classes.container}
+      {...restProps}
+    >
+      <Paper
+        className={classes.paper}
+      >
+        <div className={classes.warningContainer}>
+          <FontAwesomeIcon icon={faExclamationCircle} className={classes.warningIcon} />
+          <Typography
+            className={classes.warningText}
+          >
+            {i18n.warning}
+          </Typography>
+        </div>
         <Typography
-          className={classes.warningText}
+          className={classes.description}
         >
-          {i18n.warning}
+          {i18n.description}
         </Typography>
-      </div>
-      <Typography
-        className={classes.description}
-      >
-        {i18n.description}
-      </Typography>
-      <Button
-        variant="contained"
-        className={classes.button}
-        onClick={onClick}
-      >
-        {i18n.button}
-      </Button>
-    </Paper>
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={onClick}
+        >
+          {i18n.button}
+        </Button>
+      </Paper>
+    </div>
   );
 };
 

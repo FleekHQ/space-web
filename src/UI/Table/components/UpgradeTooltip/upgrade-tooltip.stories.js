@@ -17,7 +17,7 @@ storiesOf(categoryName, module).add('UpgradeTooltip', () => {
   };
 
   return (
-    <div style={{ padding: 10 }}>
+    <div style={{ padding: 10, backgroundColor: 'black' }}>
       <UpgradeTooltip {...defaultProps} />
     </div>
   );

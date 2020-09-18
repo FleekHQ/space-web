@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+  // invisible-zone that makes the popover disappear when mouse leaves
+  container: {
+    padding: 15,
+    backgroundColor: 'transparent',
+    display: 'inline-block',
+  },
   paper: {
     padding: '7px 5px 10px 20px',
     display: 'inline-block',
@@ -29,7 +35,9 @@ export default makeStyles((theme) => ({
     height: 20,
     fontSize: 9,
     fontWeight: 500,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: '0px 10px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));

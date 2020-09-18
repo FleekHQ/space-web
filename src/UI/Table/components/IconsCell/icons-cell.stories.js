@@ -13,13 +13,21 @@ storiesOf(categoryName, module).add('IconsRow', () => {
     localStorageActive: boolean('localStorageActive', true),
     spaceStorageActive: boolean('spaceStorageActive', true),
     sharedCount: number('sharedCount', 2),
+    storageLimitWarning: boolean('storageLimitWarning', true),
+    i18n: {
+      warning: "Backup Limit Reached",
+      description: "This file is not backed up, upgrade to Space Pro to back up this file.",
+      button: "Upgrade to Space Pro",
+    },
   };
 
   return (
-    <Table>
-      <TableRow>
-        <IconsRow {...defaultProps} />
-      </TableRow>
-    </Table>
+    <div style={{ padding: 20 }}>
+      <Table>
+        <TableRow>
+          <IconsRow {...defaultProps} />
+        </TableRow>
+      </Table>
+    </div>
   );
 });
