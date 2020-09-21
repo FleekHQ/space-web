@@ -1,10 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+
 import Box from '@material-ui/core/Box';
-import createFleekTheme from '@ui/theme';
-import DragableBar from '@shared/components/DragableBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
+import createSpaceTheme from '@terminal-packages/space-ui/core/theme';
+
+import DragableBar from '@shared/components/DragableBar';
 import registerEvents from '@events';
 
 import {
@@ -22,7 +24,7 @@ import PrivateRoute from './shared/components/PrivateRoute';
 
 registerEvents();
 
-const theme = createFleekTheme();
+const theme = createSpaceTheme();
 
 /* TODO: Remove SetUpWD from Final Version */
 
