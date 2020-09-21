@@ -5,13 +5,13 @@ import { configure, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import createFleekTheme from '@ui/theme';
+import createSpaceTheme from '@terminal-packages/space-ui/core/theme';
 
 import initConfig from '../src/locales';
 
 i18n.use(initReactI18next).init(initConfig);
 
-const theme = createFleekTheme();
+const theme = createSpaceTheme();
 
 const withProviders = (story) => (
   <ThemeProvider theme={theme}>

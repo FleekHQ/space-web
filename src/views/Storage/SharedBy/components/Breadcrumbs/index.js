@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons/faAngleRight';
+import palette from '@terminal-packages/space-ui/core/theme/palette';
 
-import palette from '@ui/theme/palette/palette';
 import AvatarsList from '@ui/AvatarsList';
 import Breadcrumb from '@shared/components/Breadcrumb';
 

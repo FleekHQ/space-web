@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Skeleton from '@material-ui/lab/Skeleton';
 import SwitchButton from '@shared/components/SwitchButton';
 import UsageBars from '@ui/UsageBars';
-import palette from '@ui/theme/palette';
+import palette from '@terminal-packages/space-ui/core/theme/palette';
 import formatUsageData from './format-usage-data';
 import {
   UpgradeAccount,

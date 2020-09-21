@@ -9,6 +9,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       FA_NPM_TOKEN: ${{secrets.FA_NPM_TOKEN}}
+      TERMINAL_NPM_TOKEN: ${{secrets.TERMINAL_NPM_TOKEN}}
       SPACE_SERVICES_URL: ${{secrets.SPACE_SERVICES_URL}}
     strategy:
       fail-fast: false
