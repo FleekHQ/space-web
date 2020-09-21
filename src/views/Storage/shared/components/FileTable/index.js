@@ -31,8 +31,9 @@ const FileTable = ({
       '/',
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
-    state.storage.error,
-    state.storage.loading,
+    state.storage.buckets[bucket].error,
+    state.storage.buckets[bucket].loading,
+    state.storage,
   ]);
 
   const handleTableOutsideClick = (target) => {

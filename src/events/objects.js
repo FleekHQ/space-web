@@ -4,7 +4,8 @@ import { objectPresenter } from '@utils';
 import {
   STORE_DIR,
   STORE_OBJECTS,
-  SET_ERROR_STATE,
+  SET_LOADING_STATE_BUCKET,
+  SET_ERROR_BUCKET,
   SET_LOADING_STATE,
 } from '@reducers/storage';
 
@@ -40,10 +41,12 @@ const registerObjectsEvents = () => {
   ipcRenderer.on(SUCCESS_DIR_EVENT, (event, payload) => {
     const entries = get(payload, 'entries', []) || [];
     const objects = entries.map((obj) => objectPresenter(obj));
-
     store.dispatch({
-      payload: false,
-      type: SET_LOADING_STATE,
+      payload: {
+        loading: false,
+        bucket: payload.bucket,
+      },
+      type: SET_LOADING_STATE_BUCKET,
     });
 
     store.dispatch({
@@ -54,23 +57,21 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(ERROR_EVENT, (event, payload) => {
     store.dispatch({
-      payload: false,
-      type: SET_LOADING_STATE,
-    });
-
-    store.dispatch({
       payload,
-      type: SET_ERROR_STATE,
+      type: SET_ERROR_BUCKET,
     });
   });
 
   ipcRenderer.on(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, (event, payload) => {
-    const entries = get(payload, 'items', []) || [];
+    const entries = get(payload, 'objects.items', []) || [];
     const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
-      payload: false,
-      type: SET_LOADING_STATE,
+      payload: {
+        loading: false,
+        bucket: payload.bucket,
+      },
+      type: SET_LOADING_STATE_BUCKET,
     });
 
     store.dispatch({
@@ -81,23 +82,20 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(FETCH_SHARED_OBJECTS_ERROR_EVENT, (event, payload) => {
     store.dispatch({
-      payload: false,
-      type: SET_LOADING_STATE,
-    });
-
-    store.dispatch({
       payload,
-      type: SET_ERROR_STATE,
+      type: SET_ERROR_BUCKET,
     });
   });
 };
 
 export const fetchSharedObjects = (seek = '', limit = 100) => {
   store.dispatch({
-    payload: true,
-    type: SET_LOADING_STATE,
+    payload: {
+      loading: true,
+      bucket: 'shared-with-me',
+    },
+    type: SET_LOADING_STATE_BUCKET,
   });
-
   ipcRenderer.send(FETCH_SHARED_OBJECTS_EVENT, { seek, limit });
 };
 
@@ -112,8 +110,11 @@ export const fetchObjects = (bucket = 'personal') => {
 
 export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true) => {
   store.dispatch({
-    payload: true,
-    type: SET_LOADING_STATE,
+    payload: {
+      loading: true,
+      bucket,
+    },
+    type: SET_LOADING_STATE_BUCKET,
   });
 
   ipcRenderer.send(FETCH_DIR_EVENT, { path, bucket, fetchSubFolders });
