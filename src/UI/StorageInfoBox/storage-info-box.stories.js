@@ -17,6 +17,14 @@ storiesOf(categoryName, module).add('StorageInfoBox', () => {
     localUsage: text('localUsage', '14 GB'),
     spaceUsage: text('spaceUsage', '26 GB'),
     spaceLimitReached: boolean('spaceLimitReached', false),
+    backupTooltipProps: object('backupTooltipProps', {
+      i18n: {
+        warning: "Backup Limit Reached",
+        description: "Upgrade to Space Pro to increase space storage limit.",
+        button: "Upgrade to Space Pro",
+      },
+      onClick: () => {},
+    }),
   };
 
   return (

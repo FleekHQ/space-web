@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaptop } from '@fortawesome/pro-regular-svg-icons/faLaptop';
 import { faPlanetRinged } from '@fortawesome/pro-regular-svg-icons/faPlanetRinged';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
+import Popover from '@material-ui/core/Popover';
+import UpgradeTooltip from '../Table/components/UpgradeTooltip';
 
 import useStyles from './styles';
 
@@ -14,8 +16,21 @@ const StorageInfoBox = ({
   localUsage,
   spaceUsage,
   spaceLimitReached,
+  backupTooltipProps,
 }) => {
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl) && spaceLimitReached;
 
   return (
     <div className={classes.container}>
@@ -50,7 +65,11 @@ const StorageInfoBox = ({
             {i18n.space}
           </Typography>
         </div>
-        <div>
+        <div
+          aria-owns={open ? 'mouse-over-popover' : undefined}
+          aria-haspopup="true"
+          onMouseEnter={handlePopoverOpen}
+        >
           {spaceLimitReached && (
             <FontAwesomeIcon icon={faExclamationCircle} className={classes.warningIcon} />
           )}
@@ -63,6 +82,28 @@ const StorageInfoBox = ({
           </Typography>
         </div>
       </div>
+      <Popover
+        classes={{
+          paper: classes.paperPopover,
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 15,
+          horizontal: 15 + 72,
+        }}
+        disableRestoreFocus
+      >
+        <UpgradeTooltip
+          onMouseLeave={handlePopoverClose}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...backupTooltipProps}
+        />
+      </Popover>
     </div>
   );
 };
@@ -82,6 +123,14 @@ StorageInfoBox.propTypes = {
   localUsage: PropTypes.string,
   spaceUsage: PropTypes.string,
   spaceLimitReached: PropTypes.bool,
+  backupTooltipProps: PropTypes.shape({
+    i18n: PropTypes.shape({
+      warning: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      button: PropTypes.string.isRequired,
+    }).isRequired,
+    onClick: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default StorageInfoBox;

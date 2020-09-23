@@ -42,4 +42,8 @@ export default makeStyles((theme) => ({
   warningText: {
     color: theme.palette.palette.red,
   },
+  paperPopover: {
+    boxShadow: 'none',
+    backgroundColor: 'transparent',
+  },
 }));
