@@ -14,6 +14,7 @@ export const CREATE_FOLDER = 'CREATE_FOLDER';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 export const SIGNOUT_CONFIRMATION = 'SIGNOUT_CONFIRMATION';
 export const ERROR_MODAL_TOAST = 'ERROR_MODAL_TOAST';
+export const LICENSE_REGISTRATION = 'LICENSE_REGISTRATION';
 
 /* Action creators */
 export const openModal = (modalType, props = {}) => (dispatch) => {

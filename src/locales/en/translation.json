@@ -338,6 +338,16 @@
       "title": "Do you know your password?",
       "description": "If you don't have a password or written down mnemonic then you might not get back access to your files.",
       "passwordLabel": "Enter your password"
+    },
+    "license": {
+      "title": "Register Space Pro",
+      "description": "To register Space Pro, you’ll need a license key",
+      "description1": "Visit our store to make a purchase if you haven’t already.",
+      "placeholder": "Enter License Key",
+      "buy": "Buy License",
+      "register": "Register",
+      "upgradedTitle": "Upgraded to Space Pro",
+      "upgradedDescription": "Enjoy 100GB more Space storage."
     }
   },
   "welcome": {
