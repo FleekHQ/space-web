@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
-import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
+import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 
 const RenderRow = ({ row }) => {
   const { t } = useTranslation();
@@ -46,7 +46,7 @@ const RenderRow = ({ row }) => {
           storageLimitWarning={false}
           upgradeOnClick={(e) => {
             e.stopPropagation();
-            dispatch(openModal(SETTINGS_MODAL));
+            dispatch(openModal(LICENSE_REGISTRATION));
           }}
           i18n={iconsCellI18n}
         />
