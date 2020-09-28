@@ -1,12 +1,13 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import path from 'path';
-import { useSelector } from 'react-redux';
-import ObjectsTable from '@shared/components/ObjectsTable';
+import PropTypes from 'prop-types';
 import { addItems } from '@events';
 import { objectsSelector } from '@utils';
-import { renderRow } from '../../../shared/renderRow';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import ObjectsTable from '@shared/components/ObjectsTable';
+
+import RenderRow from '../../../shared/RenderRow';
 import getTableHeads from '../../../shared/getTableHeads';
 
 const FileTable = ({ bucket, prefix }) => {
@@ -32,7 +33,7 @@ const FileTable = ({ bucket, prefix }) => {
     <ObjectsTable
       rows={rows}
       heads={getTableHeads(t)}
-      renderRow={renderRow}
+      renderRow={RenderRow}
       withRowOptions
       onDropzoneDrop={onDropzoneDrop}
       getRedirectUrl={(row) => path.join('/storage/files', prefix, row.name)}
