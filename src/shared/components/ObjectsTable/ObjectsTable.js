@@ -18,7 +18,7 @@ import useStyles from './styles';
 const ObjectsTable = ({
   rows,
   heads,
-  renderRow,
+  renderRow: RenderRow,
   withRowOptions,
   getRedirectUrl,
   onOutsideClick,
@@ -176,7 +176,7 @@ const ObjectsTable = ({
                 onContextMenu={handleRowRightClick({ row })}
                 onDoubleClick={handleDoubleRowClick({ row })}
               >
-                {renderRow(row)}
+                <RenderRow row={row} />
                 {withRowOptions && (
                   <TableCell align="right">
                     <Button
@@ -227,7 +227,7 @@ ObjectsTable.propTypes = {
     title: PropTypes.string.isRequired,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   })).isRequired,
-  renderRow: PropTypes.func.isRequired,
+  renderRow: PropTypes.elementType.isRequired,
   getRedirectUrl: PropTypes.func.isRequired,
   withRowOptions: PropTypes.bool,
   error: PropTypes.bool,

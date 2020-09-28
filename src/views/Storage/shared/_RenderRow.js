@@ -1,19 +1,18 @@
 import React from 'react';
 import moment from 'moment';
-import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
 import { formatBytes } from '@utils';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import Typography from '@material-ui/core/Typography';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
 import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 
-// eslint-disable-next-line import/prefer-default-export
-export const renderRow = (row) => {
-  const shareAmount = row.shareAmount - 1;
-
+const RenderRow = ({ row }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const shareAmount = row.shareAmount - 1;
   const iconsCellI18n = {
     warning: t('modules.storage.fileTable.storageLimitReached.warning'),
     description: t('modules.storage.fileTable.storageLimitReached.description'),
@@ -55,3 +54,18 @@ export const renderRow = (row) => {
     </>
   );
 };
+
+RenderRow.propTypes = {
+  row: PropTypes.shape({
+    shareAmount: PropTypes.number,
+    ext: PropTypes.string,
+    key: PropTypes.string,
+    name: PropTypes.string,
+    size: PropTypes.number,
+    lastModified: PropTypes.instanceOf(Date),
+    isLocallyAvailable: PropTypes.bool,
+    isAvailableInSpace: PropTypes.bool,
+  }).isRequired,
+};
+
+export default RenderRow;
