@@ -279,7 +279,7 @@
           "diagramTitle": "Local Usage"
         },
         "backup": {
-          "switchTitle": "Backup Storage is <0>{{value}}</0>",
+          "switchTitle": "Space Storage is <0>{{value}}</0>",
           "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
         },
         "confirmModal": {
@@ -318,6 +318,14 @@
       },
       "referrals": {
         "title": "Referrals"
+      },
+      "productKey": {
+        "title": "Product Key",
+        "messageBox": {
+          "title": "Don't have a Product Key yet?",
+          "description": "Visit our store to purchase a product key to activate Space Pro.",
+          "buy": "Buy Product Key"
+        }
       }
     },
     "changePassword": {
