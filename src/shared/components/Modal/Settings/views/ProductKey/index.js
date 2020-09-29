@@ -13,29 +13,27 @@ const ProductKey = () => {
 
   return (
     <Box>
-      <Box>
-        <MessageBox
-          type="shopping"
-          bgColor="secondary"
-          title={(
-            <Typography>
-              <Box component="span" fontWeight={600}>
-                {t('modals.settings.productKey.messageBox.title')}
-              </Box>
-            </Typography>
-          )}
-        >
-          <Box mb="11px">
-            <Typography>
-              {t('modals.settings.productKey.messageBox.description')}
-            </Typography>
-          </Box>
-          {/* TODO: change to real space billing url */}
-          <Button variant="contained" onClick={() => shell.openExternal('https://space.storage')}>
-            {t('modals.settings.productKey.messageBox.buy')}
-          </Button>
-        </MessageBox>
-      </Box>
+      <MessageBox
+        type="shopping"
+        bgColor="secondary"
+        title={(
+          <Typography>
+            <Box component="span" fontWeight={600}>
+              {t('modals.settings.productKey.messageBox.title')}
+            </Box>
+          </Typography>
+        )}
+      >
+        <Box mb="11px">
+          <Typography>
+            {t('modals.settings.productKey.messageBox.description')}
+          </Typography>
+        </Box>
+        {/* TODO: change to real space billing url */}
+        <Button variant="contained" onClick={() => shell.openExternal('https://space.storage')}>
+          {t('modals.settings.productKey.messageBox.buy')}
+        </Button>
+      </MessageBox>
     </Box>
   );
 };
