@@ -321,6 +321,12 @@
       },
       "productKey": {
         "title": "Product Key",
+        "form": {
+          "title": "Activate Space Pro",
+          "message": "Input your product key below to activate Space Pro.",
+          "inputLabel": "Product Key",
+          "submit": "Activate"
+        },
         "messageBox": {
           "title": "Don't have a Product Key yet?",
           "description": "Visit our store to purchase a product key to activate Space Pro.",
