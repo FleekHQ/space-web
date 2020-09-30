@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { shell } from 'electron';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Box from '@material-ui/core/Box';
@@ -7,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MessageBox from '@ui/MessageBox';
+import ErrorCard from '@ui/ErrorCard';
+import { claimWallet } from '@events';
 
 import useStyles from './styles';
 
@@ -14,12 +17,15 @@ const ProductKey = () => {
   const { t } = useTranslation();
   const [key, setKey] = useState('');
   const classes = useStyles();
+  const { user, productKey } = useSelector((s) => ({
+    user: s.user,
+    productKey: s.settings.productKey,
+  }));
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (key) {
-      // eslint-disable-next-line no-console
-      console.log(key);
+      claimWallet(key);
     }
   };
 
@@ -48,9 +54,20 @@ const ProductKey = () => {
               fullWidth
             />
           </Box>
-          <Button disabled={!key} variant="contained">
-            {t('modals.settings.productKey.form.submit')}
-          </Button>
+          {
+            !productKey.success && (
+              <Button type="submit" disabled={!key || productKey.loading} variant="contained">
+                {t('modals.settings.productKey.form.submit')}
+              </Button>
+            )
+          }
+          {
+            productKey.error && (
+              <Box mt={2}>
+                <ErrorCard message={productKey.error} />
+              </Box>
+            )
+          }
         </form>
       </div>
       <Box>
@@ -71,7 +88,7 @@ const ProductKey = () => {
             </Typography>
           </Box>
           {/* TODO: change to real space billing url */}
-          <Button variant="contained" onClick={() => shell.openExternal('https://space.storage')}>
+          <Button variant="contained" onClick={() => shell.openExternal(`https://square-truth-2906.on.fleek.co/#/checkout?username=${user.username}`)}>
             {t('modals.settings.productKey.messageBox.buy')}
           </Button>
         </MessageBox>
