@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons/faArrowCircleUp';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag';
 
 import useStyles from './styles';
 
@@ -14,6 +15,7 @@ const getIconByType = (type) => {
     info: faInfoCircle,
     upgrade: faArrowCircleUp,
     danger: faExclamationCircle,
+    shopping: faShoppingBag,
   };
 
   return icons[type] || null;
@@ -74,7 +76,7 @@ MessageBox.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   bgColor: PropTypes.oneOf(['primary', 'secondary']),
-  type: PropTypes.oneOf(['info', 'danger', 'upgrade']),
+  type: PropTypes.oneOf(['info', 'danger', 'upgrade', 'shopping']),
 };
 
 export default MessageBox;
