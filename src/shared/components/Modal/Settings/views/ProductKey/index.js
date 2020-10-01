@@ -51,7 +51,8 @@ const ProductKey = () => {
               value={key}
               variant="outlined"
               disabled={!!productKey.planInfo}
-              label={t('modals.settings.productKey.form.inputLabel')}
+              inputProps={{ placeholder: t('modals.settings.productKey.form.placeholder') }}
+              label={key.length > 0 ? t('modals.settings.productKey.form.inputLabel') : ''}
               onChange={(event) => setKey(event.target.value)}
             />
           </Box>

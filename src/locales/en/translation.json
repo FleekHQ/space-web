@@ -325,6 +325,7 @@
           "title": "Activate Space Pro",
           "message": "Input your product key below to activate Space Pro.",
           "inputLabel": "Product Key",
+          "placeholder": "Enter Product Key",
           "submit": "Activate"
         },
         "messageBox": {
