@@ -6,6 +6,7 @@ export const PRODUCT_KEY_ACTION_TYPES = {
 
 const defaultState = {
   error: null,
+  planInfo: {},
   success: false,
   loading: false,
 };
@@ -31,6 +32,7 @@ export default (state = defaultState, action) => {
         ...state,
         loading: false,
         success: true,
+        planInfo: action.planInfo,
       };
     }
 

@@ -47,15 +47,16 @@ const ProductKey = () => {
           </Typography>
           <Box m="16px 0 8px">
             <TextField
-              label={t('modals.settings.productKey.form.inputLabel')}
-              variant="outlined"
-              value={key}
-              onChange={(event) => setKey(event.target.value)}
               fullWidth
+              value={key}
+              variant="outlined"
+              disabled={!!productKey.planInfo}
+              label={t('modals.settings.productKey.form.inputLabel')}
+              onChange={(event) => setKey(event.target.value)}
             />
           </Box>
           {
-            !productKey.success && (
+            !productKey.success && !productKey.planInfo && (
               <Button type="submit" disabled={!key || productKey.loading} variant="contained">
                 {t('modals.settings.productKey.form.submit')}
               </Button>
@@ -70,29 +71,31 @@ const ProductKey = () => {
           }
         </form>
       </div>
-      <Box>
-        <MessageBox
-          type="shopping"
-          bgColor="secondary"
-          title={(
-            <Typography>
-              <Box component="span" fontWeight={600}>
-                {t('modals.settings.productKey.messageBox.title')}
-              </Box>
-            </Typography>
-          )}
-        >
-          <Box mb="11px">
-            <Typography>
-              {t('modals.settings.productKey.messageBox.description')}
-            </Typography>
-          </Box>
-          {/* TODO: change to real space billing url */}
-          <Button variant="contained" onClick={() => shell.openExternal(`https://square-truth-2906.on.fleek.co/#/checkout?username=${user.username}`)}>
-            {t('modals.settings.productKey.messageBox.buy')}
-          </Button>
-        </MessageBox>
-      </Box>
+      {
+        productKey.planInfo ? <span>Plan Info</span> : (
+          <MessageBox
+            type="shopping"
+            bgColor="secondary"
+            title={(
+              <Typography>
+                <Box component="span" fontWeight={600}>
+                  {t('modals.settings.productKey.messageBox.title')}
+                </Box>
+              </Typography>
+            )}
+          >
+            <Box mb="11px">
+              <Typography>
+                {t('modals.settings.productKey.messageBox.description')}
+              </Typography>
+            </Box>
+            {/* TODO: change to real space billing url */}
+            <Button variant="contained" onClick={() => shell.openExternal(`https://square-truth-2906.on.fleek.co/#/checkout?username=${user.username}`)}>
+              {t('modals.settings.productKey.messageBox.buy')}
+            </Button>
+          </MessageBox>
+        )
+      }
     </>
   );
 };

@@ -19,8 +19,9 @@ const registerWalletEvents = () => {
     });
   });
 
-  ipcRenderer.on(CLAIM_SUCCESS_EVENT, () => {
+  ipcRenderer.on(CLAIM_SUCCESS_EVENT, (_, payload) => {
     store.dispatch({
+      planInfo: payload,
       type: PRODUCT_KEY_ACTION_TYPES.CLAIM_WALLET_SUCCESS,
     });
   });
