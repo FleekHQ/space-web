@@ -11,7 +11,7 @@ import ObjectsTable from '@shared/components/ObjectsTable';
 import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
 import renderLoadingRows from '../../render-loading-rows';
-import { renderRow } from '../../renderRow';
+import RenderRow from '../../RenderRow';
 import getTableHeads from '../../getTableHeads';
 
 const FileTable = ({
@@ -68,9 +68,9 @@ const FileTable = ({
     <ObjectsTable
       rows={rows}
       bucket={bucket}
-      renderRow={renderRow}
       loading={loading}
       renderLoadingRows={renderLoadingRows}
+      renderRow={RenderRow}
       error={!!error}
       errorMessage={t('modules.storage.fileTable.error.message')}
       buttonErrorMessage={t('modules.storage.fileTable.error.buttonText')}

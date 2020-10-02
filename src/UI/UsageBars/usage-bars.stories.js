@@ -2,8 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean, array } from '@storybook/addon-knobs';
 
+import palette from '@terminal-packages/space-ui/core/theme/palette';
+
 import UsageBars from './index';
-import palette from '@ui/theme/palette';
 
 const categoryName = 'ElementalComponents';
 

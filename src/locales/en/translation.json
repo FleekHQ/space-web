@@ -124,6 +124,11 @@
         "error": {
           "message": "We had an issue loading your files, please try refreshing.",
           "buttonText": "Refresh Files"
+        },
+        "storageLimitReached": {
+          "warning": "Backup Limit Reached",
+          "description": "This file is not backed up, upgrade to Space Pro to back up this file.",
+          "button": "Upgrade to Space Pro"
         }
       },
       "sharedBy": {
@@ -274,7 +279,7 @@
           "diagramTitle": "Local Usage"
         },
         "backup": {
-          "switchTitle": "Backup Storage is <0>{{value}}</0>",
+          "switchTitle": "Space Storage is <0>{{value}}</0>",
           "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
         },
         "confirmModal": {
@@ -313,6 +318,21 @@
       },
       "referrals": {
         "title": "Referrals"
+      },
+      "productKey": {
+        "title": "Space Pro",
+        "form": {
+          "title": "Activate Space Pro",
+          "message": "Input your product key below to activate Space Pro.",
+          "inputLabel": "Product Key",
+          "placeholder": "Enter Product Key",
+          "submit": "Activate"
+        },
+        "messageBox": {
+          "title": "Don't have a Product Key yet?",
+          "description": "Visit our store to purchase a product key to activate Space Pro.",
+          "buy": "Buy Product Key"
+        }
       }
     },
     "changePassword": {
@@ -333,6 +353,16 @@
       "title": "Do you know your password?",
       "description": "If you don't have a password or written down mnemonic then you might not get back access to your files.",
       "passwordLabel": "Enter your password"
+    },
+    "license": {
+      "title": "Register Space Pro",
+      "description": "To register Space Pro, you’ll need a license key",
+      "description1": "Visit our store to make a purchase if you haven’t already.",
+      "placeholder": "Enter License Key",
+      "buy": "Buy License",
+      "register": "Register",
+      "upgradedTitle": "Upgraded to Space Pro",
+      "upgradedDescription": "Enjoy 100GB more Space storage."
     }
   },
   "welcome": {

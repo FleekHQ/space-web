@@ -13,6 +13,10 @@ export default makeStyles((theme) => ({
   inactive: {
     color: `${theme.palette.palette.gray1} !important`,
   },
+  warning: {
+    color: `${theme.palette.palette.red} !important`,
+    cursor: 'pointer',
+  },
   localStorageContainer: {
     width: 20,
     display: 'flex',
@@ -49,5 +53,9 @@ export default makeStyles((theme) => ({
     color: theme.palette.palette.black,
     fontSize: 9,
     marginLeft: 2,
+  },
+  paperPopover: {
+    boxShadow: 'none',
+    backgroundColor: 'transparent',
   },
 }));

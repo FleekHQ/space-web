@@ -4,9 +4,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Skeleton from '@material-ui/lab/Skeleton';
-import SwitchButton from '@shared/components/SwitchButton';
 import UsageBars from '@ui/UsageBars';
-import palette from '@ui/theme/palette';
+import palette from '@terminal-packages/space-ui/core/theme/palette';
 import formatUsageData from './format-usage-data';
 import {
   UpgradeAccount,
@@ -31,7 +30,6 @@ const getUsageComponent = (size, isShownMaxSize, maxSize) => (
 const Usage = ({
   // eslint-disable-next-line no-unused-vars
   loading,
-  setBackupStorage,
   backupStorage,
   isFreePlan,
   planName,
@@ -101,15 +99,6 @@ const Usage = ({
               )}
             </Typography>
           </Section>
-          <Section>
-            {loading ? <Skeleton width={90} height={22} /> : (
-              <SwitchButton
-                value={backupStorage ? 'on' : 'off'}
-                onChange={setBackupStorage}
-                i18n={switchBtnI18n}
-              />
-            )}
-          </Section>
         </Header>
       </BaseCard>
       <BaseCard className={classes.backupDiagramContainer}>
@@ -170,7 +159,6 @@ Usage.defaultProps = {
 };
 
 Usage.propTypes = {
-  setBackupStorage: PropTypes.func.isRequired,
   backupStorage: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   isFreePlan: PropTypes.bool,

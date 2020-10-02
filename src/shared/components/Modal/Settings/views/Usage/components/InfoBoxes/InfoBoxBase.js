@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStyles from './styles';
 
-const InfoBox = ({
+const InfoBoxBase = ({
   warning,
   icon,
   title,
@@ -35,19 +35,19 @@ const InfoBox = ({
   );
 };
 
-InfoBox.defaultProps = {
+InfoBoxBase.defaultProps = {
   warning: false,
   children: null,
 };
 
-InfoBox.propTypes = {
+InfoBoxBase.propTypes = {
   icon: PropTypes.shape({}).isRequired,
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
-  onClick: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
   children: PropTypes.node,
   warning: PropTypes.bool,
 };
 
-export default InfoBox;
+export default InfoBoxBase;

@@ -49,7 +49,15 @@ const renderRow = ({ row }) => (
     </TableCell>
     <TableCell align="right">
       <Typography variant="body2">
-        <IconsCell />
+        <IconsCell
+          storageLimitWarning={false}
+          upgradeOnClick={(e) => { e.preventDefault(); }}
+          i18n={{
+            warning: "Backup Limit Reached",
+            description: "This file is not backed up, upgrade to Space Pro to back up this file.",
+            button: "Upgrade to Space Pro",
+          }}
+        />
       </Typography>
     </TableCell>
   </TableRow>
