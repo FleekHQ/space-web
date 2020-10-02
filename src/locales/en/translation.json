@@ -244,6 +244,7 @@
         "setDisplayName": "Set Display Name",
         "username": "Username",
         "setUsername": "Pick a Username",
+        "changeUsername": "Change Username",
         "profileId": "Profile ID",
         "dangerZone": "Danger Zone",
         "deleteAccount": "Delete Account",
