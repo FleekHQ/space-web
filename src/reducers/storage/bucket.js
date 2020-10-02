@@ -7,14 +7,34 @@ export const DELETE_OBJECT = 'DELETE_OBJECT';
 export const UPDATE_OBJECT = 'UPDATE_OBJECT';
 export const UPDATE_OBJECTS = 'UPDATE_OBJECTS';
 export const STORE_BUCKETS = 'STORE_BUCKETS';
+export const SET_LOADING_STATE_BUCKET = 'SET_LOADING_STATE_BUCKET';
+export const SET_ERROR_BUCKET = 'SET_ERROR_BUCKET';
 
 const DEFAULT_STATE = {
   membersList: [],
   objects: [],
+  loading: false,
+  error: null,
 };
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
+    case SET_LOADING_STATE_BUCKET: {
+      return {
+        ...state,
+        loading: action.loading,
+        error: null,
+      };
+    }
+
+    case SET_ERROR_BUCKET: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    }
+
     case STORE_BUCKETS: {
       return {
         ...state,
