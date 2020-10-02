@@ -11,6 +11,7 @@ const categoryName = 'Notification';
 storiesOf(categoryName, module).add('Button', () => {
   const defaultProps = {
     badgeInvisible: boolean('badgeInvisible', false),
+    highlighted: boolean('highlighted', false),
   };
 
   const notificationMenuProps = {
