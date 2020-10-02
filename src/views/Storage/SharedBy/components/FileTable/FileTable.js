@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import renderLoadingRows from '../../../shared/render-loading-rows';
-import { renderRow } from '../../../shared/renderRow';
+import RenderRow from '../../../shared/RenderRow';
 
 import getTableHeads from '../../../shared/getTableHeads';
 
@@ -35,7 +35,7 @@ const FileTable = ({ bucket, prefix }) => {
     <ObjectsTable
       rows={rows}
       heads={getTableHeads(t)}
-      renderRow={renderRow}
+      renderRow={RenderRow}
       renderLoadingRows={renderLoadingRows}
       loading={loading}
       withRowOptions
