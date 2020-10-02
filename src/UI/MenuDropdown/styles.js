@@ -18,3 +18,13 @@ export const itemStyles = makeStyles(() => ({
     },
   },
 }));
+
+export const useStyles = makeStyles(() => ({
+  iconContainer: {
+    width: 15,
+    marginRight: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
