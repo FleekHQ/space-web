@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { listStyles, itemStyles } from './styles';
+import { listStyles, itemStyles, useStyles } from './styles';
 
 const MenuDropdown = ({
   items,
@@ -16,6 +16,7 @@ const MenuDropdown = ({
 }) => {
   const listClasses = listStyles();
   const itemClasses = itemStyles();
+  const classes = useStyles();
 
   return (
     <List classes={listClasses}>
@@ -30,7 +31,9 @@ const MenuDropdown = ({
                 onItemClick(item, index);
               }}
             >
-              <FontAwesomeIcon icon={item.icon} />
+              <div className={classes.iconContainer}>
+                <FontAwesomeIcon icon={item.icon} />
+              </div>
               <Typography color="inherit">
                 {item.name}
               </Typography>
