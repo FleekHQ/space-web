@@ -4,12 +4,13 @@ import Badge from '@material-ui/core/Badge';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/pro-regular-svg-icons/faBell';
+import classnames from 'classnames';
 
 import useStyles from './styles';
 
 /* eslint-disable react/jsx-props-no-spreading */
 const NotificationButton = (props) => {
-  const { badgeInvisible, ...buttonProps } = props;
+  const { badgeInvisible, highlighted, ...buttonProps } = props;
   const classes = useStyles();
 
   return (
@@ -24,7 +25,9 @@ const NotificationButton = (props) => {
       >
         <FontAwesomeIcon
           icon={faBell}
-          className={classes.icon}
+          className={classnames(classes.icon, {
+            [classes.highlighted]: highlighted,
+          })}
         />
       </Badge>
     </ButtonBase>
@@ -33,10 +36,12 @@ const NotificationButton = (props) => {
 
 NotificationButton.defaultProps = {
   badgeInvisible: false,
+  highlighted: false,
 };
 
 NotificationButton.propTypes = {
   badgeInvisible: PropTypes.bool,
+  highlighted: PropTypes.bool,
 };
 
 export default NotificationButton;
