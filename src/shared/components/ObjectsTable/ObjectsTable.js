@@ -27,6 +27,8 @@ const ObjectsTable = ({
   errorMessage,
   buttonErrorMessage,
   fetchObjects,
+  loading,
+  renderLoadingRows,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -154,6 +156,8 @@ const ObjectsTable = ({
             head={withRowOptions ? [...heads, { width: 43 }] : heads}
             rows={rows}
             className={classes.root}
+            renderLoadingRows={renderLoadingRows}
+            loading={loading}
             renderHead={({ head = [] }) => (
               <TableRow>
                 {head.map(({ width, title }) => (
@@ -217,6 +221,8 @@ ObjectsTable.defaultProps = {
   errorMessage: '',
   buttonErrorMessage: '',
   fetchObjects: () => null,
+  renderLoadingRows: () => null,
+  loading: false,
 };
 
 ObjectsTable.propTypes = {
@@ -234,6 +240,8 @@ ObjectsTable.propTypes = {
   errorMessage: PropTypes.string,
   buttonErrorMessage: PropTypes.string,
   fetchObjects: PropTypes.func,
+  renderLoadingRows: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 export default ObjectsTable;

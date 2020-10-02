@@ -43,7 +43,7 @@ const listDirectories = async (mainWindow, payload = {}) => {
     const entriesList = res.getEntriesList();
     const entries = entriesList.map((entry) => entryToObject(entry, bucket));
 
-    mainWindow.webContents.send(SUCCESS_EVENT, { entries });
+    mainWindow.webContents.send(SUCCESS_EVENT, { entries, bucket });
   } catch (err) {
     mainWindow.webContents.send(ERROR_EVENT, err);
   }
@@ -70,9 +70,12 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
       }),
     };
 
-    mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, objects);
-  } catch (err) {
-    mainWindow.webContents.send(FETCH_SHARED_OBJECTS_ERROR_EVENT, err);
+    mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, {
+      objects,
+      bucket: 'shared-with-me',
+    });
+  } catch (error) {
+    mainWindow.webContents.send(FETCH_SHARED_OBJECTS_ERROR_EVENT, { error, bucket: 'shared-with-me' });
   }
 };
 
@@ -86,7 +89,7 @@ const listDirectory = async (
     const res = await spaceClient.listDirectory(payload);
     const entries = res.getEntriesList().map((entry) => entryToObject(entry, bucket));
 
-    mainWindow.webContents.send(SUCCESS_DIR_EVENT, { entries });
+    mainWindow.webContents.send(SUCCESS_DIR_EVENT, { entries, bucket });
 
     // fetch sub-folders
     if (payload.fetchSubFolders) {
@@ -100,7 +103,7 @@ const listDirectory = async (
       });
     }
   } catch (error) {
-    mainWindow.webContents.send(ERROR_EVENT, error);
+    mainWindow.webContents.send(ERROR_EVENT, { error, bucket });
   }
 };
 
