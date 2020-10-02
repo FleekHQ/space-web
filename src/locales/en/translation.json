@@ -97,7 +97,7 @@
   "createNewMenu": {
     "fileUpload": "File Upload",
     "folderUpload": "Folder Upload",
-    "folder": "Folder",
+    "folder": "New Folder",
     "textDoc": "Text Doc",
     "googleDoc": "Google Doc",
     "word": "Word",
