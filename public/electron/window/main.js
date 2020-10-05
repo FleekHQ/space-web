@@ -17,9 +17,9 @@ const createWindow = () => {
     : fileUrl;
 
   const win = new BrowserWindow({
-    width: 1200,
-    height: 680,
-    minWidth: 680,
+    width: 644,
+    height: 644,
+    minWidth: 644,
     minHeight: 500,
     backgroundColor: '#000000',
     titleBarStyle: isMac ? 'hiddenInset' : undefined,

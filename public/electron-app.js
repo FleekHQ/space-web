@@ -96,6 +96,9 @@ daemon.on('ready', () => {
     ? 'http://localhost:3000'
     : fileUrl);
 
+  mainWindow.setSize(1200, 680);
+  mainWindow.center();
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
