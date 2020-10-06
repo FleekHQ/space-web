@@ -17,6 +17,9 @@
     "confirm": "Confirm",
     "on": "on",
     "off": "off",
+    "change": "Change",
+    "crypto": "Crypto",
+    "card": "Card",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -350,7 +353,13 @@
           "balanceLow": "Your balance is getting low, add more credits to your account to continue backing up your files.",
           "addCredits": "Add Credits",
           "changePaymentMethod": "Change Payment Method",
-          "cancelPlan": "Cancel Plan"
+          "cancelPlan": "Cancel Plan",
+          "balanceBox": {
+            "balance": "Balance",
+            "addFunds": "Add Funds",
+            "timeRemaining": "Time Remaining:",
+            "tooltipMessage": "Current balance can cover the next {{timeRemaining}} (estimate) based on your last bill. Exact amount is subject to change based on your Space storage & bandwidth usage."
+          }
         }
       }
     },

@@ -2215,10 +2215,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@terminal-packages/space-ui@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.1.0.tgz#e9a9c60f11cc2da126eeba5e742d0c14d05eba7e"
-  integrity sha512-cYLY/GoY7yOCeBfrKfWoxNkOuRZvWnvVTIbwSxekqcrTqHw3ssO4GNX2YHbofBy8F2AZ6HodmQcIetZtq1pqSg==
+"@terminal-packages/space-ui@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.0.tgz#3af686301934de55d6104a69b1b30847a26bbfb6"
+  integrity sha512-8K1p0JXHYvaXImcNlqi/WqoI8Z+2999iN6JaSm3hAGthYqtxmykT9bnnelELVtNL4/ckWcgCwcp1ycpCvtL6fw==
   dependencies:
     lodash.merge "^4.6.2"
 

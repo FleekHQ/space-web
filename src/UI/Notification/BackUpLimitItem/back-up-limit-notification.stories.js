@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import Button from '@material-ui/core/Button';
 
 import BackUpMenuItem from './index';
 
