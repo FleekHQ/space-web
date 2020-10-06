@@ -16,12 +16,10 @@ export default makeStyles((theme) => ({
     background: theme.palette.palette.white,
     textAlign: 'center',
   },
-  title: {
-    fontWeight: 600,
-    fontSize: 22,
-    margin: '16px 0 7px',
-  },
   logo: {
     height: 41,
+  },
+  btnRoot: {
+    backgroundColor: theme.palette.palette.blue1,
   },
 }));

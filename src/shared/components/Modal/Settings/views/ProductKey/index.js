@@ -5,32 +5,19 @@ import { useTranslation } from 'react-i18next';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import ErrorCard from '@ui/ErrorCard';
 import MessageBox from '@ui/MessageBox';
-import { claimWallet } from '@events';
 
 import AddFundsBox from './components/AddFundsBox';
-
-import useStyles from './styles';
+import SpaceProCard from './components/SpaceProCard';
 
 const ProductKey = () => {
   const { t } = useTranslation();
-  const [key, setKey] = React.useState('');
-  const classes = useStyles();
   const { user, productKey } = useSelector((s) => ({
     user: s.user,
     productKey: s.settings.productKey,
   }));
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (key) {
-      claimWallet(key);
-    }
-  };
 
   return (
     <>
@@ -42,47 +29,10 @@ const ProductKey = () => {
           onAddFunds={() => null}
         />
       </Box>
-      <div className={classes.colorBorder}>
-        <form className={classes.contentWrapper} onSubmit={onSubmit}>
-          <img
-            alt="Space logo mark"
-            // eslint-disable-next-line max-len
-            src="https://storage.googleapis.com/terminal-assets/images/space-logo-mark.svg"
-            className={classes.logo}
-          />
-          <Typography className={classes.title}>
-            {t('modals.settings.productKey.form.title')}
-          </Typography>
-          <Typography className={classes.message}>
-            {t('modals.settings.productKey.form.message')}
-          </Typography>
-          <Box m="16px 0 8px">
-            <TextField
-              fullWidth
-              value={key}
-              variant="outlined"
-              disabled={!!productKey.planInfo}
-              inputProps={{ placeholder: t('modals.settings.productKey.form.placeholder') }}
-              label={key.length > 0 ? t('modals.settings.productKey.form.inputLabel') : ''}
-              onChange={(event) => setKey(event.target.value)}
-            />
-          </Box>
-          {
-            !productKey.success && !productKey.planInfo && (
-              <Button type="submit" disabled={!key || productKey.loading} variant="contained">
-                {t('modals.settings.productKey.form.submit')}
-              </Button>
-            )
-          }
-          {
-            productKey.error && (
-              <Box mt={2}>
-                <ErrorCard message={productKey.error} />
-              </Box>
-            )
-          }
-        </form>
-      </div>
+      <SpaceProCard
+        activated={false}
+        username={user.username}
+      />
       {
         productKey.planInfo ? <span>Plan Info</span> : (
           <MessageBox
