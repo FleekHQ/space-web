@@ -19,6 +19,7 @@ const FileTable = ({
   prefix,
   baseRedirectUrl,
   fetchObjects,
+  EmptyState,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -79,6 +80,7 @@ const FileTable = ({
       getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
+      EmptyState={EmptyState}
     />
   );
 };
@@ -86,6 +88,7 @@ const FileTable = ({
 FileTable.defaultProps = {
   baseRedirectUrl: '/storage/files',
   fetchObjects: () => {},
+  EmptyState: () => null,
 };
 
 FileTable.propTypes = {
@@ -93,6 +96,7 @@ FileTable.propTypes = {
   prefix: PropTypes.string.isRequired,
   baseRedirectUrl: PropTypes.string,
   fetchObjects: PropTypes.func,
+  EmptyState: PropTypes.elementType,
 };
 
 export default FileTable;

@@ -29,6 +29,7 @@ const ObjectsTable = ({
   fetchObjects,
   loading,
   renderLoadingRows,
+  EmptyState,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -199,6 +200,7 @@ const ObjectsTable = ({
             )}
           />
         </div>
+        {!loading && !rows.length && <EmptyState />}
       </Dropzone>
       {error && (
       <div className={classes.errorCardContainer}>
@@ -223,6 +225,7 @@ ObjectsTable.defaultProps = {
   fetchObjects: () => null,
   renderLoadingRows: () => null,
   loading: false,
+  EmptyState: () => null,
 };
 
 ObjectsTable.propTypes = {
@@ -242,6 +245,7 @@ ObjectsTable.propTypes = {
   fetchObjects: PropTypes.func,
   renderLoadingRows: PropTypes.func,
   loading: PropTypes.bool,
+  EmptyState: PropTypes.elementType,
 };
 
 export default ObjectsTable;
