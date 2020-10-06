@@ -47,6 +47,7 @@ const Account = ({
     onSetDisplayName,
   } = getHandlers({
     t,
+    username,
     dispatch,
     closeMainModal,
   });
@@ -124,7 +125,9 @@ const Account = ({
                 variant="body2"
                 color="textSecondary"
               >
-                {t('modals.settings.account.setUsername')}
+                {
+                  username && username.length > 0 ? t('modals.settings.account.changeUsername') : t('modals.settings.account.setUsername')
+                }
               </Typography>
             </ButtonBase>
           </Section>

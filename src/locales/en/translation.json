@@ -97,7 +97,7 @@
   "createNewMenu": {
     "fileUpload": "File Upload",
     "folderUpload": "Folder Upload",
-    "folder": "Folder",
+    "folder": "New Folder",
     "textDoc": "Text Doc",
     "googleDoc": "Google Doc",
     "word": "Word",
@@ -129,6 +129,10 @@
           "warning": "Backup Limit Reached",
           "description": "This file is not backed up, upgrade to Space Pro to back up this file.",
           "button": "Upgrade to Space Pro"
+        },
+        "empty": {
+          "title": "Hmm, you don't have any files yet",
+          "message": "Add your first file by dragging it here or use the <0/> icon top left"
         }
       },
       "sharedBy": {
@@ -176,7 +180,7 @@
       }
     },
     "restoreKeysMnemonic": {
-      "inputLabel": "Enter 12 Word Account Recovery Phase",
+      "inputLabel": "Enter 12 Word Account Recovery Phrase",
       "keyNotFound": "No key found.",
       "submit": "Import Key"
     },
@@ -244,6 +248,7 @@
         "setDisplayName": "Set Display Name",
         "username": "Username",
         "setUsername": "Pick a Username",
+        "changeUsername": "Change Username",
         "profileId": "Profile ID",
         "dangerZone": "Danger Zone",
         "deleteAccount": "Delete Account",
@@ -255,13 +260,13 @@
       "security": {
         "title": "Security",
         "password": "Password",
-        "paperKey": "Account Recovery Phase",
-        "paperKeyTitle": "What is the Account Recovery Phase?",
-        "downloadPaperKey": "Show Account Recovery Phase",
+        "paperKey": "Account Recovery Phrase",
+        "paperKeyTitle": "What is the Account Recovery Phrase?",
+        "downloadPaperKey": "Show Account Recovery Phrase",
         "changePassword": "Change Password",
-        "paperKeyInfo": "Is a phase where a 12 words mnemonic seed will be created and it's going to be useful to access your account in case you lost your key pair.",
+        "paperKeyInfo": "A 12 words mnemonic seed will be created and it's going to be useful to access your account in case you lost your key pair.",
         "seedPhraseModal": {
-          "title": "Account Recovery Phase",
+          "title": "Account Recovery Phrase",
           "description": "Please take note of your 12 words seed phrase.",
           "confirmation": "Yes, I wrote this down."
         }
@@ -325,6 +330,7 @@
           "title": "Activate Space Pro",
           "message": "Input your product key below to activate Space Pro.",
           "inputLabel": "Product Key",
+          "placeholder": "Enter Product Key",
           "submit": "Activate"
         },
         "messageBox": {
@@ -382,7 +388,7 @@
     "remind": "Remind me later",
     "backup": {
       "title": "Backup your account",
-      "description": "Write down your Account Recovery Phase to keep your account secure."
+      "description": "Write down your Account Recovery Phrase to keep your account secure."
     },
     "username": {
       "title": "Create a Username & Password",

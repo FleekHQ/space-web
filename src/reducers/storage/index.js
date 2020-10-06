@@ -7,6 +7,8 @@ import bucketReducer, {
   UPDATE_OBJECT,
   UPDATE_OBJECTS,
   STORE_BUCKETS,
+  SET_LOADING_STATE_BUCKET,
+  SET_ERROR_BUCKET,
 } from './bucket';
 
 export * from './bucket';
@@ -19,6 +21,10 @@ const DEFAULT_STATE = {
     personal: {
       ...bucketReducer(undefined, {}),
       name: 'personal',
+    },
+    'shared-with-me': {
+      ...bucketReducer(undefined, {}),
+      name: 'shared-with-me',
     },
   },
   uploadError: null,
@@ -161,6 +167,21 @@ export default (state = DEFAULT_STATE, action) => {
       }
 
       return state;
+    }
+
+    case SET_LOADING_STATE_BUCKET:
+    case SET_ERROR_BUCKET: {
+      const { bucket, ...payload } = action.payload;
+      return {
+        ...state,
+        buckets: {
+          ...state.buckets,
+          [bucket]: bucketReducer(state.buckets[bucket], {
+            type: action.type,
+            ...payload,
+          }),
+        },
+      };
     }
 
     default:

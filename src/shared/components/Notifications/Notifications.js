@@ -22,6 +22,7 @@ const Notifications = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const [highlighted, setHighlighted] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [notifications, identities] = useSelector(
@@ -50,9 +51,13 @@ const Notifications = () => {
       timestamp: Date.now(),
     });
     setAnchorEl(null);
+    setHighlighted(false);
   };
 
-  const onClickHandler = (event) => setAnchorEl(event.currentTarget);
+  const onClickHandler = (event) => {
+    setAnchorEl(event.currentTarget);
+    setHighlighted(true);
+  };
 
   const hideNewNotifications = () => {
     const { data: { lastSeenAt, notifications: notificationsData } } = notifications;
@@ -112,6 +117,7 @@ const Notifications = () => {
     <>
       <NotificationButton
         badgeInvisible={hideNewNotifications()}
+        highlighted={highlighted}
         onClick={onClickHandler}
         className={classes.root}
       />

@@ -10,6 +10,7 @@ import { UPDATE_OBJECTS } from '@reducers/storage';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
+import renderLoadingRows from '../../render-loading-rows';
 import RenderRow from '../../RenderRow';
 import getTableHeads from '../../getTableHeads';
 
@@ -18,11 +19,12 @@ const FileTable = ({
   prefix,
   baseRedirectUrl,
   fetchObjects,
+  EmptyState,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [rows, isSharingModalVisible, error] = useSelector((state) => [
+  const [rows, isSharingModalVisible, error, loading] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
@@ -30,7 +32,9 @@ const FileTable = ({
       '/',
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
-    state.storage.error,
+    state.storage.buckets[bucket].error,
+    state.storage.buckets[bucket].loading,
+    state.storage,
   ]);
 
   const handleTableOutsideClick = (target) => {
@@ -65,6 +69,8 @@ const FileTable = ({
     <ObjectsTable
       rows={rows}
       bucket={bucket}
+      loading={loading}
+      renderLoadingRows={renderLoadingRows}
       renderRow={RenderRow}
       error={!!error}
       errorMessage={t('modules.storage.fileTable.error.message')}
@@ -74,6 +80,7 @@ const FileTable = ({
       getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
+      EmptyState={EmptyState}
     />
   );
 };
@@ -81,6 +88,7 @@ const FileTable = ({
 FileTable.defaultProps = {
   baseRedirectUrl: '/storage/files',
   fetchObjects: () => {},
+  EmptyState: () => null,
 };
 
 FileTable.propTypes = {
@@ -88,6 +96,7 @@ FileTable.propTypes = {
   prefix: PropTypes.string.isRequired,
   baseRedirectUrl: PropTypes.string,
   fetchObjects: PropTypes.func,
+  EmptyState: PropTypes.elementType,
 };
 
 export default FileTable;

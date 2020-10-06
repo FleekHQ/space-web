@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import get from 'lodash/get';
 import TextField from '@ui/TextField';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,15 @@ import Notifications from '@shared/components/Notifications';
 
 import useStyles from './styles';
 
+const isBackButtonDisabled = (pathname) => {
+  const isFileRootPath = /^\/storage\/files\/?$/.test(pathname);
+  const isSharedRootPath = /^\/storage\/shared-by\/?$/.test(pathname);
+  return isFileRootPath || isSharedRootPath;
+};
+
 const HeaderNav = () => {
+  const [backStepsNumber, setBackStepsNumber] = useState(0);
+  const backStepsPrevValue = useRef(0);
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
@@ -25,29 +33,32 @@ const HeaderNav = () => {
     searchTerm: get(state, 'storage.searchTerm', ''),
   }));
 
+  useEffect(() => {
+    // user didn't use back/forward buttons if:
+    // pathname has changed but backStepsNumber didn't
+    if (backStepsPrevValue.current === backStepsNumber) {
+      setBackStepsNumber(0);
+    }
+    backStepsPrevValue.current = backStepsNumber;
+  }, [location.pathname]);
+
   return (
     <div className={classes.root}>
       <FolderNavButton
         direction="back"
+        disabled={isBackButtonDisabled(location.pathname)}
         onClick={() => {
-          const isFileRootPath = /^\/storage\/files\/?$/.test(location.pathname);
-          const isSharedRootPath = /^\/storage\/shared-by\/?$/.test(location.pathname);
-
-          if (!isFileRootPath && !isSharedRootPath) {
-            history.goBack();
-          }
+          setBackStepsNumber((prevValue) => prevValue + 1);
+          history.goBack();
         }}
       />
       <FolderNavButton
         direction="forward"
+        disabled={backStepsNumber === 0}
         className={classes.forwardButton}
         onClick={() => {
-          const isFilePath = /^\/storage\/files\/.*/.test(location.pathname);
-          const isStoragePath = /^\/storage\/shared-by\/?.*/.test(location.pathname);
-
-          if (isFilePath || isStoragePath) {
-            history.goForward();
-          }
+          setBackStepsNumber((prevValue) => prevValue - 1);
+          history.goForward();
         }}
       />
       <TextField

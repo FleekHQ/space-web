@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, matchPath } from 'react-router-dom';
 import { fetchDir } from '@events/objects';
 import { FileTable, HeaderNav } from '../shared/components';
+import EmptyState from './components/EmptyState';
 
 import useStyles from './styles';
 
@@ -31,6 +32,7 @@ const StorageMainView = () => {
         bucket="personal"
         prefix={prefix}
         fetchObjects={() => fetchDir(prefix)}
+        EmptyState={EmptyState}
       />
     </div>
   );

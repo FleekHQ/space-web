@@ -27,6 +27,9 @@ const ObjectsTable = ({
   errorMessage,
   buttonErrorMessage,
   fetchObjects,
+  loading,
+  renderLoadingRows,
+  EmptyState,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -154,6 +157,8 @@ const ObjectsTable = ({
             head={withRowOptions ? [...heads, { width: 43 }] : heads}
             rows={rows}
             className={classes.root}
+            renderLoadingRows={renderLoadingRows}
+            loading={loading}
             renderHead={({ head = [] }) => (
               <TableRow>
                 {head.map(({ width, title }) => (
@@ -195,6 +200,7 @@ const ObjectsTable = ({
             )}
           />
         </div>
+        {!loading && !rows.length && <EmptyState />}
       </Dropzone>
       {error && (
       <div className={classes.errorCardContainer}>
@@ -217,6 +223,9 @@ ObjectsTable.defaultProps = {
   errorMessage: '',
   buttonErrorMessage: '',
   fetchObjects: () => null,
+  renderLoadingRows: () => null,
+  loading: false,
+  EmptyState: () => null,
 };
 
 ObjectsTable.propTypes = {
@@ -234,6 +243,9 @@ ObjectsTable.propTypes = {
   errorMessage: PropTypes.string,
   buttonErrorMessage: PropTypes.string,
   fetchObjects: PropTypes.func,
+  renderLoadingRows: PropTypes.func,
+  loading: PropTypes.bool,
+  EmptyState: PropTypes.elementType,
 };
 
 export default ObjectsTable;
