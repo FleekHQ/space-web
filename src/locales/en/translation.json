@@ -329,6 +329,7 @@
       },
       "productKey": {
         "title": "Space Pro",
+        "addFunds": "Add Funds",
         "form": {
           "title": "Activate Space Pro",
           "message": "Input your product key below to activate Space Pro.",

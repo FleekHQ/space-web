@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { shell } from 'electron';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import MessageBox from '@ui/MessageBox';
+import Typography from '@material-ui/core/Typography';
+
 import ErrorCard from '@ui/ErrorCard';
+import MessageBox from '@ui/MessageBox';
 import { claimWallet } from '@events';
+
+import AddFundsBox from './components/AddFundsBox';
 
 import useStyles from './styles';
 
 const ProductKey = () => {
   const { t } = useTranslation();
-  const [key, setKey] = useState('');
+  const [key, setKey] = React.useState('');
   const classes = useStyles();
   const { user, productKey } = useSelector((s) => ({
     user: s.user,
@@ -31,6 +34,14 @@ const ProductKey = () => {
 
   return (
     <>
+      <Box mb="15px">
+        <AddFundsBox
+          severity="danger"
+          message="Balance is dangerously low. Refill now to avoid losing files."
+          tooltipMessage="If you don't add funds to your balance to cover your next monthly bill, your files will be removed from Space 14 days after your next billing date. Please add funds now to avoid any disruption in service and potentially losing your files."
+          onAddFunds={() => null}
+        />
+      </Box>
       <div className={classes.colorBorder}>
         <form className={classes.contentWrapper} onSubmit={onSubmit}>
           <img

@@ -23,7 +23,7 @@ export default makeStyles((theme) => ({
   content: {
     flex: 1,
     padding: 27,
-    heigh: '100%',
+    height: '100%',
     overflow: 'auto',
     backgroundColor: theme.palette.palette.gray5,
   },
