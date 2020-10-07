@@ -42,11 +42,17 @@ const restoreWindow = (windowInstance) => {
   }
 };
 
+app.setAsDefaultProtocolClient('space');
+
 /**
  * App events
  */
 app.on('second-instance', () => {
   restoreWindow(mainWindow);
+});
+
+app.on('open-url', (event) => {
+  event.preventDefault();
 });
 
 app.on('window-all-closed', () => {
