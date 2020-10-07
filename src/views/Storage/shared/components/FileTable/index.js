@@ -69,7 +69,7 @@ const FileTable = ({
     <ObjectsTable
       rows={rows}
       bucket={bucket}
-      loading={loading}
+      loading={rows.length <= 0 && loading}
       renderLoadingRows={renderLoadingRows}
       renderRow={RenderRow}
       error={!!error}
