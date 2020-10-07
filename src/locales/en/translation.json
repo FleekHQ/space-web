@@ -17,6 +17,9 @@
     "confirm": "Confirm",
     "on": "on",
     "off": "off",
+    "change": "Change",
+    "crypto": "Crypto",
+    "card": "Card",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -344,6 +347,26 @@
           "title": "Don't have a Product Key yet?",
           "description": "Visit our store to purchase a product key to activate Space Pro.",
           "buy": "Buy Product Key"
+        },
+        "planDetails": {
+          "title": "Plan Details",
+          "currentPlan": "Current Plan: <bold>{{plan}}</bold>",
+          "paymentType": "Payment Type: <bold>{{paymentType}}</bold>",
+          "crypto": "Cryptocurrency",
+          "creditCard": "Credit Card",
+          "nextBill": "Next Bill: <bold>{{billDate}}</bold> for <bold>${{price}}</bold>",
+          "creditBalance": "Credit Balance",
+          "replenishBalance": "Replenish your balance",
+          "balanceLow": "Your balance is getting low, add more credits to your account to continue backing up your files.",
+          "addCredits": "Add Credits",
+          "changePaymentMethod": "Change Payment Method",
+          "cancelPlan": "Cancel Plan",
+          "balanceBox": {
+            "balance": "Balance",
+            "addFunds": "Add Funds",
+            "timeRemaining": "Time Remaining:",
+            "tooltipMessage": "Current balance can cover the next {{timeRemaining}} (estimate) based on your last bill. Exact amount is subject to change based on your Space storage & bandwidth usage."
+          }
         }
       }
     },
