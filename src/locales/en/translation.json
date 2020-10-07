@@ -331,11 +331,17 @@
         "title": "Space Pro",
         "addFunds": "Add Funds",
         "form": {
-          "title": "Activate Space Pro",
+          "activated": "Space Pro Activated",
+          "noactivated": "Upgrade to Space Pro",
           "message": "Input your product key below to activate Space Pro.",
           "inputLabel": "Product Key",
           "placeholder": "Enter Product Key",
-          "submit": "Activate"
+          "submit": "Get Space Pro",
+          "price": {
+            "per": "/month",
+            "extra": "$0.10 per extra GB",
+            "usage": "100 GB of Storage & Bandwidth"
+          }
         },
         "messageBox": {
           "title": "Don't have a Product Key yet?",
