@@ -156,6 +156,12 @@
     "appId": "com.electron.space-app",
     "afterSign": "./scripts/notarize.js",
     "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
+    "protocols": {
+      "name": "space-protocol",
+      "schemes": [
+        "space"
+      ]
+    },
     "publish": {
       "provider": "github",
       "repo": "desktop-storage",
