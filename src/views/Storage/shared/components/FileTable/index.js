@@ -24,7 +24,7 @@ const FileTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [rows, isSharingModalVisible, error, loading] = useSelector((state) => [
+  const [rows, isSharingModalVisible, loading] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
@@ -32,7 +32,6 @@ const FileTable = ({
       '/',
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
-    state.storage.buckets[bucket].error,
     state.storage.buckets[bucket].loading,
     state.storage,
   ]);
@@ -72,9 +71,6 @@ const FileTable = ({
       loading={rows.length <= 0 && loading}
       renderLoadingRows={renderLoadingRows}
       renderRow={RenderRow}
-      error={!!error}
-      errorMessage={t('modules.storage.fileTable.error.message')}
-      buttonErrorMessage={t('modules.storage.fileTable.error.buttonText')}
       fetchObjects={fetchObjects}
       heads={getTableHeads(t)}
       getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
