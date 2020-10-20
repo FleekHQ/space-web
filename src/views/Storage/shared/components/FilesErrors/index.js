@@ -15,7 +15,7 @@ const FilesErrors = ({
   const { t } = useTranslation();
 
   const [errorFileFetch] = useSelector((state) => [
-    !state.storage.buckets[bucket].error,
+    state.storage.buckets[bucket].error,
   ]);
 
   const errors = [];
