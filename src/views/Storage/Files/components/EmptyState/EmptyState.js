@@ -28,6 +28,11 @@ const StorageMainView = () => {
           />)]}
         />
       </Typography>
+      <img
+        alt="drag&drop"
+        className={classes.dragndropImg}
+        src={`${process.env.PUBLIC_URL}/assets/images/dragndrop.png`}
+      />
     </div>
   );
 };

@@ -51,6 +51,7 @@ const WelcomeMessages = () => {
               <Button
                 id="security"
                 type="button"
+                color="primary"
                 variant="contained"
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
@@ -63,7 +64,7 @@ const WelcomeMessages = () => {
                 classes={{ root: classes.btn }}
                 onClick={handleDismiss({ dispatch })}
               >
-                {t('common.dismiss')}
+                {t('common.remindMeLater')}
               </Button>
             </div>
           </MessageBox>
@@ -71,7 +72,7 @@ const WelcomeMessages = () => {
       }
       {
         !state.hideUsername && (
-          <MessageBox title={t('welcome.username.title')}>
+          <MessageBox title={t('welcome.username.title')} bgColor="secondary">
             <Typography variant="body2" color="textPrimary">
               {t('welcome.username.description')}
             </Typography>
@@ -80,6 +81,7 @@ const WelcomeMessages = () => {
                 id="account"
                 type="button"
                 variant="contained"
+                color="primary"
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
               >
@@ -99,7 +101,7 @@ const WelcomeMessages = () => {
       }
       {
         !state.hideIntegration && (
-          <MessageBox title={t('welcome.integrations.title')}>
+          <MessageBox title={t('welcome.integrations.title')} bgColor="secondary">
             <Typography variant="body2" color="textPrimary">
               {t('welcome.integrations.description')}
             </Typography>
@@ -108,6 +110,7 @@ const WelcomeMessages = () => {
                 id="usage"
                 type="button"
                 variant="contained"
+                color="primary"
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
               >
