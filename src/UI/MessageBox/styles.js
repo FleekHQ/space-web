@@ -10,10 +10,10 @@ const getColorByType = (type, theme) => {
   return colors[type] || colors.info;
 };
 
-const getBgColor = (bgColor) => {
+const getBgColor = (bgColor, theme) => {
   const colors = {
-    primary: '#ffeeb7',
-    secondary: 'rgba(0, 110, 255, 0.15)',
+    primary: '#D3E4FD',
+    secondary: theme.palette.palette.white,
   };
 
   return colors[bgColor] || colors.primary;
@@ -21,8 +21,8 @@ const getBgColor = (bgColor) => {
 
 const getBgBorderColor = (bgColor, theme) => {
   const colors = {
-    primary: '#de8901',
-    secondary: theme.palette.palette.blue1,
+    primary: theme.palette.palette.blue1,
+    secondary: theme.palette.palette.gray4,
   };
 
   return colors[bgColor] || colors.primary;
@@ -35,7 +35,8 @@ export default makeStyles((theme) => ({
     position: 'relative',
     flexDirection: 'column',
     padding: '12px 25px 12px 30px',
-    backgroundColor: bgColor ? getBgColor(bgColor) : theme.palette.palette.white,
+    boxShadow: '0px 3px 6px #DBE1EDE6',
+    backgroundColor: bgColor ? getBgColor(bgColor, theme) : theme.palette.palette.white,
     border: `1px solid ${bgColor ? getBgBorderColor(bgColor, theme) : getColorByType(type, theme)}`,
   }),
   titleContainer: {
