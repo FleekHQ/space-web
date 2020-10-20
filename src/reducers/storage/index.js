@@ -9,6 +9,7 @@ import bucketReducer, {
   STORE_BUCKETS,
   SET_LOADING_STATE_BUCKET,
   SET_ERROR_BUCKET,
+  SET_OPEN_ERROR_BUCKET,
 } from './bucket';
 
 export * from './bucket';
@@ -170,7 +171,8 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     case SET_LOADING_STATE_BUCKET:
-    case SET_ERROR_BUCKET: {
+    case SET_ERROR_BUCKET:
+    case SET_OPEN_ERROR_BUCKET: {
       const { bucket, ...payload } = action.payload;
       return {
         ...state,
