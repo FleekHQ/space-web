@@ -23,4 +23,7 @@ export default makeStyles((theme) => ({
     borderRadius: '50%',
     boxShadow: '0 0 9px 0 rgba(222, 222, 222, 0.8)',
   },
+  dragndropImg: {
+    marginTop: 20,
+  },
 }));
