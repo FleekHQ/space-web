@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, object, boolean } from '@storybook/addon-knobs';
+import { text, object, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import NotificationItem from './index';
@@ -13,7 +13,7 @@ storiesOf(categoryName, module).add('MenuItem', () => {
     onReject: action('reject'),
     username: text('username', 'anonbear'),
     description: text('description', 'Shared Branding.zip with you.'),
-    timestamp: text('timestamp', '2020-07-29T19:46:24.628Z'),
+    timestamp: number('timestamp', 1603290853),
     highlighted: boolean('highlighted'),
     files: object('files', [
       {

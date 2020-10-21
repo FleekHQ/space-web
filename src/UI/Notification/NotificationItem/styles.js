@@ -62,7 +62,7 @@ export default makeStyles((theme) => ({
     backgroundColor: `${theme.palette.palette.red}6c`,
   },
   timestamp: {
-    marginTop: (props) => (16 + 3 * (props.stackedItems - 1)),
+    marginTop: (props) => (20 + 3 * (props.stackedItems - 1)),
     marginBottom: 6,
   },
 }));
