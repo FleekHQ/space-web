@@ -58,7 +58,6 @@ app.on('open-url', (event, data) => {
   event.preventDefault();
 
   goTo = decodeURIComponent(data.replace('space://', ''));
-  console.log('goTo', goTo);
 
   if (mainWindow) {
     const fileUrl = url.format({
