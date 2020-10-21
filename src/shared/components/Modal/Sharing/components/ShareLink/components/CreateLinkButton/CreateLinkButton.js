@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
+import Button from '@terminal-packages/space-ui/core/Button';
 
 import useStyles from './styles';
 
@@ -11,7 +11,7 @@ const CreateLinkButton = (props) => {
 
   return (
     <Button
-      variant="contained"
+      variant="primary"
       className={classes.button}
       {...props}
     >

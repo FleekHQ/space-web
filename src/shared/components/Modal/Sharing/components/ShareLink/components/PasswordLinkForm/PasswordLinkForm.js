@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
 import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@terminal-packages/space-ui/core/Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -66,14 +66,14 @@ const PasswordLinkForm = (props) => {
         onClick={() => {
           onSave(password);
         }}
-        variant="contained"
+        variant="primary"
         disabled={loading}
         className={classes.button}
       >
         {t('common.save')}
       </Button>
       <Button
-        variant="outlined"
+        variant="secondary"
         onClick={() => {
           onCancel();
         }}
