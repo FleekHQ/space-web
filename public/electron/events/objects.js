@@ -14,6 +14,9 @@ const SUCCESS_DIR_EVENT = `${EVENT_PREFIX}:successDir`;
 const FETCH_SHARED_OBJECTS_EVENT = `${EVENT_PREFIX}:fetchShared`;
 const FETCH_SHARED_OBJECTS_ERROR_EVENT = `${EVENT_PREFIX}:fetchShared:error`;
 const FETCH_SHARED_OBJECTS_SUCCESS_EVENT = `${EVENT_PREFIX}:fetchShared:success`;
+const OPEN_PUBLIC_FILE_EVENT = `${EVENT_PREFIX}:openPublicFile`;
+const OPEN_PUBLIC_FILE_ERROR_EVENT = `${EVENT_PREFIX}:openPublicFile:error`;
+const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
 
 const DEFAULT_BUCKET = 'personal';
 
@@ -122,6 +125,24 @@ const registerObjectsEvents = (mainWindow) => {
       shell.openItem(location);
     } catch (err) {
       mainWindow.webContents.send(OPEN_ERROR_EVENT, payload);
+    }
+  });
+
+  ipcMain.on(OPEN_PUBLIC_FILE_EVENT, async (event, payload) => {
+    try {
+      const res = await spaceClient.openPublicFile(payload);
+
+      const location = res.getLocation();
+
+      if (!location) {
+        throw new Error('location not provided');
+      }
+
+      mainWindow.webContents.send(OPEN_PUBLIC_FILE_SUCCESS_EVENT, { location });
+    } catch (err) {
+      mainWindow.webContents.send(OPEN_PUBLIC_FILE_ERROR_EVENT, {
+        message: err.message,
+      });
     }
   });
 
