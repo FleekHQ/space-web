@@ -7,7 +7,7 @@ import ErrorCard from './index';
 
 const categoryName = 'ErrorCard';
 
-storiesOf(categoryName, module).add('refresh', () => {
+storiesOf(categoryName, module).add('button', () => {
   const defaultProps = {
     message: text('message', 'Error Message'),
     buttonText: text('buttonText', 'Refresh Files'),

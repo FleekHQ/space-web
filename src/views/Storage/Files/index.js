@@ -4,7 +4,7 @@ import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
 import { useHistory, matchPath } from 'react-router-dom';
 import { fetchDir } from '@events/objects';
-import { FileTable, HeaderNav } from '../shared/components';
+import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 import EmptyState from './components/EmptyState';
 
 import useStyles from './styles';
@@ -25,6 +25,10 @@ const StorageMainView = () => {
   return (
     <div className={classes.root}>
       <HeaderNav />
+      <FilesErrors
+        bucket="personal"
+        fetchObjects={() => fetchDir(prefix)}
+      />
       <Typography variant="h6" className={classes.title} weight="medium">
         {t('navigation.files')}
       </Typography>

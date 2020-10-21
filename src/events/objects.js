@@ -7,12 +7,14 @@ import {
   SET_LOADING_STATE_BUCKET,
   SET_ERROR_BUCKET,
   SET_LOADING_STATE,
+  SET_OPEN_ERROR_BUCKET,
 } from '@reducers/storage';
 
 import store from '../store';
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
+const OPEN_ERROR_EVENT = `${EVENT_PREFIX}:open:error`;
 const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
 const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
@@ -87,6 +89,16 @@ const registerObjectsEvents = () => {
     });
   });
 };
+
+ipcRenderer.on(OPEN_ERROR_EVENT, (event, payload) => {
+  store.dispatch({
+    payload: {
+      ...payload,
+      error: true,
+    },
+    type: SET_OPEN_ERROR_BUCKET,
+  });
+});
 
 export const fetchSharedObjects = (seek = '', limit = 100) => {
   store.dispatch({

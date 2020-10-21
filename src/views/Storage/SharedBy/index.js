@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { fetchSharedObjects } from '@events/objects';
 import { useHistory, matchPath } from 'react-router-dom';
 
-import { FileTable, HeaderNav } from '../shared/components';
+import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 import useStyles from './styles';
 
 const SharedWithMeView = () => {
@@ -24,6 +24,10 @@ const SharedWithMeView = () => {
   return (
     <div className={classes.root}>
       <HeaderNav />
+      <FilesErrors
+        bucket="shared-with-me"
+        fetchObjects={fetchSharedObjects}
+      />
       <div className={classes.breadcrumbs}>
         <Typography variant="h6" className={classes.title} weight="medium">
           {t('navigation.shared-by')}
