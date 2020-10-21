@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
     fontWeight: 600,
     marginBottom: 2,
   },
-  warningContainer: {
+  subtitleContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -51,18 +51,30 @@ export default makeStyles((theme) => ({
   timestamp: {
     margin: '7px 0',
   },
-  usage: {
-    marginTop: 6,
+  box: {
+    margin: '6px 0',
     borderRadius: 3,
-    display: 'inline-block',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignContent: 'center',
     padding: '9px 11px 9px 14px',
-    border: `1px solid ${theme.palette.palette.gray15}`,
-    backgroundColor: theme.palette.palette.white,
+    backgroundColor: theme.palette.palette.gray10,
   },
   highlighted: {
     backgroundColor: `${theme.palette.palette.blue1}26`,
     '&:hover': {
       backgroundColor: `${theme.palette.palette.blue1}26`,
     },
+  },
+  bold: {
+    fontWeight: 600,
+  },
+  text: {
+    fontSize: 12,
+  },
+  description: {
+    marginBottom: 6,
+    whiteSpace: 'normal',
+    wordBreak: 'break-word',
   },
 }));

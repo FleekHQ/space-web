@@ -1,38 +1,9 @@
 import React from 'react';
-import { formatBytes } from '@utils';
-import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
-import store from '../../../../store';
 
 export const INVITATION = 'INVITATION';
-export const USAGEALERT = 'USAGEALERT';
 export const SHARE_INVITE = 'share-invite';
-export const BACKUP_LIMIT = 'backup-limit';
 
 const getHighlighted = (item, lastSeenAt) => (item.createdAt * 1000 > lastSeenAt);
-
-const mapBackupLimitItem = (item, lastSeenAt) => {
-  const { PUBLIC_URL } = process.env;
-  const {
-    id,
-    createdAt,
-    usageAlert:
-      {
-        used,
-        limit,
-      },
-  } = item;
-
-  return ({
-    id,
-    type: BACKUP_LIMIT,
-    currentAmountText: formatBytes(used),
-    limitText: formatBytes(limit),
-    timestamp: createdAt,
-    logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
-    upgradeOnClick: () => store.dispatch(openModal(SETTINGS_MODAL)),
-    highlighted: getHighlighted(item, lastSeenAt),
-  });
-};
 
 const mapInvitationItem = (item, lastSeenAt, Trans, t, classes, identities) => {
   const {
@@ -105,10 +76,6 @@ const mapDataToItems = (data, Trans, t, classes, identities) => {
     //  a bug occured on the backend
     if (relatedObject === 0) {
       return arr;
-    }
-
-    if (type === USAGEALERT) {
-      return arr.concat(mapBackupLimitItem(item, lastSeenAt));
     }
 
     if (type === INVITATION) {

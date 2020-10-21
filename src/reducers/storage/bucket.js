@@ -9,12 +9,14 @@ export const UPDATE_OBJECTS = 'UPDATE_OBJECTS';
 export const STORE_BUCKETS = 'STORE_BUCKETS';
 export const SET_LOADING_STATE_BUCKET = 'SET_LOADING_STATE_BUCKET';
 export const SET_ERROR_BUCKET = 'SET_ERROR_BUCKET';
+export const SET_OPEN_ERROR_BUCKET = 'SET_OPEN_ERROR_BUCKET';
 
 const DEFAULT_STATE = {
   membersList: [],
   objects: [],
   loading: false,
   error: null,
+  openError: null,
 };
 
 export default (state = DEFAULT_STATE, action) => {
@@ -32,6 +34,13 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+    }
+
+    case SET_OPEN_ERROR_BUCKET: {
+      return {
+        ...state,
+        openError: action.error,
       };
     }
 

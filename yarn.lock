@@ -2105,6 +2105,13 @@
     telejson "^3.2.0"
     util-deprecate "^1.0.2"
 
+"@stripe/react-stripe-js@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.1.2.tgz#a7f5ef5b4d7dc7fa723501b706644414cfe6dcba"
+  integrity sha512-07hu8RJXwWKGbvdvd1yt1cYvGtDB8jFX+q10f7FQuItUt9rlSo0am3WIx845iMHANiYgxyRb1PS201Yle9xxPQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
@@ -2215,11 +2222,13 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@terminal-packages/space-ui@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.0.tgz#3af686301934de55d6104a69b1b30847a26bbfb6"
-  integrity sha512-8K1p0JXHYvaXImcNlqi/WqoI8Z+2999iN6JaSm3hAGthYqtxmykT9bnnelELVtNL4/ckWcgCwcp1ycpCvtL6fw==
+"@terminal-packages/space-ui@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.2.tgz#a1cb0bb08e04b38406f74f124ff2dd5a7ea7e860"
+  integrity sha512-IHB+beHUOgmt6ZkuTLIwm6qChMzW/EyVqfJj00dZ684Vl5s8bjiTnVJQdglihPjjsCbvxDclbfb1feMrC0cczw==
   dependencies:
+    "@stripe/react-stripe-js" "^1.1.2"
+    clsx "^1.1.1"
     lodash.merge "^4.6.2"
 
 "@testing-library/dom@*":
@@ -4636,7 +4645,7 @@ clone-response@^1.0.2:
   dependencies:
     mimic-response "^1.0.0"
 
-clsx@^1.0.4:
+clsx@^1.0.4, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==

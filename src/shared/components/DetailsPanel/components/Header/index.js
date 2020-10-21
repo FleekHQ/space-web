@@ -1,11 +1,12 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import Button from '@material-ui/core/Button';
 import FileIcon from '@ui/FileIcon';
 import { openObject } from '@events';
 import Typography from '@ui/Typography';
+import { useTranslation } from 'react-i18next';
+import Button from '@terminal-packages/space-ui/core/Button';
+
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 
@@ -50,7 +51,7 @@ const DetailsPanel = ({ objects }) => {
       </Typography>
       <div className={classes.buttonsGroup}>
         {objects.length === 1 && (
-          <Button variant="outlined" className={classes.openBtn} onClick={onClickOpen}>
+          <Button variant="secondary" className={classes.openBtn} onClick={onClickOpen}>
             {t('detailsPanel.open')}
           </Button>
         )}

@@ -5,6 +5,7 @@ const { spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
+const OPEN_ERROR_EVENT = `${EVENT_PREFIX}:open:error`;
 const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
 const ERROR_EVENT = `${EVENT_PREFIX}:error`;
 const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
@@ -123,8 +124,7 @@ const registerObjectsEvents = (mainWindow) => {
 
       shell.openItem(location);
     } catch (err) {
-      /* eslint-disable no-console */
-      console.error(err);
+      mainWindow.webContents.send(OPEN_ERROR_EVENT, payload);
     }
   });
 

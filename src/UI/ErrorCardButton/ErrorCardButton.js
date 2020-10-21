@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle } from '@fortawesome/pro-regular-svg-icons/faExclamationCircle';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 import Button from '@material-ui/core/Button';
-import { faSync } from '@fortawesome/pro-light-svg-icons/faSync';
 
 import useStyles from './styles';
 
@@ -31,7 +30,7 @@ const ErrorCard = (props) => {
       <div className={classes.messageContainer}>
         <FontAwesomeIcon
           className={classes.icon}
-          icon={faExclamationCircle}
+          icon={faExclamationTriangle}
         />
         <Typography variant="body2">
           {message}
@@ -39,12 +38,9 @@ const ErrorCard = (props) => {
       </div>
       <Button
         variant="contained"
+        color="primary"
         onClick={buttonOnClick}
       >
-        <FontAwesomeIcon
-          icon={faSync}
-          className={classes.buttonIcon}
-        />
         <Typography className={classes.buttonText}>
           {buttonText}
         </Typography>

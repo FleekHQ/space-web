@@ -5,7 +5,7 @@ import Avatar from '@ui/Avatar';
 import Typography from '@ui/Typography';
 import classnames from 'classnames';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
+import Button from '@terminal-packages/space-ui/core/Button';
 
 import useStyles from './styles';
 import { FileCard } from './components';
@@ -40,17 +40,15 @@ const NotificationItem = (props) => {
             <Button
               onClick={onAccept}
               variant="contained"
+              color="primary"
               className={classes.button}
             >
               {i18n.accept}
             </Button>
             <Button
               onClick={onReject}
-              variant="outlined"
-              className={classnames(
-                classes.button,
-                classes.rejectButton,
-              )}
+              variant="dangerOutlined"
+              className={classes.button}
             >
               {i18n.reject}
             </Button>
@@ -70,14 +68,6 @@ const NotificationItem = (props) => {
           </Typography>
         );
     }
-  };
-
-  const getTooltip = () => {
-    let tooltip = '';
-    files.forEach((file) => {
-      tooltip += `${file.name}\n`;
-    });
-    return tooltip;
   };
 
   return (
@@ -105,21 +95,14 @@ const NotificationItem = (props) => {
         </Typography>
         <div className={classes.filesContainer}>
           <div className={classes.filesStack}>
-            {files.slice(0, FILE_STACK_MAX).map((_, index) => {
-              const showTooltip = index === 0 && files.length > 1;
-
-              return (
-                <FileCard
-                  key={index}
-                  stackPosition={index}
-                  ext={files[0].ext}
-                  name={files[0].name}
-                  showBadge={showTooltip}
-                  badgeTooltip={getTooltip()}
-                  badgeNumber={files.length}
-                />
-              );
-            })}
+            {files.slice(0, FILE_STACK_MAX).map((_, index) => (
+              <FileCard
+                key={index}
+                stackPosition={index}
+                ext={files[0].ext}
+                name={files[0].name}
+              />
+            ))}
           </div>
         </div>
         <Typography variant="body2" color="secondary" className={classes.timestamp}>

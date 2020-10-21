@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import useStyles from './styles';
 import ShareNotificationItem from '../NotificationItem';
-import BackupNotificationItem from '../BackUpLimitItem';
+import GeneralNotificationItem from '../GeneralNotification';
 
 /* eslint-disable react/jsx-props-no-spreading */
 const NotificationMenu = (props) => {
@@ -18,7 +18,7 @@ const NotificationMenu = (props) => {
     onMarkAsRead,
     onAcceptInvitation,
     onRejectInvitation,
-    upgradeOnClick,
+    onClick,
     loadMore,
     ...menuProps
   } = props;
@@ -37,12 +37,11 @@ const NotificationMenu = (props) => {
             {...item}
           />
         );
-      case 'backup-limit':
       default:
         return (
-          <BackupNotificationItem
+          <GeneralNotificationItem
             key={item.id}
-            upgradeOnClick={() => upgradeOnClick(item)}
+            onClick={() => onClick(item)}
             {...item}
           />
         );
@@ -100,7 +99,7 @@ NotificationMenu.defaultProps = {
   onMarkAsRead: () => {},
   onAcceptInvitation: () => {},
   onRejectInvitation: () => {},
-  upgradeOnClick: () => {},
+  onClick: () => {},
   loadMore: () => {},
 };
 
@@ -110,7 +109,7 @@ NotificationMenu.propTypes = {
   onMarkAsRead: PropTypes.func,
   onAcceptInvitation: PropTypes.func,
   onRejectInvitation: PropTypes.func,
-  upgradeOnClick: PropTypes.func,
+  onClick: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.oneOfType([
       PropTypes.number,

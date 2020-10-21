@@ -11,7 +11,6 @@ import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import Dropzone from '@shared/components/Dropzone';
 import Table, { TableCell, TableRow } from '@ui/Table';
-import ErrorCardRefresh from '@ui/ErrorCardRefresh';
 
 import useStyles from './styles';
 
@@ -23,10 +22,6 @@ const ObjectsTable = ({
   getRedirectUrl,
   onOutsideClick,
   onDropzoneDrop,
-  error,
-  errorMessage,
-  buttonErrorMessage,
-  fetchObjects,
   loading,
   renderLoadingRows,
   EmptyState,
@@ -209,15 +204,6 @@ const ObjectsTable = ({
         </div>
         {!loading && !rows.length && <EmptyState />}
       </Dropzone>
-      {error && (
-      <div className={classes.errorCardContainer}>
-        <ErrorCardRefresh
-          message={errorMessage}
-          buttonText={buttonErrorMessage}
-          buttonOnClick={fetchObjects}
-        />
-      </div>
-      )}
     </div>
   );
 };
@@ -226,10 +212,6 @@ ObjectsTable.defaultProps = {
   onDropzoneDrop: null,
   withRowOptions: false,
   onOutsideClick: () => null,
-  error: false,
-  errorMessage: '',
-  buttonErrorMessage: '',
-  fetchObjects: () => null,
   renderLoadingRows: () => null,
   loading: false,
   EmptyState: () => null,
@@ -246,10 +228,6 @@ ObjectsTable.propTypes = {
   renderRow: PropTypes.elementType.isRequired,
   getRedirectUrl: PropTypes.func.isRequired,
   withRowOptions: PropTypes.bool,
-  error: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  buttonErrorMessage: PropTypes.string,
-  fetchObjects: PropTypes.func,
   renderLoadingRows: PropTypes.func,
   loading: PropTypes.bool,
   EmptyState: PropTypes.elementType,
