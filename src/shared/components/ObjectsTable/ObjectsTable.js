@@ -99,6 +99,7 @@ const ObjectsTable = ({
         dbId: row.dbId,
         bucket: rowBucket,
         name: row.name,
+        ipfsHash: row.ipfsHash,
         isPublicLink: row.isPublicLink,
       });
 

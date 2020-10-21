@@ -145,13 +145,14 @@ export const openObject = ({
   path,
   dbId,
   name,
+  ipfsHash,
   isPublicLink = false,
   bucket = 'personal',
 }) => {
   if (isPublicLink) {
     ipcRenderer.send(OPEN_PUBLIC_FILE_EVENT, {
-      fileCid: 'hash',
       filename: name,
+      fileCid: ipfsHash,
     });
     return;
   }
