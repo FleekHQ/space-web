@@ -139,6 +139,7 @@ const registerObjectsEvents = (mainWindow) => {
       }
 
       mainWindow.webContents.send(OPEN_PUBLIC_FILE_SUCCESS_EVENT, { location });
+      shell.openItem(location);
     } catch (err) {
       mainWindow.webContents.send(OPEN_PUBLIC_FILE_ERROR_EVENT, {
         message: err.message,

@@ -95,9 +95,9 @@ const FileLinkPassword = ({
         <form
           id="password-form"
           onSubmit={() => openPublicFile({
+            password,
             fileCid: hash,
             filename: fname,
-            fileKey: password,
           })}
         >
           <TextField

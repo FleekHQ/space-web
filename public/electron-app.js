@@ -55,8 +55,6 @@ app.on('second-instance', () => {
 app.on('open-url', (event, data) => {
   event.preventDefault();
 
-  event.preventDefault();
-
   goTo = decodeURIComponent(data.replace('space://', ''));
 
   if (mainWindow) {

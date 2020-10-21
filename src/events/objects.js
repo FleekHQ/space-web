@@ -141,11 +141,27 @@ export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true)
   ipcRenderer.send(FETCH_DIR_EVENT, { path, bucket, fetchSubFolders });
 };
 
-export const openObject = (path, dbId, bucket = 'personal') => ipcRenderer.send(OPEN_EVENT, {
+export const openObject = ({
   path,
-  bucket,
-  ...(dbId && { dbId }),
-});
+  dbId,
+  name,
+  isPublicLink = false,
+  bucket = 'personal',
+}) => {
+  if (isPublicLink) {
+    ipcRenderer.send(OPEN_PUBLIC_FILE_EVENT, {
+      fileCid: 'hash',
+      filename: name,
+    });
+    return;
+  }
+
+  ipcRenderer.send(OPEN_EVENT, {
+    path,
+    bucket,
+    ...(dbId && { dbId }),
+  });
+};
 
 export const openPublicFile = (payload) => {
   store.dispatch({
