@@ -5,6 +5,7 @@
     "search": "Search",
     "at": "at",
     "yes": "Yes",
+    "open": "Open",
     "enable": "Enable",
     "remove": "Remove",
     "owner": "Owner",
@@ -20,6 +21,7 @@
     "change": "Change",
     "crypto": "Crypto",
     "card": "Card",
+    "password": "Password",
     "remindMeLater": "Remind me later",
     "access": {
       "edit": {
@@ -397,6 +399,11 @@
       "register": "Register",
       "upgradedTitle": "Upgraded to Space Pro",
       "upgradedDescription": "Enjoy 100GB more Space storage."
+    },
+    "fileLinkPassword": {
+      "description": "File is locked",
+      "openText": "Enter password to open file",
+      "error": "Incorrect password, please try again."
     }
   },
   "welcome": {

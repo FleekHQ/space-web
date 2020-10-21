@@ -5,7 +5,7 @@ import Avatar from '@ui/Avatar';
 import Typography from '@ui/Typography';
 import classnames from 'classnames';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
+import Button from '@terminal-packages/space-ui/core/Button';
 
 import useStyles from './styles';
 import { FileCard } from './components';
@@ -47,11 +47,8 @@ const NotificationItem = (props) => {
             </Button>
             <Button
               onClick={onReject}
-              variant="outlined"
-              className={classnames(
-                classes.button,
-                classes.rejectButton,
-              )}
+              variant="dangerOutlined"
+              className={classes.button}
             >
               {i18n.reject}
             </Button>

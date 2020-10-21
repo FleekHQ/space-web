@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import Button from '@terminal-packages/space-ui/core/Button';
 
 import MessageBox from '@ui/MessageBox';
 import { WELCOME_ACTION_TYPES } from '@reducers/welcome';
@@ -51,8 +50,7 @@ const WelcomeMessages = () => {
               <Button
                 id="security"
                 type="button"
-                color="primary"
-                variant="contained"
+                variant="primary"
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
               >
@@ -61,6 +59,7 @@ const WelcomeMessages = () => {
               <Button
                 type="button"
                 id="hideBackup"
+                variant="text"
                 classes={{ root: classes.btn }}
                 onClick={handleDismiss({ dispatch })}
               >
@@ -80,8 +79,7 @@ const WelcomeMessages = () => {
               <Button
                 id="account"
                 type="button"
-                variant="contained"
-                color="primary"
+                variant="primary"
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
               >
@@ -89,6 +87,7 @@ const WelcomeMessages = () => {
               </Button>
               <Button
                 type="button"
+                variant="text"
                 id="hideUsername"
                 classes={{ root: classes.btn }}
                 onClick={handleDismiss({ dispatch })}
@@ -109,8 +108,7 @@ const WelcomeMessages = () => {
               <Button
                 id="usage"
                 type="button"
-                variant="contained"
-                color="primary"
+                variant="primary"
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
               >
@@ -118,6 +116,7 @@ const WelcomeMessages = () => {
               </Button>
               <Button
                 type="button"
+                variant="text"
                 id="hideIntegration"
                 classes={{ root: classes.btn }}
                 onClick={handleDismiss({ dispatch })}

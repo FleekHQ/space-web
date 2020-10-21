@@ -11,6 +11,7 @@ const registerEvents = require('./electron/events');
 const createMainWindow = require('./electron/window/main');
 const { getMenuOptions, trayIcon } = require('./electron/tray-menu');
 
+let goTo;
 let appIcon;
 let mainWindow;
 let destroyStream = () => {};
@@ -51,8 +52,23 @@ app.on('second-instance', () => {
   restoreWindow(mainWindow);
 });
 
-app.on('open-url', (event) => {
+app.on('open-url', (event, data) => {
   event.preventDefault();
+
+  event.preventDefault();
+
+  goTo = decodeURIComponent(data.replace('space://', ''));
+
+  if (mainWindow) {
+    const fileUrl = url.format({
+      protocol: 'file',
+      pathname: path.resolve(__dirname, `../build/index.html${goTo ? `#/${goTo}` : ''}`),
+    });
+
+    mainWindow.loadURL(isDev
+      ? `http://localhost:3000${goTo ? `/#/${goTo}` : ''}`
+      : fileUrl);
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -95,11 +111,11 @@ app.on('ready', () => {
 daemon.on('ready', () => {
   const fileUrl = url.format({
     protocol: 'file',
-    pathname: path.resolve(__dirname, '../build/index.html'),
+    pathname: path.resolve(__dirname, `../build/index.html${goTo ? `#/${goTo}` : ''}`),
   });
 
   mainWindow.loadURL(isDev
-    ? 'http://localhost:3000'
+    ? `http://localhost:3000${goTo ? `/#/${goTo}` : ''}`
     : fileUrl);
 
   mainWindow.setSize(1200, 680);

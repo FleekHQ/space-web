@@ -22,11 +22,6 @@ export default makeStyles((theme) => ({
     padding: 0,
     boxSizing: 'border-box',
   },
-  rejectButton: {
-    borderColor: theme.palette.palette.red,
-    color: theme.palette.palette.red,
-    backgroundColor: `${theme.palette.palette.white} !important`,
-  },
   filesContainer: {
     marginLeft: (props) => 3 * (props.stackedItems - 1),
     margin: '6px 0',

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import classnames from 'classnames';
-import Button from '@material-ui/core/Button';
+import Button from '@terminal-packages/space-ui/core/Button';
 
 import useStyles from './styles';
 import Collaborator from '../../../../Collaborator';
@@ -103,8 +103,7 @@ const CollaboratorList = (props) => {
       <div className={classes.shareButtonContainer}>
         <Button
           onClick={onShare}
-          variant="contained"
-          color="primary"
+          variant="primary"
           disabled={loading || !hasUsers}
           className={classes.shareButton}
         >
