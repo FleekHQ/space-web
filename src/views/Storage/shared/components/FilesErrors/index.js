@@ -24,6 +24,7 @@ const FilesErrors = ({
 
   if (errorFileFetch) {
     errors.push({
+      id: 'fetch-error',
       message: t('modules.storage.fileTable.error.message'),
       buttonText: t('modules.storage.fileTable.error.buttonText'),
       buttonOnClick: fetchObjects,
@@ -32,6 +33,7 @@ const FilesErrors = ({
 
   if (openError) {
     errors.push({
+      id: 'open-error',
       message: t('modules.storage.fileTable.openError.message'),
       buttonText: t('modules.storage.fileTable.openError.buttonText'),
       buttonOnClick: () => {
@@ -51,7 +53,7 @@ const FilesErrors = ({
       {errors.length > 0 && (
         <div className={classes.container}>
           {errors.map((error) => (
-            <div className={classes.errorBoxContainer}>
+            <div key={error.id} className={classes.errorBoxContainer}>
               <ErrorCardButton
                 message={error.message}
                 buttonText={error.buttonText}
