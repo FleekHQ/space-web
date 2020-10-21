@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
-import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@terminal-packages/space-ui/core/Button';
 
 import useStyles from './styles';
 
@@ -24,7 +24,7 @@ const CopyLink = ({ url }) => {
       />
       <Button
         onClick={onClick}
-        variant="contained"
+        variant="primary"
         className={classes.button}
       >
         {t('modals.sharingModal.shareLink.copyLink')}
