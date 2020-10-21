@@ -39,7 +39,8 @@ const NotificationItem = (props) => {
           <>
             <Button
               onClick={onAccept}
-              variant="primary"
+              variant="contained"
+              color="primary"
               className={classes.button}
             >
               {i18n.accept}
@@ -69,14 +70,6 @@ const NotificationItem = (props) => {
     }
   };
 
-  const getTooltip = () => {
-    let tooltip = '';
-    files.forEach((file) => {
-      tooltip += `${file.name}\n`;
-    });
-    return tooltip;
-  };
-
   return (
     <MenuItem
       disableRipple
@@ -102,21 +95,14 @@ const NotificationItem = (props) => {
         </Typography>
         <div className={classes.filesContainer}>
           <div className={classes.filesStack}>
-            {files.slice(0, FILE_STACK_MAX).map((_, index) => {
-              const showTooltip = index === 0 && files.length > 1;
-
-              return (
-                <FileCard
-                  key={index}
-                  stackPosition={index}
-                  ext={files[0].ext}
-                  name={files[0].name}
-                  showBadge={showTooltip}
-                  badgeTooltip={getTooltip()}
-                  badgeNumber={files.length}
-                />
-              );
-            })}
+            {files.slice(0, FILE_STACK_MAX).map((_, index) => (
+              <FileCard
+                key={index}
+                stackPosition={index}
+                ext={files[0].ext}
+                name={files[0].name}
+              />
+            ))}
           </div>
         </div>
         <Typography variant="body2" color="secondary" className={classes.timestamp}>

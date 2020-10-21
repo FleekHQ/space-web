@@ -22,6 +22,21 @@ storiesOf(categoryName, module).add('Menu', () => {
     }),
     items: object('items', [
       {
+        id: 'general',
+        type: 'general',
+        onClick: () => {},
+        i18n: {
+          title: 'Space',
+          warning: 'Replenish your balance',
+          boxText1: 'Current Balance:',
+          boxText2: '$11.25',
+          description: 'Your balance is getting low. We recommend adding more funds to make sure you have enough to cover your Space storage/usage for the next few months. This way you never have to worry about it getting too low',
+          buttonText: 'Add Funds',
+        },
+        timestamp: 1598037893916,
+        logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
+      },
+      {
         id: 1,
         type: 'share-invite',
         username: 'anonbear',
@@ -57,14 +72,6 @@ storiesOf(categoryName, module).add('Menu', () => {
           ext: 'pdf',
         }],
         status: 'PENDING',
-      },
-      {
-        id: 4,
-        type: 'backup-limit',
-        currentAmountText: '997.2 MB',
-        limitText: '1 GB',
-        timestamp: 1598037893916,
-        logoUrl: `${PUBLIC_URL}/assets/images/space.svg`,
       },
     ]),
     onMarkAsRead: action('onMarkAsRead'),

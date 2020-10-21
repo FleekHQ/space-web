@@ -55,13 +55,7 @@
     "notifications": "Notifications",
     "empty": "No notifications",
     "shared": "Shared <0>{{file}}</0> with you.",
-    "files": "{{amount}} files",
-    "backupLimit": {
-      "title": "Space",
-      "warning": "Reaching backup limit.",
-      "using": "Using <0>{{current}}</0> of <0>{{limit}}</0>",
-      "upgrade": "Upgrade to Space Pro"
-    }
+    "files": "{{amount}} files"
   },
   "detailsPanel": {
     "title": "Details Panel",
