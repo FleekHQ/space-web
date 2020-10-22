@@ -101,6 +101,7 @@ const FileLinkPassword = ({
               password,
               fileCid: hash,
               filename: fname,
+              reloadFiles: true,
             });
           }}
         >
