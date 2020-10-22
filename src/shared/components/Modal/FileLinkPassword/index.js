@@ -94,11 +94,15 @@ const FileLinkPassword = ({
       <Box mb="18px" width="100%" px="18px">
         <form
           id="password-form"
-          onSubmit={() => openPublicFile({
-            password,
-            fileCid: hash,
-            filename: fname,
-          })}
+          onSubmit={(event) => {
+            event.preventDefault();
+
+            openPublicFile({
+              password,
+              fileCid: hash,
+              filename: fname,
+            });
+          }}
         >
           <TextField
             fullWidth
