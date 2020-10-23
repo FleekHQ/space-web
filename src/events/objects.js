@@ -105,7 +105,7 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(OPEN_PUBLIC_FILE_SUCCESS_EVENT, (event, payload) => {
     store.dispatch({
-      location: payload.action,
+      location: payload.location,
       type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_SUCCESS,
     });
   });
