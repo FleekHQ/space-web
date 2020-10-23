@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -23,6 +23,7 @@ import useStyles from './styles';
 const FileLinkPassword = ({
   hash,
   fname,
+  history,
   closeModal,
 }) => {
   const classes = useStyles();
@@ -35,6 +36,8 @@ const FileLinkPassword = ({
   React.useEffect(() => {
     if (openPublicFileState.location) {
       closeModal();
+      // remove fname and hash from qs
+      history.replace('/storage/shared-by');
     }
   }, [openPublicFileState.location]);
 
@@ -94,11 +97,16 @@ const FileLinkPassword = ({
       <Box mb="18px" width="100%" px="18px">
         <form
           id="password-form"
-          onSubmit={() => openPublicFile({
-            fileCid: hash,
-            filename: fname,
-            fileKey: password,
-          })}
+          onSubmit={(event) => {
+            event.preventDefault();
+
+            openPublicFile({
+              password,
+              fileCid: hash,
+              filename: fname,
+              reloadFiles: true,
+            });
+          }}
         >
           <TextField
             fullWidth
@@ -168,6 +176,9 @@ FileLinkPassword.propTypes = {
   hash: PropTypes.string.isRequired,
   fname: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default FileLinkPassword;

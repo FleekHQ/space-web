@@ -23,6 +23,7 @@ const objectPresenter = (obj = {}) => {
   const isLocallyAvailable = get(obj, 'isLocallyAvailable', false);
   const sourceBucket = get(obj, 'sourceBucket');
   const dbId = get(obj, 'dbId');
+  const isPublicLink = get(obj, 'isPublicLink', false);
 
   return {
     key,
@@ -36,6 +37,7 @@ const objectPresenter = (obj = {}) => {
     created,
     bytesSize,
     lastModified,
+    isPublicLink,
     isLocallyAvailable,
     selected: false,
     id: `${bucket}/${key}`,

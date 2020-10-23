@@ -89,7 +89,14 @@ const ObjectsTable = ({
       }));
     } else if (row.type === 'file') {
       const rowBucket = row.sourceBucket || row.bucket;
-      openObject(row.key, row.dbId, rowBucket);
+      openObject({
+        path: row.key,
+        dbId: row.dbId,
+        bucket: rowBucket,
+        name: row.name,
+        ipfsHash: row.ipfsHash,
+        isPublicLink: row.isPublicLink,
+      });
 
       newRows = rows.map((_row) => ({
         ..._row,

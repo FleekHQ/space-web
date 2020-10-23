@@ -69,6 +69,7 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
         return {
           dbId: item.getDbid(),
           sourceBucket: item.getBucket(),
+          isPublicLink: item.getIspubliclink(),
           ...entryToObject(entry, 'shared-with-me'),
         };
       }),
@@ -130,7 +131,16 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(OPEN_PUBLIC_FILE_EVENT, async (event, payload) => {
     try {
-      const res = await spaceClient.openPublicFile(payload);
+      const openPublicFilePayload = {
+        fileCid: payload.fileCid,
+        filename: payload.filename,
+      };
+
+      if (payload.password) {
+        openPublicFilePayload.password = payload.password;
+      }
+
+      const res = await spaceClient.openPublicFile(openPublicFilePayload);
 
       const location = res.getLocation();
 
@@ -138,7 +148,12 @@ const registerObjectsEvents = (mainWindow) => {
         throw new Error('location not provided');
       }
 
+      if (payload.reloadFiles) {
+        await listSharedFiles(mainWindow);
+      }
+
       mainWindow.webContents.send(OPEN_PUBLIC_FILE_SUCCESS_EVENT, { location });
+      shell.openItem(location);
     } catch (err) {
       mainWindow.webContents.send(OPEN_PUBLIC_FILE_ERROR_EVENT, {
         message: err.message,

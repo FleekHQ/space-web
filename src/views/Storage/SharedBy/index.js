@@ -35,6 +35,7 @@ const SharedWithMeView = () => {
       dispatch(openModal(FILE_LINK_PASSWORD, {
         hash,
         fname,
+        history,
       }));
     }
   }, []);

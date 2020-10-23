@@ -105,7 +105,7 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(OPEN_PUBLIC_FILE_SUCCESS_EVENT, (event, payload) => {
     store.dispatch({
-      location: payload.action,
+      location: payload.location,
       type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_SUCCESS,
     });
   });
@@ -153,11 +153,28 @@ export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true)
   ipcRenderer.send(FETCH_DIR_EVENT, { path, bucket, fetchSubFolders });
 };
 
-export const openObject = (path, dbId, bucket = 'personal') => ipcRenderer.send(OPEN_EVENT, {
+export const openObject = ({
   path,
-  bucket,
-  ...(dbId && { dbId }),
-});
+  dbId,
+  name,
+  ipfsHash,
+  isPublicLink = false,
+  bucket = 'personal',
+}) => {
+  if (isPublicLink) {
+    ipcRenderer.send(OPEN_PUBLIC_FILE_EVENT, {
+      filename: name,
+      fileCid: ipfsHash,
+    });
+    return;
+  }
+
+  ipcRenderer.send(OPEN_EVENT, {
+    path,
+    bucket,
+    ...(dbId && { dbId }),
+  });
+};
 
 export const openPublicFile = (payload) => {
   store.dispatch({
