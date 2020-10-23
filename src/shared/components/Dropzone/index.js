@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import get from 'lodash/get';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
 import useStyles, { rowHeight, headHeight } from './styles';
 
 const Dropzone = ({
@@ -25,7 +25,7 @@ const Dropzone = ({
   };
 
   const handleOnDrop = (files) => {
-    const target = rowNumber !== -1 && objectsList[rowNumber].isFolder
+    const target = rowNumber !== -1 && get(objectsList[rowNumber], 'isFolder', false)
       ? objectsList[rowNumber].name
       : undefined;
     onDrop(files, target);
