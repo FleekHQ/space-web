@@ -110,7 +110,7 @@ const WelcomeMessages = () => {
                 type="button"
                 variant="primary"
                 classes={{ root: classes.btn }}
-                onClick={handleSettingsModal({ dispatch })}
+                onClick={() => null}
               >
                 {t('common.enable')}
               </Button>
