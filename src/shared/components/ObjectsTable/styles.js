@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
+    position: 'relative', // to keep table above the rainbow field
     userSelect: 'none',
     width: '100%',
     tableLayout: 'fixed',
@@ -18,14 +19,6 @@ export default makeStyles((theme) => ({
     fontSize: 18,
     height: '100%',
     padding: '0 5px',
-  },
-  dropzone: {
-    minHeight: '100%',
-    borderRadius: 4,
-    border: '2px solid transparent',
-  },
-  dropzoneActive: {
-    borderColor: theme.palette.palette.blue1,
   },
   selected: {
     backgroundColor: `${theme.palette.palette.white} !important`,

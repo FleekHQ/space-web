@@ -144,8 +144,11 @@ const ObjectsTable = ({
       <Dropzone
         noClick
         onDrop={onDropzoneDrop}
-        classes={{ root: classes.dropzone, active: classes.dropzoneActive }}
         disabled={!onDropzoneDrop}
+        objectsList={rows.map((obj) => ({
+          isFolder: obj.type === 'folder',
+          name: obj.key,
+        }))}
       >
         <div ref={wrapperRef}>
           <Table
