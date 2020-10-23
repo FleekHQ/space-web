@@ -33,24 +33,6 @@ const UsernameSignin = () => {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  // const textFieldClasses = {
-  //   root: classes.textFieldRoot,
-  // };
-
-  // const InputProps = {
-  //   classes: {
-  //     root: classes.inputPropsRoot,
-  //     input: classes.inputPropsInput,
-  //   },
-  // };
-
-  // const InputLabelProps = {
-  //   classes: {
-  //     root: classes.inputLabelPropsRoot,
-  //     shrink: classes.inputLabelPropsShrink,
-  //   },
-  // };
-
   React.useEffect(() => {
     if (siginState.success) {
       history.push('/storage');
