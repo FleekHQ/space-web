@@ -46,7 +46,7 @@ const UsernameSignin = () => {
   ), []);
 
   const endAdornment = (
-    <InputAdornment position="end" className={classes.adornment} >
+    <InputAdornment position="end" className={classes.adornment}>
       <IconButton
         onClick={handleShowPassword}
         className={classes.iconButton}
