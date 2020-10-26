@@ -1,11 +1,9 @@
-/* eslint-disable */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
