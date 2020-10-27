@@ -49,40 +49,6 @@ export default makeStyles((theme) => ({
       textDecoration: 'underline',
     },
   },
-  textFieldRoot: {
-    '& .MuiFormLabel-root': {
-      color: '#727272',
-    },
-    '& .MuiFormLabel-root.Mui-focused, & .MuiFormLabel-root.MuiFormLabel-filled, & .MuiFormLabel-root.MuiFormLabel-filled.Mui-error': {
-      color: theme.palette.palette.white,
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: theme.palette.palette.white,
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset, &:hover fieldset': {
-        borderColor: theme.palette.palette.gray8,
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: theme.palette.palette.white,
-      },
-    },
-    '& label.MuiFormLabel-filled + .MuiOutlinedInput-root': {
-      '& fieldset, &:hover fieldset': {
-        borderColor: theme.palette.palette.white,
-      },
-    },
-    '& label.MuiFormLabel-filled + .MuiOutlinedInput-root.Mui-error': {
-      '& fieldset, &:hover fieldset': {
-        borderColor: theme.palette.palette.red,
-      },
-    },
-    '& .MuiOutlinedInput-root.Mui-error': {
-      '& fieldset, &:hover fieldset, &.Mui-focused fieldset': {
-        borderColor: theme.palette.palette.red,
-      },
-    },
-  },
   iconButtonRoot: {
     padding: 0,
     color: theme.palette.palette.gray1,
@@ -90,26 +56,6 @@ export default makeStyles((theme) => ({
       fontSize: 14,
       paddingRight: 12,
     },
-  },
-  inputPropsRoot: {
-    borderRadius: 3,
-    '&.MuiOutlinedInput-adornedEnd': {
-      padding: 0,
-      backgroundColor: theme.palette.palette.black,
-    },
-  },
-  inputPropsInput: {
-    height: 39,
-    padding: 11,
-    boxSizing: 'border-box',
-    color: theme.palette.palette.white,
-    backgroundColor: theme.palette.palette.black,
-  },
-  inputLabelPropsRoot: {
-    top: 3,
-  },
-  inputLabelPropsShrink: {
-    top: 0,
   },
   alert: {
     width: 'auto',

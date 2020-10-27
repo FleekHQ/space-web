@@ -2222,10 +2222,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@terminal-packages/space-ui@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.2.tgz#a1cb0bb08e04b38406f74f124ff2dd5a7ea7e860"
-  integrity sha512-IHB+beHUOgmt6ZkuTLIwm6qChMzW/EyVqfJj00dZ684Vl5s8bjiTnVJQdglihPjjsCbvxDclbfb1feMrC0cczw==
+"@terminal-packages/space-ui@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.3.tgz#9cc9f4242e52a73d48a0ceb68e4edd44924ee229"
+  integrity sha512-R3L94OfyyaelSucBh/GTUtOLxsWnIAbJ+LBSB5KuVdjWkzO0YfKj6MhoVxWtWIsw8BvjKYPtXUi3pc8jOVnkQw==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"

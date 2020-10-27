@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -31,24 +31,6 @@ const UsernameSignin = () => {
 
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const textFieldClasses = {
-    root: classes.textFieldRoot,
-  };
-
-  const InputProps = {
-    classes: {
-      root: classes.inputPropsRoot,
-      input: classes.inputPropsInput,
-    },
-  };
-
-  const InputLabelProps = {
-    classes: {
-      root: classes.inputLabelPropsRoot,
-      shrink: classes.inputLabelPropsShrink,
-    },
-  };
-
   React.useEffect(() => {
     if (siginState.success) {
       history.push('/storage');
@@ -64,7 +46,7 @@ const UsernameSignin = () => {
   ), []);
 
   const endAdornment = (
-    <InputAdornment position="end">
+    <InputAdornment position="end" className={classes.adornment}>
       <IconButton
         onClick={handleShowPassword}
         className={classes.iconButton}
@@ -94,27 +76,19 @@ const UsernameSignin = () => {
   return (
     <div className={classes.root}>
       <form className={classes.form} onSubmit={onSubmit}>
-        <TextField
-          variant="outlined"
+        <RainbowField
+          isDark
           label={t('modules.signin.username')}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          classes={textFieldClasses}
-          InputProps={InputProps}
-          InputLabelProps={InputLabelProps}
         />
-        <TextField
+        <RainbowField
+          isDark
           value={password}
-          variant="outlined"
           label={t('modules.signin.password')}
           type={showPassword ? 'text' : 'password'}
           onChange={(e) => setPassword(e.target.value)}
-          classes={textFieldClasses}
-          InputLabelProps={InputLabelProps}
-          InputProps={{
-            endAdornment,
-            ...InputProps,
-          }}
+          endAdornment={endAdornment}
         />
         <Button
           fullWidth

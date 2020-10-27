@@ -16,44 +16,12 @@ export default makeStyles((theme) => ({
       marginBottom: 18,
     },
   },
-  textFieldRoot: {
-    backgroundColor: theme.palette.palette.black,
-    '& label.Mui-focused, & label.MuiFormLabel-filled': {
-      color: theme.palette.palette.white,
+  adornment: {
+    position: 'absolute',
+    right: 5,
+    '& svg': {
+      color: theme.palette.palette.gray2,
     },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: theme.palette.palette.white,
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset, &:hover fieldset': {
-        borderColor: theme.palette.palette.gray8,
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: theme.palette.palette.white,
-      },
-    },
-    '& label.MuiFormLabel-filled + .MuiOutlinedInput-root': {
-      '& fieldset, &:hover fieldset': {
-        borderColor: theme.palette.palette.white,
-      },
-    },
-  },
-  inputPropsRoot: {
-    borderRadius: 3,
-  },
-  inputPropsInput: {
-    height: 39,
-    width: 282,
-    padding: 11,
-    boxSizing: 'border-box',
-    color: theme.palette.palette.white,
-    backgroundColor: theme.palette.palette.black,
-  },
-  inputLabelPropsRoot: {
-    top: 3,
-  },
-  inputLabelPropsShrink: {
-    top: 0,
   },
   iconButton: {
     width: 18,

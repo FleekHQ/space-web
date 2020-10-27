@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 import Typography from '@material-ui/core/Typography';
 
 import { singup } from '@events';
@@ -59,22 +59,6 @@ const SignUp = () => {
   const { t } = useTranslation();
   const state = useSelector((s) => s.auth.signup);
 
-  const tfClasses = {
-    root: classes.textFieldRoot,
-  };
-  const InputProps = {
-    classes: {
-      root: classes.inputPropsRoot,
-      input: classes.inputPropsInput,
-    },
-  };
-  const InputLabelProps = {
-    classes: {
-      root: classes.inputLabelPropsRoot,
-      shrink: classes.inputLabelPropsShrink,
-    },
-  };
-
   React.useEffect(() => {
     if (state.success) {
       history.push('/storage');
@@ -103,17 +87,14 @@ const SignUp = () => {
             open: !!state.error && state.error.includes('username'),
           }}
         >
-          <TextField
-            fullWidth
+          <RainbowField
+            isDark
             type="text"
             id="tfUsername"
             variant="outlined"
             value={state.tfUsername.value}
             error={state.error && state.error.includes('username')}
             label={t('modules.signup.username')}
-            classes={tfClasses}
-            InputProps={InputProps}
-            InputLabelProps={InputLabelProps}
             onChange={handleInputChange({ dispatch })}
             onBlur={handleInputFocusAndBlur({ dispatch })}
             onFocus={handleInputFocusAndBlur({ dispatch })}
