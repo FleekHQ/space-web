@@ -67,8 +67,25 @@ function uploadProfilePic(payload) {
   });
 }
 
+/**
+ * @this {import('../client.js')}
+ * @param {Object} payload - Payload to create an indentity.
+ * @param {string} payload.token - Auth token
+ * @returns {import('axios').AxiosResponse}
+ */
+function deleteAccount(payload) {
+  return this.instance({
+    method: 'delete',
+    url: `${DEFAULT_PATH}`,
+    headers: {
+      Authorization: payload.token,
+    },
+  });
+}
+
 module.exports = {
   update,
   getMultiple,
+  deleteAccount,
   uploadProfilePic,
 };
