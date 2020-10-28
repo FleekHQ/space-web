@@ -37,7 +37,7 @@ const ThirdPartyAuthOption = ({
           borderRadius={3}
         >
           <Box display="flex" justifyContent="center" width={20} height={20} mr="11px">
-            <img className={classes.logo} src={logoUrl} alt="add new" />
+            <img className={classes.logo} src={logoUrl} alt={text} />
           </Box>
           <Typography>
             <Box component="span" color={disabled ? '#616161' : 'common.white'} fontSize="14px">
