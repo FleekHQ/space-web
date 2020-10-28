@@ -1,36 +1,21 @@
 import { makeStyles } from '@material-ui/styles';
 
-export default makeStyles((theme) => ({
-  signinRoot: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    flex: 1,
-    height: 238,
-    maxWidth: 282,
+export default makeStyles({
+  dividerRoot: {
+    color: '#5A5A5A',
+    backgroundColor: '#5A5A5A',
   },
-  link: {
+  rainbow: {
     cursor: 'pointer',
-    textDecoration: 'none',
-    color: theme.palette.palette.white,
+    '&:focus': {
+      outline: 'none',
+      background: 'linear-gradient(96deg, rgba(237, 85, 235, 1) 0%, rgba(23, 224, 216, 1) 37%, rgba(0, 255, 194, 1) 64%, rgba(255, 236, 6, 1) 100%) 0% 0% no-repeat padding-box;',
+    },
     '&:hover': {
-      textDecoration: 'underline',
+      background: 'linear-gradient(96deg, rgba(237, 85, 235, 1) 0%, rgba(23, 224, 216, 1) 37%, rgba(0, 255, 194, 1) 64%, rgba(255, 236, 6, 1) 100%) 0% 0% no-repeat padding-box;',
+    },
+    '&:hover .rainbow-bg': {
+      background: 'linear-gradient(96deg, rgba(237, 85, 235, 0.1) 0%, rgba(23, 224, 216, 0.1) 37%, rgba(0, 255, 194, 0.1) 64%, rgba(255, 236, 6, 0.1) 100%) 0% 0% no-repeat padding-box;',
     },
   },
-  buttonGroup: {
-    '& > button': {
-      margin: '8px 0',
-    },
-  },
-  buttonRoot: {
-    height: 39,
-    width: 282,
-    borderRadius: 3,
-    fontWeight: 600,
-    textTransform: 'none',
-  },
-  buttonOutlined: {
-    color: theme.palette.palette.white,
-  },
-}));
+});

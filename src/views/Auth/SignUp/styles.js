@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/styles';
 
 export default makeStyles((theme) => ({
+  dividerRoot: {
+    color: '#5A5A5A',
+    backgroundColor: '#5A5A5A',
+  },
   signupRoot: {
     display: 'flex',
     alignItems: 'center',

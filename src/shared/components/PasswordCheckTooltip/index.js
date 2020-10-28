@@ -8,18 +8,20 @@ const PasswordCheckTooltip = ({
   open,
   password,
   children,
+  bgColor,
+  tooltipPlacement,
 }) => {
   const { t } = useTranslation();
 
   return (
     <InputTooltip
       type="info"
-      bgColor="primary"
+      bgColor={bgColor}
       title={t('modules.shared.passwordCheck.title')}
       tooltip={{
         open,
         arrow: true,
-        placement: 'right-start',
+        placement: tooltipPlacement,
       }}
       requirements={(
         <>
@@ -54,11 +56,15 @@ const PasswordCheckTooltip = ({
 PasswordCheckTooltip.defaultProps = {
   open: false,
   password: '',
+  bgColor: 'primary',
+  tooltipPlacement: 'right-start',
 };
 
 PasswordCheckTooltip.propTypes = {
   open: PropTypes.bool,
+  bgColor: PropTypes.string,
   password: PropTypes.string,
+  tooltipPlacement: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
