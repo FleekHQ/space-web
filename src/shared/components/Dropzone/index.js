@@ -31,11 +31,30 @@ const Dropzone = ({
     onDrop(files, target);
   };
 
+  const getFilesFromEvent = async (event) => {
+    const files = [];
+    const fileList = event.dataTransfer
+      ? event.dataTransfer.files
+      : event.target.files;
+
+    for (let i = 0; i < fileList.length; i += 1) {
+      const file = fileList.item(i);
+      files.push(file);
+    }
+
+    return files;
+  };
+
   const {
     getRootProps,
     getInputProps,
     isDragActive,
-  } = useDropzone({ ...restProps, onDragOver, onDrop: handleOnDrop });
+  } = useDropzone({
+    ...restProps,
+    onDragOver,
+    onDrop: handleOnDrop,
+    getFilesFromEvent,
+  });
 
   useEffect(() => {
     if (wrapperNode.current) {
