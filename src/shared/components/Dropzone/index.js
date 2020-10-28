@@ -60,7 +60,7 @@ const Dropzone = ({
       {...getRootProps()}
       className={classes.root}
     >
-      <div ref={wrapperNode}>
+      <div ref={wrapperNode} className={classes.wrapper}>
         {isDragActive && (
           <div
             className={classes.rainbowField}
