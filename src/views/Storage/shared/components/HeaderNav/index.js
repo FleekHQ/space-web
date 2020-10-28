@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import get from 'lodash/get';
-import TextField from '@ui/TextField';
+import { openObject } from '@events';
+import Box from '@material-ui/core/Box';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
+import Typography from '@material-ui/core/Typography';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/pro-regular-svg-icons/faSearch';
-import { SEARCH_TERM_CHANGE } from '@reducers/storage';
+import { useHistory, matchPath } from 'react-router-dom';
 import Notifications from '@shared/components/Notifications';
+import SearchBar from '@terminal-packages/space-ui/core/SearchBar';
 
 import useStyles from './styles';
+import { fetchResults } from './actions';
 
 const isBackButtonDisabled = (pathname) => {
   const isFileRootPath = /^\/storage\/files\/?$/.test(pathname);
@@ -27,11 +26,12 @@ const HeaderNav = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { location } = history;
-
-  const { searchTerm } = useSelector((state) => ({
-    searchTerm: get(state, 'storage.searchTerm', ''),
+  const { searchTerm, results } = useSelector((state) => ({
+    results: state.search.results,
+    searchTerm: state.search.searchTerm,
   }));
+
+  const { location } = history;
 
   useEffect(() => {
     // user didn't use back/forward buttons if:
@@ -41,6 +41,45 @@ const HeaderNav = () => {
     }
     backStepsPrevValue.current = backStepsNumber;
   }, [location.pathname]);
+
+  const navigateToFolder = (item, _history) => {
+    const folderPath = item.type === 'folder'
+      ? item.key.split('/')
+      : item.key.split('/').slice(0, -1);
+
+    const basePath = item.sourceBucket === 'personal'
+      ? ['storage', 'files']
+      : ['storage', 'shared-by'];
+
+    const redirectPath = `/${[...basePath, ...folderPath].join('/')}`;
+    const isSamePath = matchPath(redirectPath, { path: _history.location.pathname, exact: true });
+
+    if (!isSamePath) {
+      _history.push(redirectPath);
+    }
+  };
+
+  const openItem = (item) => {
+    if (item.type === 'folder') return;
+    const fileBucket = item.sourceBucket || item.bucket;
+
+    openObject({
+      path: item.key,
+      dbId: item.dbId,
+      bucket: fileBucket,
+      name: item.name,
+      ipfsHash: item.ipfsHash,
+      isPublicLink: item.isPublicLink,
+    });
+  };
+
+  const noResults = (
+    <Typography className={classes.noResults}>
+      <Box fontSize={12}>
+        {t('common.noResults')}
+      </Box>
+    </Typography>
+  );
 
   return (
     <div className={classes.root}>
@@ -61,21 +100,26 @@ const HeaderNav = () => {
           history.goForward();
         }}
       />
-      <TextField
-        variant="filled"
-        label={t('common.search')}
-        className={classes.searchField}
+      <SearchBar
+        debounce={200}
+        results={results}
         value={searchTerm}
-        onChange={(e) => dispatch({
-          payload: e.target.value,
-          type: SEARCH_TERM_CHANGE,
+        noResults={noResults}
+        placeholder={t('common.search')}
+        onChange={(val) => dispatch(fetchResults(val))}
+        mapItemToFileItemProps={(item) => ({
+          ext: item.ext,
+          key: item.id,
+          fileName: item.key,
         })}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <FontAwesomeIcon icon={faSearch} className={classes.icon} />
-            </InputAdornment>
-          ),
+        onClickResult={(item, hideResults) => {
+          navigateToFolder(item, history);
+          openItem(item);
+          hideResults();
+        }}
+        classes={{
+          root: classes.rootSearchBar,
+          resultContainer: classes.resultContainer,
         }}
       />
       <Notifications />

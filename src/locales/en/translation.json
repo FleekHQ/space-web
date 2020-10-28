@@ -23,6 +23,7 @@
     "card": "Card",
     "password": "Password",
     "remindMeLater": "Remind me later",
+    "noResults": "No results",
     "access": {
       "edit": {
         "title": "Can edit",
