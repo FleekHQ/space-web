@@ -7,7 +7,7 @@ const getColor = (theme) => ({ type, bgColor }) => {
     return theme.palette.palette.red;
   }
   if (bgColor === BG_COLORS.secondary) {
-    return theme.palette.common.white;
+    return '#707070';
   }
   return theme.palette.common.black;
 };
@@ -24,8 +24,8 @@ export const useCustomToolTipStyles = makeStyles((theme) => ({
 
     if (bgColor === BG_COLORS.secondary) {
       color = theme.palette.common.white;
-      borderColor = theme.palette.palette.white;
-      backgroundColor = theme.palette.common.black;
+      borderColor = '#707070';
+      backgroundColor = '#202020';
     }
 
     if (type === TYPES.danger) {

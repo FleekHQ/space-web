@@ -35,7 +35,7 @@ function getMultiple(payload) {
  * @param {string} payload.token - Auth token
  * @param {string=} payload.username - Username of the identity.
  * @param {string=} payload.displayName - Public key of the identity.
- * @returns {import('axios').AxiosResponse<Identity>}
+ * @returns {import('axios').AxiosResponse<{ data: Identity }>}
  */
 function update(payload) {
   return this.instance({

@@ -120,6 +120,7 @@ const UsernamePasswordForm = ({
       <Button
         fullWidth
         type="submit"
+        loading={isLoading}
         classes={{
           disabled: classes.btnDisabled,
         }}

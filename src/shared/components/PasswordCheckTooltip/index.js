@@ -15,7 +15,6 @@ const PasswordCheckTooltip = ({
 
   return (
     <InputTooltip
-      type="info"
       bgColor={bgColor}
       title={t('modules.shared.passwordCheck.title')}
       tooltip={{
@@ -26,24 +25,16 @@ const PasswordCheckTooltip = ({
       requirements={(
         <>
           <Requirement
-            isCorrect={/[0-9]/.test(password)}
-            requirement={t('modules.shared.passwordCheck.requirements.number')}
+            isCorrect={/.{8,}/.test(password)}
+            requirement={t('modules.shared.passwordCheck.requirements.charLength')}
           />
           <Requirement
-            isCorrect={/[A-Z]/.test(password)}
+            isCorrect={/[A-Z]/.test(password) && /[a-z]/.test(password)}
             requirement={t('modules.shared.passwordCheck.requirements.upperCase')}
           />
           <Requirement
-            isCorrect={/[a-z]/.test(password)}
-            requirement={t('modules.shared.passwordCheck.requirements.lowerCase')}
-          />
-          <Requirement
-            isCorrect={/[\W]/.test(password)}
-            requirement={t('modules.shared.passwordCheck.requirements.specialChar')}
-          />
-          <Requirement
-            isCorrect={/.{8,}/.test(password)}
-            requirement={t('modules.shared.passwordCheck.requirements.charLength')}
+            isCorrect={/[0-9]/.test(password)}
+            requirement={t('modules.shared.passwordCheck.requirements.number')}
           />
         </>
       )}

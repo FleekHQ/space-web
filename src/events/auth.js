@@ -100,13 +100,14 @@ export const signin = (payload) => {
 /**
  * User signup
  * @param {Object=} payload
- * @param {string=} payload.username
+ * @param {string} payload.username
+ * @param {string} payload.password
  */
-export const singup = (payload) => {
+export const signup = (payload) => {
   store.dispatch({
-    withUsername: !!payload,
     type: SIGNUP_ACTION_TYPES.ON_SUBMIT,
   });
+
   ipcRenderer.send(SIGNUP_EVENT, payload);
 };
 

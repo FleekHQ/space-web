@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -12,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
 import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
 
-import { singup } from '@events';
+import { signup } from '@events';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import useStyles from './styles';
@@ -74,11 +73,11 @@ const SignUp = () => {
           <Typography color="inherit">
             <Box component="span" fontSize="10px" color="common.white">
               {`${t('modules.signup.agreenment.part1')} `}
-              <Link underline="always" color="inherit">
+              <Link href="/" underline="always" color="inherit">
                 {`${t('modules.signup.agreenment.privacy')}`}
               </Link>
               &nbsp;&&nbsp;
-              <Link underline="always" color="inherit">
+              <Link href="/" underline="always" color="inherit">
                 {t('modules.signup.agreenment.terms')}
               </Link>
             </Box>

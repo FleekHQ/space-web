@@ -64,20 +64,13 @@ const registerAuthEvents = (mainWindow) => {
 
       const apiSessionRes = await spaceClient.getAPISessionTokens();
 
-      if (!payload) {
-        const address = getAddressByPublicKey(publicKeyRes.getPublickey());
-        const { data } = await apiClient.identities.getByAddress({
-          addresses: [address],
-          token: apiSessionRes.getServicestoken(),
-        });
-
-        mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
-        return;
-      }
-
       const { data } = await apiClient.identity.update({
-        ...payload,
+        username: payload.username,
         token: apiSessionRes.getServicestoken(),
+      });
+      await spaceClient.backupKeysByPassphrase({
+        uuid: data.data.uuid,
+        passphrase: payload.password,
       });
 
       mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);

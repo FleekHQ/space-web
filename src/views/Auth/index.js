@@ -24,6 +24,13 @@ const Auth = () => {
       width: 670,
       height: 400,
     });
+
+    return () => {
+      resizeWindow({
+        width: 1200,
+        height: 680,
+      });
+    };
   }, []);
 
   return (

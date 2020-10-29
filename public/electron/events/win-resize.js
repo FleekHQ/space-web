@@ -5,6 +5,7 @@ const registerWinResizeEvents = (mainWindow) => {
     const { width = 1200, height = 680 } = payload;
 
     mainWindow.setSize(width, height);
+    mainWindow.center();
   });
 };
 

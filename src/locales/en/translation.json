@@ -196,13 +196,11 @@
     },
     "shared": {
       "passwordCheck": {
-        "title": "Password must have",
+        "title": "Password must have:",
         "requirements": {
-          "number": "One number",
-          "lowerCase": "Lowercase character",
-          "upperCase": "Uppercase character",
-          "specialChar": "One special character",
-          "charLength": "8 characters minimun"
+          "number": "At least one number",
+          "upperCase": "Upper & lowercase letters",
+          "charLength": "8 or more characters"
         }
       }
     }
