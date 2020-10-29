@@ -1336,10 +1336,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fleekhq/space-client@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.1.0.tgz#5835c3259ebd14cf1e40643472f30e3380d80655"
-  integrity sha512-dmTfKpRW1282yX54SnHAs11K48hG20jnVz1xY0IQBCSstnfy94CyJnpdPr4Omr0e5LMHze6G3HvKWCTUJfm4zg==
+"@fleekhq/space-client@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.1.1.tgz#f5b3329c0c75dbd0b21874f3bb5535c20bd02081"
+  integrity sha512-X4LsWuskJqJkjkUqMfdpyU358sIBaNrq1ebd0jURmikvspcARInZ2gnSz53hH8u2wfWLBkk7Uzk3mwENFJnhfg==
   dependencies:
     "@types/google-protobuf" "^3.7.2"
     google-protobuf "^3.12.2"
@@ -2222,8 +2222,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@terminal-packages/space-ui@file:.yalc/@terminal-packages/space-ui":
-  version "0.3.2-481235da"
+"@terminal-packages/space-ui@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.6.tgz#e8a8abbb96ad7bb8d9cb9ff353d67a4a4c5cae2e"
+  integrity sha512-dmF0F+BqMJzDdMKorZQeHVPZMRc2aaFYf7Q/SNhGhO30z7zrrOe0he23uMMMxa8Ka1YF6zGoaOS8AAJqEucbPA==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"

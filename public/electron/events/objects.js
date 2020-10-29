@@ -2,6 +2,7 @@ const { ipcMain, shell } = require('electron');
 const get = require('lodash/get');
 
 const { spaceClient } = require('../clients');
+const getMockResults = require('./mock-results');
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
@@ -17,6 +18,9 @@ const FETCH_SHARED_OBJECTS_SUCCESS_EVENT = `${EVENT_PREFIX}:fetchShared:success`
 const OPEN_PUBLIC_FILE_EVENT = `${EVENT_PREFIX}:openPublicFile`;
 const OPEN_PUBLIC_FILE_ERROR_EVENT = `${EVENT_PREFIX}:openPublicFile:error`;
 const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
+const SEARCH_EVENT = `${EVENT_PREFIX}:search`;
+const SEARCH_ERROR_EVENT = `${SEARCH_EVENT}:error`;
+const SEARCH_SUCCESS_EVENT = `${SEARCH_EVENT}:success`;
 
 const DEFAULT_BUCKET = 'personal';
 
@@ -171,6 +175,22 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(FETCH_SHARED_OBJECTS_EVENT, async (event, payload = {}) => {
     await listSharedFiles(mainWindow, payload);
+  });
+
+  ipcMain.on(SEARCH_EVENT, async (event, payload) => {
+    try {
+      mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, getMockResults(payload));
+
+      // TODO: uncomment after BE integration
+
+      // const res = await spaceClient.searchFiles(payload);
+      // const entries = res.getEntriesList().map((entry) => entryToObject(entry));
+      // mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, { entries });
+    } catch (err) {
+      mainWindow.webContents.send(SEARCH_ERROR_EVENT, {
+        message: err.message,
+      });
+    }
   });
 };
 

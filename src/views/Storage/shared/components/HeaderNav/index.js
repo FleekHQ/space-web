@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { openObject } from '@events';
 import Box from '@material-ui/core/Box';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
+import { openObject, searchFiles } from '@events';
 import Typography from '@material-ui/core/Typography';
-import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, matchPath } from 'react-router-dom';
 import Notifications from '@shared/components/Notifications';
 import SearchBar from '@terminal-packages/space-ui/core/SearchBar';
 
 import useStyles from './styles';
-import { fetchResults } from './actions';
 
 const isBackButtonDisabled = (pathname) => {
   const isFileRootPath = /^\/storage\/files\/?$/.test(pathname);
@@ -24,7 +23,6 @@ const HeaderNav = () => {
   const classes = useStyles();
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const { searchTerm, results } = useSelector((state) => ({
     results: state.search.results,
@@ -106,7 +104,7 @@ const HeaderNav = () => {
         value={searchTerm}
         noResults={noResults}
         placeholder={t('common.search')}
-        onChange={(val) => dispatch(fetchResults(val))}
+        onChange={(val) => searchFiles(val)}
         mapItemToFileItemProps={(item) => ({
           ext: item.ext,
           key: item.id,

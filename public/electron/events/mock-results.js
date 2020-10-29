@@ -1,4 +1,4 @@
-const getMockResults = (searchTerm) => {
+module.exports = (searchTerm) => {
   if (searchTerm !== 'results') return [];
 
   return [
@@ -264,5 +264,3 @@ const getMockResults = (searchTerm) => {
     },
   ];
 };
-
-export default getMockResults;
