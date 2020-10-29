@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 import Typography from '@material-ui/core/Typography';
 import InputTooltip from '@ui/InputTooltip';
 import { RESTORE_KEYS_MNEMONIC_ACTION_TYPES } from '@reducers/auth/restore-keys-mnemonic';
@@ -18,14 +18,6 @@ const RestoreKeysMnemonic = () => {
   const state = useSelector((_state) => _state.auth.restoreKeysMnemonic);
   const history = useHistory();
   const classes = useStyles({ isError: !!state.error });
-  const tfClasses = {
-    root: classes.textFieldRoot,
-  };
-  const InputProps = {
-    classes: {
-      multiline: classes.inputPropsMultiline,
-    },
-  };
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -60,16 +52,13 @@ const RestoreKeysMnemonic = () => {
             placement: 'right',
           }}
         >
-          <TextField
+          <RainbowField
+            isDark
             autoFocus
             multiline
             rows={4}
-            fullWidth
-            variant="outlined"
             value={state.mnemonic}
             label={t('modules.restoreKeysMnemonic.inputLabel')}
-            classes={tfClasses}
-            InputProps={InputProps}
             disabled={state.loading}
             onChange={(event) => dispatch({
               type: RESTORE_KEYS_MNEMONIC_ACTION_TYPES.ON_INPUT_CHANGE,

@@ -70,6 +70,10 @@ const registerAccountEvents = () => {
 };
 
 export const deleteAccount = () => {
+  store.dispatch({
+    type: DELETE_ACCOUNT_ACTION_TYPES.ON_DELETE_ACCOUNT,
+  });
+
   ipcRenderer.send(DELETE_ACCOUNT_EVENT);
 };
 

@@ -14,7 +14,8 @@ const registerFolderEvents = require('./folder');
 const registerIdentitiesEvents = require('./identities');
 const registerUsageEvents = require('./usage');
 const registerNotificationNotificationSuscribe = require('./notifications-subscribe');
-const walletSuscribe = require('./wallet');
+const registerWalletEvents = require('./wallet');
+const registerWinResizeEvents = require('./win-resize');
 
 const registerEvents = ({
   app,
@@ -37,7 +38,8 @@ const registerEvents = ({
   registerFolderEvents(mainWindow);
   registerIdentitiesEvents(mainWindow);
   registerUsageEvents(mainWindow);
-  walletSuscribe(mainWindow);
+  registerWalletEvents(mainWindow);
+  registerWinResizeEvents(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });

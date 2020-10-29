@@ -18,7 +18,11 @@ const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(DELETE_ACCOUNT_EVENT, async () => {
     try {
+      const apiTokens = await spaceClient.getAPISessionTokens();
       await spaceClient.deleteAccount();
+      await apiClient.identity.deleteAccount({
+        token: apiTokens.getServicestoken(),
+      });
 
       mainWindow.webContents.send(DELETE_ACCOUNT_SUCCESS_EVENT, {});
     } catch (err) {

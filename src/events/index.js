@@ -47,3 +47,4 @@ export * from './folder';
 export * from './identities';
 export * from './usage';
 export * from './wallet';
+export * from './win-resize';

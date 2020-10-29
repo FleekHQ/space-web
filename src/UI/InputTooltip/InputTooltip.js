@@ -25,7 +25,9 @@ const InputTooltip = ({
       title={(
         <div className={classes.tooltipContent}>
           <div className={classes.title}>
-            <FontAwesomeIcon icon={helper.getIconByType(type)} />
+            {
+              type && <FontAwesomeIcon icon={helper.getIconByType(type)} />
+            }
             <Typography variant="body2" color="inherit">{title}</Typography>
           </div>
           <div className={classes.requirementList}>
@@ -43,7 +45,7 @@ const InputTooltip = ({
 
 InputTooltip.defaultProps = {
   title: '',
-  type: 'info',
+  type: null,
   bgColor: 'primary',
   requirements: [],
 };
@@ -51,7 +53,7 @@ InputTooltip.defaultProps = {
 InputTooltip.propTypes = {
   title: PropTypes.string,
   requirements: PropTypes.node,
-  type: PropTypes.oneOf(['info', 'danger']),
+  type: PropTypes.oneOf(['info', 'danger', null]),
   bgColor: PropTypes.oneOf(['primary', 'secondary']),
   children: PropTypes.node.isRequired,
   tooltip: PropTypes.shape({

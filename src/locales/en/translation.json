@@ -21,6 +21,7 @@
     "change": "Change",
     "crypto": "Crypto",
     "card": "Card",
+    "username": "Username",
     "password": "Password",
     "remindMeLater": "Remind me later",
     "noResults": "No results",
@@ -177,6 +178,11 @@
       "email": "Email (Optional)",
       "link": "Already have an account?",
       "forgotPassword": "Forgot password?",
+      "agreenment": {
+        "part1": "By signing up, I agree to the",
+        "privacy": "Privacy",
+        "terms": "Terms"
+      },
       "errors": {
         "generic": "Sorry, there was a problem.",
         "username": "Username is taken.",
@@ -191,13 +197,11 @@
     },
     "shared": {
       "passwordCheck": {
-        "title": "Password must have",
+        "title": "Password must have:",
         "requirements": {
-          "number": "One number",
-          "lowerCase": "Lowercase character",
-          "upperCase": "Uppercase character",
-          "specialChar": "One special character",
-          "charLength": "8 characters minimun"
+          "number": "At least one number",
+          "upperCase": "Upper & lowercase letters",
+          "charLength": "8 or more characters"
         }
       }
     }

@@ -20,7 +20,7 @@ const createWindow = () => {
     width: 644,
     height: 644,
     minWidth: 644,
-    minHeight: 500,
+    minHeight: 400,
     backgroundColor: '#000000',
     titleBarStyle: isMac ? 'hiddenInset' : undefined,
     icon: path.join(__dirname, '..', '..', 'icon.png'),

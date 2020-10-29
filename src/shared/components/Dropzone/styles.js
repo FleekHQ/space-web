@@ -5,10 +5,15 @@ export const headHeight = 27;
 
 export default makeStyles({
   root: {
+    display: 'flex',
     position: 'relative', // to set boundaries for rainbow field during drag'n'drop
+    minHeight: '100%',
     '&:focus': {
       outline: 'none',
     },
+  },
+  wrapper: {
+    minHeight: '100%',
   },
   rainbowField: {
     position: 'absolute',
