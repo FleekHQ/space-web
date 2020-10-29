@@ -30,3 +30,13 @@
        url('./work-sans/work-sans-v7-latin-600.woff') format('woff');
 }
 /* End Work Sans */
+
+@font-face {
+  font-family: 'Kalam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Kalam Regular'),
+       url('./kalam/kalam-v11-latin-regular.woff2') format('woff2'),
+       url('./kalam/kalam-v11-latin-regular.woff') format('woff');
+}

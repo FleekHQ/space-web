@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
@@ -45,7 +47,13 @@ const SignUp = () => {
   ), []);
 
   return (
-    <Box display="flex" width={580}>
+    <Box
+      display="flex"
+      width={580}
+      height={288}
+      position="relative"
+      justifyContent="center"
+    >
       <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
         <Box display="inherit" flexDirection="row" alignItems="flex-end" mb="31px">
           <Typography>
@@ -84,7 +92,7 @@ const SignUp = () => {
           </Typography>
         </Box>
       </Box>
-      <Box mt="59px" mb="30px" mx="35px" display="flex" flexDirection="column" alignItems="center">
+      <Box mt="59px" mb="75px" mx="35px" display="flex" flexDirection="column" alignItems="center">
         <Box flex={1}>
           <Divider orientation="vertical" classes={{ root: classes.dividerRoot }} />
         </Box>
@@ -107,6 +115,30 @@ const SignUp = () => {
           onTwitterClick={() => null}
         />
       </Box>
+      {
+        state.error && (
+          <Box
+            pl="10px"
+            pr="14px"
+            bottom={0}
+            border={1}
+            height={33}
+            display="flex"
+            color="#EF6A6E"
+            borderRadius={4}
+            bgcolor="#240F10"
+            alignSelf="center"
+            position="absolute"
+            alignItems="center"
+            borderColor="#EF6A6E"
+          >
+            <FontAwesomeIcon icon={faExclamationTriangle} />
+            <Box ml="7px" component="span" color="common.white">
+              {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
+            </Box>
+          </Box>
+        )
+      }
     </Box>
   );
 };

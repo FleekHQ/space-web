@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
@@ -44,21 +46,31 @@ const SignIn = () => {
   ), []);
 
   return (
-    <Box display="flex" width={580}>
+    <Box
+      display="flex"
+      width={580}
+      height={288}
+      position="relative"
+      justifyContent="center"
+    >
       <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
-        <Box display="inherit" flexDirection="row" alignItems="flex-end" mb="31px">
+        <Box
+          mb="31px"
+          display="inherit"
+          flexDirection="row"
+          alignItems="flex-end"
+          justifyContent="space-between"
+        >
           <Typography>
             <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
               {t('modules.signin.title')}
             </Box>
           </Typography>
-          <Box ml="111px">
-            <Link to="/auth/signup" component={NavLink}>
-              <Box component="span" color="#006EFF" fontSize="14px">
-                {t('modules.signup.title')}
-              </Box>
-            </Link>
-          </Box>
+          <Link to="/auth/signup" component={NavLink}>
+            <Box component="span" color="#006EFF" fontSize="14px">
+              {t('modules.signup.title')}
+            </Box>
+          </Link>
         </Box>
         <Box mb="20px" width="100%">
           <UsernamePasswordForm
@@ -73,16 +85,9 @@ const SignIn = () => {
               {t('modules.signin.forgotPassword')}
             </Box>
           </Link>
-          {/* <Typography color="inherit">
-            <Box component="span" fontSize="10px">
-              By signing up, I agree to the <Link><Box component="span" color="common.white">
-              Privacy</Box></Link> & <Link><Box component="span"
-              color="common.white">Terms</Box></Link>
-            </Box>
-          </Typography> */}
         </Box>
       </Box>
-      <Box mt="59px" mb="30px" mx="35px" display="flex" flexDirection="column" alignItems="center">
+      <Box mt="59px" mb="75px" mx="35px" display="flex" flexDirection="column" alignItems="center">
         <Box flex={1}>
           <Divider orientation="vertical" classes={{ root: classes.dividerRoot }} />
         </Box>
@@ -105,6 +110,30 @@ const SignIn = () => {
           onTwitterClick={() => null}
         />
       </Box>
+      {
+        siginState.error && (
+          <Box
+            pl="10px"
+            pr="14px"
+            bottom={0}
+            border={1}
+            height={33}
+            display="flex"
+            color="#EF6A6E"
+            borderRadius={4}
+            bgcolor="#240F10"
+            alignSelf="center"
+            position="absolute"
+            alignItems="center"
+            borderColor="#EF6A6E"
+          >
+            <FontAwesomeIcon icon={faExclamationTriangle} />
+            <Box ml="7px" component="span" color="common.white">
+              {t(siginState.error, { defaultValue: t('modules.signin.errors.generic') })}
+            </Box>
+          </Box>
+        )
+      }
     </Box>
   );
 };
