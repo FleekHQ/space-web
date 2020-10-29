@@ -12,6 +12,7 @@ import SignoutConfirmation from './SignoutConfirmation';
 import ErrorModal from './Error';
 import LicenseRegistration from './LicenseRegistration';
 import FileLinkPassword from './FileLinkPassword';
+import AddBackUpSignIn from './AddBackupSignIn';
 import useStyles from './styles';
 
 import {
@@ -26,6 +27,7 @@ import {
   SIGNOUT_CONFIRMATION,
   ERROR_MODAL_TOAST,
   LICENSE_REGISTRATION,
+  ADD_BACK_UP_SIGN_IN,
   FILE_LINK_PASSWORD,
 } from './actions';
 
@@ -41,6 +43,7 @@ const MODALS = {
   [ERROR_MODAL_TOAST]: ErrorModal,
   [LICENSE_REGISTRATION]: LicenseRegistration,
   [FILE_LINK_PASSWORD]: FileLinkPassword,
+  [ADD_BACK_UP_SIGN_IN]: AddBackUpSignIn,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {

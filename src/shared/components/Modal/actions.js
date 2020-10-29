@@ -16,6 +16,7 @@ export const SIGNOUT_CONFIRMATION = 'SIGNOUT_CONFIRMATION';
 export const ERROR_MODAL_TOAST = 'ERROR_MODAL_TOAST';
 export const LICENSE_REGISTRATION = 'LICENSE_REGISTRATION';
 export const FILE_LINK_PASSWORD = 'FILE_LINK_PASSWORD';
+export const ADD_BACK_UP_SIGN_IN = 'ADD_BACK_UP_SIGN_IN';
 
 /* Action creators */
 export const openModal = (modalType, props = {}) => (dispatch) => {
