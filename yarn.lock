@@ -2222,14 +2222,15 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@terminal-packages/space-ui@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.3.tgz#9cc9f4242e52a73d48a0ceb68e4edd44924ee229"
-  integrity sha512-R3L94OfyyaelSucBh/GTUtOLxsWnIAbJ+LBSB5KuVdjWkzO0YfKj6MhoVxWtWIsw8BvjKYPtXUi3pc8jOVnkQw==
+"@terminal-packages/space-ui@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.5.tgz#84048db4eba1c81a164321b143582409bb703436"
+  integrity sha512-aJTTG22eO+zFkPIW2msFsJQAkdwPB7nTV/JGIsfLCzGV1aIlIp/TJRKRadtJKnPNA3vkMQJvdYD8W5tlQRjzpg==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"
     lodash.merge "^4.6.2"
+    use-debounce "^5.0.1"
 
 "@testing-library/dom@*":
   version "7.24.2"
@@ -14452,6 +14453,11 @@ use-callback-ref@^1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.4.tgz#d86d1577bfd0b955b6e04aaf5971025f406bea3c"
   integrity sha512-rXpsyvOnqdScyied4Uglsp14qzag1JIemLeTWGKbwpotWht57hbP78aNT+Q4wdFKQfQibbUX4fb6Qb4y11aVOQ==
+
+use-debounce@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-5.0.1.tgz#b11861bc63970bfc6fd8393a0a3cc3d7cb5944ce"
+  integrity sha512-YHzlVa7qKFRlrMpVRiStGWGE0lumwJiQPvsTMlatsIrck39ycyJkdf0npUYG5MJEVxaJQWwvpmePRYZb534upg==
 
 use-sidecar@^1.0.1:
   version "1.0.3"
