@@ -85,11 +85,11 @@ const Security = ({ t }) => {
   });
 
   const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => {
-    const isOptionAlreadyAdded = !options[optionId];
+    const isOptionNotAdded = !options[optionId];
     const isTwitter = optionId === OPTION_IDS.TWITTER;
     const isGoogle = optionId === OPTION_IDS.GOOGLE;
 
-    return (isOptionAlreadyAdded || isTwitter || isGoogle);
+    return (isOptionNotAdded || isTwitter || isGoogle);
   });
 
   return (
