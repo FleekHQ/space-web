@@ -84,8 +84,13 @@ const Security = ({ t }) => {
     },
   });
 
-  // The options for the modal are the options that are NOT in the settings
-  const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => !options[optionId]);
+  const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => {
+    const isOptionAlreadyAdded = !options[optionId];
+    const isTwitter = optionId === OPTION_IDS.TWITTER;
+    const isGoogle = optionId === OPTION_IDS.GOOGLE;
+
+    return (isOptionAlreadyAdded || isTwitter || isGoogle);
+  });
 
   return (
     <>
