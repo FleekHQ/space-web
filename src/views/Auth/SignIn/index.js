@@ -80,7 +80,7 @@ const SignIn = () => {
           />
         </Box>
         <Box color="common.white" textAlign="center">
-          <Link to="/auth/restore-keys-mnemonic" component={NavLink} color="inherit" underline="always">
+          <Link to="/auth/forgot-password" component={NavLink} color="inherit" underline="always">
             <Box component="span" fontSize="10px">
               {t('modules.signin.forgotPassword')}
             </Box>
