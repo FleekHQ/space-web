@@ -97,7 +97,9 @@ const AddBackUpSignIn = ({
                   />
                 </div>
               )}
-              <Typography className={classes.optionTitle}>
+              <Typography
+                className={classes.optionTitle}
+              >
                 {option.text}
               </Typography>
             </div>
