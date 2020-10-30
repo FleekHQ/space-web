@@ -13,6 +13,15 @@ export default makeStyles({
   btn: {
     height: 21,
     fontSize: 12,
+    minWidth: 62,
     padding: '4px 9px',
+  },
+  messageTitleContainer: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  title: {
+    fontWeight: 'bold',
   },
 });

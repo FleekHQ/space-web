@@ -3,6 +3,7 @@
   "createNew": "Create New",
   "common": {
     "search": "Search",
+    "add": "Add",
     "at": "at",
     "yes": "Yes",
     "open": "Open",
@@ -24,6 +25,7 @@
     "username": "Username",
     "password": "Password",
     "remindMeLater": "Remind me later",
+    "highlyRecommended": "Highly Recommended",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -413,16 +415,16 @@
   "welcome": {
     "remind": "Remind me later",
     "backup": {
-      "title": "Backup your account",
-      "description": "Write down your Account Recovery Phrase to keep your account secure."
+      "title": "Add backup sign in method",
+      "description": "Add a backup sign in method to make sure you never lose access to your account."
     },
     "username": {
       "title": "Create a Username & Password",
       "description": "To log in & out easier we recommend creating a username & password."
     },
     "integrations": {
-      "title": "Explorer Integration",
-      "description": "If you want a local drive mounting for all your Space files, please enable it."
+      "title": "Add Space to your local drive",
+      "description": "Browse files in Space from your computer (not just from the app)."
     }
   }
 }

@@ -44,9 +44,9 @@ export default makeStyles((theme) => ({
     position: 'relative',
     alignItems: 'center',
   },
-  icon: ({ type }) => ({
+  icon: ({ type, iconSize }) => ({
     left: -19,
-    fontSize: 14,
+    fontSize: iconSize,
     position: 'absolute',
     color: getColorByType(type, theme),
   }),

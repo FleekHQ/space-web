@@ -3,36 +3,21 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
-import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons/faArrowCircleUp';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag';
 
 import useStyles from './styles';
-
-const getIconByType = (type) => {
-  const icons = {
-    info: faInfoCircle,
-    upgrade: faArrowCircleUp,
-    danger: faExclamationCircle,
-    shopping: faShoppingBag,
-  };
-
-  return icons[type] || null;
-};
 
 const MessageBox = (props) => {
   const {
     type,
+    icon,
     title,
     bgColor,
+    iconSize,
     children,
     className,
   } = props;
 
-  const classes = useStyles({ type, bgColor });
-
-  const icon = getIconByType(type);
+  const classes = useStyles({ type, bgColor, iconSize });
 
   return (
     <div
@@ -65,7 +50,9 @@ const MessageBox = (props) => {
 
 MessageBox.defaultProps = {
   type: null,
+  icon: null,
   title: null,
+  iconSize: 14,
   bgColor: null,
   children: null,
   className: null,
@@ -74,7 +61,9 @@ MessageBox.defaultProps = {
 MessageBox.propTypes = {
   title: PropTypes.node,
   children: PropTypes.node,
+  icon: PropTypes.elementType,
   className: PropTypes.string,
+  iconSize: PropTypes.number,
   bgColor: PropTypes.oneOf(['primary', 'secondary']),
   type: PropTypes.oneOf(['info', 'danger', 'upgrade', 'shopping']),
 };

@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@terminal-packages/space-ui/core/Button';
+import { faLaptop } from '@fortawesome/pro-regular-svg-icons/faLaptop';
+import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 
 import MessageBox from '@ui/MessageBox';
 import { WELCOME_ACTION_TYPES } from '@reducers/welcome';
@@ -42,7 +44,20 @@ const WelcomeMessages = () => {
     <div className={classes.rootWelcome}>
       {
         !state.hideBackup && (
-          <MessageBox title={t('welcome.backup.title')} bgColor="primary">
+          <MessageBox
+            bgColor="primary"
+            icon={faShieldAlt}
+            title={(
+              <div className={classes.messageTitleContainer}>
+                <Typography variant="body2" className={classes.title}>
+                  {t('welcome.backup.title')}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" className={classes.title}>
+                  {t('common.highlyRecommended')}
+                </Typography>
+              </div>
+            )}
+          >
             <Typography variant="body2" color="textPrimary">
               {t('welcome.backup.description')}
             </Typography>
@@ -54,7 +69,7 @@ const WelcomeMessages = () => {
                 classes={{ root: classes.btn }}
                 onClick={handleSettingsModal({ dispatch })}
               >
-                {t('common.backup')}
+                {t('common.add')}
               </Button>
               <Button
                 type="button"
@@ -100,7 +115,21 @@ const WelcomeMessages = () => {
       }
       {
         !state.hideIntegration && (
-          <MessageBox title={t('welcome.integrations.title')} bgColor="secondary">
+          <MessageBox
+            bgColor="secondary"
+            icon={faLaptop}
+            iconSize={12}
+            title={(
+              <div className={classes.messageTitleContainer}>
+                <Typography variant="body2" className={classes.title}>
+                  {t('welcome.integrations.title')}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" className={classes.title}>
+                  {t('common.highlyRecommended')}
+                </Typography>
+              </div>
+            )}
+          >
             <Typography variant="body2" color="textPrimary">
               {t('welcome.integrations.description')}
             </Typography>
