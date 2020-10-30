@@ -71,7 +71,7 @@ export default makeStyles((theme) => ({
   optionTitle: {
     fontSize: 14,
     marginLeft: 10,
-    fontWeight: 'medium',
+    fontWeight: 500,
   },
   titleLogoContainer: {
     display: 'flex',

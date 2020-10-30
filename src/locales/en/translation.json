@@ -277,6 +277,19 @@
           "title": "Account Recovery Phrase",
           "description": "Please take note of your 12 words seed phrase.",
           "confirmation": "Yes, I wrote this down."
+        },
+        "addNew": "Add New",
+        "signIn": "Sign In Methods",
+        "space": "Space",
+        "twitter": "Twitter",
+        "google": "Google",
+        "seedPhrase": "Seed Phrase",
+        "disconnect": "Disconnect",
+        "showSeed": "Show Seed Phrase",
+        "warning": {
+          "title": "Add Another Sign In Method",
+          "description": "We highly recommend adding another sign in method so you are still able to access your account in case you forget your password or lose access to your default sign in method.",
+          "button": "Add New"
         }
       },
       "notifications": {

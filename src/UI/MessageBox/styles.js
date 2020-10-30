@@ -5,6 +5,7 @@ const getColorByType = (type, theme) => {
     info: theme.palette.palette.black,
     danger: theme.palette.palette.red,
     upgrade: theme.palette.palette.black,
+    shield: theme.palette.palette.green5,
   };
 
   return colors[type] || colors.info;
@@ -29,15 +30,15 @@ const getBgBorderColor = (bgColor, theme) => {
 };
 
 export default makeStyles((theme) => ({
-  root: ({ type, bgColor }) => ({
+  root: ({ type, bgColor, isRainbow }) => ({
     display: 'flex',
     borderRadius: 4,
     position: 'relative',
     flexDirection: 'column',
     padding: '12px 25px 12px 30px',
-    boxShadow: '0px 3px 6px #DBE1EDE6',
     backgroundColor: bgColor ? getBgColor(bgColor, theme) : theme.palette.palette.white,
-    border: `1px solid ${bgColor ? getBgBorderColor(bgColor, theme) : getColorByType(type, theme)}`,
+    ...(!isRainbow && { boxShadow: '0px 3px 6px #DBE1EDE6' }),
+    ...(!isRainbow && { border: `1px solid ${bgColor ? getBgBorderColor(bgColor, theme) : getColorByType(type, theme)}` }),
   }),
   titleContainer: {
     display: 'flex',
@@ -52,5 +53,11 @@ export default makeStyles((theme) => ({
   }),
   content: {
     marginTop: 8,
+  },
+  accentWrapper: {
+    padding: 3,
+    borderRadius: 4,
+    background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
+    boxShadow: 'none',
   },
 }));
