@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
 import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
 import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
+import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
 import AddBackUpSignIn from '@shared/components/Modal/AddBackupSignIn';
@@ -43,6 +44,13 @@ const Security = ({ t }) => {
   });
 
   const classes = useStyles();
+
+  const [error, setError] = useState(false);
+
+  const onClickNewMethod = () => {
+    // Do stuff...
+    setError(false);
+  };
 
   const options = ({
     [OPTION_IDS.EMAIL]: {
@@ -175,6 +183,17 @@ const Security = ({ t }) => {
           <Divider className={classes.divider} />
         </Body>
       </BaseCard>
+      {error && (
+        <BaseCard className={classes.errorContainer}>
+          <FontAwesomeIcon
+            icon={faExclamationTriangle}
+            className={classes.errorIcon}
+          />
+          <Typography className={classes.errorText}>
+            {t('modals.settings.security.addNewError')}
+          </Typography>
+        </BaseCard>
+      )}
       {
         state[OPTION_IDS.SEED_PHRASE] && (
           <SeedPhraseModal
@@ -198,7 +217,7 @@ const Security = ({ t }) => {
         state.addBackUpSignIn && (
           <AddBackUpSignIn
             options={modalOptions}
-            onClickContinue={() => {}}
+            onClickContinue={onClickNewMethod}
             closeModal={() => (
               setState((prevState) => ({ ...prevState, addBackUpSignIn: false }))
             )}

@@ -290,7 +290,8 @@
           "title": "Add Another Sign In Method",
           "description": "We highly recommend adding another sign in method so you are still able to access your account in case you forget your password or lose access to your default sign in method.",
           "button": "Add New"
-        }
+        },
+        "addNewError": "Failed to connect sign in method, please try again."
       },
       "notifications": {
         "title": "Notifications"

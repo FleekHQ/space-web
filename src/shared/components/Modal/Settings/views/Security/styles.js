@@ -56,4 +56,22 @@ export default makeStyles((theme) => ({
     fontSize: 12,
     marginBottom: 10,
   },
+  errorContainer: {
+    border: `1px solid ${theme.palette.palette.red}`,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#F8DEDF',
+    marginTop: 10,
+  },
+  errorText: {
+    fontSize: 12,
+    marginLeft: 7,
+    display: 'inline-block',
+  },
+  errorIcon: {
+    color: theme.palette.palette.red,
+  },
 }));
