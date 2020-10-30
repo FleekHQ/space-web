@@ -424,5 +424,17 @@
       "title": "Explorer Integration",
       "description": "If you want a local drive mounting for all your Space files, please enable it."
     }
+  },
+  "addBackupSignIn": {
+    "title": "Add Backup Sign In Method",
+    "description": "Choose one of the following options to add to your account as an additional sign in method. This will help ensure you never lose access to your account.",
+    "email": "Email",
+    "username": "Username",
+    "google": "Google",
+    "twitter": "Twitter",
+    "seedPhrase": "Seed Phrase",
+    "morePrivate": "More Private",
+    "cancel": "Cancel",
+    "continue": "Continue"
   }
 }
