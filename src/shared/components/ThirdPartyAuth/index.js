@@ -18,18 +18,18 @@ const ThirdPartyAuth = ({
       <Option
         type={type}
         text={`${type} with Google`}
-        logoUrl={`${process.env.PUBLIC_URL}/assets/images/google.png`}
+        icon={<img alt="google" src={`${process.env.PUBLIC_URL}/assets/images/google.png`} />}
         onClick={onGoogleClick}
       />
       <Option
         text={`${type} with Twitter`}
-        logoUrl={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
+        icon={<img alt="twitter" src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`} />}
         onClick={onTwitterClick}
       />
       <Option
         disabled
         text={`${type} with Ethereum`}
-        logoUrl={`${process.env.PUBLIC_URL}/assets/images/walletconnect.png`}
+        icon={<img alt="wallet-connect" src={`${process.env.PUBLIC_URL}/assets/images/walletconnect.png`} />}
         onClick={onEthClick}
       />
       <Box mt="-15px" pl="17px" display="flex" alignItems="flex-end">

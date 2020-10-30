@@ -12,6 +12,11 @@ export default makeStyles({
   logo: {
     maxWidth: 20,
   },
+  iconContainer: {
+    '& > img': {
+      maxWidth: '100%',
+    },
+  },
   rainbow: {
     cursor: ({ disabled }) => {
       if (disabled) {
@@ -22,7 +27,6 @@ export default makeStyles({
     },
     '&:focus': {
       outline: 'none',
-      background: getRainbowColor({ opacity: 1 }),
     },
     '&:hover': {
       background: getRainbowColor({ opacity: 1 }),
