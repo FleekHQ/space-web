@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, select } from '@storybook/addon-knobs';
+import { text, select, boolean } from '@storybook/addon-knobs';
 
 import MessageBox from './MessageBox';
 
@@ -18,8 +18,10 @@ storiesOf(categoryName, module).add('MessageBox', () => {
       'info',
       'danger',
       'upgrade',
+      'shield',
       null,
     ], null),
+    isRainbow: boolean('isRainbow', false),
   };
 
   return (

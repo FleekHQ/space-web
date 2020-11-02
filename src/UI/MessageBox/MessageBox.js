@@ -7,6 +7,7 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons/faArrowCircleUp';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag';
+import { faShieldAlt } from '@fortawesome/free-solid-svg-icons/faShieldAlt';
 
 import useStyles from './styles';
 
@@ -16,6 +17,7 @@ const getIconByType = (type) => {
     upgrade: faArrowCircleUp,
     danger: faExclamationCircle,
     shopping: faShoppingBag,
+    shield: faShieldAlt,
   };
 
   return icons[type] || null;
@@ -28,36 +30,43 @@ const MessageBox = (props) => {
     bgColor,
     children,
     className,
+    isRainbow,
   } = props;
 
-  const classes = useStyles({ type, bgColor });
+  const classes = useStyles({ type, bgColor, isRainbow });
 
   const icon = getIconByType(type);
 
   return (
     <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
+      className={classnames({
+        [classes.accentWrapper]: isRainbow,
+      })}
     >
-      <div className={classes.titleContainer}>
-        {
-          icon && (
-            <FontAwesomeIcon
-              icon={icon}
-              className={classes.icon}
-            />
-          )
-        }
-        {typeof title === 'string' ? (
-          <Typography variant="body2" weight="bold">
-            {title}
-          </Typography>
-        ) : title}
-      </div>
-      <div className={classes.content}>
-        {children}
+      <div
+        className={classnames(
+          classes.root,
+          className,
+        )}
+      >
+        <div className={classes.titleContainer}>
+          {
+            icon && (
+              <FontAwesomeIcon
+                icon={icon}
+                className={classes.icon}
+              />
+            )
+          }
+          {typeof title === 'string' ? (
+            <Typography variant="body2" weight="bold">
+              {title}
+            </Typography>
+          ) : title}
+        </div>
+        <div className={classes.content}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -69,6 +78,7 @@ MessageBox.defaultProps = {
   bgColor: null,
   children: null,
   className: null,
+  isRainbow: false,
 };
 
 MessageBox.propTypes = {
@@ -76,7 +86,8 @@ MessageBox.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   bgColor: PropTypes.oneOf(['primary', 'secondary']),
-  type: PropTypes.oneOf(['info', 'danger', 'upgrade', 'shopping']),
+  type: PropTypes.oneOf(['info', 'danger', 'upgrade', 'shopping', 'shield']),
+  isRainbow: PropTypes.bool,
 };
 
 export default MessageBox;

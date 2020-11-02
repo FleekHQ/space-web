@@ -11,6 +11,7 @@ import { resizeWindow } from '@events';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import UsernameSignin from './UsernameSignin';
+import ForgotPassword from './ForgotPassword';
 import RestoreKeysMnemonic from './RestoreKeysMnemonic';
 
 import useStyles from './styles';
@@ -45,7 +46,10 @@ const Auth = () => {
         <Route path={`${match.path}/signup`} exact>
           <SignUp />
         </Route>
-        <Route path={`${match.path}/restore-keys-mnemonic`} exact>
+        <Route path={`${match.path}/forgot-password`} exact>
+          <ForgotPassword />
+        </Route>
+        <Route path={`${match.path}/forgot-password/restore-keys-mnemonic`} exact>
           <RestoreKeysMnemonic />
         </Route>
         <Redirect to={`${match.path}/signup`} exact />

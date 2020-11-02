@@ -25,6 +25,8 @@
     "password": "Password",
     "remindMeLater": "Remind me later",
     "noResults": "No results",
+    "comingSoon": "Coming Soon!",
+    "goBack": "Go Back",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -191,9 +193,20 @@
       }
     },
     "restoreKeysMnemonic": {
-      "inputLabel": "Enter 12 Word Account Recovery Phrase",
+      "title": "Enter Seed Phrase",
+      "description": "Enter your Seed Phrase below to gain access to your account on this device.",
+      "inputLabel": "Enter Seed Phrase",
       "keyNotFound": "No key found.",
       "submit": "Import Key"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password?",
+      "description": "Choose one of your back up sign in methods to access your account and reset your password. Make sure the option you choose is already added to your Space account.",
+      "recover": {
+        "google": "Recover with Google",
+        "twitter": "Recover with Twitter",
+        "key": "Recover with Seed Phrase"
+      }
     },
     "shared": {
       "passwordCheck": {
@@ -278,7 +291,21 @@
           "title": "Account Recovery Phrase",
           "description": "Please take note of your 12 words seed phrase.",
           "confirmation": "Yes, I wrote this down."
-        }
+        },
+        "addNew": "Add New",
+        "signIn": "Sign In Methods",
+        "space": "Space",
+        "twitter": "Twitter",
+        "google": "Google",
+        "seedPhrase": "Seed Phrase",
+        "disconnect": "Disconnect",
+        "showSeed": "Show Seed Phrase",
+        "warning": {
+          "title": "Add Another Sign In Method",
+          "description": "We highly recommend adding another sign in method so you are still able to access your account in case you forget your password or lose access to your default sign in method.",
+          "button": "Add New"
+        },
+        "addNewError": "Failed to connect sign in method, please try again."
       },
       "notifications": {
         "title": "Notifications"
@@ -425,5 +452,17 @@
       "title": "Explorer Integration",
       "description": "If you want a local drive mounting for all your Space files, please enable it."
     }
+  },
+  "addBackupSignIn": {
+    "title": "Add Backup Sign In Method",
+    "description": "Choose one of the following options to add to your account as an additional sign in method. This will help ensure you never lose access to your account.",
+    "email": "Email",
+    "username": "Username",
+    "google": "Google",
+    "twitter": "Twitter",
+    "seedPhrase": "Seed Phrase",
+    "morePrivate": "More Private",
+    "cancel": "Cancel",
+    "continue": "Continue"
   }
 }
