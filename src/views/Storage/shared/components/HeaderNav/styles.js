@@ -14,4 +14,18 @@ export default makeStyles((theme) => ({
   icon: {
     color: theme.palette.palette.gray1,
   },
+  resultContainer: {
+    zIndex: 10,
+    maxHeight: 320,
+    overflow: 'auto',
+  },
+  rootSearchBar: {
+    display: 'flex',
+    flex: 1,
+  },
+  noResults: {
+    display: 'flex',
+    padding: '8px 5px',
+    justifyContent: 'center',
+  },
 }));

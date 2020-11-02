@@ -17,6 +17,9 @@ const FETCH_SHARED_OBJECTS_SUCCESS_EVENT = `${EVENT_PREFIX}:fetchShared:success`
 const OPEN_PUBLIC_FILE_EVENT = `${EVENT_PREFIX}:openPublicFile`;
 const OPEN_PUBLIC_FILE_ERROR_EVENT = `${EVENT_PREFIX}:openPublicFile:error`;
 const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
+const SEARCH_EVENT = `${EVENT_PREFIX}:search`;
+const SEARCH_ERROR_EVENT = `${SEARCH_EVENT}:error`;
+const SEARCH_SUCCESS_EVENT = `${SEARCH_EVENT}:success`;
 
 const DEFAULT_BUCKET = 'personal';
 
@@ -171,6 +174,33 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(FETCH_SHARED_OBJECTS_EVENT, async (event, payload = {}) => {
     await listSharedFiles(mainWindow, payload);
+  });
+
+  ipcMain.on(SEARCH_EVENT, async (event, payload) => {
+    try {
+      const res = await spaceClient.searchFiles({ query: payload });
+
+      const entries = res.getEntriesList().map((item) => {
+        const dbId = item.getDbid();
+        const entry = item.getEntry();
+        const sourceBucket = item.getBucket();
+        const bucket = sourceBucket === 'personal' ? 'personal' : 'shared-with-me';
+
+        return {
+          dbId,
+          sourceBucket,
+          ...entryToObject(entry, bucket),
+        };
+      });
+
+      mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, { entries });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(SEARCH_ERROR_EVENT, err);
+      mainWindow.webContents.send(SEARCH_ERROR_EVENT, {
+        message: err.message,
+      });
+    }
   });
 };
 
