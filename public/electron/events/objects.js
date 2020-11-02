@@ -2,7 +2,6 @@ const { ipcMain, shell } = require('electron');
 const get = require('lodash/get');
 
 const { spaceClient } = require('../clients');
-const getMockResults = require('./mock-results');
 
 const EVENT_PREFIX = 'objects';
 const OPEN_EVENT = `${EVENT_PREFIX}:open`;
@@ -179,14 +178,25 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(SEARCH_EVENT, async (event, payload) => {
     try {
-      mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, getMockResults(payload));
+      const res = await spaceClient.searchFiles({ query: payload });
 
-      // TODO: uncomment after BE integration
+      const entries = res.getEntriesList().map((item) => {
+        const dbId = item.getDbid();
+        const entry = item.getEntry();
+        const sourceBucket = item.getBucket();
+        const bucket = sourceBucket === 'personal' ? 'personal' : 'shared-with-me';
 
-      // const res = await spaceClient.searchFiles(payload);
-      // const entries = res.getEntriesList().map((entry) => entryToObject(entry));
-      // mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, { entries });
+        return {
+          dbId,
+          sourceBucket,
+          ...entryToObject(entry, bucket),
+        };
+      });
+
+      mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, { entries });
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(SEARCH_ERROR_EVENT, err);
       mainWindow.webContents.send(SEARCH_ERROR_EVENT, {
         message: err.message,
       });

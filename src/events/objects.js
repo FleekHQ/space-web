@@ -115,14 +115,12 @@ const registerObjectsEvents = () => {
   });
 
   ipcRenderer.on(SEARCH_SUCCESS_EVENT, (event, payload) => {
-    // TODO: uncomment after BE integration
-    // const entries = get(payload, 'entries', []) || [];
-    // const objects = entries.map((obj) => objectPresenter(obj));
+    const entries = get(payload, 'entries', []) || [];
+    const objects = entries.map((obj) => objectPresenter(obj));
 
     store.dispatch({
       type: SEARCH_ACTION_TYPES.SET_RESULTS,
-      payload,
-      // payload: objects,
+      payload: objects,
     });
   });
 
