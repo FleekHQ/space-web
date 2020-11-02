@@ -12,6 +12,8 @@ import Button from '@terminal-packages/space-ui/core/Button';
 import AddBackUpSignIn from '@shared/components/Modal/AddBackupSignIn';
 import classnames from 'classnames';
 import MessageBox from '@ui/MessageBox';
+import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
+import { useTheme } from '@material-ui/core/styles';
 
 import useStyles from './styles';
 import SeedPhraseModal from '../../../SeedPhrase';
@@ -43,8 +45,8 @@ const Security = ({ t }) => {
     addBackUpSignIn: false,
   });
 
+  const theme = useTheme();
   const classes = useStyles();
-
   const [error, setError] = useState(false);
 
   const onClickNewMethod = () => {
@@ -105,8 +107,9 @@ const Security = ({ t }) => {
       {(Object.keys(options).length < 2) && (
         <div className={classes.messageBox}>
           <MessageBox
-            type="shield"
             isRainbow
+            icon={faShieldAlt}
+            iconColor={theme.palette.palette.green5}
             title={t('modals.settings.security.warning.title')}
           >
             <Typography className={classes.warningDescription}>
