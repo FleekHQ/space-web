@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag';
 import MessageBox from '@ui/MessageBox';
 
 import AddFundsBox from './components/AddFundsBox';
@@ -36,8 +36,8 @@ const ProductKey = () => {
       {
         productKey.planInfo ? <span>Plan Info</span> : (
           <MessageBox
-            type="shopping"
             bgColor="secondary"
+            icon={faShoppingBag}
             title={(
               <Typography>
                 <Box component="span" fontWeight={600}>

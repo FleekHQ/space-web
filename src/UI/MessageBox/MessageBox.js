@@ -8,54 +8,67 @@ import useStyles from './styles';
 
 const MessageBox = (props) => {
   const {
-    type,
     icon,
     title,
     bgColor,
     iconSize,
     children,
     className,
+    isRainbow,
+    iconColor,
   } = props;
 
-  const classes = useStyles({ type, bgColor, iconSize });
+  const classes = useStyles({
+    bgColor,
+    iconSize,
+    isRainbow,
+    iconColor,
+  });
 
   return (
     <div
-      className={classnames(
-        classes.root,
-        className,
-      )}
+      className={classnames({
+        [classes.accentWrapper]: isRainbow,
+      })}
     >
-      <div className={classes.titleContainer}>
-        {
-          icon && (
-            <FontAwesomeIcon
-              icon={icon}
-              className={classes.icon}
-            />
-          )
-        }
-        {typeof title === 'string' ? (
-          <Typography variant="body2" weight="bold">
-            {title}
-          </Typography>
-        ) : title}
-      </div>
-      <div className={classes.content}>
-        {children}
+      <div
+        className={classnames(
+          classes.root,
+          className,
+        )}
+      >
+        <div className={classes.titleContainer}>
+          {
+            icon && (
+              <FontAwesomeIcon
+                icon={icon}
+                className={classes.icon}
+              />
+            )
+          }
+          {typeof title === 'string' ? (
+            <Typography variant="body2" weight="bold">
+              {title}
+            </Typography>
+          ) : title}
+        </div>
+        <div className={classes.content}>
+          {children}
+        </div>
       </div>
     </div>
   );
 };
 
 MessageBox.defaultProps = {
-  type: null,
   icon: null,
   title: null,
   iconSize: 14,
   bgColor: null,
   children: null,
   className: null,
+  iconColor: null,
+  isRainbow: false,
 };
 
 MessageBox.propTypes = {
@@ -64,8 +77,9 @@ MessageBox.propTypes = {
   icon: PropTypes.elementType,
   className: PropTypes.string,
   iconSize: PropTypes.number,
+  isRainbow: PropTypes.bool,
+  iconColor: PropTypes.string,
   bgColor: PropTypes.oneOf(['primary', 'secondary']),
-  type: PropTypes.oneOf(['info', 'danger', 'upgrade', 'shopping']),
 };
 
 export default MessageBox;

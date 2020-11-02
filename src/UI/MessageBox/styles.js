@@ -1,15 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const getColorByType = (type, theme) => {
-  const colors = {
-    info: theme.palette.palette.black,
-    danger: theme.palette.palette.red,
-    upgrade: theme.palette.palette.black,
-  };
-
-  return colors[type] || colors.info;
-};
-
 const getBgColor = (bgColor, theme) => {
   const colors = {
     primary: '#D3E4FD',
@@ -29,28 +19,34 @@ const getBgBorderColor = (bgColor, theme) => {
 };
 
 export default makeStyles((theme) => ({
-  root: ({ type, bgColor }) => ({
+  root: ({ bgColor, isRainbow }) => ({
     display: 'flex',
     borderRadius: 4,
     position: 'relative',
     flexDirection: 'column',
     padding: '12px 25px 12px 30px',
-    boxShadow: '0px 3px 6px #DBE1EDE6',
     backgroundColor: bgColor ? getBgColor(bgColor, theme) : theme.palette.palette.white,
-    border: `1px solid ${bgColor ? getBgBorderColor(bgColor, theme) : getColorByType(type, theme)}`,
+    ...(!isRainbow && { boxShadow: '0px 3px 6px #DBE1EDE6' }),
+    ...(!isRainbow && { border: `1px solid ${bgColor ? getBgBorderColor(bgColor, theme) : theme.palette.palette.black}` }),
   }),
   titleContainer: {
     display: 'flex',
     position: 'relative',
     alignItems: 'center',
   },
-  icon: ({ type, iconSize }) => ({
+  icon: ({ iconSize, iconColor }) => ({
     left: -19,
     fontSize: iconSize,
     position: 'absolute',
-    color: getColorByType(type, theme),
+    color: iconColor || theme.palette.palette.black,
   }),
   content: {
     marginTop: 8,
+  },
+  accentWrapper: {
+    padding: 3,
+    borderRadius: 4,
+    background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
+    boxShadow: 'none',
   },
 }));

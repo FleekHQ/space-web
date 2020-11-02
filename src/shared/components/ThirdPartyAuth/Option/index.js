@@ -8,7 +8,7 @@ import useStyles from './styles';
 
 const ThirdPartyAuthOption = ({
   text,
-  logoUrl,
+  icon,
   disabled,
   onClick,
 }) => {
@@ -36,8 +36,18 @@ const ThirdPartyAuthOption = ({
           className="rainbow-bg"
           borderRadius={3}
         >
-          <Box display="flex" justifyContent="center" width={20} height={20} mr="11px">
-            <img className={classes.logo} src={logoUrl} alt={text} />
+          <Box
+            mr="11px"
+            width={20}
+            height={20}
+            display="flex"
+            position="relative"
+            alignItems="center"
+            color="common.white"
+            justifyContent="center"
+            className={classes.iconContainer}
+          >
+            {icon}
           </Box>
           <Typography>
             <Box component="span" color={disabled ? '#616161' : 'common.white'} fontSize="14px">
@@ -57,7 +67,7 @@ ThirdPartyAuthOption.defaultProps = {
 ThirdPartyAuthOption.propTypes = {
   disabled: PropTypes.bool,
   text: PropTypes.string.isRequired,
-  logoUrl: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
