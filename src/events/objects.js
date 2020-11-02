@@ -9,6 +9,7 @@ import {
   SET_LOADING_STATE,
   SET_OPEN_ERROR_BUCKET,
 } from '@reducers/storage';
+import { SEARCH_ACTION_TYPES } from '@reducers/search';
 import { OPEN_PUBLIC_FILE_ACTION_TYPES } from '@reducers/open-public-file';
 
 import store from '../store';
@@ -27,6 +28,9 @@ const FETCH_SHARED_OBJECTS_SUCCESS_EVENT = `${EVENT_PREFIX}:fetchShared:success`
 const OPEN_PUBLIC_FILE_EVENT = `${EVENT_PREFIX}:openPublicFile`;
 const OPEN_PUBLIC_FILE_ERROR_EVENT = `${EVENT_PREFIX}:openPublicFile:error`;
 const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
+const SEARCH_EVENT = `${EVENT_PREFIX}:search`;
+const SEARCH_ERROR_EVENT = `${SEARCH_EVENT}:error`;
+const SEARCH_SUCCESS_EVENT = `${SEARCH_EVENT}:success`;
 
 const registerObjectsEvents = () => {
   ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
@@ -109,6 +113,23 @@ const registerObjectsEvents = () => {
       type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_SUCCESS,
     });
   });
+
+  ipcRenderer.on(SEARCH_SUCCESS_EVENT, (event, payload) => {
+    const entries = get(payload, 'entries', []) || [];
+    const objects = entries.map((obj) => objectPresenter(obj));
+
+    store.dispatch({
+      type: SEARCH_ACTION_TYPES.SET_RESULTS,
+      payload: objects,
+    });
+  });
+
+  ipcRenderer.on(SEARCH_ERROR_EVENT, () => {
+    store.dispatch({
+      type: SEARCH_ACTION_TYPES.SET_RESULTS,
+      payload: null,
+    });
+  });
 };
 
 ipcRenderer.on(OPEN_ERROR_EVENT, (event, payload) => {
@@ -181,6 +202,22 @@ export const openPublicFile = (payload) => {
     type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_OPEN,
   });
   ipcRenderer.send(OPEN_PUBLIC_FILE_EVENT, payload);
+};
+
+export const searchFiles = (searchTerm) => {
+  store.dispatch({
+    type: SEARCH_ACTION_TYPES.SET_SEARCHTERM,
+    payload: searchTerm,
+  });
+
+  if (searchTerm === '') {
+    store.dispatch({
+      type: SEARCH_ACTION_TYPES.SET_RESULTS,
+      payload: null,
+    });
+  } else {
+    ipcRenderer.send(SEARCH_EVENT, searchTerm);
+  }
 };
 
 export default registerObjectsEvents;
