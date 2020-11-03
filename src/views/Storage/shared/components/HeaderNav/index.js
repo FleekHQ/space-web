@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import path from 'path';
 import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -46,10 +47,10 @@ const HeaderNav = () => {
       : item.key.split('/').slice(0, -1);
 
     const basePath = item.sourceBucket === 'personal'
-      ? ['storage', 'files']
-      : ['storage', 'shared-by'];
+      ? '/storage/files'
+      : '/storage/shared-by';
 
-    const redirectPath = `/${[...basePath, ...folderPath].join('/')}`;
+    const redirectPath = path.posix.join(basePath, ...folderPath);
     const isSamePath = matchPath(redirectPath, { path: _history.location.pathname, exact: true });
 
     if (!isSamePath) {
