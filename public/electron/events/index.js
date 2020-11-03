@@ -1,5 +1,4 @@
 const registerAuthEvents = require('./auth');
-// const registerModalEvents = require('./modal');
 const registerEventStream = require('./stream');
 const registerTxlSubscribe = require('./txl-subscribe');
 const registerObjectsEvents = require('./objects').default;
@@ -16,6 +15,7 @@ const registerUsageEvents = require('./usage');
 const registerNotificationNotificationSuscribe = require('./notifications-subscribe');
 const registerWalletEvents = require('./wallet');
 const registerWinResizeEvents = require('./win-resize');
+const registerFileInfoSubscribe = require('./file-info-subscribe');
 
 const registerEvents = ({
   app,
@@ -24,10 +24,10 @@ const registerEvents = ({
 }) => {
   const stream = registerEventStream(mainWindow);
   const txlStream = registerTxlSubscribe(mainWindow);
+  const fileInfoStream = registerFileInfoSubscribe(mainWindow);
   const notificationStream = registerNotificationNotificationSuscribe(mainWindow);
 
   registerAuthEvents(mainWindow);
-  // registerModalEvents(mainWindow);
   registerShareUpdate(mainWindow);
   registerObjectsEvents(mainWindow);
   registerAddItemsSubscribe(mainWindow);
@@ -48,6 +48,7 @@ const registerEvents = ({
   return () => {
     stream.destroy();
     txlStream.destroy();
+    fileInfoStream.destroy();
     notificationStream.destroy();
   };
 };
