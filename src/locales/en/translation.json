@@ -243,6 +243,13 @@
     "dismiss": "Close"
   },
   "modals": {
+    "createUsernamePassword": {
+      "title": "Create a Username & Password",
+      "username": "Username",
+      "password": "Password",
+      "create": "Create",
+      "cancel": "Cancel"
+    },
     "sharingModal": {
       "to": "To",
       "inputPlaceholder": "Username",
