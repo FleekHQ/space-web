@@ -73,7 +73,7 @@ const FileTable = ({
       renderRow={RenderRow}
       fetchObjects={fetchObjects}
       heads={getTableHeads(t)}
-      getRedirectUrl={(row) => path.join(baseRedirectUrl, prefix, row.name)}
+      getRedirectUrl={(row) => path.posix.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
       EmptyState={EmptyState}
