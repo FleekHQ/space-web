@@ -12,6 +12,7 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import UsernameSignin from './UsernameSignin';
 import ForgotPassword from './ForgotPassword';
+import CreatePassword from './CreatePassword';
 import RestoreKeysMnemonic from './RestoreKeysMnemonic';
 
 import useStyles from './styles';
@@ -48,6 +49,9 @@ const Auth = () => {
         </Route>
         <Route path={`${match.path}/forgot-password`} exact>
           <ForgotPassword />
+        </Route>
+        <Route path={`${match.path}/create-password`} exact>
+          <CreatePassword />
         </Route>
         <Route path={`${match.path}/forgot-password/restore-keys-mnemonic`} exact>
           <RestoreKeysMnemonic />

@@ -71,7 +71,7 @@ const UsernamePasswordForm = ({
         className={classes.iconButton}
         onMouseDown={(e) => e.preventDefault()}
       >
-        {state.showPassword ? (
+        {!state.showPassword ? (
           <FontAwesomeIcon
             icon={faEye}
             className={classes.icon}

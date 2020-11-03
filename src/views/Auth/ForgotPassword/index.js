@@ -10,7 +10,7 @@ import ThirdPartyAuthOption from '@shared/components/ThirdPartyAuth/Option';
 
 import useStyles from './styles';
 
-const SignIn = () => {
+const ForgotPassword = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -31,12 +31,18 @@ const SignIn = () => {
         <ThirdPartyAuthOption
           text={t('modules.forgotPassword.recover.google')}
           icon={<img alt="google" src={`${process.env.PUBLIC_URL}/assets/images/google.png`} />}
-          onClick={() => null}
+          onClick={() => {
+            // TODO: torus integration first
+            history.push('/auth/create-password');
+          }}
         />
         <ThirdPartyAuthOption
           text={t('modules.forgotPassword.recover.twitter')}
           icon={<img alt="twitter" src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`} />}
-          onClick={() => null}
+          onClick={() => {
+            // TODO: torus integration first
+            history.push('/auth/create-password');
+          }}
         />
         <ThirdPartyAuthOption
           text={t('modules.forgotPassword.recover.key')}
@@ -58,4 +64,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;

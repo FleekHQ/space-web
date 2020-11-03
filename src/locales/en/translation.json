@@ -219,6 +219,12 @@
           "charLength": "8 or more characters"
         }
       }
+    },
+    "createPassword": {
+      "title": "Create Password",
+      "description": "Please create a new password for your Space account.",
+      "confirm": "Confirm Password",
+      "remind": "<tip>Tip:</tip> Remember it this time"
     }
   },
   "uploadProgressModal": {
