@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+
 import bucketReducer, {
   STORE_DIR,
   ADD_OBJECT,
@@ -156,7 +157,14 @@ export default (state = DEFAULT_STATE, action) => {
     case DELETE_OBJECT:
     case UPDATE_OBJECT:
     case UPDATE_OBJECTS: {
-      const bucket = get(action.payload, '[0].bucket');
+      let bucket = null;
+
+      if (Array.isArray(action.payload)) {
+        bucket = get(action.payload, '[0].bucket');
+      } else {
+        bucket = get(action.payload, 'bucket');
+      }
+
       if (bucket) {
         return {
           ...state,

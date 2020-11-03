@@ -209,4 +209,5 @@ module.exports = {
   listDirectories,
   listDirectory,
   listSharedFiles,
+  entryToObject,
 };
