@@ -104,7 +104,7 @@ const Security = ({ t }) => {
       text3: t('modals.settings.security.seedPhrase'),
       icon: faKey,
     },
-    ...(user.username && {
+    ...(!user.username && {
       [OPTION_IDS.USERNAME]: {
         id: OPTION_IDS.USERNAME,
         text: t('modals.settings.security.space'),

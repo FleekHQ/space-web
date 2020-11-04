@@ -244,11 +244,12 @@
   },
   "modals": {
     "createUsernamePassword": {
-      "title": "Create a Username & Password",
+      "title": "Create Username & Password",
       "username": "Username",
       "password": "Password",
       "create": "Create",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "usernameError": "Username is taken, please try another."
     },
     "sharingModal": {
       "to": "To",
