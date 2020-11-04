@@ -18,8 +18,8 @@ const registerFileInfoSubscribe = (mainWindow) => {
   /* eslint-disable no-console */
   eventStream.on('error', (error) => {
     try {
+      console.error('FILE_INFO_ERROR_EVENT', error);
       mainWindow.webContents.send(FILE_INFO_ERROR_EVENT, error);
-      console.error(FILE_INFO_ERROR_EVENT, error);
     } catch (err) {
       console.error(err);
     }

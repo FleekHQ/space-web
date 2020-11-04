@@ -19,6 +19,7 @@ const TEST_KEYS_BY_PASSPHRASE_EVENT = `${EVENT_PREFIX}:testKeys`;
 const TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT = `${EVENT_PREFIX}:testKeys:error`;
 const TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT = `${EVENT_PREFIX}:testKeys:success`;
 
+/* eslint-disable no-console */
 const registerKeysEvents = (mainWindow) => {
   ipcMain.on(GET_PUBLIC_KEY_EVENT, async () => {
     try {
@@ -28,6 +29,7 @@ const registerKeysEvents = (mainWindow) => {
         publicKey: res.getPublickey(),
       });
     } catch (err) {
+      console.error('GET_PUBLIC_KEY_ERROR_EVENT', err);
       mainWindow.webContents.send(GET_PUBLIC_KEY_ERROR_EVENT, err);
     }
   });
@@ -38,6 +40,7 @@ const registerKeysEvents = (mainWindow) => {
 
       mainWindow.webContents.send(DELETE_KEY_PAIR_SUCCESS);
     } catch (err) {
+      console.error('DELETE_KEY_PAIR_ERROR', err);
       mainWindow.webContents.send(DELETE_KEY_PAIR_ERROR, err);
     }
   });
@@ -50,6 +53,7 @@ const registerKeysEvents = (mainWindow) => {
         mnemonic: res.getMnemonic(),
       });
     } catch (err) {
+      console.error('GET_MNEMONIC_SEED_ERROR_EVENT', err);
       mainWindow.webContents.send(GET_MNEMONIC_SEED_ERROR_EVENT, err);
     }
   });
@@ -60,6 +64,7 @@ const registerKeysEvents = (mainWindow) => {
 
       mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
     } catch (err) {
+      console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT', err);
       mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, err);
     }
   });
@@ -71,6 +76,7 @@ const registerKeysEvents = (mainWindow) => {
 
       mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT);
     } catch (error) {
+      console.error('TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT', error);
       mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT, {
         message: error.message,
       });

@@ -18,6 +18,7 @@ const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemon
 
 const GET_PUBLIC_KEY_ERROR = ['Key not found', 'No key pair found in the local db.'];
 
+/* eslint-disable no-console */
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNIN_EVENT, async (_, payload) => {
     try {
@@ -31,6 +32,8 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(SIGNIN_SUCCESS_EVENT, data.data);
     } catch (error) {
+      console.error('SIGNIN_ERROR_EVENT', error);
+
       let message = error.message || '';
 
       if (
@@ -75,6 +78,8 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
     } catch (error) {
+      console.error('SIGNUP_ERROR_EVENT', error);
+
       let message = error.message || '';
 
       if (error.response && error.response.data) {
@@ -100,6 +105,8 @@ const registerAuthEvents = (mainWindow) => {
         identity: res.getIdentity(),
       });
     } catch (err) {
+      console.error('CHECK_USERNAME_ERROR_EVENT', err);
+
       mainWindow.webContents.send(CHECK_USERNAME_ERROR_EVENT, err);
     }
   });
@@ -116,6 +123,8 @@ const registerAuthEvents = (mainWindow) => {
       });
       mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT, data.data);
     } catch (err) {
+      console.error('RESTORE_KEYS_MNEMONIC_ERROR_EVENT', err);
+
       mainWindow.webContents.send(RESTORE_KEYS_MNEMONIC_ERROR_EVENT, err);
     }
   });

@@ -18,6 +18,7 @@ const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeen
 const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
+/* eslint-disable no-console */
 const registerNotificationsEvents = (mainWindow) => {
   ipcMain.on(READ_NOTIFICATION_EVENT, async (event, payload) => {
     try {
@@ -25,6 +26,7 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(READ_NOTIFICATION_SUCCESS_EVENT);
     } catch (err) {
+      console.error('READ_NOTIFICATION_ERROR_EVENT', err);
       mainWindow.webContents.send(READ_NOTIFICATION_ERROR_EVENT, err);
     }
   });
@@ -41,6 +43,7 @@ const registerNotificationsEvents = (mainWindow) => {
         ),
       });
     } catch (err) {
+      console.error('FETCH_NOTIFICATIONS_ERROR', err);
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_ERROR, err);
     }
   });
@@ -52,6 +55,7 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
     } catch (err) {
+      console.error('HANDLE_FILES_INVITATION_ERROR', err);
       mainWindow.webContents.send(HANDLE_FILES_INVITATION_ERROR, payload, err);
     }
   });
@@ -62,6 +66,7 @@ const registerNotificationsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, payload);
     } catch (err) {
+      console.error('SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR', err);
       mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR, {
         ...payload,
         err,

@@ -41,6 +41,7 @@ const entryToObject = (entry, bucket) => ({
   })),
 });
 
+/* eslint-disable no-console */
 const listDirectories = async (mainWindow, payload = {}) => {
   const bucket = get(payload, 'bucket', DEFAULT_BUCKET) || DEFAULT_BUCKET;
 
@@ -52,6 +53,7 @@ const listDirectories = async (mainWindow, payload = {}) => {
 
     mainWindow.webContents.send(SUCCESS_EVENT, { entries, bucket });
   } catch (err) {
+    console.error(`${ERROR_EVENT}-listDirectories`, err);
     mainWindow.webContents.send(ERROR_EVENT, err);
   }
 };
@@ -83,6 +85,7 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
       bucket: 'shared-with-me',
     });
   } catch (error) {
+    console.error('FETCH_SHARED_OBJECTS_ERROR_EVENT', error);
     mainWindow.webContents.send(FETCH_SHARED_OBJECTS_ERROR_EVENT, { error, bucket: 'shared-with-me' });
   }
 };
@@ -111,6 +114,7 @@ const listDirectory = async (
       });
     }
   } catch (error) {
+    console.error(`${ERROR_EVENT}-listDirectory`, error);
     mainWindow.webContents.send(ERROR_EVENT, { error, bucket });
   }
 };
@@ -128,6 +132,7 @@ const registerObjectsEvents = (mainWindow) => {
 
       shell.openItem(location);
     } catch (err) {
+      console.error('OPEN_ERROR_EVENT', err);
       mainWindow.webContents.send(OPEN_ERROR_EVENT, payload);
     }
   });
@@ -158,6 +163,7 @@ const registerObjectsEvents = (mainWindow) => {
       mainWindow.webContents.send(OPEN_PUBLIC_FILE_SUCCESS_EVENT, { location });
       shell.openItem(location);
     } catch (err) {
+      console.error('OPEN_PUBLIC_FILE_ERROR_EVENT', err);
       mainWindow.webContents.send(OPEN_PUBLIC_FILE_ERROR_EVENT, {
         message: err.message,
       });
@@ -195,8 +201,7 @@ const registerObjectsEvents = (mainWindow) => {
 
       mainWindow.webContents.send(SEARCH_SUCCESS_EVENT, { entries });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(SEARCH_ERROR_EVENT, err);
+      console.error('SEARCH_ERROR_EVENT', err);
       mainWindow.webContents.send(SEARCH_ERROR_EVENT, {
         message: err.message,
       });

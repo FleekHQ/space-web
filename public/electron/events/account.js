@@ -15,6 +15,7 @@ const UPLOAD_PROFILE_PIC_EVENT = `${EVENT_PREFIX}:identity:uploadProfilePic`;
 const UPLOAD_PROFILE_PIC_ERROR_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:error`;
 const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
 
+/* eslint-disable no-console */
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(DELETE_ACCOUNT_EVENT, async () => {
     try {
@@ -26,6 +27,7 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(DELETE_ACCOUNT_SUCCESS_EVENT, {});
     } catch (err) {
+      console.error('DELETE_ACCOUNT_ERROR_EVENT', err);
       mainWindow.webContents.send(DELETE_ACCOUNT_ERROR_EVENT, err);
     }
   });
@@ -41,6 +43,7 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(UPDATE_IDENTITY_SUCCESS_EVENT, data);
     } catch (error) {
+      console.error('UPDATE_IDENTITY_ERROR_EVENT', error);
       let message = error.message || error.toString();
 
       const statusCode = get(error, 'response.status');
@@ -69,6 +72,8 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(UPLOAD_PROFILE_PIC_SUCCESS_EVENT, data);
     } catch (error) {
+      console.error('UPLOAD_PROFILE_PIC_ERROR_EVENT', error);
+
       let message = error.message || error.toString();
 
       const statusCode = get(error, 'response.status');
