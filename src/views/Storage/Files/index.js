@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import get from 'lodash/get';
-import { useDispatch } from 'react-redux';
 import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
 import { useHistory, matchPath } from 'react-router-dom';
 import { fetchDir } from '@events/objects';
-import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 
 import EmptyState from './components/EmptyState';
@@ -17,14 +15,9 @@ const StorageMainView = () => {
   const history = useHistory();
   const { location } = history;
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const match = matchPath(location.pathname, { path: '/storage/files/*' });
   const prefix = get(match, 'params.0', '') || '';
-
-  useEffect(() => {
-    dispatch(openModal(SETTINGS_MODAL, { defaultItem: 'security' }));
-  }, []);
 
   useEffect(() => {
     fetchDir(prefix);

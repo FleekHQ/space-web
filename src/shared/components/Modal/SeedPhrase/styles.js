@@ -4,33 +4,44 @@ export default makeStyles((theme) => ({
   paper: {
     width: 344,
     display: 'flex',
-    padding: '20px 35px',
-    alignItems: 'center',
+    padding: '15px 18px 22px 18px',
+    alignItems: 'left',
     flexDirection: 'column',
     justifyContent: 'center',
   },
   textAreaRoot: {
+    marginBottom: 22,
     padding: '11px 26px',
     '& > textarea': {
       textAlign: 'center',
     },
   },
-  checkboxRoot: {
-    padding: 0,
-    color: theme.palette.palette.black,
-    '& svg': {
-      width: 13,
-      height: 13,
-      marginRight: 6,
-    },
+  closeButton: {
+    borderRadius: '50%',
+    width: 16,
+    height: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 18,
+    top: 18,
   },
-  checkboxColorPrimary: {
-    '&.Mui-checked': {
-      color: theme.palette.palette.blue1,
-    },
+  closeIcon: {
+    fontSize: 12,
+    color: theme.palette.palette.gray1,
   },
-  formControlLabelRoot: {
-    margin: 0,
-    userSelect: 'none',
+  title: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 14,
+    marginBottom: 13,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 }));
