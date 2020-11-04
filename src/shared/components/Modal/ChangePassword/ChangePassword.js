@@ -10,6 +10,10 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
+import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons/faEyeSlash';
+import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
@@ -30,10 +34,18 @@ const ChangePassword = (props) => {
     changePassword: s.changePassword,
   }));
   const [state, setState] = React.useState({
-    confirmPassword: '',
+    currentPassword: {
+      value: '',
+      showPassword: false,
+    },
+    confirmPassword: {
+      value: '',
+      showPassword: false,
+    },
     newPassword: {
       value: '',
       isFocus: false,
+      showPassword: false,
     },
   });
 
@@ -59,6 +71,42 @@ const ChangePassword = (props) => {
     }
   }, [changePassword.success]);
 
+  const handlePasswordVisibility = (event) => {
+    event.preventDefault();
+
+    setState((prevState) => ({
+      ...prevState,
+      [event.currentTarget.id]: {
+        ...prevState[event.currentTarget.id],
+        showPassword: !prevState[event.currentTarget.id].showPassword,
+      },
+    }));
+  };
+
+  const endAdornment = (id) => (
+    <InputAdornment position="end" className={classes.adornment}>
+      <IconButton
+        id={id}
+        disabled={changePassword.loading}
+        onClick={handlePasswordVisibility}
+        className={classes.iconButton}
+        onMouseDown={(e) => e.preventDefault()}
+      >
+        {!state[id].showPassword ? (
+          <FontAwesomeIcon
+            icon={faEye}
+            className={classes.icon}
+          />
+        ) : (
+          <FontAwesomeIcon
+            icon={faEyeSlash}
+            className={classes.icon}
+          />
+        )}
+      </IconButton>
+    </InputAdornment>
+  );
+
   return (
     <BaseModal
       paperProps={{
@@ -66,27 +114,55 @@ const ChangePassword = (props) => {
       }}
     >
       <Paper className={classes.modalContent}>
-        <div className={classes.titleContainer}>
-          <Typography variant="h6" weight="medium">
-            {t('modals.changePassword.title')}
-          </Typography>
-          <ButtonBase disableRipple onClick={() => closeModal()}>
-            <FontAwesomeIcon
-              icon={faTimes}
-              className={classes.closeIcon}
-            />
-          </ButtonBase>
-        </div>
+        <ButtonBase
+          onClick={() => closeModal()}
+          className={classes.closeButton}
+        >
+          <FontAwesomeIcon
+            icon={faTimes}
+            className={classes.closeIcon}
+          />
+        </ButtonBase>
+        <img className={classes.logo} src={`${process.env.PUBLIC_URL}/icon.png`} alt="space logo" />
+        <Typography
+          variant="h6"
+          weight="medium"
+          className={classes.title}
+        >
+          {t('modals.changePassword.title')}
+        </Typography>
         <form onSubmit={onSubmit} className={classes.bodyContainer}>
+          <TextField
+            InputProps={{
+              endAdornment: endAdornment('currentPassword'),
+            }}
+            className={classes.row}
+            label={t('modals.changePassword.currentPassword')}
+            variant="outlined"
+            type={state.currentPassword.showPassword ? 'text' : 'password'}
+            value={state.currentPassword.value}
+            onChange={(event) => setState({
+              ...state,
+              currentPassword: {
+                ...state.currentPassword,
+                value: event.target.value,
+              },
+            })}
+          />
           <PasswordCheckTooltip
             open={state.newPassword.isFocus}
             password={state.newPassword.value}
+            bgColor="secondary"
           >
             <TextField
+              fullWidth
+              InputProps={{
+                endAdornment: endAdornment('newPassword'),
+              }}
               className={classes.row}
               label={t('modals.changePassword.newPassword')}
               variant="outlined"
-              type="password"
+              type={state.newPassword.showPassword ? 'text' : 'password'}
               value={state.newPassword.value}
               onFocus={() => setState({
                 ...state,
@@ -112,14 +188,20 @@ const ChangePassword = (props) => {
             />
           </PasswordCheckTooltip>
           <TextField
+            InputProps={{
+              endAdornment: endAdornment('confirmPassword'),
+            }}
             className={classes.row}
             label={t('modals.changePassword.confirmPassword')}
             variant="outlined"
-            type="password"
-            value={state.confirmPassword}
+            type={state.confirmPassword.showPassword ? 'text' : 'password'}
+            value={state.confirmPassword.value}
             onChange={(event) => setState({
               ...state,
-              confirmPassword: event.target.value,
+              confirmPassword: {
+                ...state.confirmPassword,
+                value: event.target.value,
+              },
             })}
           />
           <div className={`${classes.footer} ${classes.row}`}>
@@ -134,9 +216,10 @@ const ChangePassword = (props) => {
             <Button
               type="submit"
               variant="contained"
+              color="primary"
               className={classes.confirmBtn}
               disabled={(
-                !helper.verifyFormValidation(state.newPassword.value, state.confirmPassword)
+                !helper.verifyFormValidation(state.newPassword.value, state.confirmPassword.value)
                 || changePassword.loading
               )}
             >

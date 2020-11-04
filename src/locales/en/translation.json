@@ -422,7 +422,8 @@
       "title": "Change Password",
       "currPassword": "Current Password",
       "newPassword": "New Password",
-      "confirmPassword": "Confirm New Password"
+      "confirmPassword": "Confirm New Password",
+      "currentPassword": "Current Password"
     },
     "createFolder": {
       "title": "Create New Folder",
