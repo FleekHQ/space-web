@@ -74,7 +74,7 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, (event, payload) => {
     const entries = get(payload, 'objects.items', []) || [];
-    const objects = entries.map((obj) => objectPresenter(obj));
+    const objects = entries.map((obj) => objectPresenter(obj, true));
 
     store.dispatch({
       payload: {
