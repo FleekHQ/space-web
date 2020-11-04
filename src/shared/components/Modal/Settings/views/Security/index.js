@@ -73,13 +73,13 @@ const Security = ({ t }) => {
 
   const options = ({
     [OPTION_IDS.EMAIL]: {
-      id: OPTION_IDS.EMAIL,
-      text: t('addBackupSignIn.email'),
-      text2: 's***********a@gmail.com',
-      text3: t('modals.settings.security.disconnect'),
-      redText3: true,
-      icon: faEnvelope,
-    },
+    //   id: OPTION_IDS.EMAIL,
+    //   text: t('addBackupSignIn.email'),
+    //   text2: 's***********a@gmail.com',
+    //   text3: t('modals.settings.security.disconnect'),
+    //   redText3: true,
+    //   icon: faEnvelope,
+    // },
     [OPTION_IDS.USERNAME]: {
       id: OPTION_IDS.USERNAME,
       text: t('modals.settings.security.space'),
