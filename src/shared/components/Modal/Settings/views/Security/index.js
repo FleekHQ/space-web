@@ -18,6 +18,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useStyles from './styles';
 import SeedPhraseModal from '../../../SeedPhrase';
 import ChangePasswordModal from '../../../ChangePassword';
+import CreateUsernamePassword from '../../../CreateUsernamePassword';
 
 import {
   Body,
@@ -25,15 +26,6 @@ import {
   Section,
   BaseCard,
 } from '../../components';
-
-const handleModals = ({ setState }) => (event) => {
-  event.preventDefault();
-
-  setState((prevState) => ({
-    ...prevState,
-    [event.currentTarget.id]: true,
-  }));
-};
 
 const Security = ({ t }) => {
   const [state, setState] = React.useState({
@@ -43,14 +35,39 @@ const Security = ({ t }) => {
     [OPTION_IDS.TWITTER]: false,
     [OPTION_IDS.SEED_PHRASE]: false,
     addBackUpSignIn: false,
+    createUsernamePassword: false,
   });
 
   const theme = useTheme();
   const classes = useStyles();
   const [error, setError] = useState(false);
 
-  const onClickNewMethod = () => {
-    // Do stuff...
+  const handleOpenModal = (event) => {
+    event.preventDefault();
+
+    setError(false);
+
+    setState((prevState) => ({
+      ...prevState,
+      [event.currentTarget.id]: true,
+    }));
+  };
+
+  const onClickNewMethod = (methodId) => {
+    switch (methodId) {
+      case OPTION_IDS.USERNAME: {
+        setState((prevState) => ({
+          ...prevState,
+          addBackUpSignIn: false,
+          createUsernamePassword: true,
+        }));
+        break;
+      }
+      default: {
+        setState((prevState) => ({ ...prevState, addBackUpSignIn: false }));
+        break;
+      }
+    }
     setError(false);
   };
 
@@ -118,7 +135,7 @@ const Security = ({ t }) => {
             <Button
               id="addBackUpSignIn"
               variant="primary"
-              onClick={handleModals({ setState })}
+              onClick={handleOpenModal}
             >
               {t('modals.settings.security.warning.button')}
             </Button>
@@ -136,7 +153,7 @@ const Security = ({ t }) => {
             <Button
               id="addBackUpSignIn"
               variant="primary"
-              onClick={handleModals({ setState })}
+              onClick={handleOpenModal}
             >
               {t('modals.settings.security.addNew')}
             </Button>
@@ -170,7 +187,7 @@ const Security = ({ t }) => {
                   <Typography>{option.text2}</Typography>
                   <ButtonBase>
                     <Typography
-                      onClick={handleModals({ setState })}
+                      onClick={handleOpenModal}
                       id={option.id}
                       className={classnames(classes.optionText3, {
                         [classes.redText]: !!option.redText3,
@@ -223,6 +240,16 @@ const Security = ({ t }) => {
             onClickContinue={onClickNewMethod}
             closeModal={() => (
               setState((prevState) => ({ ...prevState, addBackUpSignIn: false }))
+            )}
+          />
+        )
+      }
+      {
+        state.createUsernamePassword && (
+          <CreateUsernamePassword
+            setError={setError}
+            closeModal={() => (
+              setState((prevState) => ({ ...prevState, createUsernamePassword: false }))
             )}
           />
         )
