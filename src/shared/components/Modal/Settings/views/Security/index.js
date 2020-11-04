@@ -14,6 +14,7 @@ import classnames from 'classnames';
 import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
 import SeedPhraseModal from '../../../SeedPhrase';
@@ -41,6 +42,7 @@ const Security = ({ t }) => {
   const theme = useTheme();
   const classes = useStyles();
   const [error, setError] = useState(false);
+  const user = useSelector((reduxState) => reduxState.user);
 
   const handleOpenModal = (event) => {
     event.preventDefault();
@@ -80,13 +82,6 @@ const Security = ({ t }) => {
     //   redText3: true,
     //   icon: faEnvelope,
     // },
-    [OPTION_IDS.USERNAME]: {
-      id: OPTION_IDS.USERNAME,
-      text: t('modals.settings.security.space'),
-      text2: 'samuele',
-      text3: t('modals.settings.security.changePassword'),
-      imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
-    },
     [OPTION_IDS.GOOGLE]: {
       id: OPTION_IDS.GOOGLE,
       text: t('addBackupSignIn.google'),
@@ -109,6 +104,15 @@ const Security = ({ t }) => {
       text3: t('modals.settings.security.seedPhrase'),
       icon: faKey,
     },
+    ...(user.username && {
+      [OPTION_IDS.USERNAME]: {
+        id: OPTION_IDS.USERNAME,
+        text: t('modals.settings.security.space'),
+        text2: 'samuele',
+        text3: t('modals.settings.security.changePassword'),
+        imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
+      },
+    }),
   });
 
   const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => {
