@@ -21,6 +21,7 @@ const getBucketData = (bucket) => ({
   isSelectGroupBucket: bucket.getIsselectgroupbucket(),
 });
 
+/* eslint-disable no-console */
 const listBuckets = async (
   mainWindow,
   payload = {},
@@ -39,6 +40,8 @@ const listBuckets = async (
       });
     });
   } catch (error) {
+    console.error('LIST_ERROR_EVENT', error);
+
     mainWindow.webContents.send(LIST_ERROR_EVENT, error);
   }
 };
@@ -53,6 +56,8 @@ const registerObjectsEvents = (mainWindow) => {
       await spaceClient.toggleBucketBackup(payload);
       mainWindow.webContents.send(TOGGLE_BUCKET_BACKUP_SUCCESS_EVENT);
     } catch (error) {
+      console.error('TOGGLE_BUCKET_BACKUP_ERROR_EVENT', error);
+
       mainWindow.webContents.send(TOGGLE_BUCKET_BACKUP_ERROR_EVENT, error);
     }
   });

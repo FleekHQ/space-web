@@ -10,6 +10,7 @@ const CREATE_FOLDER_EVENT = `${EVENT_PREFIX}:folder`;
 const CREATE_FOLDER_ERROR_EVENT = `${EVENT_PREFIX}:folder:error`;
 const CREATE_FOLDER_SUCCESS_EVENT = `${EVENT_PREFIX}:folder:success`;
 
+/* eslint-disable no-console */
 const registerFolderEvents = (mainWindow) => {
   ipcMain.on(CREATE_FOLDER_EVENT, async (_, payload) => {
     try {
@@ -34,6 +35,8 @@ const registerFolderEvents = (mainWindow) => {
 
       await listDirectory(mainWindow, listDirPayload);
     } catch (err) {
+      console.error('CREATE_FOLDER_ERROR_EVENT', err);
+
       mainWindow.webContents.send(CREATE_FOLDER_ERROR_EVENT, err);
     }
   });

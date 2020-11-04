@@ -21,8 +21,10 @@ const registerNotificationSubscribe = (mainWindow) => {
     }
   });
 
+  /* eslint-disable no-console */
   eventStream.on('error', (error) => {
     try {
+      console.error('NOTIFICATION_SUBSCRIBE_ERROR', error);
       mainWindow.webContents.send(NOTIFICATION_SUBSCRIBE_ERROR, error);
     } catch (err) {
       // eslint-disable-next-line no-console
