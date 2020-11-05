@@ -87,8 +87,9 @@ const registerAuthEvents = () => {
 /**
  * User signin
  * @param {Object} payload
- * @param {string} payload.username
- * @param {string} payload.password
+ * @param {string=} payload.username
+ * @param {string=} payload.password
+ * @param {Object=} payload.torusRes
  */
 export const signin = (payload) => {
   store.dispatch({
@@ -99,9 +100,10 @@ export const signin = (payload) => {
 
 /**
  * User signup
- * @param {Object=} payload
- * @param {string} payload.username
- * @param {string} payload.password
+ * @param {Object} payload
+ * @param {string=} payload.username
+ * @param {string=} payload.password
+ * @param {Object=} payload.torusRes
  */
 export const signup = (payload) => {
   store.dispatch({

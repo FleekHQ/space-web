@@ -16,20 +16,39 @@ const RESTORE_KEYS_MNEMONIC_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic`;
 const RESTORE_KEYS_MNEMONIC_ERROR_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:error`;
 const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemonic:success`;
 
-const GET_PUBLIC_KEY_ERROR = ['Key not found', 'No key pair found in the local db.'];
-
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNIN_EVENT, async (_, payload) => {
     try {
-      const { data } = await apiClient.identities.getByUsername({
-        usernames: [payload.username],
-      });
-      await spaceClient.recoverKeysByPassphrase({
-        uuid: data.data.uuid,
-        passphrase: payload.password,
-      });
+      let user;
 
-      mainWindow.webContents.send(SIGNIN_SUCCESS_EVENT, data.data);
+      if (payload.username && payload.password) {
+        const { data } = await apiClient.identities.getByUsername({
+          usernames: [payload.username],
+        });
+        await spaceClient.recoverKeysByPassphrase({
+          uuid: data.data.uuid,
+          passphrase: payload.password,
+        });
+
+        user = { ...data.data };
+      } else {
+        await spaceClient.recoverKeysByPassphrase({
+          // uuid: 'not-sure-if-this-field-is-require',
+          passphrase: payload.torusRes.privateKey,
+        });
+        const publicKeyRes = await spaceClient.getPublicKey();
+        const address = getAddressByPublicKey(publicKeyRes.getPublickey());
+
+        const apiSessionRes = await spaceClient.getAPISessionTokens();
+        const { data } = await apiClient.identities.getByAddress({
+          addresses: [address],
+          token: apiSessionRes.getServicestoken(),
+        });
+
+        user = { ...data.data };
+      }
+
+      mainWindow.webContents.send(SIGNIN_SUCCESS_EVENT, user);
     } catch (error) {
       let message = error.message || '';
 
@@ -48,32 +67,37 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
-      let publicKeyRes = await spaceClient
-        .getPublicKey()
-        .catch((error) => {
-          if (error && !GET_PUBLIC_KEY_ERROR.includes(error.message)) {
-            throw error;
-          }
-          return null;
+      let user;
+
+      if (payload.username && payload.password) {
+        await spaceClient.generateKeyPairWithForce();
+        const apiSessionRes = await spaceClient.getAPISessionTokens();
+
+        const { data } = await apiClient.identity.update({
+          username: payload.username,
+          token: apiSessionRes.getServicestoken(),
+        });
+        await spaceClient.backupKeysByPassphrase({
+          uuid: data.data.uuid,
+          passphrase: payload.password,
         });
 
-      if (!publicKeyRes) {
-        await spaceClient.generateKeyPairWithForce();
-        publicKeyRes = await spaceClient.getPublicKey();
+        user = { ...data.data };
+      } else {
+        await spaceClient.recoverKeysByPassphrase({
+          // uuid: 'not-sure-if-this-field-is-require',
+          passphrase: payload.torusRes.privateKey,
+        });
+        const apiSessionRes = await spaceClient.getAPISessionTokens();
+        const { data } = await apiClient.identity.update({
+          token: apiSessionRes.getServicestoken(),
+          displayName: payload.torusRes.userInfo.name,
+        });
+
+        user = { ...data.data };
       }
 
-      const apiSessionRes = await spaceClient.getAPISessionTokens();
-
-      const { data } = await apiClient.identity.update({
-        username: payload.username,
-        token: apiSessionRes.getServicestoken(),
-      });
-      await spaceClient.backupKeysByPassphrase({
-        uuid: data.data.uuid,
-        passphrase: payload.password,
-      });
-
-      mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, data.data);
+      mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, user);
     } catch (error) {
       let message = error.message || '';
 
