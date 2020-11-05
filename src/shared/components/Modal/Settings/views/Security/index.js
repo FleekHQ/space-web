@@ -5,7 +5,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
 import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
-// import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
+import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
@@ -30,7 +30,7 @@ import {
 
 const Security = ({ t }) => {
   const [state, setState] = React.useState({
-    // [OPTION_IDS.EMAIL]: false,
+    [OPTION_IDS.EMAIL]: false,
     [OPTION_IDS.USERNAME]: false,
     [OPTION_IDS.GOOGLE]: false,
     [OPTION_IDS.TWITTER]: false,
@@ -74,14 +74,14 @@ const Security = ({ t }) => {
   };
 
   const options = ({
-    // [OPTION_IDS.EMAIL]: {
-    //   id: OPTION_IDS.EMAIL,
-    //   text: t('addBackupSignIn.email'),
-    //   text2: 's***********a@gmail.com',
-    //   text3: t('modals.settings.security.disconnect'),
-    //   redText3: true,
-    //   icon: faEnvelope,
-    // },
+    [OPTION_IDS.EMAIL]: {
+      id: OPTION_IDS.EMAIL,
+      text: t('addBackupSignIn.email'),
+      text2: 's***********a@gmail.com',
+      text3: t('modals.settings.security.disconnect'),
+      redText3: true,
+      icon: faEnvelope,
+    },
     [OPTION_IDS.GOOGLE]: {
       id: OPTION_IDS.GOOGLE,
       text: t('addBackupSignIn.google'),
@@ -108,7 +108,7 @@ const Security = ({ t }) => {
       [OPTION_IDS.USERNAME]: {
         id: OPTION_IDS.USERNAME,
         text: t('modals.settings.security.space'),
-        text2: 'samuele',
+        text2: user.username,
         text3: t('modals.settings.security.changePassword'),
         imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
       },
@@ -119,7 +119,6 @@ const Security = ({ t }) => {
     const isOptionNotAdded = !options[optionId];
     const isTwitter = optionId === OPTION_IDS.TWITTER;
     const isGoogle = optionId === OPTION_IDS.GOOGLE;
-
     return (isOptionNotAdded || isTwitter || isGoogle);
   });
 
