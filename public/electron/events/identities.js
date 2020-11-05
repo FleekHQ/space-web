@@ -10,6 +10,7 @@ const GET_RECENTLY_MEMBERS_EVENT = `${EVENT_PREFIX}:recentlyMembers`;
 const GET_RECENTLY_MEMBERS_ERROR_EVENT = `${EVENT_PREFIX}:recentlyMembers:error`;
 const GET_RECENTLY_MEMBERS_SUCCESS_EVENT = `${EVENT_PREFIX}:recentlyMembers:success`;
 
+/* eslint-disable no-console */
 const registerIdentitiesEvents = (mainWindow) => {
   ipcMain.on(GET_IDENTITIES_BY_ADDRESS_EVENT, async (_, payload) => {
     try {
@@ -22,6 +23,8 @@ const registerIdentitiesEvents = (mainWindow) => {
       const identities = Array.isArray(data.data) ? data.data : [data.data];
       mainWindow.webContents.send(GET_IDENTITIES_BY_ADDRESS_SUCCESS_EVENT, { identities });
     } catch (error) {
+      console.error('GET_IDENTITIES_BY_ADDRESS_ERROR_EVENT', error);
+
       let message = error.message || '';
 
       if (error.response && error.response.data) {
@@ -54,6 +57,8 @@ const registerIdentitiesEvents = (mainWindow) => {
 
       mainWindow.webContents.send(GET_RECENTLY_MEMBERS_SUCCESS_EVENT, { identities });
     } catch (error) {
+      console.error('GET_RECENTLY_MEMBERS_ERROR_EVENT', error);
+
       mainWindow.webContents.send(GET_RECENTLY_MEMBERS_ERROR_EVENT, error);
     }
   });

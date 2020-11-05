@@ -33,8 +33,10 @@ const registerEventStream = (mainWindow) => {
     }
   });
 
+  /* eslint-disable no-console */
   eventStream.on('error', (error) => {
     try {
+      console.error(`${EVENT_PREFIX}:error`, error);
       mainWindow.webContents.send(`${EVENT_PREFIX}:error`, error);
     } catch (err) {
       // eslint-disable-next-line no-console

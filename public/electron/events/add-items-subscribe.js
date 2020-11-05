@@ -46,7 +46,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
 
     eventStream.on('error', (error) => {
       // eslint-disable-next-line no-console
-      console.log('Error received in add item stream: ', error.message);
+      console.error('SUBSCRIBE_ERROR_EVENT', error);
 
       mainWindow.webContents.send(
         SUBSCRIBE_ERROR_EVENT,

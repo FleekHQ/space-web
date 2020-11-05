@@ -24,7 +24,7 @@ const registerAppUpdateEvents = ({
     });
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(`Errror when try to check for updates: ${error.message}`);
+    console.error('ERROR_UPDATE_APP', error);
   }
 };
 

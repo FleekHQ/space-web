@@ -15,12 +15,14 @@ const GENERATE_PUBLIC_LINK_EVENT = `${EVENT_PREFIX}:publicLink`;
 const GENERATE_PUBLIC_LINK_ERROR_EVENT = `${EVENT_PREFIX}:publicLink:error`;
 const GENERATE_PUBLIC_LINK_SUCCESS_EVENT = `${EVENT_PREFIX}:publicLink:success`;
 
+/* eslint-disable no-console */
 const registerShareEvents = (mainWindow) => {
   ipcMain.on(SHARE_ITEMS_EVENT, async (event, payload) => {
     try {
       await spaceClient.shareItemsToSelectGroup(payload);
       mainWindow.webContents.send(SHARE_ITEMS_SUCCESS_EVENT);
     } catch (err) {
+      console.error('SHARE_ITEMS_ERROR_EVENT', err);
       mainWindow.webContents.send(SHARE_ITEMS_ERROR_EVENT, err);
     }
   });
@@ -68,6 +70,7 @@ const registerShareEvents = (mainWindow) => {
 
       mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, { usersNotFound });
     } catch (err) {
+      console.error('SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT', err);
       mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, err);
     }
   });
@@ -82,6 +85,7 @@ const registerShareEvents = (mainWindow) => {
 
       mainWindow.webContents.send(GENERATE_PUBLIC_LINK_SUCCESS_EVENT, linkInfo);
     } catch (error) {
+      console.error('GENERATE_PUBLIC_LINK_ERROR_EVENT', error);
       mainWindow.webContents.send(GENERATE_PUBLIC_LINK_ERROR_EVENT, error.message);
     }
   });
