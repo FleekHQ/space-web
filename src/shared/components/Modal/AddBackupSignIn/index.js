@@ -25,7 +25,7 @@ const AddBackUpSignIn = ({
   const [selectedOption, setSelectedOption] = useState(null);
 
   const MAX_ITEMS = 4;
-  const OPTION_HEIGHT = 60;
+  const OPTION_HEIGHT = 64;
   const listMaxHeight = OPTION_HEIGHT * MAX_ITEMS;
   const listHeight = Math.min((options.length * OPTION_HEIGHT), listMaxHeight);
 

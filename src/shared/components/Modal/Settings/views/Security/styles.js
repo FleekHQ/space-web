@@ -36,6 +36,9 @@ export default makeStyles((theme) => ({
     fontSize: 20,
     color: '#ECBE3E',
   },
+  [`${OPTION_IDS.TWITTER}`]: {
+    width: 35,
+  },
   optionText2: {
     width: 200,
     fontSize: 12,

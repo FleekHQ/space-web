@@ -5,7 +5,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
 import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
-import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
+// import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
@@ -74,14 +74,14 @@ const Security = ({ t }) => {
   };
 
   const options = ({
-    [OPTION_IDS.EMAIL]: {
-      id: OPTION_IDS.EMAIL,
-      text: t('addBackupSignIn.email'),
-      text2: 's***********a@gmail.com',
-      text3: t('modals.settings.security.disconnect'),
-      redText3: true,
-      icon: faEnvelope,
-    },
+    // [OPTION_IDS.EMAIL]: {
+    //   id: OPTION_IDS.EMAIL,
+    //   text: t('addBackupSignIn.email'),
+    //   text2: 's***********a@gmail.com',
+    //   text3: t('modals.settings.security.disconnect'),
+    //   redText3: true,
+    //   icon: faEnvelope,
+    // },
     [OPTION_IDS.GOOGLE]: {
       id: OPTION_IDS.GOOGLE,
       text: t('addBackupSignIn.google'),
@@ -119,8 +119,9 @@ const Security = ({ t }) => {
     const isOptionNotAdded = !options[optionId];
     const isTwitter = optionId === OPTION_IDS.TWITTER;
     const isGoogle = optionId === OPTION_IDS.GOOGLE;
+    const isEmail = optionId === OPTION_IDS.EMAIL;
 
-    return ((!isOptionNotAdded || isTwitter || isGoogle) && !isGoogle);
+    return ((isOptionNotAdded || isTwitter || isGoogle) && !isEmail);
   });
 
   return (
@@ -172,7 +173,13 @@ const Security = ({ t }) => {
                 <div className={classes.methodContainer}>
                   <div className={classes.titleLogoContainer}>
                     {option.imgSrc && (
-                      <img alt={option.id} src={option.imgSrc} className={classes.image} />
+                      <div className={classes.optionIconContainer}>
+                        <img
+                          alt={option.id}
+                          src={option.imgSrc}
+                          className={classnames(classes.image, classes[option.id])}
+                        />
+                      </div>
                     )}
                     {option.icon && (
                       <div className={classes.optionIconContainer}>
