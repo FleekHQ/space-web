@@ -245,11 +245,12 @@
   },
   "modals": {
     "createUsernamePassword": {
-      "title": "Create a Username & Password",
+      "title": "Create Username & Password",
       "username": "Username",
       "password": "Password",
       "create": "Create",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "usernameError": "Username is taken, please try another."
     },
     "sharingModal": {
       "to": "To",
@@ -304,9 +305,8 @@
         "changePassword": "Change Password",
         "paperKeyInfo": "A 12 words mnemonic seed will be created and it's going to be useful to access your account in case you lost your key pair.",
         "seedPhraseModal": {
-          "title": "Account Recovery Phrase",
-          "description": "Please take note of your 12 words seed phrase.",
-          "confirmation": "Yes, I wrote this down."
+          "title": "Seed Phrase",
+          "description": "Please write down your seed phrase and keep it somewhere safe, this will help you gain access to your account if you forget your password and have no other account recovery method."
         },
         "addNew": "Add New",
         "signIn": "Sign In Methods",
@@ -423,7 +423,8 @@
       "title": "Change Password",
       "currPassword": "Current Password",
       "newPassword": "New Password",
-      "confirmPassword": "Confirm New Password"
+      "confirmPassword": "Confirm New Password",
+      "currentPassword": "Current Password"
     },
     "createFolder": {
       "title": "Create New Folder",

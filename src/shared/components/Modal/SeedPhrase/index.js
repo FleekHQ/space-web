@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import { useDispatch, useSelector } from 'react-redux';
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
@@ -23,7 +23,6 @@ const SeedPhraseModal = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((s) => s.mnemonic);
-  const [confirmed, setConfirm] = React.useState(false);
 
   React.useEffect(() => {
     getMnemonic();
@@ -45,16 +44,20 @@ const SeedPhraseModal = ({
         open: true,
       }}
     >
-      <Typography align="center" variant="h6">
+      <ButtonBase onClick={closeModal} className={classes.closeButton}>
+        <FontAwesomeIcon
+          icon={faTimes}
+          className={classes.closeIcon}
+        />
+      </ButtonBase>
+      <Typography className={classes.title}>
         <Box component="span" fontWeight={600}>
           {t('modals.settings.security.seedPhraseModal.title')}
         </Box>
       </Typography>
-      <br />
-      <Typography align="center" variant="body2">
+      <Typography className={classes.description}>
         {t('modals.settings.security.seedPhraseModal.description')}
       </Typography>
-      <br />
       <TextField
         multiline
         fullWidth
@@ -68,37 +71,20 @@ const SeedPhraseModal = ({
           },
         }}
       />
-      <br />
-      <FormControlLabel
-        label={t('modals.settings.security.seedPhraseModal.confirmation')}
-        classes={{
-          root: classes.formControlLabelRoot,
-        }}
-        control={(
-          <Checkbox
-            disableRipple
-            color="primary"
-            checked={confirmed}
-            classes={{
-              root: classes.checkboxRoot,
-              colorPrimary: classes.checkboxColorPrimary,
-            }}
-            onChange={(event) => setConfirm(event.target.checked)}
-          />
-        )}
-      />
-      <br />
-      <Button
-        variant="contained"
-        onClick={() => closeModal()}
-        disabled={!confirmed || state.loading}
-      >
-        {
-          state.loading ? (
-            <FontAwesomeIcon spin icon={faSpinner} />
-          ) : t('common.done')
-        }
-      </Button>
+      <div className={classes.buttonContainer}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => closeModal()}
+          disabled={state.loading}
+        >
+          {
+            state.loading ? (
+              <FontAwesomeIcon spin icon={faSpinner} />
+            ) : t('common.done')
+          }
+        </Button>
+      </div>
     </BaseModal>
   );
 };

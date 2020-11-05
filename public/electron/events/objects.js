@@ -193,9 +193,9 @@ const registerObjectsEvents = (mainWindow) => {
         const bucket = sourceBucket === 'personal' ? 'personal' : 'shared-with-me';
 
         return {
-          dbId,
           sourceBucket,
           ...entryToObject(entry, bucket),
+          ...(bucket !== 'personal' && { dbId }),
         };
       });
 
