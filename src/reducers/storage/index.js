@@ -11,6 +11,7 @@ import bucketReducer, {
   SET_LOADING_STATE_BUCKET,
   SET_ERROR_BUCKET,
   SET_OPEN_ERROR_BUCKET,
+  UPDATE_OR_ADD_OBJECT,
 } from './bucket';
 
 export * from './bucket';
@@ -156,7 +157,8 @@ export default (state = DEFAULT_STATE, action) => {
     case ADD_OBJECT:
     case DELETE_OBJECT:
     case UPDATE_OBJECT:
-    case UPDATE_OBJECTS: {
+    case UPDATE_OBJECTS:
+    case UPDATE_OR_ADD_OBJECT: {
       let bucket = null;
 
       if (Array.isArray(action.payload)) {

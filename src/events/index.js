@@ -14,7 +14,6 @@ import registerIdentitiesEvents from './identities';
 import registerUsageEvents from './usage';
 import registerNotificationSubscribe from './notifications-subscribe';
 import walletSubscribe from './wallet';
-import registerFileInfoSubscribe from './file-info-subscribe';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -33,7 +32,6 @@ const registerEvents = () => {
   registerUsageEvents();
   registerNotificationSubscribe();
   walletSubscribe();
-  registerFileInfoSubscribe();
 };
 
 export default registerEvents;

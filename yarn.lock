@@ -1330,10 +1330,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fleekhq/space-client@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.1.1.tgz#f5b3329c0c75dbd0b21874f3bb5535c20bd02081"
-  integrity sha512-X4LsWuskJqJkjkUqMfdpyU358sIBaNrq1ebd0jURmikvspcARInZ2gnSz53hH8u2wfWLBkk7Uzk3mwENFJnhfg==
+"@fleekhq/space-client@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.1.2.tgz#273cef1ecc581dd5f7ae8f809781f5ee49a6d0ef"
+  integrity sha512-ubngEvZgh5R/lbspyMShnkNgQXupUYphfYrV/eJ2Vc+kM6gqHOjyvVhhdi0uwnx7ewSFWv76Wp5V2j7FL5Cfcg==
   dependencies:
     "@types/google-protobuf" "^3.7.2"
     google-protobuf "^3.12.2"
