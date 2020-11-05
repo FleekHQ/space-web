@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { signup } from '@events';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,8 @@ import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons/faEyeSlash';
 import BaseModal from '@ui/BaseModal';
 import TextField from '@ui/TextField';
 import Typography from '@ui/Typography';
+import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
+
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
@@ -30,13 +32,18 @@ const CreateUsernamePassword = ({
   const { t } = useTranslation();
   const authState = useSelector((s) => s.auth.signup);
   const dispatch = useDispatch();
+  const [usernameError, setUsernameError] = useState(false);
 
   React.useEffect(() => {
-    if (authState.success || authState.error) {
-      closeModal();
+    if (authState.error === 'modules.signup.errors.username') {
+      setUsernameError(true);
+      return;
     }
     if (authState.error) {
-      setError();
+      setError(true);
+    }
+    if (authState.success || authState.error) {
+      closeModal();
     }
   }, [authState.success, authState.error]);
 
@@ -56,6 +63,7 @@ const CreateUsernamePassword = ({
   });
 
   const handleInputChange = (event) => {
+    setUsernameError(false);
     const { name, value } = event.target;
 
     setState({
@@ -140,6 +148,17 @@ const CreateUsernamePassword = ({
           onChange={handleInputChange}
           className={classes.username}
         />
+        {usernameError && (
+          <div className={classes.errorContainer}>
+            <FontAwesomeIcon
+              icon={faExclamationCircle}
+              className={classes.errorIcon}
+            />
+            <Typography className={classes.errorMessage}>
+              {t('modals.createUsernamePassword.usernameError')}
+            </Typography>
+          </div>
+        )}
         <PasswordCheckTooltip
           bgColor="secondary"
           tooltipPlacement="bottom"

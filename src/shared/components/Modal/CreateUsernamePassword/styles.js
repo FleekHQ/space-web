@@ -60,4 +60,20 @@ export default makeStyles((theme) => ({
   submit: {
     marginLeft: 5,
   },
+  errorContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 10,
+    marginTop: -15,
+  },
+  errorIcon: {
+    color: theme.palette.palette.red,
+    fontSize: 9,
+    marginRight: 2,
+  },
+  errorMessage: {
+    color: theme.palette.palette.red,
+    fontSize: 10,
+  },
 }));

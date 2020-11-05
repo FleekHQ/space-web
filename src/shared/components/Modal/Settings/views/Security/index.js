@@ -5,7 +5,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
 import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
-import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
+// import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
@@ -14,6 +14,7 @@ import classnames from 'classnames';
 import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
 import SeedPhraseModal from '../../../SeedPhrase';
@@ -29,7 +30,7 @@ import {
 
 const Security = ({ t }) => {
   const [state, setState] = React.useState({
-    [OPTION_IDS.EMAIL]: false,
+    // [OPTION_IDS.EMAIL]: false,
     [OPTION_IDS.USERNAME]: false,
     [OPTION_IDS.GOOGLE]: false,
     [OPTION_IDS.TWITTER]: false,
@@ -41,6 +42,7 @@ const Security = ({ t }) => {
   const theme = useTheme();
   const classes = useStyles();
   const [error, setError] = useState(false);
+  const user = useSelector((reduxState) => reduxState.user);
 
   const handleOpenModal = (event) => {
     event.preventDefault();
@@ -72,21 +74,14 @@ const Security = ({ t }) => {
   };
 
   const options = ({
-    [OPTION_IDS.EMAIL]: {
-      id: OPTION_IDS.EMAIL,
-      text: t('addBackupSignIn.email'),
-      text2: 's***********a@gmail.com',
-      text3: t('modals.settings.security.disconnect'),
-      redText3: true,
-      icon: faEnvelope,
-    },
-    [OPTION_IDS.USERNAME]: {
-      id: OPTION_IDS.USERNAME,
-      text: t('modals.settings.security.space'),
-      text2: 'samuele',
-      text3: t('modals.settings.security.changePassword'),
-      imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
-    },
+    // [OPTION_IDS.EMAIL]: {
+    //   id: OPTION_IDS.EMAIL,
+    //   text: t('addBackupSignIn.email'),
+    //   text2: 's***********a@gmail.com',
+    //   text3: t('modals.settings.security.disconnect'),
+    //   redText3: true,
+    //   icon: faEnvelope,
+    // },
     [OPTION_IDS.GOOGLE]: {
       id: OPTION_IDS.GOOGLE,
       text: t('addBackupSignIn.google'),
@@ -109,6 +104,15 @@ const Security = ({ t }) => {
       text3: t('modals.settings.security.seedPhrase'),
       icon: faKey,
     },
+    ...(user.username && {
+      [OPTION_IDS.USERNAME]: {
+        id: OPTION_IDS.USERNAME,
+        text: t('modals.settings.security.space'),
+        text2: 'samuele',
+        text3: t('modals.settings.security.changePassword'),
+        imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
+      },
+    }),
   });
 
   const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => {

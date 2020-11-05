@@ -2,23 +2,22 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    width: 344,
-    backgroundColor: 'transparent',
+    maxWidth: 321,
     boxShadow: 'none',
   },
   modalContent: {
     backgroundColor: theme.palette.palette.white,
-    padding: '12px 15px 16px',
+    padding: '39px 18px 18px 18px',
     borderRadius: 6,
-  },
-  titleContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'column',
   },
   bodyContainer: {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
   },
   footer: {
     display: 'flex',
@@ -26,6 +25,17 @@ export default makeStyles((theme) => ({
     '& > button': {
       width: 94,
     },
+  },
+  closeButton: {
+    borderRadius: '50%',
+    width: 16,
+    height: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 18,
+    top: 18,
   },
   closeIcon: {
     fontSize: 12,
@@ -49,5 +59,27 @@ export default makeStyles((theme) => ({
       opacity: 0,
       pointerEvents: 'none',
     },
+  },
+  adornment: {
+    position: 'absolute',
+    right: 5,
+    '& svg': {
+      color: theme.palette.palette.gray18,
+    },
+  },
+  iconButton: {
+    width: 18,
+  },
+  icon: {
+    fontSize: 14,
+    color: theme.palette.palette.gray18,
+  },
+  title: {
+    fontWeight: 600,
+    fontSize: 16,
+  },
+  logo: {
+    width: 45,
+    marginBottom: 10,
   },
 }));
