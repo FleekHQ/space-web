@@ -112,8 +112,9 @@ const AddBackUpSignIn = ({
         )}
       >
         {optionList.map((option) => (
-          <div className={classnames(classes.optionWrapper, {
+          <div className={classnames({
             [classes.accentWrapper]: selectedOption === option.id,
+            [classes.optionWrapper]: selectedOption !== option.id,
           })}
           >
             <ButtonBase
@@ -125,7 +126,13 @@ const AddBackUpSignIn = ({
             >
               <div className={classes.titleLogoContainer}>
                 {option.imgSrc && (
-                  <img alt={option.id} src={option.imgSrc} className={classes.image} />
+                  <div className={classes.optionIconContainer}>
+                    <img
+                      alt={option.id}
+                      src={option.imgSrc}
+                      className={classnames(classes.image, classes[option.id])}
+                    />
+                  </div>
                 )}
                 {option.icon && (
                   <div className={classes.optionIconContainer}>

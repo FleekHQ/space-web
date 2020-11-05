@@ -47,14 +47,23 @@ export default makeStyles((theme) => ({
     boxShadow: '0 3px 6px 0 rgba(219, 225, 237, 0.9)',
   },
   accentWrapper: {
+    margin: '6px 18px 6px 0',
     padding: 2,
     borderRadius: 4,
     background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
     boxShadow: 'none',
+    '&:hover': {
+      background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
+    },
   },
   optionWrapper: {
     margin: '6px 18px 6px 0',
     padding: 2,
+    '&:hover': {
+      borderRadius: 4,
+      background: `linear-gradient(134deg, ${theme.palette.palette.spacePink}4D 18%, ${theme.palette.palette.spaceTeal}4D 42%, ${theme.palette.palette.spaceGreen}4D 59%, ${theme.palette.palette.spaceYellow}4D 81%)`,
+      boxShadow: 'none',
+    },
   },
   option: {
     backgroundColor: theme.palette.palette.white,
@@ -88,6 +97,9 @@ export default makeStyles((theme) => ({
   [`${OPTION_IDS.SEED_PHRASE}`]: {
     fontSize: 20,
     color: '#ECBE3E',
+  },
+  [`${OPTION_IDS.TWITTER}`]: {
+    width: 35,
   },
   optionSecondaryText: {
     color: theme.palette.palette.blue1,
