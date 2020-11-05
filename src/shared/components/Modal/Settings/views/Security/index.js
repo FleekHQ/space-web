@@ -35,7 +35,7 @@ const Security = ({ t }) => {
     [OPTION_IDS.GOOGLE]: false,
     [OPTION_IDS.TWITTER]: false,
     [OPTION_IDS.SEED_PHRASE]: false,
-    addBackUpSignIn: true,
+    addBackUpSignIn: false,
     createUsernamePassword: false,
   });
 
@@ -188,18 +188,20 @@ const Security = ({ t }) => {
                       {option.text}
                     </Typography>
                   </div>
-                  <Typography>{option.text2}</Typography>
-                  <ButtonBase>
-                    <Typography
-                      onClick={handleOpenModal}
-                      id={option.id}
-                      className={classnames(classes.optionText3, {
-                        [classes.redText]: !!option.redText3,
-                      })}
-                    >
-                      {option.text3}
-                    </Typography>
-                  </ButtonBase>
+                  <Typography className={classes.optionText2}>{option.text2}</Typography>
+                  <div className={classes.optionText3Wrapper}>
+                    <ButtonBase>
+                      <Typography
+                        onClick={handleOpenModal}
+                        id={option.id}
+                        className={classnames(classes.optionText3, {
+                          [classes.redText]: !!option.redText3,
+                        })}
+                      >
+                        {option.text3}
+                      </Typography>
+                    </ButtonBase>
+                  </div>
                 </div>
               </div>
             );
