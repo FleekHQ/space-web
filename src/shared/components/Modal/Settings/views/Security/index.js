@@ -35,7 +35,7 @@ const Security = ({ t }) => {
     [OPTION_IDS.GOOGLE]: false,
     [OPTION_IDS.TWITTER]: false,
     [OPTION_IDS.SEED_PHRASE]: false,
-    addBackUpSignIn: false,
+    addBackUpSignIn: true,
     createUsernamePassword: false,
   });
 
@@ -119,7 +119,8 @@ const Security = ({ t }) => {
     const isOptionNotAdded = !options[optionId];
     const isTwitter = optionId === OPTION_IDS.TWITTER;
     const isGoogle = optionId === OPTION_IDS.GOOGLE;
-    return (isOptionNotAdded || isTwitter || isGoogle);
+
+    return ((!isOptionNotAdded || isTwitter || isGoogle) && !isGoogle);
   });
 
   return (

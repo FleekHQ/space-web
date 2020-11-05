@@ -30,11 +30,11 @@ export default makeStyles((theme) => ({
   description: {
     marginRight: 18,
     fontSize: 14,
-    marginBottom: 5,
+    marginBottom: 12,
   },
   buttonsContainer: {
     marginRight: 18,
-    marginTop: 20,
+    marginTop: 25,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -47,15 +47,14 @@ export default makeStyles((theme) => ({
     boxShadow: '0 3px 6px 0 rgba(219, 225, 237, 0.9)',
   },
   accentWrapper: {
-    margin: '13px 20px -2px 2px !important',
     padding: 2,
     borderRadius: 4,
     background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
     boxShadow: 'none',
   },
   optionWrapper: {
-    marginTop: 15,
-    marginRight: 18,
+    margin: '6px 18px 6px 0',
+    padding: 2,
   },
   option: {
     backgroundColor: theme.palette.palette.white,
