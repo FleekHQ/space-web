@@ -62,7 +62,6 @@ const SeedPhraseModal = ({
         multiline
         fullWidth
         variant="outlined"
-        rows={3}
         value={state.seedphrase || ''}
         InputProps={{
           readOnly: true,
