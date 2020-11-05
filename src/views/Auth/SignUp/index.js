@@ -13,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
 import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
 
-import { signup } from '@events';
+import { signup, signin } from '@events';
+import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import useStyles from './styles';
@@ -23,13 +24,32 @@ const SignUp = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const state = useSelector((s) => s.auth.signup);
+  const state = useSelector((s) => ({
+    ...s.auth.signup,
+    loading: s.auth.signup.loading || s.auth.signin.loading,
+  }));
 
   const handleUsernamePasswordFormSubmit = ({ username, password }) => {
     signup({
       username,
       password,
     });
+  };
+
+  /**
+   * @param {Object} payload
+   * @param {Boolean=} payload.keyNotExists
+   * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
+   */
+  const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    if (keyNotExists) {
+      signup({
+        torusRes,
+      });
+      return;
+    }
+
+    signin({ torusRes });
   };
 
   React.useEffect(() => {
@@ -42,6 +62,9 @@ const SignUp = () => {
     () => {
       dispatch({
         type: SIGNUP_ACTION_TYPES.ON_RESET,
+      });
+      dispatch({
+        type: SIGNIN_ACTION_TYPES.ON_RESET,
       });
     }
   ), []);
@@ -109,10 +132,10 @@ const SignUp = () => {
       </Box>
       <Box flex={1} maxWidth={247} mt="59px">
         <ThirdPartyAuth
+          onError={() => null}
+          isLoading={state.loading}
           type={t('modules.signup.title')}
-          onEthClick={() => null}
-          onGoogleClick={() => null}
-          onTwitterClick={() => null}
+          onSuccess={handleThirdPartyAuthSuccess}
         />
       </Box>
       {

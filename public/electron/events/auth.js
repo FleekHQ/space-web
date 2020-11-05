@@ -33,17 +33,14 @@ const registerAuthEvents = (mainWindow) => {
 
         user = { ...data.data };
       } else {
-        await spaceClient.recoverKeysByPassphrase({
-          // uuid: 'not-sure-if-this-field-is-require',
-          passphrase: payload.torusRes.privateKey,
-        });
-        const publicKeyRes = await spaceClient.getPublicKey();
-        const address = getAddressByPublicKey(publicKeyRes.getPublickey());
-
-        const apiSessionRes = await spaceClient.getAPISessionTokens();
         const { data } = await apiClient.identities.getByAddress({
-          addresses: [address],
-          token: apiSessionRes.getServicestoken(),
+          token: '',
+          addresses: [payload.torusRes.publicAddress],
+        });
+
+        await spaceClient.recoverKeysByPassphrase({
+          uuid: data.data.uuid,
+          passphrase: payload.torusRes.privateKey,
         });
 
         user = { ...data.data };
@@ -72,8 +69,9 @@ const registerAuthEvents = (mainWindow) => {
     try {
       let user;
 
+      await spaceClient.generateKeyPairWithForce();
+
       if (payload.username && payload.password) {
-        await spaceClient.generateKeyPairWithForce();
         const apiSessionRes = await spaceClient.getAPISessionTokens();
 
         const { data } = await apiClient.identity.update({
@@ -87,17 +85,30 @@ const registerAuthEvents = (mainWindow) => {
 
         user = { ...data.data };
       } else {
-        await spaceClient.recoverKeysByPassphrase({
-          // uuid: 'not-sure-if-this-field-is-require',
+        const publicKeyResponse = await spaceClient.getPublicKey();
+        const apiSessionRes = await spaceClient.getAPISessionTokens();
+        const address = getAddressByPublicKey(publicKeyResponse.getPublickey());
+
+        const { data } = await apiClient.identities.getByAddress({
+          addresses: [address],
+          token: apiSessionRes.getServicestoken(),
+        });
+
+        await spaceClient.backupKeysByPassphrase({
+          uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
         });
-        const apiSessionRes = await spaceClient.getAPISessionTokens();
-        const { data } = await apiClient.identity.update({
+
+        const { data: newData } = await apiClient.identity.update({
           token: apiSessionRes.getServicestoken(),
           displayName: payload.torusRes.userInfo.name,
         });
+        await apiClient.identity.addEthAddress({
+          token: apiSessionRes.getServicestoken(),
+          address: payload.torusRes.publicAddress,
+        });
 
-        user = { ...data.data };
+        user = { ...newData.data };
       }
 
       mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, user);
