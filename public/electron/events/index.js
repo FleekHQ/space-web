@@ -15,6 +15,7 @@ const registerUsageEvents = require('./usage');
 const registerNotificationNotificationSuscribe = require('./notifications-subscribe');
 const registerWalletEvents = require('./wallet');
 const registerWinResizeEvents = require('./win-resize');
+const registerShellEvents = require('./shell');
 
 const registerEvents = ({
   app,
@@ -38,6 +39,7 @@ const registerEvents = ({
   registerUsageEvents(mainWindow);
   registerWalletEvents(mainWindow);
   registerWinResizeEvents(mainWindow);
+  registerShellEvents(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });
