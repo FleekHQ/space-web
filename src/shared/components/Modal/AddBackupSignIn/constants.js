@@ -1,5 +1,5 @@
 export const OPTION_IDS = {
-  // EMAIL: 'EMAIL',
+  EMAIL: 'EMAIL',
   USERNAME: 'USERNAME',
   GOOGLE: 'GOOGLE',
   TWITTER: 'TWITTER',

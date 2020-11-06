@@ -4,10 +4,9 @@ import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
 import { useHistory, matchPath } from 'react-router-dom';
 import { fetchDir } from '@events/objects';
+
 import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
-
 import EmptyState from './components/EmptyState';
-
 import useStyles from './styles';
 
 const StorageMainView = () => {

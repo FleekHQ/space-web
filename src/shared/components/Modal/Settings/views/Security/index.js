@@ -30,7 +30,7 @@ import {
 
 const Security = ({ t }) => {
   const [state, setState] = React.useState({
-    // [OPTION_IDS.EMAIL]: false,
+    [OPTION_IDS.EMAIL]: false,
     [OPTION_IDS.USERNAME]: false,
     [OPTION_IDS.GOOGLE]: false,
     [OPTION_IDS.TWITTER]: false,
@@ -108,7 +108,7 @@ const Security = ({ t }) => {
       [OPTION_IDS.USERNAME]: {
         id: OPTION_IDS.USERNAME,
         text: t('modals.settings.security.space'),
-        text2: 'samuele',
+        text2: user.username,
         text3: t('modals.settings.security.changePassword'),
         imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
       },
@@ -119,8 +119,9 @@ const Security = ({ t }) => {
     const isOptionNotAdded = !options[optionId];
     const isTwitter = optionId === OPTION_IDS.TWITTER;
     const isGoogle = optionId === OPTION_IDS.GOOGLE;
+    const isEmail = optionId === OPTION_IDS.EMAIL;
 
-    return (isOptionNotAdded || isTwitter || isGoogle);
+    return ((isOptionNotAdded || isTwitter || isGoogle) && !isEmail);
   });
 
   return (
@@ -172,7 +173,13 @@ const Security = ({ t }) => {
                 <div className={classes.methodContainer}>
                   <div className={classes.titleLogoContainer}>
                     {option.imgSrc && (
-                      <img alt={option.id} src={option.imgSrc} className={classes.image} />
+                      <div className={classes.optionIconContainer}>
+                        <img
+                          alt={option.id}
+                          src={option.imgSrc}
+                          className={classnames(classes.image, classes[option.id])}
+                        />
+                      </div>
                     )}
                     {option.icon && (
                       <div className={classes.optionIconContainer}>
@@ -188,18 +195,20 @@ const Security = ({ t }) => {
                       {option.text}
                     </Typography>
                   </div>
-                  <Typography>{option.text2}</Typography>
-                  <ButtonBase>
-                    <Typography
-                      onClick={handleOpenModal}
-                      id={option.id}
-                      className={classnames(classes.optionText3, {
-                        [classes.redText]: !!option.redText3,
-                      })}
-                    >
-                      {option.text3}
-                    </Typography>
-                  </ButtonBase>
+                  <Typography className={classes.optionText2}>{option.text2}</Typography>
+                  <div className={classes.optionText3Wrapper}>
+                    <ButtonBase>
+                      <Typography
+                        onClick={handleOpenModal}
+                        id={option.id}
+                        className={classnames(classes.optionText3, {
+                          [classes.redText]: !!option.redText3,
+                        })}
+                      >
+                        {option.text3}
+                      </Typography>
+                    </ButtonBase>
+                  </div>
                 </div>
               </div>
             );

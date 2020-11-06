@@ -3,7 +3,7 @@ import { OPTION_IDS } from './constants';
 
 export default makeStyles((theme) => ({
   paper: {
-    padding: '15px 18px',
+    padding: '15px 0px 18px 18px',
     maxWidth: 400,
   },
   closeButton: {
@@ -22,16 +22,19 @@ export default makeStyles((theme) => ({
     color: theme.palette.palette.gray1,
   },
   title: {
+    marginRight: 18,
     fontSize: 16,
     fontWeight: 600,
     marginBottom: 8,
   },
   description: {
+    marginRight: 18,
     fontSize: 14,
-    marginBottom: 5,
+    marginBottom: 12,
   },
   buttonsContainer: {
-    marginTop: 20,
+    marginRight: 18,
+    marginTop: 25,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -44,14 +47,23 @@ export default makeStyles((theme) => ({
     boxShadow: '0 3px 6px 0 rgba(219, 225, 237, 0.9)',
   },
   accentWrapper: {
-    margin: '13px -2px -2px -2px !important',
+    margin: '6px 18px 6px 0',
     padding: 2,
     borderRadius: 4,
     background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
     boxShadow: 'none',
+    '&:hover': {
+      background: `linear-gradient(134deg, ${theme.palette.palette.spacePink} 18%, ${theme.palette.palette.spaceTeal} 42%, ${theme.palette.palette.spaceGreen} 59%, ${theme.palette.palette.spaceYellow} 81%)`,
+    },
   },
   optionWrapper: {
-    marginTop: 15,
+    margin: '6px 18px 6px 0',
+    padding: 2,
+    '&:hover': {
+      borderRadius: 4,
+      background: `linear-gradient(134deg, ${theme.palette.palette.spacePink}4D 18%, ${theme.palette.palette.spaceTeal}4D 42%, ${theme.palette.palette.spaceGreen}4D 59%, ${theme.palette.palette.spaceYellow}4D 81%)`,
+      boxShadow: 'none',
+    },
   },
   option: {
     backgroundColor: theme.palette.palette.white,
@@ -86,6 +98,9 @@ export default makeStyles((theme) => ({
     fontSize: 20,
     color: '#ECBE3E',
   },
+  [`${OPTION_IDS.TWITTER}`]: {
+    width: 35,
+  },
   optionSecondaryText: {
     color: theme.palette.palette.blue1,
     fontSize: 14,
@@ -95,5 +110,10 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  scrollbar: {
+    color: 'red',
+    backgroundColor: 'red',
+    right: -5,
   },
 }));

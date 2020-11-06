@@ -18,7 +18,7 @@ export default makeStyles((theme) => ({
     width: 24,
   },
   optionTitle: {
-    fontSize: 14,
+    fontSize: 12,
     marginLeft: 10,
     fontWeight: 500,
   },
@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: 150,
+    width: 200,
   },
   [`${OPTION_IDS.EMAIL}`]: {
     fontSize: 20,
@@ -36,9 +36,22 @@ export default makeStyles((theme) => ({
     fontSize: 20,
     color: '#ECBE3E',
   },
+  [`${OPTION_IDS.TWITTER}`]: {
+    width: 35,
+  },
+  optionText2: {
+    width: 200,
+    fontSize: 12,
+  },
   optionText3: {
     color: theme.palette.palette.blue1,
-    fontSize: 14,
+    fontSize: 12,
+  },
+  optionText3Wrapper: {
+    width: 150,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   redText: {
     color: theme.palette.palette.red,

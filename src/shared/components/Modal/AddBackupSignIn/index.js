@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 import BaseModal from '@terminal-packages/space-ui/core/BaseModal';
 import Typography from '@material-ui/core/Typography';
@@ -22,6 +23,11 @@ const AddBackUpSignIn = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const MAX_ITEMS = 4;
+  const OPTION_HEIGHT = 64;
+  const listMaxHeight = OPTION_HEIGHT * MAX_ITEMS;
+  const listHeight = Math.min((options.length * OPTION_HEIGHT), listMaxHeight);
 
   const signInMethods = {
     [OPTION_IDS.EMAIL]: {
@@ -73,44 +79,84 @@ const AddBackUpSignIn = ({
       <Typography className={classes.description}>
         {t('addBackupSignIn.description')}
       </Typography>
-      {optionList.map((option) => (
-        <div className={classnames(classes.optionWrapper, {
-          [classes.accentWrapper]: selectedOption === option.id,
-        })}
-        >
-          <ButtonBase
-            key={option.id}
-            className={classnames(classes.option, {
-              [classes.unselected]: !(selectedOption === option.id),
-            })}
-            onClick={() => setSelectedOption(option.id)}
+      <Scrollbars
+        thumbSize={68}
+        style={{ width: '100%', height: listHeight }}
+        renderThumbVertical={({ style, ...props }) => (
+          <div
+            style={{
+              ...style,
+              backgroundColor: '#AEAEAE',
+              width: 4,
+              borderRadius: 3,
+              right: 0,
+            }}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...props}
+          />
+        )}
+        renderTrackVertical={({ style, ...props }) => (
+          <div
+            style={{
+              ...style,
+              height: '100%',
+              top: 0,
+              right: 7,
+              width: 4,
+              border: options.length > MAX_ITEMS ? '1px solid #e2e2e2' : 'none',
+              borderRadius: 3,
+            }}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...props}
+          />
+        )}
+      >
+        {optionList.map((option) => (
+          <div className={classnames({
+            [classes.accentWrapper]: selectedOption === option.id,
+            [classes.optionWrapper]: selectedOption !== option.id,
+          })}
           >
-            <div className={classes.titleLogoContainer}>
-              {option.imgSrc && (
-                <img alt={option.id} src={option.imgSrc} className={classes.image} />
+            <ButtonBase
+              key={option.id}
+              className={classnames(classes.option, {
+                [classes.unselected]: !(selectedOption === option.id),
+              })}
+              onClick={() => setSelectedOption(option.id)}
+            >
+              <div className={classes.titleLogoContainer}>
+                {option.imgSrc && (
+                  <div className={classes.optionIconContainer}>
+                    <img
+                      alt={option.id}
+                      src={option.imgSrc}
+                      className={classnames(classes.image, classes[option.id])}
+                    />
+                  </div>
+                )}
+                {option.icon && (
+                  <div className={classes.optionIconContainer}>
+                    <FontAwesomeIcon
+                      icon={option.icon}
+                      className={classes[`${OPTION_IDS[option.id]}`]}
+                    />
+                  </div>
+                )}
+                <Typography
+                  className={classes.optionTitle}
+                >
+                  {option.text}
+                </Typography>
+              </div>
+              {option.text2 && (
+                <Typography className={classes.optionSecondaryText}>
+                  {option.text2}
+                </Typography>
               )}
-              {option.icon && (
-                <div className={classes.optionIconContainer}>
-                  <FontAwesomeIcon
-                    icon={option.icon}
-                    className={classes[`${OPTION_IDS[option.id]}`]}
-                  />
-                </div>
-              )}
-              <Typography
-                className={classes.optionTitle}
-              >
-                {option.text}
-              </Typography>
-            </div>
-            {option.text2 && (
-              <Typography className={classes.optionSecondaryText}>
-                {option.text2}
-              </Typography>
-            )}
-          </ButtonBase>
-        </div>
-      ))}
+            </ButtonBase>
+          </div>
+        ))}
+      </Scrollbars>
       <div className={classes.buttonsContainer}>
         <Button
           className={classes.cancel}
