@@ -60,7 +60,10 @@ const registerKeysEvents = (mainWindow) => {
 
   ipcMain.on(BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT, async (_, payload) => {
     try {
-      await spaceClient.backupKeysByPassphrase(payload);
+      await spaceClient.backupKeysByPassphrase({
+        type: 0, // 0 = PASSWORD; 1 = ETH
+        ...payload,
+      });
 
       mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
     } catch (err) {

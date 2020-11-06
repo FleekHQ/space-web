@@ -12,6 +12,10 @@ export const USER_ACTION_TYPES = {
   ON_UPDATE_AVATAR_ERROR: 'ON_UPDATE_AVATAR_ERROR',
   ON_UPDATE_AVATAR_SUCCESS: 'ON_UPDATE_AVATAR_SUCCESS',
   FETCHING_IDENTITY_ERROR: 'USER_ACTION_FETCHING_IDENTITY_ERROR',
+  ON_CREATE_PASSWORD_AND_USERNAME: 'ON_CREATE_PASSWORD_AND_USERNAME',
+  ON_CREATE_PASSWORD_AND_USERNAME_RESET: 'ON_CREATE_PASSWORD_AND_USERNAME_RESET',
+  ON_CREATE_PASSWORD_AND_USERNAME_ERROR: 'ON_CREATE_PASSWORD_AND_USERNAME_ERROR',
+  ON_CREATE_PASSWORD_AND_USERNAME_SUCCESS: 'ON_CREATE_PASSWORD_AND_USERNAME_SUCCESS',
 };
 
 let user;
@@ -70,6 +74,41 @@ export default (state = user, action) => {
       return writeUser(state, {
         ...action.user,
         uploadingAvatar: false,
+      });
+    }
+
+    case USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME: {
+      return {
+        ...state,
+        creatingUsernameAndPassword: true,
+        creatingUsernameAndPasswordError: null,
+        creatingUsernameAndPasswordSuccess: null,
+      };
+    }
+
+    case USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME_ERROR: {
+      return {
+        ...state,
+        creatingUsernameAndPassword: false,
+        creatingUsernameAndPasswordSuccess: null,
+        creatingUsernameAndPasswordError: action.error,
+      };
+    }
+
+    case USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME_SUCCESS: {
+      return writeUser(state, {
+        ...action.user,
+        creatingUsernameAndPassword: false,
+        creatingUsernameAndPasswordSuccess: true,
+      });
+    }
+
+    case USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME_RESET: {
+      return writeUser(state, {
+        ...action.user,
+        creatingUsernameAndPassword: false,
+        creatingUsernameAndPasswordError: null,
+        creatingUsernameAndPasswordSuccess: null,
       });
     }
 

@@ -14,9 +14,34 @@ const UPDATE_IDENTITY_SUCCESS_EVENT = `${UPDATE_IDENTITY_EVENT}:success`;
 const UPLOAD_PROFILE_PIC_EVENT = `${EVENT_PREFIX}:identity:uploadProfilePic`;
 const UPLOAD_PROFILE_PIC_ERROR_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:error`;
 const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
+const CREATE_USERNAME_AND_PASSWORD_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword`;
+const CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:error`;
+const CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:success`;
 
 /* eslint-disable no-console */
 const registerAuthEvents = (mainWindow) => {
+  ipcMain.on(CREATE_USERNAME_AND_PASSWORD_EVENT, async (_, payload) => {
+    try {
+      const apiSessionRes = await spaceClient.getAPISessionTokens();
+
+      const { data } = await apiClient.identity.update({
+        username: payload.username,
+        token: apiSessionRes.getServicestoken(),
+      });
+
+      await spaceClient.backupKeysByPassphrase({
+        type: 0, // 0 = PASSWORD; 1 = ETH
+        uuid: data.data.uuid,
+        passphrase: payload.password,
+      });
+
+      mainWindow.webContents.send(CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT, data.data);
+    } catch (err) {
+      console.error('CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT', err);
+      mainWindow.webContents.send(CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT, err);
+    }
+  });
+
   ipcMain.on(DELETE_ACCOUNT_EVENT, async () => {
     try {
       const apiTokens = await spaceClient.getAPISessionTokens();

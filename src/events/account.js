@@ -15,8 +15,28 @@ const UPDATE_IDENTITY_SUCCESS_EVENT = `${UPDATE_IDENTITY_EVENT}:success`;
 const UPLOAD_PROFILE_PIC_EVENT = `${EVENT_PREFIX}:identity:uploadProfilePic`;
 const UPLOAD_PROFILE_PIC_ERROR_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:error`;
 const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
+const CREATE_USERNAME_AND_PASSWORD_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword`;
+const CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:error`;
+const CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:success`;
 
 const registerAccountEvents = () => {
+  ipcRenderer.on(CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT, (_, error) => {
+    // eslint-disable-next-line no-console
+    console.error('Error when trying to create username and password', error.message);
+
+    store.dispatch({
+      error: error.message,
+      type: USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME_ERROR,
+    });
+  });
+
+  ipcRenderer.on(CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT, (_, data) => {
+    store.dispatch({
+      user: data,
+      type: USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME_SUCCESS,
+    });
+  });
+
   ipcRenderer.on(DELETE_ACCOUNT_ERROR_EVENT, (_, error) => {
     // eslint-disable-next-line no-console
     console.error('Error when trying to delete the account', error.message);
@@ -86,5 +106,18 @@ export const uploadProfilePic = (payload) => {
 };
 
 export const updateIdentity = (payload) => ipcRenderer.send(UPDATE_IDENTITY_EVENT, payload);
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.username
+ * @param {string} payload.password
+ */
+export const createUsernameAndPassword = (payload) => {
+  store.dispatch({
+    type: USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME,
+  });
+
+  ipcRenderer.send(CREATE_USERNAME_AND_PASSWORD_EVENT, payload);
+};
 
 export default registerAccountEvents;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { signup } from '@events';
+import { createUsernameAndPassword } from '@events';
 import { useDispatch, useSelector } from 'react-redux';
 import PasswordCheckTooltip from '@shared/components/PasswordCheckTooltip';
 import PropTypes from 'prop-types';
@@ -19,7 +19,7 @@ import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamat
 
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { USER_ACTION_TYPES } from '@reducers/user';
 import { PASSWORD_REGEX } from '@shared/components/Modal/ChangePassword/helper';
 
 import useStyles from './styles';
@@ -30,27 +30,30 @@ const CreateUsernamePassword = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const authState = useSelector((s) => s.auth.signup);
   const dispatch = useDispatch();
   const [usernameError, setUsernameError] = useState(false);
+  const userState = useSelector((s) => s.user);
 
   React.useEffect(() => {
-    if (authState.error === 'modules.signup.errors.username') {
+    if (userState.creatingUsernameAndPasswordError === 'modules.signup.errors.username') {
       setUsernameError(true);
       return;
     }
-    if (authState.error) {
+    if (userState.creatingUsernameAndPasswordError) {
       setError(true);
     }
-    if (authState.success || authState.error) {
+    if (
+      userState.creatingUsernameAndPasswordSuccess
+      || userState.creatingUsernameAndPasswordError
+    ) {
       closeModal();
     }
-  }, [authState.success, authState.error]);
+  }, [userState.creatingUsernameAndPasswordSuccess, userState.creatingUsernameAndPasswordError]);
 
   React.useEffect(() => (
     () => {
       dispatch({
-        type: SIGNUP_ACTION_TYPES.ON_RESET,
+        type: USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME_RESET,
       });
     }
   ), []);
@@ -91,7 +94,7 @@ const CreateUsernamePassword = ({
   const endAdornment = (
     <InputAdornment position="end" className={classes.adornment}>
       <IconButton
-        disabled={authState.loading}
+        disabled={userState.creatingUsernameAndPassword}
         onClick={handlePasswordVisibility}
         className={classes.iconButton}
         onMouseDown={(e) => e.preventDefault()}
@@ -112,7 +115,7 @@ const CreateUsernamePassword = ({
   );
 
   const handleUsernamePasswordFormSubmit = () => {
-    signup({
+    createUsernameAndPassword({
       username: state.username,
       password: state.password,
     });
@@ -184,7 +187,7 @@ const CreateUsernamePassword = ({
             onClick={closeModal}
             color="secondary"
             variant="outlined"
-            disabled={authState.loading}
+            disabled={userState.creatingUsernameAndPassword}
           >
             {t('common.cancel')}
           </Button>
@@ -195,10 +198,10 @@ const CreateUsernamePassword = ({
             variant="contained"
             color="primary"
             // eslint-disable-next-line max-len
-            disabled={authState.loading || state.username.length === 0 || !isPasswordValid}
+            disabled={userState.creatingUsernameAndPassword || state.username.length === 0 || !isPasswordValid}
           >
             {
-              authState.loading ? (
+              userState.creatingUsernameAndPassword ? (
                 <FontAwesomeIcon spin icon={faSpinner} />
               ) : t('common.create')
             }
