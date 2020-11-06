@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -43,6 +43,10 @@ const Security = ({ t }) => {
   const classes = useStyles();
   const [error, setError] = useState(false);
   const user = useSelector((reduxState) => reduxState.user);
+
+  useEffect(() => {
+    // called the linked addresses
+  });
 
   const handleOpenModal = (event) => {
     event.preventDefault();

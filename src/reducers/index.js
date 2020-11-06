@@ -16,6 +16,7 @@ import deleteAccountReducer from './delete-account';
 import settingsReducer from './settings';
 import openPublicFileReducer from './open-public-file';
 import searchReducer from './search';
+import linkedAddresesReducer from './linked-addresses';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   openPublicFile: openPublicFileReducer,
   search: searchReducer,
+  linkedAddreses: linkedAddresesReducer,
 });
 
 /* eslint-disable no-param-reassign */
