@@ -14,6 +14,7 @@ import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons/faEyeSlash';
 import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
@@ -49,11 +50,15 @@ const ChangePassword = (props) => {
     },
   });
 
+  const testKeysError = changePassword.error === 'testKeysError';
+  const generalError = changePassword.error === 'generalError';
+
   const onSubmit = (e) => {
     e.preventDefault();
     backupKeysByPassphrase({
       uuid: user.uuid,
       passphrase: state.newPassword.value,
+      currentPassphrase: state.currentPassword.value,
     });
   };
 
@@ -133,6 +138,8 @@ const ChangePassword = (props) => {
         </Typography>
         <form onSubmit={onSubmit} className={classes.bodyContainer}>
           <TextField
+            disabled={changePassword.loading}
+            error={testKeysError}
             InputProps={{
               endAdornment: endAdornment('currentPassword'),
             }}
@@ -141,20 +148,39 @@ const ChangePassword = (props) => {
             variant="outlined"
             type={state.currentPassword.showPassword ? 'text' : 'password'}
             value={state.currentPassword.value}
-            onChange={(event) => setState({
-              ...state,
-              currentPassword: {
-                ...state.currentPassword,
-                value: event.target.value,
-              },
-            })}
+            onChange={(event) => {
+              dispatch({
+                type: CHANGE_PASSWORD_ACTION_TYPES.ON_RESET,
+              });
+              setState({
+                ...state,
+                currentPassword: {
+                  ...state.currentPassword,
+                  value: event.target.value,
+                },
+              });
+            }}
           />
+          {
+            testKeysError && (
+              <div className={classes.errorContainer}>
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className={classes.errorIcon}
+                />
+                <Typography className={classes.errorMessage}>
+                  {t('modals.changePassword.testKeysError')}
+                </Typography>
+              </div>
+            )
+          }
           <PasswordCheckTooltip
             open={state.newPassword.isFocus}
             password={state.newPassword.value}
             bgColor="secondary"
           >
             <TextField
+              disabled={changePassword.loading}
               fullWidth
               InputProps={{
                 endAdornment: endAdornment('newPassword'),
@@ -178,16 +204,22 @@ const ChangePassword = (props) => {
                   isFocus: false,
                 },
               })}
-              onChange={(event) => setState({
-                ...state,
-                newPassword: {
-                  ...state.newPassword,
-                  value: event.target.value,
-                },
-              })}
+              onChange={(event) => {
+                dispatch({
+                  type: CHANGE_PASSWORD_ACTION_TYPES.ON_RESET,
+                });
+                setState({
+                  ...state,
+                  newPassword: {
+                    ...state.newPassword,
+                    value: event.target.value,
+                  },
+                });
+              }}
             />
           </PasswordCheckTooltip>
           <TextField
+            disabled={changePassword.loading}
             InputProps={{
               endAdornment: endAdornment('confirmPassword'),
             }}
@@ -196,14 +228,32 @@ const ChangePassword = (props) => {
             variant="outlined"
             type={state.confirmPassword.showPassword ? 'text' : 'password'}
             value={state.confirmPassword.value}
-            onChange={(event) => setState({
-              ...state,
-              confirmPassword: {
-                ...state.confirmPassword,
-                value: event.target.value,
-              },
-            })}
+            onChange={(event) => {
+              dispatch({
+                type: CHANGE_PASSWORD_ACTION_TYPES.ON_RESET,
+              });
+              setState({
+                ...state,
+                confirmPassword: {
+                  ...state.confirmPassword,
+                  value: event.target.value,
+                },
+              });
+            }}
           />
+          {
+            generalError && (
+              <div className={classes.errorContainer}>
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className={classes.errorIcon}
+                />
+                <Typography className={classes.errorMessage}>
+                  {t('modals.changePassword.generalError')}
+                </Typography>
+              </div>
+            )
+          }
           <div className={`${classes.footer} ${classes.row}`}>
             <Button
               variant="outlined"
@@ -232,13 +282,6 @@ const ChangePassword = (props) => {
           </div>
         </form>
       </Paper>
-      {
-        changePassword.error && (
-          <Typography className={classes.error} variant="body2">
-            {changePassword.error}
-          </Typography>
-        )
-      }
     </BaseModal>
   );
 };

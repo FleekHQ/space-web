@@ -47,18 +47,20 @@ export default makeStyles((theme) => ({
   confirmBtn: {
     marginLeft: 12,
   },
-  error: {
-    marginTop: 10,
-    backgroundColor: theme.palette.palette.red,
-    color: theme.palette.palette.white,
-    textAlign: 'center',
-    padding: '6px 0',
-    borderRadius: 6,
-    minHeight: 25,
-    '&:empty': {
-      opacity: 0,
-      pointerEvents: 'none',
-    },
+  errorContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: 5,
+  },
+  errorIcon: {
+    color: theme.palette.palette.red,
+    fontSize: 9,
+    marginRight: 5,
+  },
+  errorMessage: {
+    color: theme.palette.palette.red,
+    fontSize: 10,
   },
   adornment: {
     position: 'absolute',

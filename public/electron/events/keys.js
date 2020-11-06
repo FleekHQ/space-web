@@ -59,13 +59,32 @@ const registerKeysEvents = (mainWindow) => {
   });
 
   ipcMain.on(BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT, async (_, payload) => {
-    try {
-      await spaceClient.backupKeysByPassphrase(payload);
+    const {
+      uuid,
+      passphrase,
+      currentPassphrase,
+    } = payload;
 
-      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
+    try {
+      await spaceClient.testKeysPassphrase({
+        uuid,
+        passphrase: currentPassphrase,
+      });
+
+      try {
+        await spaceClient.backupKeysByPassphrase({
+          uuid,
+          passphrase,
+        });
+
+        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
+      } catch (err) {
+        console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT', err);
+        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'generalError');
+      }
     } catch (err) {
       console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT', err);
-      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, err);
+      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'testKeysError');
     }
   });
 

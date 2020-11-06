@@ -67,10 +67,10 @@ const registerKeysEvents = () => {
   });
 
   ipcRenderer.on(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, (_, error) => {
-    console.error('Error when trying to backup keys by passphrase: ', error.message);
+    console.error('Error when trying to backup keys by passphrase: ', error);
 
     store.dispatch({
-      error: error.message,
+      error,
       type: CHANGE_PASSWORD_ACTION_TYPES.ON_REQUEST_ERROR,
     });
   });
@@ -111,6 +111,7 @@ export const deleteKeyPair = () => ipcRenderer.send(DELETE_KEY_PAIR);
  * @param {Object} payload
  * @param {string} payload.uuid
  * @param {string} payload.passphrase
+ * @param {string} payload.currentPassphrase
  */
 export const backupKeysByPassphrase = (payload) => {
   store.dispatch({
