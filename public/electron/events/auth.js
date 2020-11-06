@@ -86,23 +86,17 @@ const registerAuthEvents = (mainWindow) => {
 
         user = { ...data.data };
       } else {
-        const publicKeyResponse = await spaceClient.getPublicKey();
         const apiSessionRes = await spaceClient.getAPISessionTokens();
-        const address = getAddressByPublicKey(publicKeyResponse.getPublickey());
 
-        const { data } = await apiClient.identities.getByAddress({
-          addresses: [address],
+        const { data } = await apiClient.identity.update({
           token: apiSessionRes.getServicestoken(),
+          displayName: payload.torusRes.userInfo.name,
         });
+
         await spaceClient.backupKeysByPassphrase({
           type: 1, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
-        });
-
-        const { data: newData } = await apiClient.identity.update({
-          token: apiSessionRes.getServicestoken(),
-          displayName: payload.torusRes.userInfo.name,
         });
 
         await apiClient.identity.addEthAddress({
@@ -111,7 +105,7 @@ const registerAuthEvents = (mainWindow) => {
           provider: payload.torusRes.userInfo.typeOfLogin,
         });
 
-        user = { ...newData.data };
+        user = { ...data.data };
       }
 
       mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, user);
