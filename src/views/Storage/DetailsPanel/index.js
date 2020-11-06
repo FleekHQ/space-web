@@ -77,7 +77,10 @@ const StorageDetailsPanel = () => {
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <ObjectDetails {...selectedObjects[0]} />
             {
-              selectedObjects.length === 1 && selectedObjects[0].type === 'file' && (
+              selectedObjects.length === 1
+              && selectedObjects[0].type === 'file'
+              && selectedObjects[0].isAvailableInSpace
+              && (
                 <>
                   <Divider />
                   <SharePanel
