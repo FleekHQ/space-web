@@ -20,9 +20,9 @@ const GET_MNEMONIC_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:get_mnemomnic:success`;
 const BACKUP_KEYS_BY_PASSPHRASE_SEED_EVENT = `${EVENT_PREFIX}:backupByPassphrase`;
 const BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT = `${EVENT_PREFIX}:backupByPassphrase:error`;
 const BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT = `${EVENT_PREFIX}:backupByPassphrase:success`;
-const TEST_KEYS_BY_PASSPHRASE_EVENT = `${EVENT_PREFIX}:testKeys`;
-const TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT = `${EVENT_PREFIX}:testKeys:error`;
-const TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT = `${EVENT_PREFIX}:testKeys:success`;
+const TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_EVENT = `${EVENT_PREFIX}:testKeysAndSignOut`;
+const TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_ERROR_EVENT = `${EVENT_PREFIX}:testKeysAndSignOut:error`;
+const TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_SUCCESS_EVENT = `${EVENT_PREFIX}:testKeysAndSignOut:success`;
 
 /* eslint-disable no-console */
 const registerKeysEvents = () => {
@@ -81,7 +81,7 @@ const registerKeysEvents = () => {
     });
   });
 
-  ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_ERROR_EVENT, (_, error) => {
+  ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_ERROR_EVENT, (_, error) => {
     console.error('Error when trying to test keys by passphrase: ', error.message);
 
     store.dispatch({
@@ -90,7 +90,7 @@ const registerKeysEvents = () => {
     });
   });
 
-  ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_SUCCESS_EVENT, () => {
+  ipcRenderer.on(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_SUCCESS_EVENT, () => {
     store.dispatch({
       type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_SUCCESS,
     });
@@ -128,7 +128,7 @@ export const testKeys = (payload) => {
   store.dispatch({
     type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT,
   });
-  ipcRenderer.send(TEST_KEYS_BY_PASSPHRASE_EVENT, payload);
+  ipcRenderer.send(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_EVENT, payload);
 };
 
 export default registerKeysEvents;
