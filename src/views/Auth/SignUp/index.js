@@ -1,14 +1,17 @@
+/* eslint-disable */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { openExternalLink } from '@events/shell';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
 import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
@@ -17,6 +20,9 @@ import { signup } from '@events';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import useStyles from './styles';
+
+const PRIVACY_POLICY_URL = 'https://space.storage/privacy-policy';
+const TERMS_OF_SERVICE_URL = 'https://space.storage/terms-of-service';
 
 const SignUp = () => {
   const classes = useStyles();
@@ -81,13 +87,21 @@ const SignUp = () => {
           <Typography color="inherit">
             <Box component="span" fontSize="10px" color="common.white">
               {`${t('modules.signup.agreenment.part1')} `}
-              <Link href="/" underline="always" color="inherit">
+              <ButtonBase
+                color="inherit"
+                className={classes.linkButton}
+                onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
+              >
                 {`${t('modules.signup.agreenment.privacy')}`}
-              </Link>
+              </ButtonBase>
               &nbsp;&&nbsp;
-              <Link href="/" underline="always" color="inherit">
+              <ButtonBase
+                color="inherit"
+                className={classes.linkButton}
+                onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}
+              >
                 {t('modules.signup.agreenment.terms')}
-              </Link>
+              </ButtonBase>
             </Box>
           </Typography>
         </Box>
