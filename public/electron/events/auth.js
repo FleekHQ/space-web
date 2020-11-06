@@ -79,6 +79,7 @@ const registerAuthEvents = (mainWindow) => {
           token: apiSessionRes.getServicestoken(),
         });
         await spaceClient.backupKeysByPassphrase({
+          type: 0, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.password,
         });
@@ -93,8 +94,8 @@ const registerAuthEvents = (mainWindow) => {
           addresses: [address],
           token: apiSessionRes.getServicestoken(),
         });
-
         await spaceClient.backupKeysByPassphrase({
+          type: 1, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
         });
@@ -103,9 +104,11 @@ const registerAuthEvents = (mainWindow) => {
           token: apiSessionRes.getServicestoken(),
           displayName: payload.torusRes.userInfo.name,
         });
+
         await apiClient.identity.addEthAddress({
           token: apiSessionRes.getServicestoken(),
           address: payload.torusRes.publicAddress,
+          provider: payload.torusRes.userInfo.typeOfLogin,
         });
 
         user = { ...newData.data };

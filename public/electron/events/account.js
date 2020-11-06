@@ -28,7 +28,9 @@ const registerAuthEvents = (mainWindow) => {
         username: payload.username,
         token: apiSessionRes.getServicestoken(),
       });
+
       await spaceClient.backupKeysByPassphrase({
+        type: 0, // 0 = PASSWORD; 1 = ETH
         uuid: data.data.uuid,
         passphrase: payload.password,
       });

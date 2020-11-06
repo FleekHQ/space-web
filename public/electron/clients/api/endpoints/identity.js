@@ -88,6 +88,7 @@ function deleteAccount(payload) {
  * @param {Object} payload - Payload to create an indentity.
  * @param {string} payload.token - Auth token
  * @param {string} payload.address - Eth address
+ * @param {string} payload.provider - Auth provider
  * @returns {import('axios').AxiosResponse}
  */
 function addEthAddress(payload) {
@@ -99,6 +100,7 @@ function addEthAddress(payload) {
     },
     data: {
       address: payload.address,
+      provider: payload.provider,
     },
   });
 }
