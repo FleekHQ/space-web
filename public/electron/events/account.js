@@ -17,6 +17,9 @@ const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
 const CREATE_USERNAME_AND_PASSWORD_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword`;
 const CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:error`;
 const CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:success`;
+const GET_LINKED_ADDRESSES_EVENT = `${EVENT_PREFIX}:getLinkedAddresses`;
+const GET_LINKED_ADDRESSES_SUCCESS_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:success`;
+const GET_LINKED_ADDRESSES_ERROR_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:error`;
 
 /* eslint-disable no-console */
 const registerAuthEvents = (mainWindow) => {
@@ -110,6 +113,21 @@ const registerAuthEvents = (mainWindow) => {
       mainWindow.webContents.send(UPLOAD_PROFILE_PIC_ERROR_EVENT, {
         message,
       });
+    }
+  });
+
+  ipcMain.on(GET_LINKED_ADDRESSES_EVENT, async () => {
+    try {
+      const apiTokens = await spaceClient.getAPISessionTokens();
+      const { data } = await apiClient.identity.getLinkedAddresses({
+        token: apiTokens.getServicestoken(),
+      });
+
+      mainWindow.webContents.send(GET_LINKED_ADDRESSES_SUCCESS_EVENT, data);
+    } catch (error) {
+      console.error('GET_LINKED_ADDRESSES_ERROR_EVENT', error);
+
+      mainWindow.webContents.send(GET_LINKED_ADDRESSES_ERROR_EVENT, error);
     }
   });
 };

@@ -4,6 +4,7 @@ import { ipcRenderer } from 'electron';
 import store from '../store';
 import { USER_ACTION_TYPES } from '../reducers/user';
 import { DELETE_ACCOUNT_ACTION_TYPES } from '../reducers/delete-account';
+import { LINKED_ADDRESSES_ACTION_TYPES } from '../reducers/linked-addresses';
 
 const EVENT_PREFIX = 'account';
 const DELETE_ACCOUNT_EVENT = `${EVENT_PREFIX}:delete`;
@@ -18,6 +19,9 @@ const UPLOAD_PROFILE_PIC_SUCCESS_EVENT = `${UPLOAD_PROFILE_PIC_EVENT}:success`;
 const CREATE_USERNAME_AND_PASSWORD_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword`;
 const CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:error`;
 const CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT = `${EVENT_PREFIX}:createUsernameAndPassword:success`;
+const GET_LINKED_ADDRESSES_EVENT = `${EVENT_PREFIX}:getLinkedAddresses`;
+const GET_LINKED_ADDRESSES_SUCCESS_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:success`;
+const GET_LINKED_ADDRESSES_ERROR_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:error`;
 
 const registerAccountEvents = () => {
   ipcRenderer.on(CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT, (_, error) => {
@@ -87,6 +91,22 @@ const registerAccountEvents = () => {
       type: USER_ACTION_TYPES.ON_UPDATE_AVATAR_SUCCESS,
     });
   });
+
+  ipcRenderer.on(GET_LINKED_ADDRESSES_SUCCESS_EVENT, (event, payload) => {
+    const data = get(payload, 'data', []) || [];
+
+    store.dispatch({
+      addresses: data,
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_SUCCESS,
+    });
+  });
+
+  ipcRenderer.on(GET_LINKED_ADDRESSES_ERROR_EVENT, (event, error) => {
+    store.dispatch({
+      error,
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_ERROR,
+    });
+  });
 };
 
 export const deleteAccount = () => {
@@ -118,6 +138,14 @@ export const createUsernameAndPassword = (payload) => {
   });
 
   ipcRenderer.send(CREATE_USERNAME_AND_PASSWORD_EVENT, payload);
+};
+
+export const getLinkedAddresses = () => {
+  store.dispatch({
+    type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES,
+  });
+
+  ipcRenderer.send(GET_LINKED_ADDRESSES_EVENT);
 };
 
 export default registerAccountEvents;

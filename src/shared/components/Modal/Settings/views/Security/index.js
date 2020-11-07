@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -15,6 +15,7 @@ import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+import { getLinkedAddresses } from '@events';
 
 import useStyles from './styles';
 import SeedPhraseModal from '../../../SeedPhrase';
@@ -42,7 +43,14 @@ const Security = ({ t }) => {
   const theme = useTheme();
   const classes = useStyles();
   const [error, setError] = useState(false);
-  const user = useSelector((reduxState) => reduxState.user);
+  const [user, linkedAddresses] = useSelector((reduxState) => [
+    reduxState.user,
+    reduxState.linkedAddresses,
+  ]);
+
+  useEffect(() => {
+    getLinkedAddresses();
+  }, []);
 
   const handleOpenModal = (event) => {
     event.preventDefault();
@@ -82,22 +90,6 @@ const Security = ({ t }) => {
     //   redText3: true,
     //   icon: faEnvelope,
     // },
-    [OPTION_IDS.GOOGLE]: {
-      id: OPTION_IDS.GOOGLE,
-      text: t('addBackupSignIn.google'),
-      text2: 's***********a@gmail.com',
-      text3: t('modals.settings.security.disconnect'),
-      imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Google__G__Logo.svg',
-      redText3: true,
-    },
-    [OPTION_IDS.TWITTER]: {
-      id: OPTION_IDS.TWITTER,
-      text: t('addBackupSignIn.twitter'),
-      text2: '@s*m',
-      text3: t('modals.settings.security.disconnect'),
-      imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Twitter_Logo_Blue.svg',
-      redText3: true,
-    },
     [OPTION_IDS.SEED_PHRASE]: {
       id: OPTION_IDS.SEED_PHRASE,
       text: t('addBackupSignIn.seedPhrase'),
@@ -113,6 +105,39 @@ const Security = ({ t }) => {
         imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
       },
     }),
+  });
+
+  linkedAddresses.data.forEach((linkedAddress) => {
+    const { provider } = linkedAddress;
+
+    switch (provider) {
+      case 'google':
+        options.push({
+          [OPTION_IDS.GOOGLE]: {
+            id: OPTION_IDS.GOOGLE,
+            text: t('addBackupSignIn.google'),
+            text2: linkedAddress.metadata.email,
+            text3: t('modals.settings.security.disconnect'),
+            imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Google__G__Logo.svg',
+            redText3: true,
+          },
+        });
+        break;
+      case 'twitter':
+        options.push({
+          [OPTION_IDS.TWITTER]: {
+            id: OPTION_IDS.TWITTER,
+            text: t('addBackupSignIn.twitter'),
+            text2: linkedAddress.metadata.name,
+            text3: t('modals.settings.security.disconnect'),
+            imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Twitter_Logo_Blue.svg',
+            redText3: true,
+          },
+        });
+        break;
+      default:
+        break;
+    }
   });
 
   const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => {
