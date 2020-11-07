@@ -33,6 +33,12 @@ export default (state = DEFAULT_STATE, action) => {
         data: action.addresses,
       };
     }
+    case LINKED_ADDRESSES_ACTION_TYPES.UPDATE_LINKED_ADDRESSES: {
+      return {
+        ...state,
+        data: action.data,
+      };
+    }
     default: {
       return state;
     }

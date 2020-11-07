@@ -14,7 +14,8 @@ import classnames from 'classnames';
 import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { LINKED_ADDRESSES_ACTION_TYPES } from '@reducers/linked-addresses';
 
 import useStyles from './styles';
 import SeedPhraseModal from '../../../SeedPhrase';
@@ -42,11 +43,19 @@ const Security = ({ t }) => {
   const theme = useTheme();
   const classes = useStyles();
   const [error, setError] = useState(false);
-  const user = useSelector((reduxState) => reduxState.user);
+  const [user, linkedAddresses] = useSelector((reduxState) => [
+    reduxState.user,
+    reduxState.linkedAddresses,
+  ]);
+  const dispatch = useDispatch();
+
+  console.log('linked addresses', linkedAddresses);
 
   useEffect(() => {
-    // called the linked addresses
-  });
+    dispatch({
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES,
+    });
+  }, []);
 
   const handleOpenModal = (event) => {
     event.preventDefault();

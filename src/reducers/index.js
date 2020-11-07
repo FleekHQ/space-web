@@ -35,7 +35,7 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   openPublicFile: openPublicFileReducer,
   search: searchReducer,
-  linkedAddreses: linkedAddresesReducer,
+  linkedAddresses: linkedAddresesReducer,
 });
 
 /* eslint-disable no-param-reassign */
