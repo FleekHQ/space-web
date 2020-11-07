@@ -98,6 +98,10 @@ const registerAuthEvents = (mainWindow) => {
           type: 1, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
+          metadata: {
+            email: payload.torusRes.userInfo.email,
+            name: payload.torusRes.userInfo.name,
+          },
         });
 
         const { data: newData } = await apiClient.identity.update({
