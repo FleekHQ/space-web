@@ -31,6 +31,24 @@ const SignIn = () => {
     });
   };
 
+  /**
+   * @param {Object} payload
+   * @param {Boolean=} payload.keyNotExists
+   * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
+   */
+  const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    if (keyNotExists) {
+      // TODO: user not found error message
+      dispatch({
+        error: 'modules.signin.errors.notFound',
+        type: SIGNIN_ACTION_TYPES.ON_SUBMIT_ERROR,
+      });
+      return;
+    }
+
+    signin({ torusRes });
+  };
+
   React.useEffect(() => {
     if (siginState.success) {
       history.push('/storage');
@@ -104,10 +122,10 @@ const SignIn = () => {
       </Box>
       <Box flex={1} maxWidth={247} mt="59px">
         <ThirdPartyAuth
+          onError={() => null}
+          isLoading={siginState.loading}
           type={t('modules.signin.title')}
-          onEthClick={() => null}
-          onGoogleClick={() => null}
-          onTwitterClick={() => null}
+          onSuccess={handleThirdPartyAuthSuccess}
         />
       </Box>
       {

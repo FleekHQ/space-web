@@ -34,6 +34,7 @@
       "alias": {
         "map": [
           ["@ui", "./src/UI"],
+          ["@config", "./src/config"],
           ["@utils", "./src/utils"],
           ["@shared", "./src/shared"],
           ["@events", "./src/events"],

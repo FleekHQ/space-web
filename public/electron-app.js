@@ -43,6 +43,7 @@ const restoreWindow = (windowInstance) => {
   }
 };
 
+app.userAgentFallback = 'Chrome';
 app.setAsDefaultProtocolClient('space');
 
 /**

@@ -295,6 +295,7 @@ module.exports = function(webpackEnv) {
         'react-native': 'react-native-web',
         // Allows for better profiling with ReactDevTools
         '@ui': path.resolve(process.cwd(), 'src', 'UI'),
+        '@config': path.resolve(process.cwd(), 'src', 'config'),
         '@shared': path.resolve(process.cwd(), 'src', 'shared'),
         '@events': path.resolve(process.cwd(), 'src', 'events'),
         '@reducers': path.resolve(process.cwd(), 'src', 'reducers'),

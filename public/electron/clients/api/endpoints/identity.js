@@ -83,9 +83,56 @@ function deleteAccount(payload) {
   });
 }
 
+/**
+ * @this {import('../client.js')}
+ * @param {Object} payload - Payload to create an indentity.
+ * @param {string} payload.token - Auth token
+ * @param {string} payload.address - Eth address
+ * @param {string} payload.provider - Auth provider
+ * @returns {import('axios').AxiosResponse}
+ */
+function addEthAddress(payload) {
+  return this.instance({
+    method: 'post',
+    url: '/add-eth-address',
+    headers: {
+      Authorization: payload.token,
+    },
+    data: {
+      address: payload.address,
+      provider: payload.provider,
+    },
+  });
+}
+
+/**
+ * @typedef {Object} Address
+ * @property {string} uuid
+ * @property {string} address
+ * @property {string} createdAt
+ * @property {string} provider
+ * @property {object} metadata
+*/
+
+/**
+ * @this {import('../client.js')}
+ * @returns {import('axios').AxiosResponse<{ data: [Address] }>}
+ */
+function getLinkedAddresses(payload) {
+  return this.instance({
+    method: 'get',
+    url: `${DEFAULT_PATH}/get-list-of-linked-addresses`,
+    headers: {
+      Authorization: payload.token || '',
+    },
+  });
+}
+
 module.exports = {
   update,
   getMultiple,
   deleteAccount,
+  addEthAddress,
   uploadProfilePic,
+  getLinkedAddresses,
 };

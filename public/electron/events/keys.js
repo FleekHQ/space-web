@@ -73,6 +73,7 @@ const registerKeysEvents = (mainWindow) => {
 
       try {
         await spaceClient.backupKeysByPassphrase({
+          type: 0, // 0 = PASSWORD; 1 = ETH
           uuid,
           passphrase,
         });

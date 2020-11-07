@@ -1,35 +1,61 @@
+/* eslint-disable */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
+import { openExternalLink } from '@events/shell';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
 import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
 
-import { signup } from '@events';
+import { signup, signin } from '@events';
+import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
 import useStyles from './styles';
+
+const PRIVACY_POLICY_URL = 'https://space.storage/privacy-policy';
+const TERMS_OF_SERVICE_URL = 'https://space.storage/terms-of-service';
 
 const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const state = useSelector((s) => s.auth.signup);
+  const state = useSelector((s) => ({
+    ...s.auth.signup,
+    loading: s.auth.signup.loading || s.auth.signin.loading,
+  }));
 
   const handleUsernamePasswordFormSubmit = ({ username, password }) => {
     signup({
       username,
       password,
     });
+  };
+
+  /**
+   * @param {Object} payload
+   * @param {Boolean=} payload.keyNotExists
+   * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
+   */
+  const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    if (keyNotExists) {
+      signup({
+        torusRes,
+      });
+      return;
+    }
+
+    signin({ torusRes });
   };
 
   React.useEffect(() => {
@@ -42,6 +68,9 @@ const SignUp = () => {
     () => {
       dispatch({
         type: SIGNUP_ACTION_TYPES.ON_RESET,
+      });
+      dispatch({
+        type: SIGNIN_ACTION_TYPES.ON_RESET,
       });
     }
   ), []);
@@ -81,13 +110,21 @@ const SignUp = () => {
           <Typography color="inherit">
             <Box component="span" fontSize="10px" color="common.white">
               {`${t('modules.signup.agreenment.part1')} `}
-              <Link href="/" underline="always" color="inherit">
+              <ButtonBase
+                color="inherit"
+                className={classes.linkButton}
+                onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
+              >
                 {`${t('modules.signup.agreenment.privacy')}`}
-              </Link>
+              </ButtonBase>
               &nbsp;&&nbsp;
-              <Link href="/" underline="always" color="inherit">
+              <ButtonBase
+                color="inherit"
+                className={classes.linkButton}
+                onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}
+              >
                 {t('modules.signup.agreenment.terms')}
-              </Link>
+              </ButtonBase>
             </Box>
           </Typography>
         </Box>
@@ -109,10 +146,10 @@ const SignUp = () => {
       </Box>
       <Box flex={1} maxWidth={247} mt="59px">
         <ThirdPartyAuth
+          onError={() => null}
+          isLoading={state.loading}
           type={t('modules.signup.title')}
-          onEthClick={() => null}
-          onGoogleClick={() => null}
-          onTwitterClick={() => null}
+          onSuccess={handleThirdPartyAuthSuccess}
         />
       </Box>
       {

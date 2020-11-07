@@ -3,6 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "@ui": ["src/UI"],
+      "@config": ["src/config"],
       "@shared": ["src/shared"],
       "@events": ["src/events"],
       "@reducers": ["src/reducers"],
