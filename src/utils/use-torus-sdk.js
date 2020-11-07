@@ -10,7 +10,7 @@ import config from '@config';
  * @property {string} publicAddress
 */
 
-export default function useAccountDropdownMenu() {
+export default function useTorusSdk() {
   const [torusSdk, setTorus] = React.useState(null);
 
   /**

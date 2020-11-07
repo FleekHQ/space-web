@@ -116,4 +116,7 @@ export default makeStyles((theme) => ({
     backgroundColor: 'red',
     right: -5,
   },
+  error: {
+    color: theme.palette.palette.red,
+  },
 }));

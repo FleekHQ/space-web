@@ -480,6 +480,7 @@
     "seedPhrase": "Seed Phrase",
     "morePrivate": "More Private",
     "cancel": "Cancel",
-    "continue": "Continue"
+    "continue": "Continue",
+    "torusError": "Something went wrong, please try again later."
   }
 }

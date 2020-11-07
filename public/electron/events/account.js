@@ -20,6 +20,9 @@ const CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT = `${EVENT_PREFIX}:createUserna
 const GET_LINKED_ADDRESSES_EVENT = `${EVENT_PREFIX}:getLinkedAddresses`;
 const GET_LINKED_ADDRESSES_SUCCESS_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:success`;
 const GET_LINKED_ADDRESSES_ERROR_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:error`;
+const ADD_LINKED_ADDRESS_EVENT = `${EVENT_PREFIX}:add_linked_address`;
+const ADD_LINKED_ADDRESS_SUCCESS_EVENT = `${EVENT_PREFIX}:add_linked_address:success`;
+const ADD_LINKED_ADDRESS_ERROR_EVENT = `${EVENT_PREFIX}:add_linked_address:error`;
 
 /* eslint-disable no-console */
 const registerAuthEvents = (mainWindow) => {
@@ -128,6 +131,50 @@ const registerAuthEvents = (mainWindow) => {
       console.error('GET_LINKED_ADDRESSES_ERROR_EVENT', error);
 
       mainWindow.webContents.send(GET_LINKED_ADDRESSES_ERROR_EVENT, error);
+    }
+  });
+
+  ipcMain.on(ADD_LINKED_ADDRESS_EVENT, async (_, payload) => {
+    try {
+      await spaceClient.backupKeysByPassphrase({
+        uuid: payload.uuid,
+        passphrase: payload.torusRes.privateKey,
+      });
+      const apiSessionRes = await spaceClient.getAPISessionTokens();
+      console.log({
+        token: apiSessionRes.getServicestoken(),
+        address: payload.torusRes.publicAddress,
+        provider: payload.provider,
+        metadata: {
+          email: payload.torusRes.userInfo.email,
+          name: payload.torusRes.userInfo.name,
+        },
+      });
+      await apiClient.identity.addEthAddress({
+        token: apiSessionRes.getServicestoken(),
+        address: payload.torusRes.publicAddress,
+        provider: payload.provider,
+        metadata: {
+          email: payload.torusRes.userInfo.email,
+          name: payload.torusRes.userInfo.name,
+        },
+      });
+      mainWindow.webContents.send(ADD_LINKED_ADDRESS_SUCCESS_EVENT, {
+        uuid: payload.uuid,
+        address: payload.torusRes.publicAddress,
+        provider: payload.provider,
+        createdAt: new Date().toISOString(),
+        metadata: {
+          email: payload.torusRes.userInfo.email,
+          name: payload.torusRes.userInfo.name,
+        },
+      });
+    } catch (error) {
+      console.error('ADD_LINKED_ADDRESS_ERROR_EVENT', error);
+
+      mainWindow.webContents.send(ADD_LINKED_ADDRESS_ERROR_EVENT, {
+        message: error.message,
+      });
     }
   });
 };

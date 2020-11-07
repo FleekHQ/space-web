@@ -121,7 +121,7 @@ function addEthAddress(payload) {
 function getLinkedAddresses(payload) {
   return this.instance({
     method: 'get',
-    url: `${DEFAULT_PATH}/get-list-of-linked-addresses`,
+    url: `${DEFAULT_PATH}/addresses`,
     headers: {
       Authorization: payload.token || '',
     },

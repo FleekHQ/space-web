@@ -22,6 +22,9 @@ const CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT = `${EVENT_PREFIX}:createUserna
 const GET_LINKED_ADDRESSES_EVENT = `${EVENT_PREFIX}:getLinkedAddresses`;
 const GET_LINKED_ADDRESSES_SUCCESS_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:success`;
 const GET_LINKED_ADDRESSES_ERROR_EVENT = `${EVENT_PREFIX}:getLinkedAddresses:error`;
+const ADD_LINKED_ADDRESS_EVENT = `${EVENT_PREFIX}:add_linked_address`;
+const ADD_LINKED_ADDRESS_SUCCESS_EVENT = `${EVENT_PREFIX}:add_linked_address:success`;
+const ADD_LINKED_ADDRESS_ERROR_EVENT = `${EVENT_PREFIX}:add_linked_address:error`;
 
 const registerAccountEvents = () => {
   ipcRenderer.on(CREATE_USERNAME_AND_PASSWORD_ERROR_EVENT, (_, error) => {
@@ -107,6 +110,20 @@ const registerAccountEvents = () => {
       type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_ERROR,
     });
   });
+
+  ipcRenderer.on(ADD_LINKED_ADDRESS_SUCCESS_EVENT, (event, payload) => {
+    store.dispatch({
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_ADD_NEW_LINKED_ADDRESS_SUCCESS,
+      payload,
+    });
+  });
+
+  ipcRenderer.on(ADD_LINKED_ADDRESS_ERROR_EVENT, (event, { message }) => {
+    store.dispatch({
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_ADD_NEW_LINKED_ADDRESS_ERROR,
+      error: message,
+    });
+  });
 };
 
 export const deleteAccount = () => {
@@ -146,6 +163,17 @@ export const getLinkedAddresses = () => {
   });
 
   ipcRenderer.send(GET_LINKED_ADDRESSES_EVENT);
+};
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.torusPrivateKey
+ * @param {string} payload.torusPublicAddress
+ * @param {string} payload.provider
+ * @param {string} payload.uuid
+ */
+export const addLinkedAddress = (payload) => {
+  ipcRenderer.send(ADD_LINKED_ADDRESS_EVENT, payload);
 };
 
 export default registerAccountEvents;

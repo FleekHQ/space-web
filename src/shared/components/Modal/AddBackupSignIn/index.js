@@ -19,6 +19,8 @@ const AddBackUpSignIn = ({
   closeModal,
   options,
   onClickContinue,
+  error,
+  loading,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -112,10 +114,12 @@ const AddBackUpSignIn = ({
         )}
       >
         {optionList.map((option) => (
-          <div className={classnames({
-            [classes.accentWrapper]: selectedOption === option.id,
-            [classes.optionWrapper]: selectedOption !== option.id,
-          })}
+          <div
+            key={option.id}
+            className={classnames({
+              [classes.accentWrapper]: selectedOption === option.id,
+              [classes.optionWrapper]: selectedOption !== option.id,
+            })}
           >
             <ButtonBase
               key={option.id}
@@ -157,6 +161,9 @@ const AddBackUpSignIn = ({
           </div>
         ))}
       </Scrollbars>
+      {error && (
+        <Typography className={classes.error}>{error}</Typography>
+      )}
       <div className={classes.buttonsContainer}>
         <Button
           className={classes.cancel}
@@ -170,6 +177,7 @@ const AddBackUpSignIn = ({
           variant="primary"
           disabled={!selectedOption}
           onClick={() => onClickContinue(selectedOption)}
+          loading={loading}
         >
           {t('addBackupSignIn.continue')}
         </Button>
@@ -181,12 +189,16 @@ const AddBackUpSignIn = ({
 AddBackUpSignIn.defaultProps = {
   options: [],
   onClickContinue: () => {},
+  error: '',
+  loading: false,
 };
 
 AddBackUpSignIn.propTypes = {
   onClickContinue: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.string.isRequired),
+  error: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 export default AddBackUpSignIn;
