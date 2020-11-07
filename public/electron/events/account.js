@@ -119,13 +119,13 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(GET_LINKED_ADDRESSES_EVENT, async () => {
     try {
       const apiTokens = await spaceClient.getAPISessionTokens();
-      const { data } = await apiClient.identities.getLinkedAddresses({
+      const { data } = await apiClient.identity.getLinkedAddresses({
         token: apiTokens.getServicestoken(),
       });
 
       mainWindow.webContents.send(GET_LINKED_ADDRESSES_SUCCESS_EVENT, data);
     } catch (error) {
-      console.error('UPLOAD_PROFILE_PIC_ERROR_EVENT', error);
+      console.error('GET_LINKED_ADDRESSES_ERROR_EVENT', error);
 
       mainWindow.webContents.send(GET_LINKED_ADDRESSES_ERROR_EVENT, error);
     }

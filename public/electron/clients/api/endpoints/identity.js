@@ -105,10 +105,34 @@ function addEthAddress(payload) {
   });
 }
 
+/**
+ * @typedef {Object} Address
+ * @property {string} uuid
+ * @property {string} address
+ * @property {string} createdAt
+ * @property {string} provider
+ * @property {object} metadata
+*/
+
+/**
+ * @this {import('../client.js')}
+ * @returns {import('axios').AxiosResponse<{ data: [Address] }>}
+ */
+function getLinkedAddresses(payload) {
+  return this.instance({
+    method: 'get',
+    url: `${DEFAULT_PATH}/get-list-of-linked-addresses`,
+    headers: {
+      Authorization: payload.token || '',
+    },
+  });
+}
+
 module.exports = {
   update,
   getMultiple,
   deleteAccount,
   addEthAddress,
   uploadProfilePic,
+  getLinkedAddresses,
 };

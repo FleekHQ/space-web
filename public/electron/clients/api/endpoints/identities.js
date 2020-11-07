@@ -40,30 +40,7 @@ function getByUsername(payload) {
   });
 }
 
-/**
- * @typedef {Object} Address
- * @property {string} uuid
- * @property {string} address
- * @property {string} createdAt
- * @property {string} provider
-*/
-
-/**
- * @this {import('../client.js')}
- * @returns {import('axios').AxiosResponse<{ data: Address }>}
- */
-function getLinkedAddresses(payload) {
-  return this.instance({
-    method: 'get',
-    url: DEFAULT_PATH,
-    headers: {
-      Authorization: payload.token || '',
-    },
-  });
-}
-
 module.exports = {
   getByAddress,
   getByUsername,
-  getLinkedAddresses,
 };
