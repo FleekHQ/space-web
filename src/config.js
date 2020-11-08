@@ -20,12 +20,16 @@ const config = {
           typeOfLogin: 'google',
           clientId: '480855465278-s0lcvq0m4hpn5hokhgs8s1ujfe3lbk4f.apps.googleusercontent.com',
           verifier: 'space-google-testnet',
+          jwtParams: {},
         },
         twitter: {
           name: 'Twitter',
           typeOfLogin: 'twitter',
           clientId: 's2pA8qVTUgxkzRP7DgTfUJ7dS',
           verifier: 'torus-auth0-twitter-lrc',
+          jwtParams: {
+            domain: 'http://space.local',
+          },
         },
       },
     },

@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
@@ -12,6 +13,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@terminal-packages/space-ui/core/Button';
 import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 
+import { backupKeysByPassphrase } from '@events';
 import PasswordCheckTooltip from '@shared/components/PasswordCheckTooltip';
 import changePasswordHelper from '@shared/components/Modal/ChangePassword/helper';
 
@@ -19,7 +21,12 @@ import useStyles from './styles';
 
 const CreatePassword = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { t } = useTranslation();
+  const { userState, changePasswordState } = useSelector((s) => ({
+    userState: s.user,
+    changePasswordState: s.changePassword,
+  }));
   const [state, setState] = React.useState({
     password: '',
     confirmPassword: '',
@@ -27,6 +34,15 @@ const CreatePassword = () => {
     showConfirmPassword: false,
     showPasswordTooltip: false,
   });
+
+  const handleChangePassword = (event) => {
+    event.preventDefault();
+
+    backupKeysByPassphrase({
+      uuid: userState.uuid,
+      passphrase: state.confirmPassword,
+    });
+  };
 
   const handlePasswordTooltipVisibility = () => {
     setState((prevState) => ({
@@ -71,6 +87,12 @@ const CreatePassword = () => {
       </IconButton>
     </InputAdornment>
   );
+
+  React.useEffect(() => {
+    if (changePasswordState.success) {
+      history.push('/storage');
+    }
+  }, [changePasswordState.success]);
 
   return (
     <Box
@@ -139,7 +161,9 @@ const CreatePassword = () => {
             disabled={
               !changePasswordHelper
                 .verifyFormValidation(state.password, state.confirmPassword)
+              || changePasswordState.loading
             }
+            onClick={handleChangePassword}
           >
             {t('common.confirm')}
           </Button>

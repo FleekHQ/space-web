@@ -22,7 +22,7 @@ const registerAuthEvents = (mainWindow) => {
     try {
       let user;
 
-      if (payload.username && payload.password) {
+      if (payload.username && payload.password && !payload.torusRes) {
         const { data } = await apiClient.identities.getByUsername({
           usernames: [payload.username],
         });
