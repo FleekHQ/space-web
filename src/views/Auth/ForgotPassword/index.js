@@ -101,7 +101,7 @@ const ForgotPassword = () => {
 
   React.useEffect(() => {
     if (signinState.success) {
-      history.push('/auth/forgot-password/create-password');
+      history.push('/auth/create-password');
     }
   }, [signinState.success]);
 
