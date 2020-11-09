@@ -36,7 +36,7 @@ const config = {
   },
   production: {
     ws: {
-      url: 'wss://gqo1oqz055.execute-api.us-west-2.amazonaws.com/dev',
+      url: 'wss://auth.space.storage',
     },
     torus: {
       sdkConfig: {
@@ -53,12 +53,16 @@ const config = {
           typeOfLogin: 'google',
           clientId: '480855465278-s0lcvq0m4hpn5hokhgs8s1ujfe3lbk4f.apps.googleusercontent.com',
           verifier: 'space-google-testnet',
+          jwtParams: {},
         },
         twitter: {
           name: 'Twitter',
           typeOfLogin: 'twitter',
-          clientId: 's2pA8qVTUgxkzRP7DgTfUJ7dS',
-          verifier: 'torus-auth0-twitter-lrc',
+          clientId: 'jMfyGURX9wbS3GpusgLOZkvOn0AvIaJj',
+          verifier: 'fleek-auth0-twitter',
+          jwtParams: {
+            domain: 'https://space-twitter.us.auth0.com',
+          },
         },
       },
     },
