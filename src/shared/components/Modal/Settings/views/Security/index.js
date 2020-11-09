@@ -15,7 +15,7 @@ import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLinkedAddresses, addLinkedAddress } from '@events';
+import { addLinkedAddress } from '@events';
 import { useTorusSdk } from '@utils';
 import { LINKED_ADDRESSES_ACTION_TYPES } from '@reducers/linked-addresses';
 
@@ -53,10 +53,6 @@ const Security = ({ t }) => {
     reduxState.user,
     reduxState.linkedAddresses,
   ]);
-
-  useEffect(() => {
-    getLinkedAddresses();
-  }, []);
 
   const handleOpenModal = (event) => {
     event.preventDefault();

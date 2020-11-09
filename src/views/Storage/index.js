@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Route,
   Switch,
   Redirect,
   useRouteMatch,
 } from 'react-router-dom';
+import { getLinkedAddresses } from '@events';
 
 import Layout from '@shared/components/Layout';
 
@@ -18,6 +19,11 @@ import useStyles from './styles';
 const Storage = () => {
   const classes = useStyles();
   const match = useRouteMatch();
+
+  // pre-fetching data for Settings
+  useEffect(() => {
+    getLinkedAddresses();
+  }, []);
 
   return (
     <Layout>
