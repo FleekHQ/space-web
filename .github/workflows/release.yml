@@ -11,6 +11,7 @@ jobs:
       FA_NPM_TOKEN: ${{secrets.FA_NPM_TOKEN}}
       TERMINAL_NPM_TOKEN: ${{secrets.TERMINAL_NPM_TOKEN}}
       SPACE_SERVICES_URL: ${{secrets.SPACE_SERVICES_URL}}
+      REACT_APP_FE_NODE_ENV: ${{secrets.REACT_APP_FE_NODE_ENV}}
     strategy:
       fail-fast: false
       matrix:
