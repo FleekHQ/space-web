@@ -278,7 +278,8 @@
       "shareEmailButton": "Share",
       "errors": {
         "invalidEmail": "Email is invalid",
-        "duplicateEmail": "This email is already selected"
+        "duplicateEmail": "This email is already selected",
+        "failedShare": "Failed to share file, please try again."
       },
       "shareLink": {
         "title": "Share via Password Protected Link",
