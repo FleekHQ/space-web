@@ -12,28 +12,33 @@ const PasswordCheckTooltip = ({
   tooltipPlacement,
 }) => {
   const { t } = useTranslation();
+  const test1 = /.{8,}/.test(password);
+  const test2 = /[A-Z]/.test(password) && /[a-z]/.test(password);
+  const test3 = /[0-9]/.test(password);
+
+  const successfulCheck = test1 && test2 && test3;
 
   return (
     <InputTooltip
       bgColor={bgColor}
       title={t('modules.shared.passwordCheck.title')}
       tooltip={{
-        open,
+        open: open && !successfulCheck,
         arrow: true,
         placement: tooltipPlacement,
       }}
       requirements={(
         <>
           <Requirement
-            isCorrect={/.{8,}/.test(password)}
+            isCorrect={test1}
             requirement={t('modules.shared.passwordCheck.requirements.charLength')}
           />
           <Requirement
-            isCorrect={/[A-Z]/.test(password) && /[a-z]/.test(password)}
+            isCorrect={test2}
             requirement={t('modules.shared.passwordCheck.requirements.upperCase')}
           />
           <Requirement
-            isCorrect={/[0-9]/.test(password)}
+            isCorrect={test3}
             requirement={t('modules.shared.passwordCheck.requirements.number')}
           />
         </>
