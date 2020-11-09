@@ -65,29 +65,30 @@ const registerKeysEvents = (mainWindow) => {
       currentPassphrase,
     } = payload;
 
-    try {
-      if (currentPassphrase) {
+    if (currentPassphrase) {
+      try {
         await spaceClient.testKeysPassphrase({
           uuid,
           passphrase: currentPassphrase,
         });
-      }
-
-      try {
-        await spaceClient.backupKeysByPassphrase({
-          type: 0, // 0 = PASSWORD; 1 = ETH
-          uuid,
-          passphrase,
-        });
-
-        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
       } catch (err) {
-        console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:backupKeysByPassphrase', err);
-        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'backupKeysError');
+        console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:testKeysPassphrase', err);
+        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'testKeysError');
+        return;
       }
+    }
+
+    try {
+      await spaceClient.backupKeysByPassphrase({
+        type: 0, // 0 = PASSWORD; 1 = ETH
+        uuid,
+        passphrase,
+      });
+
+      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
     } catch (err) {
-      console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:testKeysPassphrase', err);
-      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'testKeysError');
+      console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:backupKeysByPassphrase', err);
+      mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'backupKeysError');
     }
   });
 
