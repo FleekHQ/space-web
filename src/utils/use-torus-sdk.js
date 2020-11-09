@@ -11,7 +11,10 @@ import config from '@config';
 */
 
 export default function useTorusSdk() {
-  const [torusSdk, setTorus] = React.useState(null);
+  const [state, setState] = React.useState({
+    torusSdk: null,
+    isInitializing: true,
+  });
 
   /**
    * Trigger torus login
@@ -29,14 +32,16 @@ export default function useTorusSdk() {
         name,
         verifier,
         clientId,
+        jwtParams,
         typeOfLogin,
       } = config.torus.providers[provider];
 
       /** @type {TorusRes} */
-      const tRes = await torusSdk.triggerLogin({
+      const tRes = await state.torusSdk.triggerLogin({
         name,
         verifier,
         clientId,
+        jwtParams,
         typeOfLogin,
       });
 
@@ -50,7 +55,7 @@ export default function useTorusSdk() {
       // eslint-disable-next-line no-console
       console.error(`Error when trying to get torus response: ${error.message}`);
 
-      return null;
+      throw error;
     }
   };
 
@@ -59,7 +64,10 @@ export default function useTorusSdk() {
 
     const initTorusSdk = async () => {
       await torusdirectsdk.init({ skipSw: true });
-      setTorus(torusdirectsdk);
+      setState({
+        isInitializing: false,
+        torusSdk: torusdirectsdk,
+      });
     };
 
     initTorusSdk();
@@ -67,5 +75,6 @@ export default function useTorusSdk() {
 
   return {
     torusTriggerLogin,
+    isInitializing: state.isInitializing,
   };
 }

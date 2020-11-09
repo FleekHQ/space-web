@@ -165,6 +165,9 @@
       "recover": "Recover Account",
       "link": "Don't have an account?",
       "errors": {
+        "torus": "There was an error with torus integration",
+        "noData": "There is no data from torus",
+        "timeout": "Websocket Timeout",
         "notFound": "User not found.",
         "generic": "Sorry, there was a problem.",
         "invalid": "Invalid username or password."
@@ -192,7 +195,10 @@
         "generic": "Sorry, there was a problem.",
         "username": "Username is taken.",
         "identity": "Sorry, there was a problem getting your identity.",
-        "address": "Sorry, the current address is already registered."
+        "address": "Sorry, the current address is already registered.",
+        "torus": "There was an error with torus integration",
+        "noData": "There is no data from torus",
+        "timeout": "Websocket Timeout"
       }
     },
     "restoreKeysMnemonic": {
@@ -209,6 +215,13 @@
         "google": "Recover with Google",
         "twitter": "Recover with Twitter",
         "key": "Recover with Seed Phrase"
+      },
+      "errors": {
+        "torus": "There was an error with torus integration",
+        "noData": "There is no data from torus",
+        "timeout": "Websocket Timeout",
+        "notFound": "User not found.",
+        "signin": "Sorry, there was an error when trying to recover your account."
       }
     },
     "shared": {

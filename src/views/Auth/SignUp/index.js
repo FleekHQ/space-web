@@ -58,6 +58,16 @@ const SignUp = () => {
     signin({ torusRes });
   };
 
+  /**
+   * @param {string} errorKey
+   */
+  const handleThirdPartyAuthError = (errorKey) => {
+    dispatch({
+      error: `modules.signup.errors.${errorKey}`,
+      type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
+    });
+  };
+
   React.useEffect(() => {
     if (state.success) {
       history.push('/storage');
@@ -146,9 +156,9 @@ const SignUp = () => {
       </Box>
       <Box flex={1} maxWidth={247} mt="59px">
         <ThirdPartyAuth
-          onError={() => null}
           isLoading={state.loading}
           type={t('modules.signup.title')}
+          onError={handleThirdPartyAuthError}
           onSuccess={handleThirdPartyAuthSuccess}
         />
       </Box>
