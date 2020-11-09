@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
 import EthCrypto from 'eth-crypto';
 
 import config from '@config';
