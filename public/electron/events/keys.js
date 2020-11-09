@@ -66,10 +66,12 @@ const registerKeysEvents = (mainWindow) => {
     } = payload;
 
     try {
-      await spaceClient.testKeysPassphrase({
-        uuid,
-        passphrase: currentPassphrase,
-      });
+      if (currentPassphrase) {
+        await spaceClient.testKeysPassphrase({
+          uuid,
+          passphrase: currentPassphrase,
+        });
+      }
 
       try {
         await spaceClient.backupKeysByPassphrase({

@@ -51,7 +51,7 @@ const ChangePassword = (props) => {
   });
 
   const testKeysError = changePassword.error === 'testKeysError';
-  const generalError = changePassword.error === 'generalError';
+  const generalError = changePassword.error === 'backupKeysError';
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -249,7 +249,7 @@ const ChangePassword = (props) => {
                   className={classes.errorIcon}
                 />
                 <Typography className={classes.errorMessage}>
-                  {t('modals.changePassword.generalError')}
+                  {t('modals.changePassword.backupKeysError')}
                 </Typography>
               </div>
             )

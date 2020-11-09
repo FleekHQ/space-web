@@ -426,7 +426,7 @@
       "confirmPassword": "Confirm New Password",
       "currentPassword": "Current Password",
       "testKeysError": "Incorrect current password",
-      "generalError": "Failed to update password"
+      "backupKeysError": "Failed to update password"
     },
     "createFolder": {
       "title": "Create New Folder",
