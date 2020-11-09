@@ -97,16 +97,16 @@ const registerAuthEvents = (mainWindow) => {
           type: 1, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
-          metadata: {
-            email: payload.torusRes.userInfo.email,
-            name: payload.torusRes.userInfo.name,
-          },
         });
 
         await apiClient.identity.addEthAddress({
           token: apiSessionRes.getServicestoken(),
           address: payload.torusRes.publicAddress,
           provider: payload.torusRes.userInfo.typeOfLogin,
+          metadata: {
+            email: payload.torusRes.userInfo.email,
+            name: payload.torusRes.userInfo.name,
+          },
         });
 
         user = { ...data.data };
