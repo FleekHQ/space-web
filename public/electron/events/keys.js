@@ -82,11 +82,11 @@ const registerKeysEvents = (mainWindow) => {
 
         mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
       } catch (err) {
-        console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT', err);
-        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'generalError');
+        console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:backupKeysByPassphrase', err);
+        mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'backupKeysError');
       }
     } catch (err) {
-      console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT', err);
+      console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:testKeysPassphrase', err);
       mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'testKeysError');
     }
   });
