@@ -25,10 +25,10 @@ const config = {
         twitter: {
           name: 'Twitter',
           typeOfLogin: 'twitter',
-          clientId: 's2pA8qVTUgxkzRP7DgTfUJ7dS',
-          verifier: 'torus-auth0-twitter-lrc',
+          clientId: 'jMfyGURX9wbS3GpusgLOZkvOn0AvIaJj',
+          verifier: 'fleek-auth0-twitter',
           jwtParams: {
-            domain: 'http://space.local',
+            domain: 'https://space-twitter.us.auth0.com',
           },
         },
       },
