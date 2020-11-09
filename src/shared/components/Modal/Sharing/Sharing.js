@@ -214,7 +214,7 @@ const SharingModal = (props) => {
       {error && (
         <ErrorCard
           className={classes.error}
-          message={error}
+          message={t('modals.sharingModal.errors.failedShare')}
         />
       )}
     </BaseModal>
