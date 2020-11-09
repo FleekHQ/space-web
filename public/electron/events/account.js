@@ -141,15 +141,6 @@ const registerAuthEvents = (mainWindow) => {
         passphrase: payload.torusRes.privateKey,
       });
       const apiSessionRes = await spaceClient.getAPISessionTokens();
-      console.log({
-        token: apiSessionRes.getServicestoken(),
-        address: payload.torusRes.publicAddress,
-        provider: payload.provider,
-        metadata: {
-          email: payload.torusRes.userInfo.email,
-          name: payload.torusRes.userInfo.name,
-        },
-      });
       await apiClient.identity.addEthAddress({
         token: apiSessionRes.getServicestoken(),
         address: payload.torusRes.publicAddress,

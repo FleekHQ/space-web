@@ -101,6 +101,7 @@ function addEthAddress(payload) {
     data: {
       address: payload.address,
       provider: payload.provider,
+      metadata: payload.metadata,
     },
   });
 }
