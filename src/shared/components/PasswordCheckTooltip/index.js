@@ -12,28 +12,33 @@ const PasswordCheckTooltip = ({
   tooltipPlacement,
 }) => {
   const { t } = useTranslation();
+  const isLongEnough = /.{8,}/.test(password);
+  const containsUpperLowerCase = /[A-Z]/.test(password) && /[a-z]/.test(password);
+  const containsNumber = /[0-9]/.test(password);
+
+  const successfulCheck = isLongEnough && containsUpperLowerCase && containsNumber;
 
   return (
     <InputTooltip
       bgColor={bgColor}
       title={t('modules.shared.passwordCheck.title')}
       tooltip={{
-        open,
+        open: open && !successfulCheck,
         arrow: true,
         placement: tooltipPlacement,
       }}
       requirements={(
         <>
           <Requirement
-            isCorrect={/.{8,}/.test(password)}
+            isCorrect={isLongEnough}
             requirement={t('modules.shared.passwordCheck.requirements.charLength')}
           />
           <Requirement
-            isCorrect={/[A-Z]/.test(password) && /[a-z]/.test(password)}
+            isCorrect={containsUpperLowerCase}
             requirement={t('modules.shared.passwordCheck.requirements.upperCase')}
           />
           <Requirement
-            isCorrect={/[0-9]/.test(password)}
+            isCorrect={containsNumber}
             requirement={t('modules.shared.passwordCheck.requirements.number')}
           />
         </>
