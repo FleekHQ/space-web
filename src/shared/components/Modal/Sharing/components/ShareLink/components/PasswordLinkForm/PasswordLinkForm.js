@@ -8,6 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash';
+import classnames from 'classnames';
 
 import useStyles from './styles';
 import PasswordTooltip from '../PasswordTooltip';
@@ -68,7 +69,8 @@ const PasswordLinkForm = (props) => {
         }}
         variant="primary"
         disabled={loading}
-        className={classes.button}
+        loading={loading}
+        className={classnames(classes.button, classes.saveButton)}
       >
         {t('common.save')}
       </Button>
