@@ -77,15 +77,17 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
     case NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS_SUCCESS: {
+      const newNotifications = cloneDeep(uniqBy([
+        ...state.data.notifications,
+        ...action.data.notifications,
+      ], 'id'));
+
       return {
         ...state,
         loading: false,
         data: {
           ...action.data,
-          notifications: uniqBy([
-            ...state.data.notifications,
-            ...action.data.notifications,
-          ], 'id'),
+          notifications: newNotifications,
         },
       };
     }
