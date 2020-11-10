@@ -41,8 +41,6 @@ const registerObjectsEvents = () => {
       notificationId,
     });
 
-    console.log(payload);
-
     if (newMembers.length > 0) {
       // handling sharing files from different buckets
       // group paths by bucket name
