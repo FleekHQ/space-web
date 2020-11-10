@@ -11,6 +11,7 @@ export const UPDATE_OR_ADD_OBJECT = 'UPDATE_OBJECT';
 export const SET_LOADING_STATE_BUCKET = 'SET_LOADING_STATE_BUCKET';
 export const SET_ERROR_BUCKET = 'SET_ERROR_BUCKET';
 export const SET_OPEN_ERROR_BUCKET = 'SET_OPEN_ERROR_BUCKET';
+export const UPDATE_SHARE_AMOUNT_OBJECTS = 'UPDATE_SHARE_AMOUNT_OBJECTS';
 
 const DEFAULT_STATE = {
   membersList: [],
@@ -155,6 +156,25 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         objects: action.payload.concat(newObjs),
+      };
+    }
+
+    case UPDATE_SHARE_AMOUNT_OBJECTS: {
+      return {
+        ...state,
+        objects: state.objects.map((obj) => {
+          if (action.payload.paths.includes(obj.key)) {
+            return {
+              ...obj,
+              shareAmount: obj.shareAmount + action.payload.newMembers.length,
+              members: [
+                ...obj.members,
+                ...action.payload.newMembers,
+              ],
+            };
+          }
+          return obj;
+        }),
       };
     }
 

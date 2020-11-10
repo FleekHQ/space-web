@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
+import { UPDATE_SHARE_AMOUNT_OBJECTS } from '@reducers/storage/bucket';
 
 import store from '../store';
 
@@ -31,10 +32,32 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, (_, payload) => {
     const usersNotFound = get(payload, 'usersNotFound', []) || [];
+    const objects = get(payload, 'objects', []) || [];
+    const newMembers = get(payload, 'newMembers', []) || [];
 
     store.dispatch({
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,
     });
+
+    if (newMembers.length > 0) {
+      // handling sharing files from different buckets
+      // group paths by bucket name
+      const bucketsList = objects.reduce((buckets, obj) => ({
+        ...buckets,
+        [obj.bucket]: [
+          ...(buckets[obj.bucket] || []),
+          obj.path,
+        ],
+      }), {});
+
+      // call dispatch for each bucket
+      Object.entries(bucketsList).forEach(([bucket, paths]) => {
+        store.dispatch({
+          type: UPDATE_SHARE_AMOUNT_OBJECTS,
+          payload: { paths, newMembers, bucket },
+        });
+      });
+    }
 
     if (usersNotFound.length > 0) {
       const props = {
