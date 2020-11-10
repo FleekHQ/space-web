@@ -27,4 +27,7 @@ export default makeStyles((theme) => ({
     padding: '0 11px',
     marginLeft: 5,
   },
+  saveButton: {
+    minWidth: 42,
+  },
 }));

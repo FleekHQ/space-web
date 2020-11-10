@@ -35,8 +35,9 @@ const CreateFolder = ({
   const onSubmitForm = (e) => {
     e.preventDefault();
 
-    dispatch({
-      type: CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT,
+    createFolder({
+      path,
+      folderName: state.folderName,
     });
   };
 
@@ -53,15 +54,6 @@ const CreateFolder = ({
       closeModal();
     }
   }, [state.success]);
-
-  React.useEffect(() => {
-    if (state.loading) {
-      createFolder({
-        path,
-        folderName: state.folderName,
-      });
-    }
-  }, [state.loading]);
 
   return (
     <BaseModal

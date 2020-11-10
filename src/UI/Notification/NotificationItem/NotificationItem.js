@@ -90,7 +90,7 @@ const NotificationItem = (props) => {
         <Typography variant="body2">
           <strong>{username}</strong>
         </Typography>
-        <Typography variant="body2">
+        <Typography noWrap variant="body2">
           {description}
         </Typography>
         <div className={classes.filesContainer}>

@@ -31,13 +31,14 @@ const FileCard = (props) => {
             horizontal: 'right',
           }}
           classes={{
+            root: classes.badgeRoot,
             badge: classes.badge,
           }}
         >
           <div className={classes.iconContainer}>
             <FileIcon ext={ext} />
           </div>
-          <Typography variant="body2">
+          <Typography noWrap variant="body2">
             { name }
           </Typography>
         </Badge>

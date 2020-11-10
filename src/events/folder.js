@@ -1,5 +1,7 @@
 import { ipcRenderer } from 'electron';
 
+import { objectPresenter } from '@utils';
+
 import store from '../store';
 import { CREATE_FOLDER_ACTION_TYPES } from '../reducers/create-folder';
 
@@ -19,8 +21,9 @@ const registerKeysEvents = () => {
     });
   });
 
-  ipcRenderer.on(CREATE_FOLDER_SUCCESS_EVENT, () => {
+  ipcRenderer.on(CREATE_FOLDER_SUCCESS_EVENT, (_, data) => {
     store.dispatch({
+      payload: objectPresenter(data),
       type: CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT_SUCCESS,
     });
   });
@@ -34,6 +37,10 @@ const registerKeysEvents = () => {
  * @param {string=} payload.bucket - Bucket to create the folder. Default is personal
  */
 export const createFolder = (payload) => {
+  store.dispatch({
+    type: CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT,
+  });
+
   ipcRenderer.send(CREATE_FOLDER_EVENT, payload);
 };
 

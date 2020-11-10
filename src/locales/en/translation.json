@@ -274,6 +274,7 @@
       "noLinkDescription": "No link created yet.",
       "linkDescription": "Anyone with this link can view the folder.",
       "copyLink": "Copy link",
+      "copied": "Copied",
       "createLink": "Create link",
       "emailPlaceholder": "Add a message (optional)",
       "shareEmailButton": "Share",

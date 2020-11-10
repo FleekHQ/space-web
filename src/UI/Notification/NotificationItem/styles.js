@@ -41,6 +41,7 @@ export default makeStyles((theme) => ({
   content: {
     flex: 1,
     marginLeft: 8,
+    maxWidth: 220,
   },
   statusChip: {
     fontSize: 12,

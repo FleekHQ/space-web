@@ -11,6 +11,7 @@ export default makeStyles((theme) => ({
     borderRadius: 3,
     border: '1px solid #f1f1f1',
     width: 'fit-content',
+    maxWidth: 220,
     backgroundColor: theme.palette.palette.white,
     position: 'absolute',
     top: (props) => props.stackPosition * 3,
@@ -20,6 +21,12 @@ export default makeStyles((theme) => ({
     width: 18,
     height: 18,
     marginRight: 5,
+    display: 'flex',
+  },
+  badgeRoot: {
+    maxWidth: '100%',
+    display: 'flex',
+    alignItems: 'center',
   },
   badge: {
     cursor: 'pointer',
