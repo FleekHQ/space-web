@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 
-const DetailsPanel = ({ objects }) => {
+const DetailsPanelHeader = ({ objects }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -52,7 +52,7 @@ const DetailsPanel = ({ objects }) => {
           </div>
         ))}
       </div>
-      <Typography className={classes.title} variant="h6" weight="medium">
+      <Typography noWrap className={classes.title} variant="h6" weight="medium">
         {objects.length === 1
           ? objects[0].name
           : `${t(
@@ -74,7 +74,7 @@ const DetailsPanel = ({ objects }) => {
   );
 };
 
-DetailsPanel.propTypes = {
+DetailsPanelHeader.propTypes = {
   objects: PropTypes.arrayOf(
     PropTypes.shape({
       ext: PropTypes.string.isRequired,
@@ -85,4 +85,4 @@ DetailsPanel.propTypes = {
   ).isRequired,
 };
 
-export default DetailsPanel;
+export default DetailsPanelHeader;
