@@ -254,6 +254,7 @@
   "sharingProgressModal": {
     "message": "Shared <0>{{fileName}}",
     "inProgress": "Sharing <0>{{fileName}}...",
+    "failedToShare": "Failed to share file",
     "dismiss": "Close"
   },
   "modals": {
