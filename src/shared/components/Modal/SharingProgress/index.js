@@ -1,47 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
+import { faSpinner } from '@fortawesome/pro-solid-svg-icons/faSpinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 import { Trans, useTranslation } from 'react-i18next';
 import Typography from '@ui/Typography';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Grow from '@material-ui/core/Grow';
+import classnames from 'classnames';
 import useStyles from './styles';
 
+const DELAYED_CLOSE_DELAY = 3000;
 const TRANSITION_TIMEOUT = 300;
 
-const SharingProgress = ({ closeModal }) => {
-  // TODO: replace it with reading state from redux (and keep also sharing progress)
-  const objects = useSelector((state) => (
-    state.storage.buckets.personal.objects.slice(0, 1) || []
-  ));
-  const isUploaded = false;
+const SharingProgress = ({ closeModal, notificationId }) => {
+  const {
+    files: objects,
+    success,
+    loading,
+    error,
+  } = useSelector((s) => (s.detailsPanel.share.shareFileByPublicKey.find((notification) => (
+    notification.id === notificationId))));
+
   const allFolders = objects.filter((obj) => obj.type === 'folder');
 
   const classes = useStyles();
-  const [timeoutId, setTimeoutId] = useState(null);
+  const [timeoutIdAnimation, setTimeoutIdAnimation] = useState(null);
+  const [timeoutIdDelayedClose, setTimeoutIdDelayedClose] = useState(null);
   const { t } = useTranslation();
 
-  const onClickDismiss = () => {
-    if (!timeoutId) {
-      setTimeoutId(
-        setTimeout(closeModal, TRANSITION_TIMEOUT),
-      );
-    }
+  const modalCloseAnimation = () => {
+    setTimeoutIdAnimation(
+      setTimeout(closeModal, TRANSITION_TIMEOUT),
+    );
   };
 
   useEffect(() => {
-    if (isUploaded) {
-      setTimeoutId(
-        setTimeout(closeModal, TRANSITION_TIMEOUT),
+    if (error === 'not-found-usernames') {
+      // if the error is due to usernames not found, another Modal
+      // displays the error
+      closeModal();
+    } else if (success || error) {
+      setTimeoutIdDelayedClose(
+        setTimeout(modalCloseAnimation, DELAYED_CLOSE_DELAY),
       );
     }
-  }, [isUploaded]);
+  }, [success, error]);
 
-  useEffect(() => () => clearTimeout(timeoutId), []);
+  useEffect(() => () => {
+    clearTimeout(timeoutIdAnimation);
+    clearTimeout(timeoutIdDelayedClose);
+  }, []);
 
   const translationTitle = objects.length === 1
     ? objects[0].name
@@ -53,31 +64,43 @@ const SharingProgress = ({ closeModal }) => {
       { count: objects.length - allFolders.length },
     )}`;
 
+  const getMessage = () => {
+    if (loading) {
+      return 'sharingProgressModal.inProgress';
+    }
+    if (success) {
+      return 'sharingProgressModal.message';
+    }
+    return 'sharingProgressModal.failedToShare';
+  };
+
   return (
-    <Grow in={!timeoutId} timeout={TRANSITION_TIMEOUT}>
+    <Grow in={!timeoutIdAnimation} timeout={TRANSITION_TIMEOUT}>
       <div className={classes.root}>
         <div>
-          {isUploaded
-            ? <FontAwesomeIcon icon={faCheckCircle} className={classes.icon} />
-            : <CircularProgress size={14} className={classes.loader} />}
+          {!loading
+            ? (
+              <FontAwesomeIcon
+                icon={success ? faCheckCircle : faExclamationCircle}
+                className={classnames(classes.icon, {
+                  [classes.successIcon]: success,
+                  [classes.errorIcon]: error,
+                })}
+              />
+            )
+            : (
+              <FontAwesomeIcon spin className={classes.loader} icon={faSpinner} />
+            )}
           <Typography variant="body1" weight="medium" component="span">
             <Trans
               i18nKey={
-                `sharingProgressModal.${isUploaded ? 'message' : 'inProgress'}`
+                getMessage()
               }
               values={{ fileName: translationTitle }}
               components={[<Box fontWeight="600" component="span" />]}
             />
           </Typography>
         </div>
-        <Button
-          color="secondary"
-          className={classes.button}
-          onClick={onClickDismiss}
-          disableRipple
-        >
-          {t('sharingProgressModal.dismiss')}
-        </Button>
       </div>
     </Grow>
   );
@@ -85,6 +108,7 @@ const SharingProgress = ({ closeModal }) => {
 
 SharingProgress.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  notificationId: PropTypes.string.isRequired,
 };
 
 export default SharingProgress;

@@ -32,11 +32,13 @@ const registerObjectsEvents = () => {
 
   ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, (_, payload) => {
     const usersNotFound = get(payload, 'usersNotFound', []) || [];
+    const { notificationId } = payload;
     const objects = get(payload, 'objects', []) || [];
     const newMembers = get(payload, 'newMembers', []) || [];
 
     store.dispatch({
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,
+      notificationId,
     });
 
     if (newMembers.length > 0) {
@@ -76,11 +78,12 @@ const registerObjectsEvents = () => {
     }
   });
 
-  ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, (_, error) => {
+  ipcRenderer.on(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, (_, { error, notificationId }) => {
     console.error('Error when trying to share files by public key:', error.message);
 
     store.dispatch({
-      error: error.message,
+      error: 'failedToShare',
+      notificationId,
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_ERROR,
     });
   });
@@ -118,6 +121,7 @@ export const generatePublicFileLink = (payload) => {
  * @param {string=} payload.bucket
  * @param {Array.<string>} payload.paths
  * @param {Array.<string>} payload.publicKeys
+ * @param {string} payload.notificationId
  */
 export const shareFiles = (payload) => {
   ipcRenderer.send(SHARE_FILES_BY_PUBLIC_KEY_EVENT, payload);

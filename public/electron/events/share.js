@@ -28,6 +28,7 @@ const registerShareEvents = (mainWindow) => {
   });
 
   ipcMain.on(SHARE_FILES_BY_PUBLIC_KEY_EVENT, async (event, payload) => {
+    const { notificationId } = payload;
     try {
       let usersNotFound = [];
       let usernamesPubKeys = [];
@@ -76,6 +77,7 @@ const registerShareEvents = (mainWindow) => {
       };
 
       mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_SUCCESS_EVENT, {
+        notificationId,
         usersNotFound,
         objects: paths,
         newMembers: publicKeys.map((publicKey) => ({
@@ -83,9 +85,12 @@ const registerShareEvents = (mainWindow) => {
           address: getAddress(publicKey),
         })),
       });
-    } catch (err) {
-      console.error('SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT', err);
-      mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, err);
+    } catch (error) {
+      console.error('SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT', error);
+      mainWindow.webContents.send(SHARE_FILES_BY_PUBLIC_KEY_ERROR_EVENT, {
+        error,
+        notificationId,
+      });
     }
   });
 

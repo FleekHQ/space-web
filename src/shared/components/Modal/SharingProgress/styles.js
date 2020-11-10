@@ -17,11 +17,18 @@ export default makeStyles((theme) => ({
   },
   icon: {
     marginRight: 10,
+  },
+  successIcon: {
     color: theme.palette.palette.green,
     fontSize: 14,
   },
+  errorIcon: {
+    color: theme.palette.palette.red,
+    fontSize: 14,
+  },
   loader: {
-    margin: '0 10px -2px 0',
     color: theme.palette.palette.blue1,
+    fontSize: 14,
+    marginRight: 10,
   },
 }));
