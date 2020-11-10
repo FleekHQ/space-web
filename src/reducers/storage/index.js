@@ -15,6 +15,8 @@ import bucketReducer, {
   UPDATE_SHARE_AMOUNT_OBJECTS,
 } from './bucket';
 
+import { CREATE_FOLDER_ACTION_TYPES } from '../create-folder';
+
 export * from './bucket';
 
 const DEFAULT_STATE = {
@@ -160,7 +162,8 @@ export default (state = DEFAULT_STATE, action) => {
     case UPDATE_OBJECT:
     case UPDATE_OBJECTS:
     case UPDATE_OR_ADD_OBJECT:
-    case UPDATE_SHARE_AMOUNT_OBJECTS: {
+    case UPDATE_SHARE_AMOUNT_OBJECTS:
+    case CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT_SUCCESS: {
       let bucket = null;
 
       if (Array.isArray(action.payload)) {

@@ -14,15 +14,33 @@ const CREATE_FOLDER_SUCCESS_EVENT = `${EVENT_PREFIX}:folder:success`;
 const registerFolderEvents = (mainWindow) => {
   ipcMain.on(CREATE_FOLDER_EVENT, async (_, payload) => {
     try {
-      const { path, bucket, folderName } = payload;
+      const {
+        path,
+        folderName,
+        bucket = 'personal',
+      } = payload;
+      const folderPath = path.length === 0 ? folderName : `${path}/${folderName}`;
+
       const createFolderPayload = pickBy({
         bucket,
-        path: path.length === 0 ? folderName : `${path}/${folderName}`,
+        path: folderPath,
       }, identity);
 
       await spaceClient.createFolder(createFolderPayload);
 
-      mainWindow.webContents.send(CREATE_FOLDER_SUCCESS_EVENT, {});
+      mainWindow.webContents.send(CREATE_FOLDER_SUCCESS_EVENT, {
+        bucket,
+        isDir: true,
+        ipfsHash: '',
+        sizeInBytes: 0,
+        backupCount: 0,
+        path: folderPath,
+        name: folderName,
+        fileExtension: '',
+        isLocallyAvailable: false,
+        created: (new Date()).toISOString(),
+        updated: (new Date()).toISOString(),
+      });
 
       const listDirPayload = {
         path,

@@ -1,5 +1,7 @@
 import uniqBy from 'lodash/uniqBy';
 
+import { CREATE_FOLDER_ACTION_TYPES } from '../create-folder';
+
 export const STORE_DIR = 'STORE_DIR';
 export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
@@ -76,7 +78,8 @@ export default (state = DEFAULT_STATE, action) => {
       };
     }
 
-    case ADD_OBJECT: {
+    case ADD_OBJECT:
+    case CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT_SUCCESS: {
       const objects = [
         action.payload,
         ...state.objects,
