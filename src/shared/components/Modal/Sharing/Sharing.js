@@ -86,13 +86,15 @@ const SharingModal = (props) => {
     event.preventDefault();
     const notificationId = `${new Date().getTime()}`;
 
-    const _publicKeys = usernames
-      .filter((_user) => _user.publicKey)
-      .map((_user) => _user.publicKey);
+    const { _usernames, _publicKeys } = usernames.reduce((acc, _user) => {
+      if (_user.publicKey) {
+        acc._publicKeys.push(_user.publicKey);
+      } else {
+        acc._usernames.push(_user.username);
+      }
 
-    const _usernames = usernames
-      .filter((_user) => !_user.publicKey)
-      .map((_user) => _user.username);
+      return acc;
+    }, { _usernames: [], _publicKeys: [] });
 
     shareFiles({
       notificationId,
