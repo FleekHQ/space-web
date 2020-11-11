@@ -60,24 +60,53 @@ const listDirectories = async (mainWindow, payload = {}) => {
 
 const listSharedFiles = async (mainWindow, payload = {}) => {
   try {
-    const res = await spaceClient.getSharedWithMeFiles({
+    const withMeRes = await spaceClient.getSharedWithMeFiles({
       seek: '',
       limit: 100,
       ...payload,
     });
+    const byMeRes = await spaceClient.getSharedByMeFiles({
+      seek: '',
+      limit: 100,
+      ...payload,
+    }).catch((error) => {
+      console.error('FETCH_SHARED_BY_ME_FILES', error);
+      return {
+        getNextoffset() {
+          return '';
+        },
+        getItemsList() {
+          return [];
+        },
+      };
+    });
+
+    const byMeItems = byMeRes.getItemsList().map((item) => {
+      const entry = item.getEntry();
+
+      return {
+        dbId: item.getDbid(),
+        sourceBucket: item.getBucket(),
+        isPublicLink: item.getIspubliclink(),
+        ...entryToObject(entry, 'shared-with-me'),
+      };
+    });
+
+    const withMeItems = withMeRes.getItemsList().map((item) => {
+      const entry = item.getEntry();
+
+      return {
+        dbId: item.getDbid(),
+        sourceBucket: item.getBucket(),
+        isPublicLink: item.getIspubliclink(),
+        ...entryToObject(entry, 'shared-with-me'),
+      };
+    });
 
     const objects = {
-      nextOffset: res.getNextoffset(),
-      items: res.getItemsList().map((item) => {
-        const entry = item.getEntry();
-
-        return {
-          dbId: item.getDbid(),
-          sourceBucket: item.getBucket(),
-          isPublicLink: item.getIspubliclink(),
-          ...entryToObject(entry, 'shared-with-me'),
-        };
-      }),
+      nextOffset: withMeRes.getNextoffset(),
+      nextOffsetByMe: byMeRes.getNextoffset(),
+      items: [...withMeItems, ...byMeItems],
     };
 
     mainWindow.webContents.send(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, {
