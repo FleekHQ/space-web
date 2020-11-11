@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
@@ -11,11 +13,40 @@ const SUBSCRIBE_SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
 const registerAddItemsSubscribe = (mainWindow) => {
   let eventStream;
 
-  ipcMain.on(SUBSCRIBE_START_EVENT, (_, { id, payload }) => {
-    eventStream = spaceClient.addItems(payload);
+  ipcMain.on(SUBSCRIBE_START_EVENT, (_, { id, payload, bucket = 'personal' }) => {
+    eventStream = spaceClient.addItems({
+      targetPath: payload.targetPath,
+      sourcePaths: payload.sourcePaths,
+    });
 
     eventStream.on('data', async (event) => {
       const result = event.getResult();
+
+      let fileFolderName = '';
+      let fileFolderPath = '';
+      const totalBytes = event.getTotalbytes();
+      const bucketPath = result.getBucketpath();
+      const sourcePath = result.getSourcepath();
+
+      let fileExtension = path.extname(sourcePath);
+      if (fileExtension.length > 0) {
+        fileExtension = fileExtension.replace('.', '');
+      }
+
+      const [srcPath] = payload.sourcePaths.filter((_folderPath) => (
+        sourcePath.includes(_folderPath)
+      ));
+
+      if (srcPath) {
+        fileFolderName = sourcePath.replace(srcPath, '');
+        if (fileFolderName.length === 0) {
+          fileFolderName = sourcePath.split('/').pop();
+          fileFolderPath = payload.targetPath.length === 0 ? fileFolderName : `${payload.targetPath}/${fileFolderName}`;
+        } else {
+          fileFolderPath = payload.targetPath.length === 0 ? `${srcPath.split('/').pop()}${fileFolderName}` : `${payload.targetPath}/${srcPath.split('/').pop()}${fileFolderName}`;
+          fileFolderName = fileFolderName.split('/').pop();
+        }
+      }
 
       mainWindow.webContents.send(
         SUBSCRIBE_SUCCESS_EVENT,
@@ -23,14 +54,27 @@ const registerAddItemsSubscribe = (mainWindow) => {
           id,
           payload: {
             result: {
-              sourcePath: result.getSourcepath(),
-              bucketPath: result.getBucketpath(),
+              sourcePath,
+              bucketPath,
               error: result.getError(),
             },
-            totalBytes: event.getTotalbytes(),
+            totalBytes,
             totalFiles: event.getTotalfiles(),
             completedFiles: event.getCompletedfiles(),
             completedBytes: event.getCompletedbytes(),
+          },
+          object: {
+            bucket,
+            fileExtension,
+            backupCount: 0,
+            path: fileFolderPath,
+            name: fileFolderName,
+            sizeInBytes: totalBytes,
+            isLocallyAvailable: true,
+            created: (new Date()).toISOString(),
+            updated: (new Date()).toISOString(),
+            ipfsHash: bucketPath.split('/').pop(),
+            isDir: fs.existsSync(sourcePath) && fs.lstatSync(sourcePath).isDirectory(),
           },
         },
       );
@@ -56,7 +100,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
 
     eventStream.on('end', () => {
       // eslint-disable-next-line no-console
-      console.log('Add item steam ended');
+      console.log('Add item stream ended');
     });
   });
 };
