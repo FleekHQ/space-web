@@ -77,8 +77,8 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
         },
         getItemsList() {
           return [];
-        }
-      }
+        },
+      };
     });
 
     const byMeItems = byMeRes.getItemsList().map((item) => {
