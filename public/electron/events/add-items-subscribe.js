@@ -106,6 +106,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
         console.log('Add item stream ended');
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('add-items-subscriptions', err);
     }
     return eventStream;
