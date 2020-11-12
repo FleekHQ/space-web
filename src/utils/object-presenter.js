@@ -39,7 +39,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     lastModified,
     isPublicLink,
     isLocallyAvailable,
-    selected: false,
+    selected: undefined,
     id: `${bucket}/${key}`,
     fullKey: `${bucket}/${isRootDir ? name : key}`,
     ipfsHash: get(obj, 'ipfsHash'),
