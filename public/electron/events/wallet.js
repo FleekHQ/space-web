@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 
 const { spaceClient, apiClient } = require('../clients');
+const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'wallet';
 const CLAIM_EVENT = `${EVENT_PREFIX}:claim`;
@@ -11,7 +12,8 @@ const CLAIM_SUCCESS_EVENT = `${EVENT_PREFIX}:claim:success`;
 const registerWalletEvents = (mainWindow) => {
   ipcMain.on(CLAIM_EVENT, async (payload) => {
     try {
-      const apiTokens = await spaceClient.getAPISessionTokens();
+      const tokenMetadata = await getAppTokenMetadata();
+      const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
 
       const { data } = await apiClient.wallet.claim({
         key: payload.key,

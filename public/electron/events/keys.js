@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
+const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'keys';
 const GET_PUBLIC_KEY_EVENT = `${EVENT_PREFIX}:publicKey`;
@@ -23,7 +24,8 @@ const TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_SUCCESS_EVENT = `${EVENT_PREFIX}:test
 const registerKeysEvents = (mainWindow) => {
   ipcMain.on(GET_PUBLIC_KEY_EVENT, async () => {
     try {
-      const res = await spaceClient.getPublicKey();
+      const tokenMetadata = await getAppTokenMetadata();
+      const res = await spaceClient.getPublicKey(tokenMetadata());
 
       mainWindow.webContents.send(GET_PUBLIC_KEY_SUCCESS_EVENT, {
         publicKey: res.getPublickey(),
@@ -36,7 +38,8 @@ const registerKeysEvents = (mainWindow) => {
 
   ipcMain.on(DELETE_KEY_PAIR, async () => {
     try {
-      await spaceClient.deleteKeyPair();
+      const tokenMetadata = await getAppTokenMetadata();
+      await spaceClient.deleteKeyPair(tokenMetadata());
 
       mainWindow.webContents.send(DELETE_KEY_PAIR_SUCCESS);
     } catch (err) {
@@ -47,7 +50,8 @@ const registerKeysEvents = (mainWindow) => {
 
   ipcMain.on(GET_MNEMONIC_SEED_EVENT, async () => {
     try {
-      const res = await spaceClient.getStoredMnemonic();
+      const tokenMetadata = await getAppTokenMetadata();
+      const res = await spaceClient.getStoredMnemonic(tokenMetadata());
 
       mainWindow.webContents.send(GET_MNEMONIC_SEED_SUCCESS_EVENT, {
         mnemonic: res.getMnemonic(),
@@ -67,10 +71,11 @@ const registerKeysEvents = (mainWindow) => {
 
     if (currentPassphrase) {
       try {
+        const tokenMetadata = await getAppTokenMetadata();
         await spaceClient.testKeysPassphrase({
           uuid,
           passphrase: currentPassphrase,
-        });
+        }, tokenMetadata());
       } catch (err) {
         console.error('BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT:testKeysPassphrase', err);
         mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_ERROR_EVENT, 'testKeysError');
@@ -79,11 +84,12 @@ const registerKeysEvents = (mainWindow) => {
     }
 
     try {
+      const tokenMetadata = await getAppTokenMetadata();
       await spaceClient.backupKeysByPassphrase({
         type: 0, // 0 = PASSWORD; 1 = ETH
         uuid,
         passphrase,
-      });
+      }, tokenMetadata());
 
       mainWindow.webContents.send(BACKUP_KEYS_BY_PASSPHRASE_SEED_SUCCESS_EVENT);
     } catch (err) {
@@ -94,8 +100,9 @@ const registerKeysEvents = (mainWindow) => {
 
   ipcMain.on(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_EVENT, async (_, payload) => {
     try {
-      await spaceClient.testKeysPassphrase(payload);
-      await spaceClient.deleteKeyPair();
+      const tokenMetadata = await getAppTokenMetadata();
+      await spaceClient.testKeysPassphrase(payload, tokenMetadata());
+      await spaceClient.deleteKeyPair(tokenMetadata());
 
       mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_SUCCESS_EVENT);
     } catch (error) {

@@ -14,7 +14,7 @@ const { getMenuOptions, trayIcon } = require('./electron/tray-menu');
 let appIcon;
 let mainWindow;
 let goTo = null;
-let destroyStream = () => {};
+global.destroyStream = () => {};
 
 const daemon = new DaemonProcess();
 
@@ -32,7 +32,7 @@ const restoreWindow = (windowInstance) => {
   if (!windowInstance) {
     mainWindow = createMainWindow();
 
-    destroyStream = registerEvents({
+    registerEvents({
       app,
       isDev,
       mainWindow,
@@ -74,7 +74,7 @@ app.on('open-url', (event, data) => {
 app.on('window-all-closed', () => {
   // eslint-disable-next-line no-console
   console.log('All windows are closed...');
-  destroyStream();
+  global.destroyStream();
 
   if (process.platform !== 'darwin' || app.newUpdate) {
     app.quit();
@@ -135,7 +135,7 @@ daemon.on('ready', () => {
     }
   });
 
-  destroyStream = registerEvents({
+  registerEvents({
     app,
     isDev,
     mainWindow,

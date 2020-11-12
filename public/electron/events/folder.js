@@ -2,6 +2,7 @@ const { ipcMain } = require('electron');
 const pickBy = require('lodash/pickBy');
 const identity = require('lodash/identity');
 
+const { getAppTokenMetadata } = require('../utils');
 const { spaceClient } = require('../clients');
 const { listDirectory } = require('./objects');
 
@@ -25,8 +26,8 @@ const registerFolderEvents = (mainWindow) => {
         bucket,
         path: folderPath,
       }, identity);
-
-      await spaceClient.createFolder(createFolderPayload);
+      const tokenMetadata = await getAppTokenMetadata();
+      await spaceClient.createFolder(createFolderPayload, tokenMetadata());
 
       mainWindow.webContents.send(CREATE_FOLDER_SUCCESS_EVENT, {
         bucket,

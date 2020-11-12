@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
 
 const { apiClient, spaceClient } = require('../clients');
+const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'identities';
 const GET_IDENTITIES_BY_ADDRESS_EVENT = `${EVENT_PREFIX}:byAddress`;
@@ -14,7 +15,8 @@ const GET_RECENTLY_MEMBERS_SUCCESS_EVENT = `${EVENT_PREFIX}:recentlyMembers:succ
 const registerIdentitiesEvents = (mainWindow) => {
   ipcMain.on(GET_IDENTITIES_BY_ADDRESS_EVENT, async (_, payload) => {
     try {
-      const res = await spaceClient.getAPISessionTokens();
+      const tokenMetadata = await getAppTokenMetadata();
+      const res = await spaceClient.getAPISessionTokens(tokenMetadata());
       const { data } = await apiClient.identities.getByAddress({
         token: res.getServicestoken(),
         addresses: payload.addresses,
@@ -39,14 +41,15 @@ const registerIdentitiesEvents = (mainWindow) => {
 
   ipcMain.on(GET_RECENTLY_MEMBERS_EVENT, async () => {
     try {
-      const res = await spaceClient.getRecentlySharedWith();
+      const tokenMetadata = await getAppTokenMetadata();
+      const res = await spaceClient.getRecentlySharedWith(tokenMetadata());
       const membersAddresses = res
         .getMembersList()
         .map((member) => member.getAddress());
 
       if (membersAddresses.length < 1) return;
 
-      const apiTokens = await spaceClient.getAPISessionTokens();
+      const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
 
       const { data } = await apiClient.identities.getByAddress({
         token: apiTokens.getServicestoken(),

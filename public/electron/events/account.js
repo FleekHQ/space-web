@@ -3,6 +3,7 @@ const get = require('lodash/get');
 const { ipcMain } = require('electron');
 
 const { spaceClient, apiClient } = require('../clients');
+const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'account';
 const DELETE_ACCOUNT_EVENT = `${EVENT_PREFIX}:delete`;
@@ -28,7 +29,8 @@ const ADD_LINKED_ADDRESS_ERROR_EVENT = `${EVENT_PREFIX}:add_linked_address:error
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(CREATE_USERNAME_AND_PASSWORD_EVENT, async (_, payload) => {
     try {
-      const apiSessionRes = await spaceClient.getAPISessionTokens();
+      const tokenMetadata = await getAppTokenMetadata();
+      const apiSessionRes = await spaceClient.getAPISessionTokens(tokenMetadata());
 
       const { data } = await apiClient.identity.update({
         username: payload.username,
@@ -39,7 +41,7 @@ const registerAuthEvents = (mainWindow) => {
         type: 0, // 0 = PASSWORD; 1 = ETH
         uuid: data.data.uuid,
         passphrase: payload.password,
-      });
+      }, tokenMetadata());
 
       mainWindow.webContents.send(CREATE_USERNAME_AND_PASSWORD_SUCCESS_EVENT, data.data);
     } catch (err) {
@@ -50,8 +52,9 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(DELETE_ACCOUNT_EVENT, async () => {
     try {
-      const apiTokens = await spaceClient.getAPISessionTokens();
-      await spaceClient.deleteAccount();
+      const tokenMetadata = await getAppTokenMetadata();
+      const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
+      await spaceClient.deleteAccount(null, tokenMetadata());
       await apiClient.identity.deleteAccount({
         token: apiTokens.getServicestoken(),
       });
@@ -65,7 +68,8 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(UPDATE_IDENTITY_EVENT, async (event, payload) => {
     try {
-      const apiTokens = await spaceClient.getAPISessionTokens();
+      const tokenMetadata = await getAppTokenMetadata();
+      const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
 
       const { data } = await apiClient.identity.update({
         ...payload,
@@ -92,7 +96,8 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(UPLOAD_PROFILE_PIC_EVENT, async (event, payload) => {
     const { imagePath } = payload;
     try {
-      const apiTokens = await spaceClient.getAPISessionTokens();
+      const tokenMetadata = await getAppTokenMetadata();
+      const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
 
       const base64Image = fs.readFileSync(imagePath).toString('base64');
 
@@ -121,7 +126,8 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(GET_LINKED_ADDRESSES_EVENT, async () => {
     try {
-      const apiTokens = await spaceClient.getAPISessionTokens();
+      const tokenMetadata = await getAppTokenMetadata();
+      const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
       const { data } = await apiClient.identity.getLinkedAddresses({
         token: apiTokens.getServicestoken(),
       });
@@ -136,11 +142,12 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(ADD_LINKED_ADDRESS_EVENT, async (_, payload) => {
     try {
+      const tokenMetadata = await getAppTokenMetadata();
       await spaceClient.backupKeysByPassphrase({
         uuid: payload.uuid,
         passphrase: payload.torusRes.privateKey,
-      });
-      const apiSessionRes = await spaceClient.getAPISessionTokens();
+      }, tokenMetadata());
+      const apiSessionRes = await spaceClient.getAPISessionTokens(tokenMetadata());
       await apiClient.identity.addEthAddress({
         token: apiSessionRes.getServicestoken(),
         address: payload.torusRes.publicAddress,

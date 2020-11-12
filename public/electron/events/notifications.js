@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
-const { mapNotification } = require('../utils');
+const { mapNotification, getAppTokenMetadata } = require('../utils');
 const { listSharedFiles } = require('./objects');
 
 const EVENT_PREFIX = 'notifications';
@@ -22,7 +22,8 @@ const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLa
 const registerNotificationsEvents = (mainWindow) => {
   ipcMain.on(READ_NOTIFICATION_EVENT, async (event, payload) => {
     try {
-      await spaceClient.readNotification(payload);
+      const tokenMetadata = await getAppTokenMetadata();
+      await spaceClient.readNotification(payload, tokenMetadata());
 
       mainWindow.webContents.send(READ_NOTIFICATION_SUCCESS_EVENT);
     } catch (err) {
@@ -33,7 +34,8 @@ const registerNotificationsEvents = (mainWindow) => {
 
   ipcMain.on(FETCH_NOTIFICATIONS, async (event, payload) => {
     try {
-      const res = await spaceClient.getNotifications(payload);
+      const tokenMetadata = await getAppTokenMetadata();
+      const res = await spaceClient.getNotifications(payload, tokenMetadata());
 
       mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
         nextOffset: res.getNextoffset(),
@@ -50,7 +52,8 @@ const registerNotificationsEvents = (mainWindow) => {
 
   ipcMain.on(HANDLE_FILES_INVITATION, async (event, payload) => {
     try {
-      await spaceClient.handleFilesInvitation(payload);
+      const tokenMetadata = await getAppTokenMetadata();
+      await spaceClient.handleFilesInvitation(payload, tokenMetadata());
       await listSharedFiles(mainWindow);
 
       mainWindow.webContents.send(HANDLE_FILES_INVITATION_SUCCESS, payload);
@@ -62,7 +65,8 @@ const registerNotificationsEvents = (mainWindow) => {
 
   ipcMain.on(SET_NOTIFICATIONS_LAST_SEEN_AT, async (event, payload) => {
     try {
-      await spaceClient.setNotificationsLastSeenAt(payload);
+      const tokenMetadata = await getAppTokenMetadata();
+      await spaceClient.setNotificationsLastSeenAt(payload, tokenMetadata());
 
       mainWindow.webContents.send(SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS, payload);
     } catch (err) {

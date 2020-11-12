@@ -1,6 +1,7 @@
 const { ipcMain, shell } = require('electron');
 const get = require('lodash/get');
 
+const { getAppTokenMetadata } = require('../utils');
 const { spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'objects';
@@ -46,7 +47,8 @@ const listDirectories = async (mainWindow, payload = {}) => {
   const bucket = get(payload, 'bucket', DEFAULT_BUCKET) || DEFAULT_BUCKET;
 
   try {
-    const res = await spaceClient.listDirectories(payload);
+    const tokenMetadata = await getAppTokenMetadata();
+    const res = await spaceClient.listDirectories(payload, tokenMetadata());
 
     const entriesList = res.getEntriesList();
     const entries = entriesList.map((entry) => entryToObject(entry, bucket));
@@ -60,16 +62,17 @@ const listDirectories = async (mainWindow, payload = {}) => {
 
 const listSharedFiles = async (mainWindow, payload = {}) => {
   try {
+    const tokenMetadata = await getAppTokenMetadata();
     const withMeRes = await spaceClient.getSharedWithMeFiles({
       seek: '',
       limit: 100,
       ...payload,
-    });
+    }, tokenMetadata());
     const byMeRes = await spaceClient.getSharedByMeFiles({
       seek: '',
       limit: 100,
       ...payload,
-    }).catch((error) => {
+    }, tokenMetadata()).catch((error) => {
       console.error('FETCH_SHARED_BY_ME_FILES', error);
       return {
         getNextoffset() {
@@ -126,7 +129,8 @@ const listDirectory = async (
   const bucket = get(payload, 'bucket', DEFAULT_BUCKET) || DEFAULT_BUCKET;
 
   try {
-    const res = await spaceClient.listDirectory(payload);
+    const tokenMetadata = await getAppTokenMetadata();
+    const res = await spaceClient.listDirectory(payload, tokenMetadata());
     const entries = res.getEntriesList().map((entry) => entryToObject(entry, bucket));
 
     mainWindow.webContents.send(SUCCESS_DIR_EVENT, { entries, bucket });
@@ -151,7 +155,9 @@ const listDirectory = async (
 const registerObjectsEvents = (mainWindow) => {
   ipcMain.on(OPEN_EVENT, async (event, payload) => {
     try {
-      const res = await spaceClient.openFile(payload);
+      const tokenMetadata = await getAppTokenMetadata();
+
+      const res = await spaceClient.openFile(payload, tokenMetadata());
 
       const location = res.getLocation();
 
@@ -176,8 +182,8 @@ const registerObjectsEvents = (mainWindow) => {
       if (payload.password) {
         openPublicFilePayload.password = payload.password;
       }
-
-      const res = await spaceClient.openPublicFile(openPublicFilePayload);
+      const tokenMetadata = await getAppTokenMetadata();
+      const res = await spaceClient.openPublicFile(openPublicFilePayload, tokenMetadata());
 
       const location = res.getLocation();
 
@@ -213,7 +219,9 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(SEARCH_EVENT, async (event, payload) => {
     try {
-      const res = await spaceClient.searchFiles({ query: payload });
+      const tokenMetadata = await getAppTokenMetadata();
+
+      const res = await spaceClient.searchFiles({ query: payload }, tokenMetadata());
 
       const entries = res.getEntriesList().map((item) => {
         const dbId = item.getDbid();
