@@ -18,6 +18,7 @@ const getMasterAppToken = async () => {
     }
 
     // if token is not initialized, we initialize it
+    /*  eslint-disable no-console */
     console.log('initializing master app token');
     const initializeMasterAppTokenRes = await spaceClient.initializeMasterAppToken();
     token = initializeMasterAppTokenRes.getApptoken();
