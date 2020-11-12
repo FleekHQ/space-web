@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fs = require('fs-extra');
 const path = require('path');
 const axios = require('axios');
@@ -24,16 +25,13 @@ async function getDaemon() {
     responseType: 'stream',
     url: daemonURL,
   }).catch((error) => {
-    // eslint-disable-next-line no-console
     console.error(`\nError when trying to download the daemon binary from: ${daemonURL}`);
-    // eslint-disable-next-line no-console
     console.error(`Error : ${error.stack || error.message}`);
     process.exit(1);
   });
 
   const totalLength = headers['content-length'];
 
-  // eslint-disable-next-line no-console
   console.log(`Downloading space daemon binary from ${daemonURL}:`);
   const progressBar = new ProgressBar(`File: ${headers['content-disposition'].split(';')[1].trim()} [:bar] :percent :etas`, {
     width: 40,
@@ -55,21 +53,29 @@ async function getDaemon() {
     data.destroy();
     writer.destroy();
 
-    // eslint-disable-next-line no-console
     console.error(`\nError when downloading the space daemon binary: ${error.stack || error.message}`);
     process.exit(1);
   });
 
-  writer.on('finish', () => {
-    // eslint-disable-next-line no-console
-    console.log('Space daemon was download successfully!');
+  writer.on('finish', async () => {
+    let tag = '';
+    let name = '';
+    try {
+      const { data: spaceDaemonReleaseInfo } = await axios.get('https://api.github.com/repos/FleekHQ/space-daemon/releases/latest');
+      name = spaceDaemonReleaseInfo.name;
+      tag = spaceDaemonReleaseInfo.tag_name;
+    } catch (error) {
+      console.error(`Could not get space daemon name and tag info: ${error.message}`);
+    }
+    console.log('Space daemon was download successfully:');
+    console.log(`\t•Tag: ${tag}`);
+    console.log(`\t•Name: ${name}`);
     process.exit(0);
   });
 
   writer.on('error', (error) => {
     writer.destroy();
 
-    // eslint-disable-next-line no-console
     console.error(`\nError when saving the space daemon binary: ${error.stack || error.message}`);
     process.exit(1);
   });
