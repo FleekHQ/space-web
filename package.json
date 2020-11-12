@@ -201,6 +201,15 @@
     },
     "linux": {
       "icon": "build/icon.png"
+    },
+    "dmg": {
+      "background": "build/background.png",
+      "icon": "build/icon.png",
+      "iconSize": 70,
+      "contents": [
+        { "x": 129, "y": 217, "type": "file", "path": "Space.app" },
+        { "x": 481, "y": 217, "type": "link", "path": "/Applications" }
+      ]
     }
   },
   "jest": {

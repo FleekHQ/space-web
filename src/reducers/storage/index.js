@@ -5,7 +5,6 @@ import bucketReducer, {
   ADD_OBJECT,
   STORE_OBJECTS,
   DELETE_OBJECT,
-  UPDATE_OBJECT,
   UPDATE_OBJECTS,
   STORE_BUCKETS,
   SET_LOADING_STATE_BUCKET,
@@ -159,7 +158,6 @@ export default (state = DEFAULT_STATE, action) => {
     case STORE_DIR:
     case ADD_OBJECT:
     case DELETE_OBJECT:
-    case UPDATE_OBJECT:
     case UPDATE_OBJECTS:
     case UPDATE_OR_ADD_OBJECT:
     case UPDATE_SHARE_AMOUNT_OBJECTS:
