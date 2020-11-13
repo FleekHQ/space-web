@@ -1,5 +1,5 @@
-![Test Action Status](https://github.com/FleekHQ/desktop-storage/workflows/Test/badge.svg)
-![Build-Pack-Release Action Status](https://github.com/FleekHQ/desktop-storage/workflows/Build-Pack-Release/badge.svg)
+![Test Action Status](https://github.com/FleekHQ/space-desktop/workflows/Test/badge.svg)
+![Build-Pack-Release Action Status](https://github.com/FleekHQ/space-desktop/workflows/Build-Pack-Release/badge.svg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -84,4 +84,4 @@ For the release process, will be just necessary to create and merge a PR from `d
 **Note 2**: By running `npm version <patch|minor|major>`, the tag is automatically created with `v`, it just required to be pushed. Ex, `git push origin --tags  `.
 * Create a draft release selecting the tag version previously pushed.
 
-After doing those actions, we are ready to create the PR to make the app release. When the release PR (`develop` to `master`) is merged, the CI process will be in charge of generating the installer for each OS (mac, linux, and windows) and links to the installers will be available on the [repository releases page](https://github.com/FleekHQ/desktop-storage/releases) based on the app version.
+After doing those actions, we are ready to create the PR to make the app release. When the release PR (`develop` to `master`) is merged, the CI process will be in charge of generating the installer for each OS (mac, linux, and windows) and links to the installers will be available on the [repository releases page](https://github.com/FleekHQ/space-desktop/releases) based on the app version.

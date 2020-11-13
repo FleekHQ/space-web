@@ -7,7 +7,7 @@
   "homepage": "./",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FleekHQ/desktop-storage.git"
+    "url": "https://github.com/FleekHQ/space-desktop.git"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -167,9 +167,8 @@
     },
     "publish": {
       "provider": "github",
-      "repo": "desktop-storage",
-      "owner": "FleekHQ",
-      "private": true
+      "repo": "space-desktop",
+      "owner": "FleekHQ"
     },
     "files": [
       "build/**/*",
@@ -207,7 +206,7 @@
       "icon": "build/icon.png",
       "iconSize": 70,
       "contents": [
-        { "x": 129, "y": 217, "type": "file", "path": "Space.app" },
+        { "x": 129, "y": 217, "type": "file" },
         { "x": 481, "y": 217, "type": "link", "path": "/Applications" }
       ]
     }
