@@ -39,9 +39,6 @@ jobs:
       - name: Get daemon
         run: yarn download-daemon
       - name: Linux app pack and release
-        env:
-          SPACE_SERVICES_URL: ${{secrets.SPACE_SERVICES_URL}}
-          REACT_APP_FE_NODE_ENV: ${{secrets.REACT_APP_FE_NODE_ENV}}
         if: matrix.os == 'ubuntu-latest'
         run: yarn electron-pack --linux
       - name: MacOS app pack and release
