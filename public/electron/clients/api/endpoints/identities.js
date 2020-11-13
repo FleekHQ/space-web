@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const DEFAULT_PATH = '/identities';
 
 /**
@@ -5,7 +6,7 @@ const DEFAULT_PATH = '/identities';
  * @param {Object} payload - Payload to get an identity by address.
  * @param {string} payload.token - Services token.
  * @param {Array.<string>} payload.addresses - Address to get identity.
- * @returns {import('axios').AxiosResponse<{ data: import('./identity').Identity }>}
+ * @returns {import('axios').AxiosResponse<{ data: Array<import('./identity').Identity> | import('./identity').Identity }>}
  */
 function getByAddress(payload) {
   return this.instance({
@@ -25,7 +26,7 @@ function getByAddress(payload) {
  * @param {Object} payload - Payload to get an identity by username.
  * @param {string=} payload.token - Services token.
  * @param {Array.<string>} payload.usernames - Username to get identity.
- * @returns {import('axios').AxiosResponse<{ data: import('./identity').Identity }>}
+ * @returns {import('axios').AxiosResponse<{ data: Array<import('./identity').Identity> | import('./identity').Identity }>}
  */
 function getByUsername(payload) {
   return this.instance({
