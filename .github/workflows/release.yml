@@ -11,7 +11,15 @@ jobs:
       FA_NPM_TOKEN: ${{secrets.FA_NPM_TOKEN}}
       TERMINAL_NPM_TOKEN: ${{secrets.TERMINAL_NPM_TOKEN}}
       SPACE_SERVICES_URL: ${{secrets.SPACE_SERVICES_URL}}
-      REACT_APP_FE_NODE_ENV: ${{secrets.REACT_APP_FE_NODE_ENV}}
+      REACT_APP_TORUS_NETWORK: ${{secrets.REACT_APP_TORUS_NETWORK}}
+      REACT_APP_TORUS_PROXY_CONTRACT: ${{secrets.REACT_APP_TORUS_PROXY_CONTRACT}}
+      REACT_APP_TORUS_GOOGLE_VERIFIER: ${{secrets.REACT_APP_TORUS_GOOGLE_VERIFIER}}
+      REACT_APP_WS_AUTH_CHALLENGE_URL: ${{secrets.REACT_APP_WS_AUTH_CHALLENGE_URL}}
+      REACT_APP_TORUS_TWITTER_VERIFIER: ${{secrets.REACT_APP_TORUS_TWITTER_VERIFIER}}
+      REACT_APP_TORUS_GOOGLE_CLIENT_ID: ${{secrets.REACT_APP_TORUS_GOOGLE_CLIENT_ID}}
+      REACT_APP_TORUS_TWITTER_CLIENT_ID: ${{secrets.REACT_APP_TORUS_TWITTER_CLIENT_ID}}
+      REACT_APP_TORUS_TWITTER_AUTH_DOMAIN: ${{secrets.REACT_APP_TORUS_TWITTER_AUTH_DOMAIN}}
+      REACT_APP_TORUS_PROVIDERS_REDIRECT_URL: ${{secrets.REACT_APP_TORUS_PROVIDERS_REDIRECT_URL}}
     strategy:
       fail-fast: false
       matrix:
@@ -42,8 +50,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: yarn electron-pack --mac
       - name: Windows app pack and release
-        # env:
-        #  CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-        #  CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+        # env: 
+          #  CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          #  CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
         if: matrix.os == 'windows-latest'
         run: yarn electron-pack --win --x64 --ia32

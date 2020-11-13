@@ -1,5 +1,5 @@
-![Test Action Status](https://github.com/FleekHQ/desktop-storage/workflows/Test/badge.svg)
-![Build-Pack-Release Action Status](https://github.com/FleekHQ/desktop-storage/workflows/Build-Pack-Release/badge.svg)
+![Test Action Status](https://github.com/FleekHQ/space-desktop/workflows/Test/badge.svg)
+![Build-Pack-Release Action Status](https://github.com/FleekHQ/space-desktop/workflows/Build-Pack-Release/badge.svg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -60,6 +60,9 @@ Also, if the daemon requires additional env variables, you need to pass those en
 
 You can also download the latest version of the daemon directly into the resource folder (same way as CI does). To do that you can run `yarn download-daemon`
 
+### .env File
+Take a look at the `.env.example` file to set the necessary environment variables with its right values when you run the project locally.
+
 ## Build app locally
 The default behavior of the build process it's to try to sign the application. If you are not exporting the ENV variables required to sign the application, the build process is going to fail. If you want to skip the signing process in order to be able to run the build process locally you can pass the `CSC_IDENTITY_AUTO_DISCOVERY=false` env variable, so the sign step is going to be ignored
 
@@ -84,4 +87,4 @@ For the release process, will be just necessary to create and merge a PR from `d
 **Note 2**: By running `npm version <patch|minor|major>`, the tag is automatically created with `v`, it just required to be pushed. Ex, `git push origin --tags  `.
 * Create a draft release selecting the tag version previously pushed.
 
-After doing those actions, we are ready to create the PR to make the app release. When the release PR (`develop` to `master`) is merged, the CI process will be in charge of generating the installer for each OS (mac, linux, and windows) and links to the installers will be available on the [repository releases page](https://github.com/FleekHQ/desktop-storage/releases) based on the app version.
+After doing those actions, we are ready to create the PR to make the app release. When the release PR (`develop` to `master`) is merged, the CI process will be in charge of generating the installer for each OS (mac, linux, and windows) and links to the installers will be available on the [repository releases page](https://github.com/FleekHQ/space-desktop/releases) based on the app version.
