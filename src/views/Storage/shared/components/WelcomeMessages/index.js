@@ -40,6 +40,10 @@ const WelcomeMessages = () => {
     return null;
   }
 
+  // Delete this variable when we have integrated drive mounting
+  // and want it to show up
+  const disableDriveMountingModal = true;
+
   return (
     <div className={classes.rootWelcome}>
       {
@@ -114,7 +118,7 @@ const WelcomeMessages = () => {
         )
       }
       {
-        !state.hideIntegration && (
+        !state.hideIntegration && !disableDriveMountingModal && (
           <MessageBox
             bgColor="secondary"
             icon={faLaptop}
