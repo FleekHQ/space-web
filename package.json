@@ -1,6 +1,6 @@
 {
   "name": "space-app",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "main": "public/electron-app.js",
   "author": "Fleek Labs Inc.",
@@ -206,8 +206,17 @@
       "icon": "build/icon.png",
       "iconSize": 70,
       "contents": [
-        { "x": 129, "y": 217, "type": "file" },
-        { "x": 481, "y": 217, "type": "link", "path": "/Applications" }
+        {
+          "x": 129,
+          "y": 217,
+          "type": "file"
+        },
+        {
+          "x": 481,
+          "y": 217,
+          "type": "link",
+          "path": "/Applications"
+        }
       ]
     }
   },
