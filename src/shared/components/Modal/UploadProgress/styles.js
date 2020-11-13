@@ -36,4 +36,7 @@ export default makeStyles((theme) => ({
       error ? theme.palette.palette.red : theme.palette.text.primary
     ),
   },
+  tryAgainButton: {
+    marginRight: 15,
+  },
 }));

@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grow from '@material-ui/core/Grow';
 import { addItems } from '@events/add-items-subscribe';
+import classnames from 'classnames';
 import useStyles from './styles';
 
 const TRANSITION_TIMEOUT = 300;
@@ -73,16 +74,17 @@ const UploadProgress = ({ id, closeModal }) => {
               />
             )}
           </Typography>
-          {errorMessage ? (
-            <Button
-              color="primary"
-              className={classes.button}
-              onClick={retry}
-              disableRipple
-            >
-              {t('uploadProgressModal.retry')}
-            </Button>
-          ) : (
+          <div className={classes.buttons}>
+            {errorMessage && (
+              <Button
+                color="primary"
+                className={classnames(classes.button, classes.tryAgainButton)}
+                onClick={retry}
+                disableRipple
+              >
+                {t('uploadProgressModal.retry')}
+              </Button>
+            )}
             <Button
               color="secondary"
               className={classes.button}
@@ -91,7 +93,7 @@ const UploadProgress = ({ id, closeModal }) => {
             >
               {t('uploadProgressModal.dismiss')}
             </Button>
-          )}
+          </div>
         </div>
         <div className={classes.progressBar} />
       </div>
