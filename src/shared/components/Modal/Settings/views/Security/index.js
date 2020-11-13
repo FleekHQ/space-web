@@ -161,6 +161,7 @@ const Security = ({ t }) => {
           id: OPTION_IDS.GOOGLE,
           text: t('addBackupSignIn.google'),
           text2: metadata.email,
+          // Uncomment text below to re-enable the red disconnect button
           // text3: t('modals.settings.security.disconnect'),
           imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Google__G__Logo.svg',
           redText3: true,
@@ -184,7 +185,7 @@ const Security = ({ t }) => {
   const modalOptions = Object.keys(OPTION_IDS).filter((optionId) => {
     const isOptionNotAdded = !options[optionId];
     const isEmail = optionId === OPTION_IDS.EMAIL;
-    return (((isOptionNotAdded) && !isEmail) || (optionId === OPTION_IDS.GOOGLE));
+    return (isOptionNotAdded && !isEmail);
   });
 
   return (
