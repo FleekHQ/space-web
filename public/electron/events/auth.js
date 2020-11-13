@@ -133,7 +133,6 @@ const registerAuthEvents = (mainWindow) => {
 
       mainWindow.webContents.send(SIGNUP_SUCCESS_EVENT, user);
     } catch (error) {
-      console.log('catch error!!', error);
       console.error('SIGNUP_ERROR_EVENT', error);
 
       let message = error.message || '';
