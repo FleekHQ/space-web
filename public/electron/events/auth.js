@@ -69,9 +69,27 @@ const registerAuthEvents = (mainWindow) => {
     try {
       let user;
 
-      await spaceClient.generateKeyPairWithForce();
+      if (payload.username && payload.password && !payload.torusRes) {
+        const { data: usernamesData } = await apiClient.identities.getByUsername({
+          usernames: [payload.username],
+        }).catch((error) => {
+          if (error.response && error.response.status === 404) {
+            return {
+              data: null,
+            };
+          }
 
-      if (payload.username && payload.password) {
+          throw error;
+        });
+
+        if (usernamesData && usernamesData.data) {
+          mainWindow.webContents.send(SIGNUP_ERROR_EVENT, {
+            message: 'modules.signup.errors.username',
+          });
+          return;
+        }
+
+        await spaceClient.generateKeyPairWithForce();
         const apiSessionRes = await spaceClient.getAPISessionTokens();
 
         const { data } = await apiClient.identity.update({
@@ -86,6 +104,7 @@ const registerAuthEvents = (mainWindow) => {
 
         user = { ...data.data };
       } else {
+        await spaceClient.generateKeyPairWithForce();
         const apiSessionRes = await spaceClient.getAPISessionTokens();
 
         const { data } = await apiClient.identity.update({
