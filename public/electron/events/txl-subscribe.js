@@ -6,7 +6,7 @@ const EVENT_PREFIX = 'txlSuscribe';
 const registerTxlSubscribe = async (mainWindow) => {
   let eventStream = () => {};
   try {
-    eventStream = await spaceClient.txlSubscribe({ skipPromise: true });
+    eventStream = await spaceClient.txlSubscribe();
 
     eventStream.on('data', async (data) => {
       const bucket = data.getBucket();

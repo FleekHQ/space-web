@@ -9,7 +9,7 @@ const INVITATION_REPLY = 'INVITATION_REPLY';
 const registerNotificationSubscribe = async (mainWindow) => {
   let eventStream = () => {};
   try {
-    eventStream = await spaceClient.notificationSubscribe({ skipPromise: true });
+    eventStream = await spaceClient.notificationSubscribe();
 
     eventStream.on('data', async (data) => {
       const notification = data.getNotification();

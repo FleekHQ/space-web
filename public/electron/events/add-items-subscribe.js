@@ -18,7 +18,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
       eventStream = await spaceClient.addItems({
         targetPath: payload.targetPath,
         sourcePaths: payload.sourcePaths,
-      }, { skipPromise: true });
+      });
 
       eventStream.on('data', async (event) => {
         const result = event.getResult();

@@ -15,37 +15,30 @@ const proxiedHandler = {
   apply: (target, thisArg, args) => new Promise((resolve, reject) => {
     getAppTokenMetadata(spaceClientBase)
       .then((tokenMetadata) => {
-        let skipPromiseOption;
         if (args.length > 0) {
           const lastArgument = args[args.length - 1];
-          if (typeof lastArgument === 'object') {
-            // options
-            // additionalMetadata: optional metadata field,
-            // skipPromise: will not call a promise. Used for streams
-            const {
-              additionalMetadata,
-              skipPromise,
-            } = lastArgument;
-            skipPromiseOption = skipPromise;
-            if (additionalMetadata) {
-              /* eslint-disable-next-line max-len */
-              const newArgs = [...args.slice(0, args.length - 1), tokenMetadata(additionalMetadata)];
-              if (skipPromiseOption) {
-                return spaceClientBase[target.name](...newArgs);
-              }
-              return spaceClientBase[target.name](...newArgs)
+          // options
+          // additionalMetadata: optional metadata field,
+          if (typeof lastArgument === 'object' && lastArgument.additionalMetadata) {
+            /* eslint-disable-next-line max-len */
+            const newArgs = [...args.slice(0, args.length - 1), tokenMetadata(lastArgument.additionalMetadata)];
+            const response = spaceClientBase[target.name](...newArgs);
+            if (response instanceof Promise) {
+              return response
                 .then((res) => resolve(res))
                 .catch((e) => reject(e));
             }
+            return response;
           }
         }
         const newArgs = [...args, tokenMetadata()];
-        if (skipPromiseOption) {
-          return spaceClientBase[target.name](...newArgs);
+        const response = spaceClientBase[target.name](...newArgs);
+        if (response instanceof Promise) {
+          return response
+            .then((res) => resolve(res))
+            .catch((e) => reject(e));
         }
-        return spaceClientBase[target.name](...newArgs)
-          .then((res) => resolve(res))
-          .catch((e) => reject(e));
+        return response;
       })
       .catch((e) => reject(e));
   }),

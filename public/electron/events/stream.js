@@ -21,7 +21,7 @@ const EventType = {
 const registerEventStream = async (mainWindow) => {
   let eventStream = () => {};
   try {
-    eventStream = await spaceClient.subscribe({ skipPromise: true });
+    eventStream = await spaceClient.subscribe();
 
     eventStream.on('data', (event) => {
       // TODO: Check with BE event to update files on FE
