@@ -25,7 +25,6 @@ const registerFolderEvents = (mainWindow) => {
         bucket,
         path: folderPath,
       }, identity);
-
       await spaceClient.createFolder(createFolderPayload);
 
       mainWindow.webContents.send(CREATE_FOLDER_SUCCESS_EVENT, {

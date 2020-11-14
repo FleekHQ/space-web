@@ -51,7 +51,7 @@ const registerAuthEvents = (mainWindow) => {
   ipcMain.on(DELETE_ACCOUNT_EVENT, async () => {
     try {
       const apiTokens = await spaceClient.getAPISessionTokens();
-      await spaceClient.deleteAccount();
+      await spaceClient.deleteAccount(null);
       await apiClient.identity.deleteAccount({
         token: apiTokens.getServicestoken(),
       });

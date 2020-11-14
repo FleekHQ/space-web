@@ -1,6 +1,5 @@
 const registerAuthEvents = require('./auth');
-const registerEventStream = require('./stream');
-const registerTxlSubscribe = require('./txl-subscribe');
+
 const registerObjectsEvents = require('./objects').default;
 const registerAddItemsSubscribe = require('./add-items-subscribe');
 const registerAppUpdate = require('./app-update');
@@ -12,20 +11,16 @@ const registerAccountEvents = require('./account');
 const registerFolderEvents = require('./folder');
 const registerIdentitiesEvents = require('./identities');
 const registerUsageEvents = require('./usage');
-const registerNotificationNotificationSuscribe = require('./notifications-subscribe');
 const registerWalletEvents = require('./wallet');
 const registerWinResizeEvents = require('./win-resize');
 const registerShellEvents = require('./shell');
+const registerSubscriptions = require('./subscriptions');
 
 const registerEvents = ({
   app,
   isDev,
   mainWindow,
 }) => {
-  const stream = registerEventStream(mainWindow);
-  const txlStream = registerTxlSubscribe(mainWindow);
-  const notificationStream = registerNotificationNotificationSuscribe(mainWindow);
-
   registerAuthEvents(mainWindow);
   registerShareUpdate(mainWindow);
   registerObjectsEvents(mainWindow);
@@ -40,16 +35,11 @@ const registerEvents = ({
   registerWalletEvents(mainWindow);
   registerWinResizeEvents(mainWindow);
   registerShellEvents(mainWindow);
+  registerSubscriptions(mainWindow);
 
   if (!isDev && process.env.SKIP_AUTOUPDATE !== 'true') {
     registerAppUpdate({ app, mainWindow });
   }
-
-  return () => {
-    stream.destroy();
-    txlStream.destroy();
-    notificationStream.destroy();
-  };
 };
 
 module.exports = registerEvents;

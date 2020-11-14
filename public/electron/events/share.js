@@ -37,6 +37,7 @@ const registerShareEvents = (mainWindow) => {
       const usernames = get(payload, 'usernames', []) || [];
       const publicKeysInput = get(payload, 'publicKeys', []) || [];
       let identities = [];
+
       if (usernames.length > 0) {
         const apiTokens = await spaceClient.getAPISessionTokens();
         const { data } = await apiClient.identities.getByUsername({

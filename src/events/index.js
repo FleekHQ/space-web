@@ -14,6 +14,7 @@ import registerIdentitiesEvents from './identities';
 import registerUsageEvents from './usage';
 import registerNotificationSubscribe from './notifications-subscribe';
 import walletSubscribe from './wallet';
+import registerSubscriptions from './subscriptions';
 
 const registerEvents = () => {
   registerShortcuts();
@@ -32,6 +33,8 @@ const registerEvents = () => {
   registerUsageEvents();
   registerNotificationSubscribe();
   walletSubscribe();
+  registerSubscriptions();
+  registerSubscriptions();
 };
 
 export default registerEvents;
@@ -48,3 +51,4 @@ export * from './identities';
 export * from './usage';
 export * from './wallet';
 export * from './win-resize';
+export * from './subscriptions';

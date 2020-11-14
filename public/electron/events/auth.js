@@ -26,6 +26,7 @@ const registerAuthEvents = (mainWindow) => {
         const { data } = await apiClient.identities.getByUsername({
           usernames: [payload.username],
         });
+
         await spaceClient.recoverKeysByPassphrase({
           uuid: data.data.uuid,
           passphrase: payload.password,
@@ -106,7 +107,6 @@ const registerAuthEvents = (mainWindow) => {
       } else {
         await spaceClient.generateKeyPairWithForce();
         const apiSessionRes = await spaceClient.getAPISessionTokens();
-
         const { data } = await apiClient.identity.update({
           token: apiSessionRes.getServicestoken(),
           displayName: payload.torusRes.userInfo.name,

@@ -5,7 +5,7 @@ import {
   Redirect,
   useRouteMatch,
 } from 'react-router-dom';
-import { getLinkedAddresses } from '@events';
+import { getLinkedAddresses, subscribeToStreams } from '@events';
 
 import Layout from '@shared/components/Layout';
 
@@ -21,8 +21,10 @@ const Storage = () => {
   const match = useRouteMatch();
 
   // pre-fetching data for Settings
+  // subscribing to streams, which occurs only for a logged in user
   useEffect(() => {
     getLinkedAddresses();
+    subscribeToStreams();
   }, []);
 
   return (

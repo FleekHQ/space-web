@@ -176,7 +176,6 @@ const registerObjectsEvents = (mainWindow) => {
       if (payload.password) {
         openPublicFilePayload.password = payload.password;
       }
-
       const res = await spaceClient.openPublicFile(openPublicFilePayload);
 
       const location = res.getLocation();
