@@ -28,7 +28,7 @@ const proxiedHandler = {
                 .then((res) => resolve(res))
                 .catch((e) => reject(e));
             }
-            return response;
+            return resolve(response);
           }
         }
         const newArgs = [...args, tokenMetadata()];
@@ -38,7 +38,7 @@ const proxiedHandler = {
             .then((res) => resolve(res))
             .catch((e) => reject(e));
         }
-        return response;
+        return resolve(response);
       })
       .catch((e) => reject(e));
   }),
