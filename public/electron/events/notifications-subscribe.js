@@ -1,5 +1,4 @@
 const { spaceClient } = require('../clients');
-const { getAppTokenMetadata } = require('../utils');
 const { mapNotification } = require('../utils');
 const { listDirectories } = require('./objects');
 
@@ -10,8 +9,7 @@ const INVITATION_REPLY = 'INVITATION_REPLY';
 const registerNotificationSubscribe = async (mainWindow) => {
   let eventStream = () => {};
   try {
-    const tokenMetadata = await getAppTokenMetadata();
-    eventStream = spaceClient.notificationSubscribe(tokenMetadata());
+    eventStream = await spaceClient.notificationSubscribe({ skipPromise: true });
 
     eventStream.on('data', async (data) => {
       const notification = data.getNotification();

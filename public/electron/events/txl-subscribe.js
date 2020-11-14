@@ -1,5 +1,4 @@
 const { spaceClient } = require('../clients');
-const { getAppTokenMetadata } = require('../utils');
 const { listDirectories, listSharedFiles } = require('./objects');
 
 const EVENT_PREFIX = 'txlSuscribe';
@@ -7,9 +6,7 @@ const EVENT_PREFIX = 'txlSuscribe';
 const registerTxlSubscribe = async (mainWindow) => {
   let eventStream = () => {};
   try {
-    const tokenMetadata = await getAppTokenMetadata();
-
-    eventStream = spaceClient.txlSubscribe(tokenMetadata());
+    eventStream = await spaceClient.txlSubscribe({ skipPromise: true });
 
     eventStream.on('data', async (data) => {
       const bucket = data.getBucket();

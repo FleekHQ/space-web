@@ -3,7 +3,6 @@ const isArray = require('lodash/isArray');
 const { ipcMain } = require('electron');
 
 const { spaceClient, apiClient } = require('../clients');
-const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'share';
 const SHARE_ITEMS_EVENT = `${EVENT_PREFIX}:items`;
@@ -20,8 +19,7 @@ const GENERATE_PUBLIC_LINK_SUCCESS_EVENT = `${EVENT_PREFIX}:publicLink:success`;
 const registerShareEvents = (mainWindow) => {
   ipcMain.on(SHARE_ITEMS_EVENT, async (event, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-      await spaceClient.shareItemsToSelectGroup(payload, tokenMetadata());
+      await spaceClient.shareItemsToSelectGroup(payload);
       mainWindow.webContents.send(SHARE_ITEMS_SUCCESS_EVENT);
     } catch (err) {
       console.error('SHARE_ITEMS_ERROR_EVENT', err);
@@ -39,10 +37,9 @@ const registerShareEvents = (mainWindow) => {
       const usernames = get(payload, 'usernames', []) || [];
       const publicKeysInput = get(payload, 'publicKeys', []) || [];
       let identities = [];
-      const tokenMetadata = await getAppTokenMetadata();
 
       if (usernames.length > 0) {
-        const apiTokens = await spaceClient.getAPISessionTokens(tokenMetadata());
+        const apiTokens = await spaceClient.getAPISessionTokens();
         const { data } = await apiClient.identities.getByUsername({
           usernames,
           token: apiTokens.getServicestoken(),
@@ -73,7 +70,7 @@ const registerShareEvents = (mainWindow) => {
       await spaceClient.shareFilesViaPublicKey({
         paths,
         publicKeys,
-      }, tokenMetadata());
+      });
 
       const getAddress = (publicKey) => {
         const user = identities.find((identity) => identity.publicKey === publicKey);
@@ -100,8 +97,7 @@ const registerShareEvents = (mainWindow) => {
 
   ipcMain.on(GENERATE_PUBLIC_LINK_EVENT, async (event, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-      const res = await spaceClient.generatePublicFileLink(payload, tokenMetadata());
+      const res = await spaceClient.generatePublicFileLink(payload);
       const linkInfo = {
         link: res.getLink(),
         fileCid: res.getFilecid(),

@@ -1,5 +1,4 @@
 const Store = require('electron-store');
-const { spaceClient } = require('../clients');
 
 const appTokenStoreKey = 'masterAppToken';
 
@@ -8,7 +7,7 @@ const returnMetadata = (token = '') => (metadata = {}) => ({
   authorization: `AppToken ${token}`,
 });
 
-const getMasterAppToken = async () => {
+const getMasterAppToken = async (spaceClientBase) => {
   const store = new Store();
   let token = store.get(appTokenStoreKey);
   try {
@@ -20,7 +19,7 @@ const getMasterAppToken = async () => {
     // if token is not initialized, we initialize it
     /*  eslint-disable no-console */
     console.log('initializing master app token');
-    const initializeMasterAppTokenRes = await spaceClient.initializeMasterAppToken();
+    const initializeMasterAppTokenRes = await spaceClientBase.initializeMasterAppToken();
     token = initializeMasterAppTokenRes.getApptoken();
     console.log(token);
 

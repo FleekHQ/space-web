@@ -4,7 +4,6 @@ const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
 const { listDirectory } = require('./objects');
-const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'addItemsSubscribe';
 const SUBSCRIBE_START_EVENT = `${EVENT_PREFIX}:start`;
@@ -16,11 +15,10 @@ const registerAddItemsSubscribe = (mainWindow) => {
 
   ipcMain.on(SUBSCRIBE_START_EVENT, async (_, { id, payload, bucket = 'personal' }) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-      eventStream = spaceClient.addItems({
+      eventStream = await spaceClient.addItems({
         targetPath: payload.targetPath,
         sourcePaths: payload.sourcePaths,
-      }, tokenMetadata());
+      }, { skipPromise: true });
 
       eventStream.on('data', async (event) => {
         const result = event.getResult();

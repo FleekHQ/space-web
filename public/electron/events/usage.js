@@ -1,7 +1,6 @@
 const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
-const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'usage';
 const FETCH_USAGE_EVENT = `${EVENT_PREFIX}:fetch`;
@@ -24,9 +23,7 @@ const mockupResponse = (mainWindow) => {
 const registerUsageEvents = (mainWindow) => {
   ipcMain.on(FETCH_USAGE_EVENT, async (event, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-
-      const res = await spaceClient.getUsageInfo(payload, tokenMetadata());
+      const res = await spaceClient.getUsageInfo(payload);
       mainWindow.webContents.send(FETCH_USAGE_SUCCESS_EVENT, res);
     } catch (error) {
       // mainWindow.webContents.send(FETCH_USAGE_ERROR_EVENT, error);

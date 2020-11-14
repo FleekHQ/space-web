@@ -1,6 +1,5 @@
 const { spaceClient } = require('../clients');
 const { entryToObject } = require('./objects');
-const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'eventStream';
 const EVENT_STREAM_DELETE_ITEM = `${EVENT_PREFIX}:delete`;
@@ -22,8 +21,7 @@ const EventType = {
 const registerEventStream = async (mainWindow) => {
   let eventStream = () => {};
   try {
-    const tokenMetadata = await getAppTokenMetadata();
-    eventStream = spaceClient.subscribe(tokenMetadata());
+    eventStream = await spaceClient.subscribe({ skipPromise: true });
 
     eventStream.on('data', (event) => {
       // TODO: Check with BE event to update files on FE

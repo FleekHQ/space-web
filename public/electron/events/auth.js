@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron');
-const { getAddressByPublicKey, getAppTokenMetadata } = require('../utils');
+const { getAddressByPublicKey } = require('../utils');
 const { apiClient, spaceClient } = require('../clients');
 
 const EVENT_PREFIX = 'auth';
@@ -20,8 +20,6 @@ const RESTORE_KEYS_MNEMONIC_SUCCESS_EVENT = `${EVENT_PREFIX}:restore_keys_mnemon
 const registerAuthEvents = (mainWindow) => {
   ipcMain.on(SIGNIN_EVENT, async (_, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-
       let user;
 
       if (payload.username && payload.password && !payload.torusRes) {
@@ -32,7 +30,7 @@ const registerAuthEvents = (mainWindow) => {
         await spaceClient.recoverKeysByPassphrase({
           uuid: data.data.uuid,
           passphrase: payload.password,
-        }, tokenMetadata());
+        });
 
         user = { ...data.data };
       } else {
@@ -44,7 +42,7 @@ const registerAuthEvents = (mainWindow) => {
         await spaceClient.recoverKeysByPassphrase({
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
-        }, tokenMetadata());
+        });
 
         user = { ...data.data };
       }
@@ -70,14 +68,12 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(SIGNUP_EVENT, async (_, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-      console.log(tokenMetadata());
       let user;
 
-      await spaceClient.generateKeyPairWithForce(tokenMetadata());
+      await spaceClient.generateKeyPairWithForce();
 
       if (payload.username && payload.password) {
-        const apiSessionRes = await spaceClient.getAPISessionTokens(tokenMetadata());
+        const apiSessionRes = await spaceClient.getAPISessionTokens();
 
         const { data } = await apiClient.identity.update({
           username: payload.username,
@@ -87,12 +83,11 @@ const registerAuthEvents = (mainWindow) => {
           type: 0, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.password,
-        }, tokenMetadata());
+        });
 
         user = { ...data.data };
       } else {
-        const apiSessionRes = await spaceClient.getAPISessionTokens(tokenMetadata());
-
+        const apiSessionRes = await spaceClient.getAPISessionTokens();
         const { data } = await apiClient.identity.update({
           token: apiSessionRes.getServicestoken(),
           displayName: payload.torusRes.userInfo.name,
@@ -102,7 +97,7 @@ const registerAuthEvents = (mainWindow) => {
           type: 1, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
-        }, tokenMetadata());
+        });
 
         await apiClient.identity.addEthAddress({
           token: apiSessionRes.getServicestoken(),
@@ -141,8 +136,7 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(CHECK_USERNAME_EVENT, async (event, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-      const res = await spaceClient.getIdentityByUsername(payload, tokenMetadata());
+      const res = await spaceClient.getIdentityByUsername(payload);
       mainWindow.webContents.send(CHECK_USERNAME_SUCCESS_EVENT, {
         identity: res.getIdentity(),
       });
@@ -155,10 +149,9 @@ const registerAuthEvents = (mainWindow) => {
 
   ipcMain.on(RESTORE_KEYS_MNEMONIC_EVENT, async (event, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-      await spaceClient.restoreKeyPairViaMnemonic(payload, tokenMetadata());
-      const publicKeyResponse = await spaceClient.getPublicKey(tokenMetadata());
-      const sessionTokensResponse = await spaceClient.getAPISessionTokens(tokenMetadata());
+      await spaceClient.restoreKeyPairViaMnemonic(payload);
+      const publicKeyResponse = await spaceClient.getPublicKey();
+      const sessionTokensResponse = await spaceClient.getAPISessionTokens();
       const address = getAddressByPublicKey(publicKeyResponse.getPublickey());
       const { data } = await apiClient.identities.getByAddress({
         addresses: [address],

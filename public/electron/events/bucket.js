@@ -2,7 +2,6 @@ const { ipcMain } = require('electron');
 
 const { spaceClient } = require('../clients');
 const { listDirectory } = require('./objects');
-const { getAppTokenMetadata } = require('../utils');
 
 const EVENT_PREFIX = 'bucket';
 const LIST_FETCH_EVENT = `${EVENT_PREFIX}:list:fetch`;
@@ -28,9 +27,7 @@ const listBuckets = async (
   payload = {},
 ) => {
   try {
-    const tokenMetadata = await getAppTokenMetadata();
-
-    const res = await spaceClient.listBuckets(payload, tokenMetadata());
+    const res = await spaceClient.listBuckets(payload);
     const bucketsList = res.getBucketsList().map(getBucketData);
 
     mainWindow.webContents.send(LIST_SUCCESS_EVENT, { bucketsList });
@@ -56,9 +53,7 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(TOGGLE_BUCKET_BACKUP_EVENT, async (event, payload) => {
     try {
-      const tokenMetadata = await getAppTokenMetadata();
-
-      await spaceClient.toggleBucketBackup(payload, tokenMetadata());
+      await spaceClient.toggleBucketBackup(payload);
       mainWindow.webContents.send(TOGGLE_BUCKET_BACKUP_SUCCESS_EVENT);
     } catch (error) {
       console.error('TOGGLE_BUCKET_BACKUP_ERROR_EVENT', error);
