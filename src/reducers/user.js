@@ -52,7 +52,7 @@ export default (state = user, action) => {
     }
 
     case USER_ACTION_TYPES.ON_USER_LOGOUT: {
-      electronStore.clear();
+      electronStore.delete(USER_KEY);
       return null;
     }
 
