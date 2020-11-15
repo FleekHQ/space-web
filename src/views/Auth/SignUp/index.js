@@ -20,6 +20,8 @@ import { signup, signin } from '@events';
 import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 
+import Splash from '../../Splash';
+
 import useStyles from './styles';
 
 const PRIVACY_POLICY_URL = 'https://space.storage/privacy-policy';
@@ -30,8 +32,11 @@ const SignUp = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [showSplash, setShowSplash] = React.useState(false);
   const state = useSelector((s) => ({
     ...s.auth.signup,
+    error: s.auth.signup.error || s.auth.signin.error,
+    success: s.auth.signup.success || s.auth.signin.success,
     loading: s.auth.signup.loading || s.auth.signin.loading,
   }));
 
@@ -48,6 +53,7 @@ const SignUp = () => {
    * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
    */
   const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    setShowSplash(true);
     if (keyNotExists) {
       signup({
         torusRes,
@@ -62,6 +68,7 @@ const SignUp = () => {
    * @param {string} errorKey
    */
   const handleThirdPartyAuthError = (errorKey) => {
+    setShowSplash(false);
     dispatch({
       error: `modules.signup.errors.${errorKey}`,
       type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
@@ -85,108 +92,132 @@ const SignUp = () => {
     }
   ), []);
 
+  React.useEffect(() => {
+    if (state.error) {
+      setShowSplash(false);
+    }
+  }, [state.error]);
+
   return (
-    <Box
-      display="flex"
-      width={580}
-      height={288}
-      position="relative"
-      justifyContent="center"
-    >
-      <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
-        <Box display="inherit" flexDirection="row" alignItems="flex-end" mb="31px">
-          <Typography>
-            <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
-              {t('modules.signup.title')}
-            </Box>
-          </Typography>
-          <Box ml="111px">
-            <Link to="/auth/signin" component={NavLink}>
-              <Box component="span" color="#006EFF" fontSize="14px">
-                {t('modules.signin.title')}
-              </Box>
-            </Link>
-          </Box>
-        </Box>
-        <Box mb="20px" width="100%">
-          <UsernamePasswordForm
-            showPasswordTooltip
-            isLoading={state.loading}
-            submitBtnText={t('modules.signup.title')}
-            onSubmit={handleUsernamePasswordFormSubmit}
-          />
-        </Box>
-        <Box color="common.white" textAlign="center">
-          <Typography color="inherit">
-            <Box component="span" fontSize="10px" color="common.white">
-              {`${t('modules.signup.agreenment.part1')} `}
-              <ButtonBase
-                color="inherit"
-                className={classes.linkButton}
-                onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
-              >
-                {`${t('modules.signup.agreenment.privacy')}`}
-              </ButtonBase>
-              &nbsp;&&nbsp;
-              <ButtonBase
-                color="inherit"
-                className={classes.linkButton}
-                onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}
-              >
-                {t('modules.signup.agreenment.terms')}
-              </ButtonBase>
-            </Box>
-          </Typography>
-        </Box>
-      </Box>
-      <Box mt="59px" mb="75px" mx="35px" display="flex" flexDirection="column" alignItems="center">
-        <Box flex={1}>
-          <Divider orientation="vertical" classes={{ root: classes.dividerRoot }} />
-        </Box>
-        <Box mt="8px" mb="10px">
-          <Typography>
-            <Box component="span" color="#5A5A5A">
-              or
-            </Box>
-          </Typography>
-        </Box>
-        <Box flex={1}>
-          <Divider light orientation="vertical" classes={{ root: classes.dividerRoot }} />
-        </Box>
-      </Box>
-      <Box flex={1} maxWidth={247} mt="59px">
-        <ThirdPartyAuth
-          isLoading={state.loading}
-          type={t('modules.signup.title')}
-          onError={handleThirdPartyAuthError}
-          onSuccess={handleThirdPartyAuthSuccess}
-        />
-      </Box>
+    <>
       {
-        state.error && (
+        showSplash && (
           <Box
-            pl="10px"
-            pr="14px"
-            bottom={0}
-            border={1}
-            height={33}
             display="flex"
-            color="#EF6A6E"
-            borderRadius={4}
-            bgcolor="#240F10"
-            alignSelf="center"
+            width="100%"
+            height="100vh"
             position="absolute"
-            alignItems="center"
-            borderColor="#EF6A6E"
+            zIndex={2}
+            justifyContent="center"
           >
-            <FontAwesomeIcon icon={faExclamationTriangle} />
-            <Box ml="7px" component="span" color="common.white">
-              {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
-            </Box>
+            <Splash />
           </Box>
         )
       }
-    </Box>
+      <Box
+        display="flex"
+        width={580}
+        height={288}
+        position="relative"
+        justifyContent="center"
+      >
+        <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
+          <Box display="inherit" flexDirection="row" alignItems="flex-end" mb="31px">
+            <Typography>
+              <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
+                {t('modules.signup.title')}
+              </Box>
+            </Typography>
+            <Box ml="111px">
+              <Link to="/auth/signin" component={NavLink}>
+                <Box component="span" color="#006EFF" fontSize="14px">
+                  {t('modules.signin.title')}
+                </Box>
+              </Link>
+            </Box>
+          </Box>
+          <Box mb="20px" width="100%">
+            <UsernamePasswordForm
+              showPasswordTooltip
+              isLoading={state.loading}
+              submitBtnText={t('modules.signup.title')}
+              onSubmit={handleUsernamePasswordFormSubmit}
+            />
+          </Box>
+          <Box color="common.white" textAlign="center">
+            <Typography color="inherit">
+              <Box component="span" fontSize="10px" color="common.white">
+                {`${t('modules.signup.agreenment.part1')} `}
+                <ButtonBase
+                  color="inherit"
+                  className={classes.linkButton}
+                  onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
+                >
+                  {`${t('modules.signup.agreenment.privacy')}`}
+                </ButtonBase>
+                &nbsp;&&nbsp;
+                <ButtonBase
+                  color="inherit"
+                  className={classes.linkButton}
+                  onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}
+                >
+                  {t('modules.signup.agreenment.terms')}
+                </ButtonBase>
+              </Box>
+            </Typography>
+          </Box>
+        </Box>
+        <Box mt="59px" mb="75px" mx="35px" display="flex" flexDirection="column" alignItems="center">
+          <Box flex={1}>
+            <Divider orientation="vertical" classes={{ root: classes.dividerRoot }} />
+          </Box>
+          <Box mt="8px" mb="10px">
+            <Typography>
+              <Box component="span" color="#5A5A5A">
+                or
+              </Box>
+            </Typography>
+          </Box>
+          <Box flex={1}>
+            <Divider light orientation="vertical" classes={{ root: classes.dividerRoot }} />
+          </Box>
+        </Box>
+        <Box flex={1} maxWidth={247} mt="59px">
+          <ThirdPartyAuth
+            isLoading={state.loading}
+            type={t('modules.signup.title')}
+            onError={handleThirdPartyAuthError}
+            onCancel={() => setShowSplash(false)}
+            onSuccess={handleThirdPartyAuthSuccess}
+            onStartLoading={() => setShowSplash(true)}
+          />
+        </Box>
+        {
+          state.error && (
+            <Box
+              pl="10px"
+              pr="14px"
+              bottom={0}
+              border={1}
+              height={33}
+              display="flex"
+              color="#EF6A6E"
+              borderRadius={4}
+              bgcolor="#240F10"
+              alignSelf="center"
+              position="absolute"
+              alignItems="center"
+              borderColor="#EF6A6E"
+            >
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+              <Box ml="7px" component="span" color="common.white">
+                {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
+              </Box>
+            </Box>
+          )
+        }
+      </Box>
+    </>
   );
 };
 
