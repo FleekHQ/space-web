@@ -94,7 +94,9 @@ const registerKeysEvents = (mainWindow) => {
 
   ipcMain.on(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_EVENT, async (_, payload) => {
     try {
-      await spaceClient.testKeysPassphrase(payload);
+      if (payload.passphrase) {
+        await spaceClient.testKeysPassphrase(payload);
+      }
       await spaceClient.deleteKeyPair();
 
       mainWindow.webContents.send(TEST_KEYS_BY_PASSPHRASE_AND_SIGN_OUT_SUCCESS_EVENT);

@@ -13,7 +13,7 @@ import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
-import { testKeys } from '@events';
+import { testKeysAndDelete } from '@events';
 import { USER_ACTION_TYPES } from '@reducers/user';
 import { SIGNOUT_ACTION_TYPES } from '@reducers/auth/signout';
 
@@ -71,7 +71,7 @@ const SignoutConfirmation = ({ closeModal }) => {
       <Box my={2}>
         <form
           id="password-form"
-          onSubmit={() => testKeys({
+          onSubmit={() => testKeysAndDelete({
             uuid: user.uuid,
             passphrase: password,
           })}
@@ -107,7 +107,7 @@ const SignoutConfirmation = ({ closeModal }) => {
           variant="contained"
           form="password-form"
           disabled={signoutState.loading}
-          onClick={() => testKeys({
+          onClick={() => testKeysAndDelete({
             uuid: user.uuid,
             passphrase: password,
           })}
