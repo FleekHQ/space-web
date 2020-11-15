@@ -48,7 +48,7 @@ const SharePanel = (props) => {
         <Typography variant="body1">
           {t('detailsPanel.share.with')}
         </Typography>
-        <Typography component="a" variant="body1" color="textSecondary">
+        <Typography component="a" variant="body1" color="textSecondary" className="manageLink" onClick={onShare}>
           {t('detailsPanel.share.manage')}
         </Typography>
       </div>
