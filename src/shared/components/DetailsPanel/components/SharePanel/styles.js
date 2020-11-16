@@ -17,6 +17,9 @@ export default makeStyles({
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: '5px 0 10px 0',
+    '& > .manageLink': {
+      cursor: 'pointer',
+    },
   },
   collaboratorList: {
     flex: 1,

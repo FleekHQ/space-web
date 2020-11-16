@@ -13,8 +13,10 @@ import * as constants from './constants';
 const ThirdPartyAuth = ({
   type,
   onError,
+  onCancel,
   onSuccess,
   isLoading,
+  onStartLoading,
 }) => {
   const { t } = useTranslation();
   const { isInitializing, torusTriggerLogin } = useTorusSdk();
@@ -33,6 +35,7 @@ const ThirdPartyAuth = ({
     });
 
     try {
+      onStartLoading();
       const tRes = await torusTriggerLogin({ provider });
 
       if (tRes) {
@@ -58,6 +61,7 @@ const ThirdPartyAuth = ({
       });
 
       if (error && error.message === 'user closed popup') {
+        onCancel();
         return;
       }
 
@@ -135,10 +139,14 @@ const ThirdPartyAuth = ({
 
 ThirdPartyAuth.defaultProps = {
   isLoading: false,
+  onCancel: () => null,
+  onStartLoading: () => null,
 };
 
 ThirdPartyAuth.propTypes = {
   isLoading: PropTypes.bool,
+  onCancel: PropTypes.func,
+  onStartLoading: PropTypes.func,
   onError: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
   type: PropTypes.oneOf([constants.SIGNIN, constants.SIGNUP]).isRequired,
