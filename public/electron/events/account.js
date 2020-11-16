@@ -146,8 +146,9 @@ const registerAuthEvents = (mainWindow) => {
         address: payload.torusRes.publicAddress,
         provider: payload.provider,
         metadata: {
-          email: payload.torusRes.userInfo.email,
           name: payload.torusRes.userInfo.name,
+          email: payload.torusRes.userInfo.email,
+          nickname: payload.torusRes.userInfo.nickname,
         },
       });
       mainWindow.webContents.send(ADD_LINKED_ADDRESS_SUCCESS_EVENT, {
@@ -156,8 +157,9 @@ const registerAuthEvents = (mainWindow) => {
         provider: payload.provider,
         createdAt: new Date().toISOString(),
         metadata: {
-          email: payload.torusRes.userInfo.email,
           name: payload.torusRes.userInfo.name,
+          email: payload.torusRes.userInfo.email,
+          nickname: payload.torusRes.userInfo.nickname,
         },
       });
     } catch (error) {

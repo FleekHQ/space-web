@@ -1,14 +1,44 @@
 import React from 'react';
+import axios from 'axios';
 import TorusSdk from '@toruslabs/torus-direct-web-sdk';
 
 import config from '@config';
 
 /**
+ * @typedef {Object} UserInfo
+ * @property {string?} email
+ * @property {string?} nickname
+ * @property {string} name
+ * @property {string} idToken
+ * @property {string} typeOfLogin
+ * @property {string} accessToken
+ *
  * @typedef {Object} TorusRes
- * @property {Object} userInfo
+ * @property {UserInfo} userInfo
  * @property {string} privateKey
  * @property {string} publicAddress
 */
+
+/**
+ * @param {TorusRes} torusRes
+ */
+const setTwitterNickname = async (torusRes) => {
+  try {
+    const { data } = await axios.get(`${config.torus.providers.twitter.jwtParams.domain}/userinfo`, {
+      headers: {
+        authorization: `Bearer ${torusRes.userInfo.accessToken}`,
+      },
+    });
+
+    if (data && data.nickname) {
+      // eslint-disable-next-line no-param-reassign
+      torusRes.userInfo.nickname = data.nickname;
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error when trying to get twitter nickname: ${error.message}`);
+  }
+};
 
 export default function useTorusSdk() {
   const [state, setState] = React.useState({
@@ -47,6 +77,11 @@ export default function useTorusSdk() {
 
       if (tRes) {
         tRes.privateKey = `0x${tRes.privateKey}`;
+
+        if (tRes.userInfo.typeOfLogin === 'twitter') {
+          await setTwitterNickname(tRes);
+        }
+
         return tRes;
       }
 

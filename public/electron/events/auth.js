@@ -123,8 +123,9 @@ const registerAuthEvents = (mainWindow) => {
           address: payload.torusRes.publicAddress,
           provider: payload.torusRes.userInfo.typeOfLogin,
           metadata: {
-            email: payload.torusRes.userInfo.email,
             name: payload.torusRes.userInfo.name,
+            email: payload.torusRes.userInfo.email,
+            nickname: payload.torusRes.userInfo.nickname,
           },
         });
 
