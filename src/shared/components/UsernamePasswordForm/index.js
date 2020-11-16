@@ -18,14 +18,17 @@ import useStyles from './styles';
 const UsernamePasswordForm = ({
   onSubmit,
   isLoading,
+  onChangeForm,
   submitBtnText,
+  defaultUsername,
+  defaultPassword,
   showPasswordTooltip,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [state, setState] = React.useState({
-    username: '',
-    password: '',
+    username: defaultUsername,
+    password: defaultPassword,
     showPassword: false,
     showPasswordTooltip: false,
   });
@@ -41,10 +44,15 @@ const UsernamePasswordForm = ({
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    setState({
+    const newState = {
       ...state,
       [name]: value,
+    };
+
+    setState(newState);
+    onChangeForm({
+      username: newState.username,
+      password: newState.password,
     });
   };
 
@@ -134,14 +142,20 @@ const UsernamePasswordForm = ({
 
 UsernamePasswordForm.defaultProps = {
   isLoading: false,
+  defaultUsername: '',
+  defaultPassword: '',
+  onChangeForm: () => null,
   showPasswordTooltip: false,
 };
 
 UsernamePasswordForm.propTypes = {
   isLoading: PropTypes.bool,
+  onChangeForm: PropTypes.func,
+  defaultUsername: PropTypes.string,
+  defaultPassword: PropTypes.string,
   showPasswordTooltip: PropTypes.bool,
-  submitBtnText: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  submitBtnText: PropTypes.string.isRequired,
 };
 
 export default UsernamePasswordForm;

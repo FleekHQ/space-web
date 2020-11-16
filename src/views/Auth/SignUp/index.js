@@ -1,7 +1,6 @@
-/* eslint-disable */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useHistory } from 'react-router-dom';
+import { Link as ReactRouterLink, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
@@ -30,8 +29,10 @@ const TERMS_OF_SERVICE_URL = 'https://space.storage/terms-of-service';
 const SignUp = () => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [formData, setFormData] = React.useState(null);
   const [showSplash, setShowSplash] = React.useState(false);
   const state = useSelector((s) => ({
     ...s.auth.signup,
@@ -81,16 +82,20 @@ const SignUp = () => {
     }
   }, [state.success]);
 
-  React.useEffect(() => (
-    () => {
+  React.useEffect(() => {
+    if (location.state && location.state.username && location.state.password) {
+      setFormData(location.state);
+    }
+
+    return () => {
       dispatch({
         type: SIGNUP_ACTION_TYPES.ON_RESET,
       });
       dispatch({
         type: SIGNIN_ACTION_TYPES.ON_RESET,
       });
-    }
-  ), []);
+    };
+  }, []);
 
   React.useEffect(() => {
     if (state.error) {
@@ -129,7 +134,13 @@ const SignUp = () => {
               </Box>
             </Typography>
             <Box ml="111px">
-              <Link to="/auth/signin" component={NavLink}>
+              <Link
+                component={ReactRouterLink}
+                to={{
+                  pathname: '/auth/signin',
+                  state: formData,
+                }}
+              >
                 <Box component="span" color="#006EFF" fontSize="14px">
                   {t('modules.signin.title')}
                 </Box>
@@ -141,7 +152,16 @@ const SignUp = () => {
               showPasswordTooltip
               isLoading={state.loading}
               submitBtnText={t('modules.signup.title')}
+              defaultUsername={
+                location.state
+                && location.state.username ? location.state.username : undefined
+              }
+              defaultPassword={
+                location.state
+                && location.state.password ? location.state.password : undefined
+              }
               onSubmit={handleUsernamePasswordFormSubmit}
+              onChangeForm={(newFormData) => setFormData(newFormData)}
             />
           </Box>
           <Box color="common.white" textAlign="center">
