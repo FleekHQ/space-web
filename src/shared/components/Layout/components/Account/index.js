@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
+import { testKeysAndDelete } from '@events';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/pro-regular-svg-icons/faCog';
 import { faSignOut } from '@fortawesome/pro-regular-svg-icons/faSignOut';
 import { faAngleDown } from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
+import { USER_ACTION_TYPES } from '@reducers/user';
+import { SIGNOUT_ACTION_TYPES } from '@reducers/auth/signout';
 
 import MenuDropdown from '@ui/MenuDropdown';
 import { openModal, SETTINGS_MODAL, SIGNOUT_CONFIRMATION } from '@shared/components/Modal/actions';
@@ -25,9 +28,29 @@ const Account = ({ account }) => {
   const btnClasses = useUserBtnStyles();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { signoutState, linkedAddresses } = useSelector((state) => ({
+    signoutState: state.auth.signout,
+    linkedAddresses: state.linkedAddresses,
+  }));
 
   const open = Boolean(anchorEl);
   const id = open ? 'account-menu' : undefined;
+
+  React.useEffect(() => {
+    if (signoutState.success) {
+      dispatch({
+        type: USER_ACTION_TYPES.ON_USER_LOGOUT,
+      });
+    }
+  }, [signoutState.success]);
+
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_RESET,
+      });
+    }
+  ), []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,7 +60,7 @@ const Account = ({ account }) => {
     setAnchorEl(null);
   };
 
-  const handleMenuItemClick = (item) => {
+  const handleMenuItemClick = async (item) => {
     setAnchorEl(null);
     if (item.id === MENU_DROPDOWN_ITEMS.settings) {
       dispatch(openModal(SETTINGS_MODAL));
@@ -45,7 +68,12 @@ const Account = ({ account }) => {
     }
 
     if (item.id === MENU_DROPDOWN_ITEMS.signout) {
-      dispatch(openModal(SIGNOUT_CONFIRMATION));
+      // we only ask for a password if the user DOES NOT have google/twitter account
+      if (linkedAddresses.data.length === 0) {
+        dispatch(openModal(SIGNOUT_CONFIRMATION));
+        return;
+      }
+      testKeysAndDelete();
       return;
     }
     // TODO: handle rest of item click
