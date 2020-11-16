@@ -106,16 +106,20 @@ export default (state = DEFAULT_STATE, action) => {
       if (objectIndex >= 0) {
         objects = state.objects.map((obj) => {
           if (obj.fullKey === action.payload.fullKey) {
+            const members = [
+              ...obj.members,
+              ...action.payload.members,
+            ];
+
             return {
               ...obj,
               ...action.payload,
               selected: typeof action.payload.selected === 'boolean'
                 ? action.payload.selected
                 : obj.selected,
-              members: [
-                ...obj.members,
-                ...action.payload.members,
-              ],
+              members,
+              shareAmount: members.length,
+              // sometimes updates shareAmount = 0, because daemon is sending empty members list
             };
           }
 

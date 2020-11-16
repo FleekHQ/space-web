@@ -33,7 +33,7 @@ const SharePanel = (props) => {
     if (addresses.length > 0) {
       getIdentitiesByAddress({ addresses });
     }
-  }, []);
+  }, [members]);
 
   return (
     <div className={classes.root}>
