@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link as ReactRouterLink, useHistory, useLocation } from 'react-router-dom';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
 
 import Box from '@material-ui/core/Box';
@@ -22,8 +22,10 @@ import useStyles from './styles';
 const SignIn = () => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [formData, setFormData] = React.useState(null);
   const siginState = useSelector((s) => s.auth.signin);
   const [showSplash, setShowSplash] = React.useState(false);
 
@@ -70,13 +72,17 @@ const SignIn = () => {
     }
   }, [siginState.success]);
 
-  React.useEffect(() => (
-    () => {
+  React.useEffect(() => {
+    if (location.state && location.state.username && location.state.password) {
+      setFormData(location.state);
+    }
+
+    return () => {
       dispatch({
         type: SIGNIN_ACTION_TYPES.ON_RESET,
       });
-    }
-  ), []);
+    };
+  }, []);
 
   React.useEffect(() => {
     if (siginState.error) {
@@ -120,7 +126,13 @@ const SignIn = () => {
                 {t('modules.signin.title')}
               </Box>
             </Typography>
-            <Link to="/auth/signup" component={NavLink}>
+            <Link
+              component={ReactRouterLink}
+              to={{
+                pathname: '/auth/signup',
+                state: formData,
+              }}
+            >
               <Box component="span" color="#006EFF" fontSize="14px">
                 {t('modules.signup.title')}
               </Box>
@@ -130,11 +142,20 @@ const SignIn = () => {
             <UsernamePasswordForm
               isLoading={siginState.loading}
               submitBtnText={t('modules.signin.title')}
+              defaultUsername={
+                location.state
+                && location.state.username ? location.state.username : undefined
+              }
+              defaultPassword={
+                location.state
+                && location.state.password ? location.state.password : undefined
+              }
               onSubmit={handleUsernamePasswordFormSubmit}
+              onChangeForm={(newFormData) => setFormData(newFormData)}
             />
           </Box>
           <Box color="common.white" textAlign="center">
-            <Link to="/auth/forgot-password" component={NavLink} color="inherit" underline="always">
+            <Link to="/auth/forgot-password" component={ReactRouterLink} color="inherit" underline="always">
               <Box component="span" fontSize="10px">
                 {t('modules.signin.forgotPassword')}
               </Box>
