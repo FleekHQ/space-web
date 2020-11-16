@@ -41,11 +41,11 @@ const registerAddItemsSubscribe = (mainWindow) => {
         if (srcPath) {
           fileFolderName = sourcePath.replace(srcPath, '');
           if (fileFolderName.length === 0) {
-            fileFolderName = sourcePath.split('/').pop();
+            fileFolderName = sourcePath.split(path.sep).pop();
             fileFolderPath = payload.targetPath.length === 0 ? fileFolderName : `${payload.targetPath}/${fileFolderName}`;
           } else {
-            fileFolderPath = payload.targetPath.length === 0 ? `${srcPath.split('/').pop()}${fileFolderName}` : `${payload.targetPath}/${srcPath.split('/').pop()}${fileFolderName}`;
-            fileFolderName = fileFolderName.split('/').pop();
+            fileFolderPath = payload.targetPath.length === 0 ? `${srcPath.split(path.sep).pop()}${fileFolderName}` : `${payload.targetPath}/${srcPath.split(path.sep).pop()}${fileFolderName}`;
+            fileFolderName = fileFolderName.split(path.posix.sep).pop();
           }
         }
 
