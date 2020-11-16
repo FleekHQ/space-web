@@ -118,7 +118,7 @@ export default (state = DEFAULT_STATE, action) => {
                 ? action.payload.selected
                 : obj.selected,
               members,
-              shareAmount: members.length,
+              shareAmount: Math.max(1, members.length, obj.shareAmount),
               // sometimes updates shareAmount = 0, because daemon is sending empty members list
             };
           }
