@@ -67,6 +67,11 @@ const Account = ({ account }) => {
       return;
     }
 
+    if (item.id === MENU_DROPDOWN_ITEMS.help) {
+      window.location.href = 'mailto:hi@space.storage?subject=I have a question about Space!';
+      return;
+    }
+
     if (item.id === MENU_DROPDOWN_ITEMS.signout) {
       // we only ask for a password if the user DOES NOT have google/twitter account
       if (linkedAddresses.data.length === 0) {
