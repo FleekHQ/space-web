@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 
 import useStyles from './styles';
 import TableCell from '../TableCell';
-import FileIcon from '../../../FileIcon';
 
 const FileCell = (props) => {
   const {
