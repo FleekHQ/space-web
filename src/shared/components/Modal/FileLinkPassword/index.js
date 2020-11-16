@@ -13,7 +13,7 @@ import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import { faLockAlt } from '@fortawesome/pro-solid-svg-icons/faLockAlt';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 
-import FileIcon from '@ui/FileIcon';
+import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
 import { openPublicFile } from '@events';

@@ -125,7 +125,7 @@ export const backupKeysByPassphrase = (payload) => {
  * @param {string} payload.uuid
  * @param {string} payload.passphrase
  */
-export const testKeys = (payload) => {
+export const testKeysAndDelete = (payload = {}) => {
   store.dispatch({
     type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT,
   });

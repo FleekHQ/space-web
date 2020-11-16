@@ -45,7 +45,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     ipfsHash: get(obj, 'ipfsHash'),
     isAvailableInSpace: backupCount > 0,
     sourceBucket: sourceBucket || bucket,
-    shareAmount: members.length,
+    shareAmount: Math.max(1, members.length),
   };
 };
 

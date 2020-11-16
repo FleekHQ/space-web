@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Typography from '@ui/Typography';
 import Button from '@material-ui/core/Button';
-import FileIcon from '@ui/FileIcon';
+import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import AvatarsList from '@ui/AvatarsList';
 import useStyles from './styles';
 
