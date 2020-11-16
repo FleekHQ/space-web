@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FileIcon from '@ui/FileIcon';
+import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import classnames from 'classnames';
 import Typography from '@ui/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';

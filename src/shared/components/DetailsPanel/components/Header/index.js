@@ -1,7 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
-import FileIcon from '@ui/FileIcon';
+import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import { openObject } from '@events';
 import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
