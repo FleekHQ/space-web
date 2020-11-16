@@ -30,8 +30,10 @@ const setTwitterNickname = async (torusRes) => {
       },
     });
 
-    // eslint-disable-next-line no-param-reassign
-    torusRes.userInfo.nickname = data.nickname;
+    if (data && data.nickname) {
+      // eslint-disable-next-line no-param-reassign
+      torusRes.userInfo.nickname = data.nickname;
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Error when trying to get twitter nickname: ${error.message}`);
