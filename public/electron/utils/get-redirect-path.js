@@ -1,10 +1,12 @@
+const log = require('electron-log');
+
 const spaceProtocol = 'space://'
 const spaceRegex = /^space:\/\/.*/i;
 
 const getRedirectPath = (args = []) => {
   const deepLink = args.find((arg) => spaceRegex.test(arg));
 
-  console.log('deepLink', deepLink);
+  log.info('deepLink', deepLink);
 
   if (deepLink) return decodeURIComponent(deepLink.replace(spaceProtocol, ''));
   return null;

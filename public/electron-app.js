@@ -5,6 +5,7 @@ const url = require('url');
 const path = require('path');
 const { app, Tray } = require('electron');
 const isDev = require('electron-is-dev');
+const log = require('electron-log');
 
 const DaemonProcess = require('./electron/daemon');
 const registerEvents = require('./electron/events');
@@ -12,10 +13,14 @@ const createMainWindow = require('./electron/window/main');
 const { getMenuOptions, trayIcon } = require('./electron/tray-menu');
 const getRedirectPath = require('./electron/utils/get-redirect-path');
 
+log.info('start args', process.argv);
+
 let appIcon;
 let mainWindow;
 let goTo = getRedirectPath(process.argv);
 global.destroyStream = () => {};
+
+log.info('goTo', goTo);
 
 const daemon = new DaemonProcess();
 
@@ -51,9 +56,9 @@ app.setAsDefaultProtocolClient('space');
  * App events
  */
 app.on('second-instance', (event, args) => {
-  console.log('second-instance', args);
+  log.info('second-instance', args);
   goTo = getRedirectPath(args);
-  console.log('goTo', goTo);
+  log.info('goTo', goTo);
 
   if (goTo && mainWindow) {
     const fileUrl = url.format({
