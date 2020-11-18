@@ -5,6 +5,7 @@ import { openModal, PROMPT_MODAL, DELETE_ACCOUNT } from '../../../actions';
 
 export default ({
   t,
+  user,
   username,
   dispatch,
   closeMainModal,
@@ -12,13 +13,13 @@ export default ({
   const onSetDisplayName = () => {
     const modalProps = {
       title: t('modals.settings.account.editDisplayName'),
-      onSubmit: (newDisplayName, errors, closeModal) => {
+      onSubmit: (newDisplayName) => {
         const payload = {
           displayName: newDisplayName,
         };
 
         updateIdentity(payload);
-        closeModal();
+        // closeModal();
       },
       validateOnChange: false,
       validateOnSubmit: false,
@@ -34,14 +35,15 @@ export default ({
 
   const onChangeUsername = () => {
     const modalProps = {
+      loading: user.updatingUser,
+      error: user.updatingUserError,
       title: username && username.length > 0 ? t('modals.settings.account.editUsername') : t('modals.settings.account.setUsername'),
-      onSubmit: (newUsername, errors, closeModal) => {
+      onSubmit: (newUsername) => {
         const payload = {
           username: newUsername,
         };
 
         updateIdentity(payload);
-        closeModal();
       },
       validateOnChange: false,
       validateOnSubmit: false,

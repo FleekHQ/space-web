@@ -47,6 +47,7 @@ const Account = ({
     onSetDisplayName,
   } = getHandlers({
     t,
+    user,
     username,
     dispatch,
     closeMainModal,
