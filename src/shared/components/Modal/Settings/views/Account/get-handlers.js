@@ -19,7 +19,6 @@ export default ({
         };
 
         updateIdentity(payload);
-        // closeModal();
       },
       validateOnChange: false,
       validateOnSubmit: false,
