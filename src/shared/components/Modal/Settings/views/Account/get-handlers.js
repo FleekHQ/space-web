@@ -5,7 +5,6 @@ import { openModal, PROMPT_MODAL, DELETE_ACCOUNT } from '../../../actions';
 
 export default ({
   t,
-  user,
   username,
   dispatch,
   closeMainModal,
@@ -34,8 +33,6 @@ export default ({
 
   const onChangeUsername = () => {
     const modalProps = {
-      loading: user.updatingUser,
-      error: user.updatingUserError,
       title: username && username.length > 0 ? t('modals.settings.account.editUsername') : t('modals.settings.account.setUsername'),
       onSubmit: (newUsername) => {
         const payload = {
