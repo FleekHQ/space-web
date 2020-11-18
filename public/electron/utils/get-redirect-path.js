@@ -1,4 +1,4 @@
-const spaceProtocol = 'space://'
+const spaceProtocol = 'space://';
 const spaceRegex = /^space:\/\/.*/i;
 
 const getRedirectPath = (args = []) => {
