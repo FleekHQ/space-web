@@ -41,7 +41,7 @@ const FileLinkPassword = ({
     }
   }, [openPublicFileState.location]);
 
-  const [fName, fExt] = fname.split('.');
+  const [, fExt] = fname.split('.');
 
   return (
     <BaseModal
@@ -64,12 +64,7 @@ const FileLinkPassword = ({
         </Box>
         <Typography noWrap>
           <Box component="span" fontWeight={500} fontSize="14px">
-            {fName}
-          </Box>
-        </Typography>
-        <Typography>
-          <Box component="span" fontWeight={500} fontSize="14px">
-            {fExt}
+            {fname}
           </Box>
         </Typography>
       </Box>
