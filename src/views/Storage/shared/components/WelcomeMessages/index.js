@@ -44,7 +44,7 @@ const WelcomeMessages = () => {
     linkedAddresses: s.linkedAddresses,
   }));
 
-  const hasNoLinkedAddresses = linkedAddresses.loading || linkedAddresses.data.length === 0;
+  const showBackUpMessage = !linkedAddresses.loading && linkedAddresses.data.length === 0;
 
   if (welcome.hideBackup && welcome.hideUsername && welcome.hideIntegration) {
     return null;
@@ -57,7 +57,7 @@ const WelcomeMessages = () => {
   return (
     <div className={classes.rootWelcome}>
       {
-        !welcome.hideBackup && hasNoLinkedAddresses && (
+        !welcome.hideBackup && showBackUpMessage && (
           <MessageBox
             bgColor="primary"
             icon={faShieldAlt}

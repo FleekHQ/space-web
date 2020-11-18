@@ -10,7 +10,7 @@ export const LINKED_ADDRESSES_ACTION_TYPES = {
 
 const DEFAULT_STATE = {
   error: null,
-  loading: false,
+  loading: true,
   data: [],
   addLinkedAddress: {
     loading: false,
