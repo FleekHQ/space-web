@@ -10,10 +10,11 @@ const DaemonProcess = require('./electron/daemon');
 const registerEvents = require('./electron/events');
 const createMainWindow = require('./electron/window/main');
 const { getMenuOptions, trayIcon } = require('./electron/tray-menu');
+const getRedirectPath = require('./electron/utils/get-redirect-path');
 
 let appIcon;
 let mainWindow;
-let goTo = null;
+let goTo = getRedirectPath(process.argv);
 global.destroyStream = () => {};
 
 const daemon = new DaemonProcess();
@@ -49,14 +50,28 @@ app.setAsDefaultProtocolClient('space');
 /**
  * App events
  */
-app.on('second-instance', () => {
+app.on('second-instance', (event, args) => {
+  goTo = getRedirectPath(args);
+
+  if (goTo && mainWindow) {
+    const fileUrl = url.format({
+      hash: goTo,
+      protocol: 'file',
+      pathname: path.resolve(__dirname, '../build/index.html'),
+    });
+
+    mainWindow.loadURL(isDev
+      ? `http://localhost:3000${goTo ? `/#/${goTo}` : ''}`
+      : fileUrl);
+  }
+
   restoreWindow(mainWindow);
 });
 
 app.on('open-url', (event, data) => {
   event.preventDefault();
 
-  goTo = decodeURIComponent(data.replace('space://', ''));
+  goTo = getRedirectPath([data]);
 
   if (mainWindow) {
     const fileUrl = url.format({
