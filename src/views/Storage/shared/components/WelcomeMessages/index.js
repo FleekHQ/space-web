@@ -31,12 +31,22 @@ const WelcomeMessages = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const state = useSelector((s) => ({
-    ...s.welcome,
-    hideUsername: s.welcome.hideUsername || s.user.username.length !== 0,
+  const {
+    welcome,
+    user,
+    linkedAddresses,
+  } = useSelector((s) => ({
+    welcome: {
+      ...s.welcome,
+      hideUsername: s.welcome.hideUsername || s.user.username.length !== 0,
+    },
+    user: s.user,
+    linkedAddresses: s.linkedAddresses,
   }));
 
-  if (state.hideBackup && state.hideUsername && state.hideIntegration) {
+  const showBackUpMessage = !linkedAddresses.loading && linkedAddresses.data.length === 0;
+
+  if (welcome.hideBackup && welcome.hideUsername && welcome.hideIntegration) {
     return null;
   }
 
@@ -47,7 +57,7 @@ const WelcomeMessages = () => {
   return (
     <div className={classes.rootWelcome}>
       {
-        !state.hideBackup && (
+        !welcome.hideBackup && showBackUpMessage && (
           <MessageBox
             bgColor="primary"
             icon={faShieldAlt}
@@ -89,7 +99,7 @@ const WelcomeMessages = () => {
         )
       }
       {
-        !state.hideUsername && (
+        !welcome.hideUsername && !user.username && (
           <MessageBox title={t('welcome.username.title')} bgColor="secondary">
             <Typography variant="body2" color="textPrimary">
               {t('welcome.username.description')}
@@ -118,7 +128,7 @@ const WelcomeMessages = () => {
         )
       }
       {
-        !state.hideIntegration && !disableDriveMountingModal && (
+        !welcome.hideIntegration && !disableDriveMountingModal && (
           <MessageBox
             bgColor="secondary"
             icon={faLaptop}
