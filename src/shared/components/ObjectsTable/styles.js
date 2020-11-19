@@ -36,4 +36,11 @@ export default makeStyles((theme) => ({
     // 6px * 2 = 12px
     width: 'calc(100% - 12px)',
   },
+  filterDirectionIcon: {
+    marginLeft: 4,
+    fontSize: 10,
+  },
+  sortButton: {
+    padding: 2,
+  },
 }));

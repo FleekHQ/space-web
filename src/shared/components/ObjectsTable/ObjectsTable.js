@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp';
+import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
 import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
 import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
@@ -15,7 +18,7 @@ import Table, { TableCell, TableRow } from '@ui/Table';
 import useStyles from './styles';
 
 const ObjectsTable = ({
-  rows,
+  rows: unsortedRows,
   heads,
   renderRow: RenderRow,
   withRowOptions,
@@ -30,15 +33,47 @@ const ObjectsTable = ({
   const history = useHistory();
   const dispatch = useDispatch();
   const wrapperRef = React.useRef(null);
+  const [filtersDirection, setFiltersDirection] = useState({
+    name: 'desc',
+    size: 'desc',
+    lastModified: 'desc',
+  });
+  const [currentFilter, setCurrentFilter] = useState('name');
+  const sortedRows = unsortedRows.sort((rowA, rowB) => {
+    let compareValueA = rowA[currentFilter];
+    let compareValueB = rowB[currentFilter];
+    if (filtersDirection[currentFilter] === 'desc') {
+      compareValueA = rowB[currentFilter];
+      compareValueB = rowA[currentFilter];
+    }
+    if (rowA instanceof Date) {
+      compareValueA = new Date(compareValueA).getTime();
+      compareValueB = new Date(compareValueB).getTime();
+    }
+
+    if (typeof compareValueA === 'string') {
+      compareValueA = compareValueA.toLowerCase();
+      compareValueB = compareValueB.toLowerCase();
+      if (compareValueA > compareValueB) {
+        return 1;
+      }
+      if (compareValueA < compareValueB) {
+        return -1;
+      }
+      return 0;
+    }
+
+    return (compareValueA - compareValueB);
+  });
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
 
     const isShiftKeyPress = !!event.shiftKey;
     const isCtrlOrMetaPress = !!(event.ctrlKey || event.metaKey);
-    const pivoteRowIndex = rows.findIndex((_row) => _row.pivote);
+    const pivoteRowIndex = sortedRows.findIndex((_row) => _row.pivote);
 
-    const payload = rows.reduce((newRows, _row, index) => {
+    const payload = sortedRows.reduce((newRows, _row, index) => {
       if (
         isShiftKeyPress
         && pivoteRowIndex !== -1
@@ -82,7 +117,7 @@ const ObjectsTable = ({
       const redirectUrl = getRedirectUrl(row);
       history.push(redirectUrl);
 
-      newRows = rows.map((_row) => ({
+      newRows = sortedRows.map((_row) => ({
         ..._row,
         pivote: false,
         selected: false,
@@ -98,7 +133,7 @@ const ObjectsTable = ({
         isPublicLink: row.isPublicLink,
       });
 
-      newRows = rows.map((_row) => ({
+      newRows = sortedRows.map((_row) => ({
         ..._row,
         pivote: row.id === _row.id,
         selected: row.id === _row.id,
@@ -120,7 +155,7 @@ const ObjectsTable = ({
       return;
     }
 
-    const newRows = rows.map((_row) => ({
+    const newRows = sortedRows.map((_row) => ({
       ..._row,
       pivote: _row.id === row.id,
       selected: _row.id === row.id,
@@ -144,7 +179,18 @@ const ObjectsTable = ({
     return () => {
       document.removeEventListener('click', handleTableOutsideClick);
     };
-  }, [rows]);
+  }, [sortedRows]);
+
+  const sortButtonOnClick = (id) => {
+    if (currentFilter === id) {
+      setFiltersDirection({
+        ...filtersDirection,
+        [id]: filtersDirection[id] === 'desc' ? 'asc' : 'desc',
+      });
+      return;
+    }
+    setCurrentFilter(id);
+  };
 
   return (
     <div className={classes.tableWrapper}>
@@ -152,7 +198,7 @@ const ObjectsTable = ({
         noClick
         onDrop={onDropzoneDrop}
         disabled={!onDropzoneDrop}
-        objectsList={rows.map((obj) => ({
+        objectsList={sortedRows.map((obj) => ({
           isFolder: obj.type === 'folder',
           name: obj.key,
         }))}
@@ -160,17 +206,39 @@ const ObjectsTable = ({
         <div ref={wrapperRef}>
           <Table
             head={withRowOptions ? [...heads, { width: 43 }] : heads}
-            rows={rows}
+            rows={sortedRows}
             className={classes.root}
             renderLoadingRows={renderLoadingRows}
             loading={loading}
             renderHead={({ head = [] }) => (
               <TableRow>
-                {head.map(({ width, title }) => (
+                {head.map(({
+                  width,
+                  title,
+                  isSortable,
+                  id,
+                }) => (
                   <TableCell key={title || 'options'} className={classes.headerCell} width={width}>
-                    <Typography variant="body2">
-                      {title}
-                    </Typography>
+                    {isSortable ? (
+                      <ButtonBase
+                        className={classes.sortButton}
+                        onClick={() => sortButtonOnClick(id)}
+                      >
+                        <Typography variant="body2">
+                          {title}
+                        </Typography>
+                        {(currentFilter === id) && (
+                          <FontAwesomeIcon
+                            icon={(filtersDirection[currentFilter] === 'desc') ? faLongArrowDown : faLongArrowUp}
+                            className={classes.filterDirectionIcon}
+                          />
+                        )}
+                      </ButtonBase>
+                    ) : (
+                      <Typography variant="body2">
+                        {title}
+                      </Typography>
+                    )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -205,7 +273,7 @@ const ObjectsTable = ({
             )}
           />
         </div>
-        {!loading && !rows.length && <EmptyState />}
+        {!loading && !sortedRows.length && <EmptyState />}
       </Dropzone>
     </div>
   );
