@@ -104,7 +104,7 @@ NotificationMenu.defaultProps = {
   onAcceptInvitation: () => {},
   onRejectInvitation: () => {},
   onClick: () => {},
-  loadMore: () => { console.log('load more') },
+  loadMore: () => {},
 };
 
 NotificationMenu.propTypes = {
