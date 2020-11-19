@@ -46,7 +46,7 @@ const ObjectsTable = ({
       compareValueA = rowB[currentFilter];
       compareValueB = rowA[currentFilter];
     }
-    if (rowA instanceof Date) {
+    if (compareValueA instanceof Date) {
       compareValueA = new Date(compareValueA).getTime();
       compareValueB = new Date(compareValueB).getTime();
     }
