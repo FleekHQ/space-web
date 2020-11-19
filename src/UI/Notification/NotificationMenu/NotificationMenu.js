@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import ListItem from '@material-ui/core/ListItem';
 
 import useStyles from './styles';
 import ShareNotificationItem from '../NotificationItem';
@@ -66,27 +66,31 @@ const NotificationMenu = (props) => {
       PopoverClasses={{
         paper: classes.popoverPaper,
       }}
-      onScroll={onScroll}
       {...menuProps}
     >
-      <MenuItem className={classes.menuItem} disableRipple>
+      <ListItem className={classes.listItem}>
         <Typography variant="body2">
           {i18n.notifications}
         </Typography>
-      </MenuItem>
-      {items.length > 0 ? items.map((item) => (
-        getNotificationItem(item)
-      )) : (
-        <MenuItem className={classes.menuItem} disableRipple>
-          <Typography
-            variant="body2"
-            align="center"
-            className={classes.empty}
-          >
-            {i18n.empty}
-          </Typography>
-        </MenuItem>
-      )}
+      </ListItem>
+      <ListItem
+        className={classes.notificationContainer}
+        onScroll={onScroll}
+      >
+        {items.length > 0 ? items.map((item) => (
+          getNotificationItem(item)
+        )) : (
+          <div className={classes.listItem}>
+            <Typography
+              variant="body2"
+              align="center"
+              className={classes.empty}
+            >
+              {i18n.empty}
+            </Typography>
+          </div>
+        )}
+      </ListItem>
     </Menu>
   );
 };

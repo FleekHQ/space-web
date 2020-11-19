@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
@@ -20,7 +20,7 @@ const GeneralNotification = ({
   const timeAgo = moment(timestamp).fromNow();
 
   return (
-    <MenuItem
+    <ListItem
       disableRipple
       className={classnames(
         classes.root,
@@ -85,7 +85,7 @@ const GeneralNotification = ({
           </Button>
         </div>
       </div>
-    </MenuItem>
+    </ListItem>
   );
 };
 
