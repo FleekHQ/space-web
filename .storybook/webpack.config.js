@@ -9,6 +9,7 @@ module.exports = ({ config }) => {
     '@events': path.resolve(process.cwd(), 'src', 'events'),
     '@utils': path.resolve(process.cwd(), 'src', 'utils'),
     '@reducers': path.resolve(process.cwd(), 'src', 'reducers'),
+    '@electron-store': path.resolve(process.cwd(), 'src', 'electron-store'),
   };
 
   return config;

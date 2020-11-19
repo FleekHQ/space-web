@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@material-ui/core/MenuItem';
+import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@ui/Avatar';
 import Typography from '@ui/Typography';
 import classnames from 'classnames';
@@ -71,7 +71,7 @@ const NotificationItem = (props) => {
   };
 
   return (
-    <MenuItem
+    <ListItem
       disableRipple
       className={classnames(
         classes.root,
@@ -112,7 +112,7 @@ const NotificationItem = (props) => {
           {getButtons()}
         </div>
       </div>
-    </MenuItem>
+    </ListItem>
   );
 };
 
