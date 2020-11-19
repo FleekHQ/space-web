@@ -12,13 +12,12 @@ export default ({
   const onSetDisplayName = () => {
     const modalProps = {
       title: t('modals.settings.account.editDisplayName'),
-      onSubmit: (newDisplayName, errors, closeModal) => {
+      onSubmit: (newDisplayName) => {
         const payload = {
           displayName: newDisplayName,
         };
 
         updateIdentity(payload);
-        closeModal();
       },
       validateOnChange: false,
       validateOnSubmit: false,
@@ -35,13 +34,12 @@ export default ({
   const onChangeUsername = () => {
     const modalProps = {
       title: username && username.length > 0 ? t('modals.settings.account.editUsername') : t('modals.settings.account.setUsername'),
-      onSubmit: (newUsername, errors, closeModal) => {
+      onSubmit: (newUsername) => {
         const payload = {
           username: newUsername,
         };
 
         updateIdentity(payload);
-        closeModal();
       },
       validateOnChange: false,
       validateOnSubmit: false,

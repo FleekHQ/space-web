@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
@@ -6,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import TextField from '@ui/TextField';
-import Button from '@material-ui/core/Button';
+import Button from '@terminal-packages/space-ui/core/Button';
+import { USER_ACTION_TYPES } from '@reducers/user';
 
 import useStyles from './styles';
 
@@ -23,8 +25,11 @@ const Prompt = (props) => {
     validateOnSubmit,
   } = props;
 
+  const dispatch = useDispatch();
   const [error, setError] = useState();
   const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const userState = useSelector((s) => s.user);
 
   const classes = useStyles();
 
@@ -39,6 +44,7 @@ const Prompt = (props) => {
   const onSubmitForm = (e) => {
     e.preventDefault();
 
+    setError(null);
     if (validateOnSubmit) {
       const validationError = validate(value);
 
@@ -49,8 +55,36 @@ const Prompt = (props) => {
     }
   };
 
+  React.useEffect(() => {
+    if (userState.updatingUser) {
+      setLoading(true);
+    }
+  }, [userState.updatingUser]);
+
+  React.useEffect(() => {
+    if (userState.updatingUserError) {
+      setLoading(false);
+      setError(userState.updatingUserError);
+    }
+  }, [userState.updatingUserError]);
+
+  React.useEffect(() => {
+    if (userState.updatingUserSuccess) {
+      closeModal();
+    }
+  }, [userState.updatingUserSuccess]);
+
+  React.useEffect(() => (
+    () => {
+      dispatch({
+        type: USER_ACTION_TYPES.ON_UPDATING_USER_RESET,
+      });
+    }
+  ), []);
+
   return (
     <BaseModal
+      onClose={closeModal}
       paperProps={{
         className: classes.root,
       }}
@@ -84,7 +118,7 @@ const Prompt = (props) => {
             {...textFieldProps}
           />
           {error && (
-            <Typography variant="body2" color="secondary" className={classes.errorMessage}>
+            <Typography variant="body2" className={classes.errorMessage}>
               {error}
             </Typography>
           )}
@@ -93,12 +127,18 @@ const Prompt = (props) => {
               onClick={closeModal}
               color="secondary"
               variant="outlined"
+              disabled={loading}
             >
               {i18n.cancel}
             </Button>
             <Button
               type="submit"
-              variant="contained"
+              variant="primary"
+              loading={loading}
+              disabled={loading}
+              classes={{
+                root: classes.btnRoot,
+              }}
             >
               {i18n.submit}
             </Button>

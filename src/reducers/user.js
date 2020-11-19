@@ -1,3 +1,4 @@
+import pick from 'lodash/pick';
 import electronStore from '@electron-store';
 
 import { SIGNIN_ACTION_TYPES } from './auth/signin';
@@ -8,10 +9,12 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const USER_ACTION_TYPES = {
   UPDATE_USER: 'UPDATE_USER',
   ON_USER_LOGOUT: 'ON_USER_LOGOUT',
+  ON_UPDATING_USER: 'ON_UPDATING_USER',
+  ON_UPDATING_USER_ERROR: 'ON_UPDATING_USER_ERROR',
+  ON_UPDATING_USER_RESET: 'ON_UPDATING_USER_RESET',
   ON_UPDATE_AVATAR: 'ON_UPDATE_AVATAR',
   ON_UPDATE_AVATAR_ERROR: 'ON_UPDATE_AVATAR_ERROR',
   ON_UPDATE_AVATAR_SUCCESS: 'ON_UPDATE_AVATAR_SUCCESS',
-  FETCHING_IDENTITY_ERROR: 'USER_ACTION_FETCHING_IDENTITY_ERROR',
   ON_CREATE_PASSWORD_AND_USERNAME: 'ON_CREATE_PASSWORD_AND_USERNAME',
   ON_CREATE_PASSWORD_AND_USERNAME_RESET: 'ON_CREATE_PASSWORD_AND_USERNAME_RESET',
   ON_CREATE_PASSWORD_AND_USERNAME_ERROR: 'ON_CREATE_PASSWORD_AND_USERNAME_ERROR',
@@ -34,7 +37,12 @@ const writeUser = (state, userInfo) => {
     ...userInfo,
   };
 
-  electronStore.set(USER_KEY, JSON.stringify(newUserState));
+  electronStore.set(
+    USER_KEY,
+    JSON.stringify(
+      pick(newUserState, ['uuid', 'address', 'publicKey', 'displayName', 'avatarUrl', 'username']),
+    ),
+  );
 
   return newUserState;
 };
@@ -48,7 +56,38 @@ export default (state = user, action) => {
     }
 
     case UPDATE_USER: {
-      return writeUser(state, action.user);
+      return writeUser(state, {
+        ...action.user,
+        updatingUser: false,
+        updatingUserError: null,
+        updatingUserSuccess: true,
+      });
+    }
+
+    case USER_ACTION_TYPES.ON_UPDATING_USER: {
+      return {
+        ...state,
+        updatingUser: true,
+        updatingUserError: null,
+        updatingUserSuccess: false,
+      };
+    }
+
+    case USER_ACTION_TYPES.ON_UPDATING_USER_ERROR: {
+      return {
+        ...state,
+        updatingUser: false,
+        updatingUserError: action.error,
+      };
+    }
+
+    case USER_ACTION_TYPES.ON_UPDATING_USER_RESET: {
+      return {
+        ...state,
+        updatingUser: false,
+        updatingUserError: null,
+        updatingUserSuccess: false,
+      };
     }
 
     case USER_ACTION_TYPES.ON_USER_LOGOUT: {

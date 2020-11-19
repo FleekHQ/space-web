@@ -63,8 +63,8 @@ const registerAccountEvents = () => {
   /* eslint-disable no-console */
   ipcRenderer.on(UPDATE_IDENTITY_ERROR_EVENT, (event, error) => {
     store.dispatch({
-      payload: error.message,
-      type: USER_ACTION_TYPES.FETCHING_IDENTITY_ERROR,
+      error: error.message,
+      type: USER_ACTION_TYPES.ON_UPDATING_USER_ERROR,
     });
   });
 
@@ -142,7 +142,13 @@ export const uploadProfilePic = (payload) => {
   ipcRenderer.send(UPLOAD_PROFILE_PIC_EVENT, payload);
 };
 
-export const updateIdentity = (payload) => ipcRenderer.send(UPDATE_IDENTITY_EVENT, payload);
+export const updateIdentity = (payload) => {
+  store.dispatch({
+    type: USER_ACTION_TYPES.ON_UPDATING_USER,
+  });
+
+  ipcRenderer.send(UPDATE_IDENTITY_EVENT, payload);
+};
 
 /**
  * @param {Object} payload

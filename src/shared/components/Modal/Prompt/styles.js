@@ -13,6 +13,13 @@ export default makeStyles((theme) => ({
   textField: {
     marginTop: 15,
   },
+  btnRoot: {
+    minWidth: 96,
+    backgroundColor: theme.palette.common.black,
+    '&:hover': {
+      backgroundColor: theme.palette.common.black,
+    },
+  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -24,6 +31,7 @@ export default makeStyles((theme) => ({
   },
   errorMessage: {
     marginTop: 5,
+    color: theme.palette.error.main,
   },
   icon: {
     fontSize: 12,
