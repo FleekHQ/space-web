@@ -83,7 +83,7 @@ const mapDataToItems = (data, Trans, t, classes, identities) => {
     return arr;
   }, []);
 
-  return mappedData;
+  return mappedData.sort((n1, n2) => n2.timestamp - n1.timestamp);
 };
 
 export default mapDataToItems;
