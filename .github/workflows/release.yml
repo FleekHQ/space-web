@@ -50,8 +50,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: yarn electron-pack --mac
       - name: Windows app pack and release
-        # env: 
-          #  CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-          #  CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+        env: 
+          CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
         if: matrix.os == 'windows-latest'
         run: yarn electron-pack --win --x64 --ia32
