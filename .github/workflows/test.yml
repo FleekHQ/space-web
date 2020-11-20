@@ -10,6 +10,15 @@ jobs:
     env:
       FA_NPM_TOKEN: ${{secrets.FA_NPM_TOKEN}}
       TERMINAL_NPM_TOKEN: ${{secrets.TERMINAL_NPM_TOKEN}}
+      REACT_APP_TORUS_NETWORK: ${{secrets.REACT_APP_TORUS_NETWORK}}
+      REACT_APP_TORUS_PROXY_CONTRACT: ${{secrets.REACT_APP_TORUS_PROXY_CONTRACT}}
+      REACT_APP_TORUS_GOOGLE_VERIFIER: ${{secrets.REACT_APP_TORUS_GOOGLE_VERIFIER}}
+      REACT_APP_WS_AUTH_CHALLENGE_URL: ${{secrets.REACT_APP_WS_AUTH_CHALLENGE_URL}}
+      REACT_APP_TORUS_TWITTER_VERIFIER: ${{secrets.REACT_APP_TORUS_TWITTER_VERIFIER}}
+      REACT_APP_TORUS_GOOGLE_CLIENT_ID: ${{secrets.REACT_APP_TORUS_GOOGLE_CLIENT_ID}}
+      REACT_APP_TORUS_TWITTER_CLIENT_ID: ${{secrets.REACT_APP_TORUS_TWITTER_CLIENT_ID}}
+      REACT_APP_TORUS_TWITTER_AUTH_DOMAIN: ${{secrets.REACT_APP_TORUS_TWITTER_AUTH_DOMAIN}}
+      REACT_APP_TORUS_PROVIDERS_REDIRECT_URL: ${{secrets.REACT_APP_TORUS_PROVIDERS_REDIRECT_URL}}
     steps:
     - uses: actions/checkout@v2
     - name: Cache node modules
@@ -22,6 +31,6 @@ jobs:
       with:
         node-version: '12'
     - name: Install dependencies
-      run: yarn install --ignore-scripts
+      run: yarn
     - name: Run lint
       run: yarn lint
