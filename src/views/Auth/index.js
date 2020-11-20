@@ -14,6 +14,7 @@ import UsernameSignin from './UsernameSignin';
 import ForgotPassword from './ForgotPassword';
 import CreatePassword from './CreatePassword';
 import RestoreKeysMnemonic from './RestoreKeysMnemonic';
+import EmailLinkAuth from './EmailLinkAuth';
 
 import useStyles from './styles';
 
@@ -55,6 +56,9 @@ const Auth = () => {
         </Route>
         <Route path={`${match.path}/forgot-password/restore-keys-mnemonic`} exact>
           <RestoreKeysMnemonic />
+        </Route>
+        <Route path={`${match.path}/email-link-auth`} exact>
+          <EmailLinkAuth isSignup />
         </Route>
         <Redirect to={`${match.path}/signup`} exact />
       </Switch>
