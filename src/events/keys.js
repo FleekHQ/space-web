@@ -38,6 +38,11 @@ export const testKeysAndDelete = (payload = {}) => {
   store.dispatch({
     type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT,
   });
+  setTimeout(() => {
+    store.dispatch({
+      type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_SUCCESS,
+    });
+  }, 1000);
 };
 
 export default registerKeysEvents;

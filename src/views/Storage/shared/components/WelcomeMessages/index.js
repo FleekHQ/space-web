@@ -38,7 +38,7 @@ const WelcomeMessages = () => {
   } = useSelector((s) => ({
     welcome: {
       ...s.welcome,
-      hideUsername: s.welcome.hideUsername || s.user.username.length !== 0,
+      hideUsername: s.welcome && (s.welcome.hideUsername || s.user.username.length !== 0),
     },
     user: s.user,
     linkedAddresses: s.linkedAddresses,
