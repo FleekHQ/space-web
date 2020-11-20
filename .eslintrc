@@ -1,0 +1,46 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+  },
+  "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@ui", "./src/UI"],
+          ["@config", "./src/config"],
+          ["@utils", "./src/utils"],
+          ["@shared", "./src/shared"],
+          ["@events", "./src/events"],
+          ["@reducers", "./src/reducers"]
+        ]
+      }
+    }
+  }
+}

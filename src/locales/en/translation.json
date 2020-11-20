@@ -1,0 +1,504 @@
+{
+  "test": "Translate me!",
+  "createNew": "Create New",
+  "common": {
+    "search": "Search",
+    "add": "Add",
+    "at": "at",
+    "yes": "Yes",
+    "open": "Open",
+    "enable": "Enable",
+    "remove": "Remove",
+    "owner": "Owner",
+    "save": "Save",
+    "done": "Done",
+    "backup": "Backup",
+    "dismiss": "Dismiss",
+    "create": "Create",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "on": "on",
+    "off": "off",
+    "change": "Change",
+    "crypto": "Crypto",
+    "card": "Card",
+    "username": "Username",
+    "password": "Password",
+    "remindMeLater": "Remind me later",
+    "highlyRecommended": "Highly Recommended",
+    "noResults": "No results",
+    "comingSoon": "Coming Soon!",
+    "goBack": "Go Back",
+    "access": {
+      "edit": {
+        "title": "Can edit",
+        "description": "Members can edit, delete, and add the file to their Space."
+      },
+      "view": {
+        "title": "Can view",
+        "description": "Members can view and download."
+      }
+    }
+  },
+  "contextMenu": {
+    "open": "Open",
+    "openWith": "Open With",
+    "star": "Star",
+    "share": "Share...",
+    "copyLink": "Copy Link",
+    "duplicate": "Duplicate",
+    "rename": "Rename",
+    "copy": "Copy",
+    "delete": "Delete",
+    "viewInFolder": "View in Finder"
+  },
+  "notifications": {
+    "accept": "Accept",
+    "reject": "Reject",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "markAsRead": "Mark all as read",
+    "notifications": "Notifications",
+    "empty": "No notifications",
+    "shared": "Shared <0>{{file}}</0> with you.",
+    "files": "{{amount}} files"
+  },
+  "detailsPanel": {
+    "title": "Details Panel",
+    "message": "Select a file or folder to see a detailed breakdown.",
+    "open": "Open",
+    "filesNumber": "{{count}} file",
+    "filesNumber_plural": "{{count}} files",
+    "foldersNumber": "{{count}} folder",
+    "foldersNumber_plural": "{{count}} folders",
+    "objectDetails": {
+      "size": "Size:",
+      "created": "Created:",
+      "lastModified": "Last Modified:"
+    },
+    "share": {
+      "share": "Share",
+      "copy": "Copy Link",
+      "copied": "Copied to clipboard!",
+      "invite": "Invite Members",
+      "with": "Shared with",
+      "manage": "Manage",
+      "group": "+{{number}} others",
+      "you": " (you)"
+    }
+  },
+  "account": {
+    "personal": "Personal",
+    "menu": {
+      "settings": "Settings",
+      "help": "Help",
+      "signout": "Sign out"
+    }
+  },
+  "navigation": {
+    "storage": "Storage",
+    "files": "My Files",
+    "shared-by": "Shared"
+  },
+  "createNewMenu": {
+    "fileUpload": "File Upload",
+    "folderUpload": "Folder Upload",
+    "folder": "New Folder",
+    "textDoc": "Text Doc",
+    "googleDoc": "Google Doc",
+    "word": "Word",
+    "textEdit": "TextEdit",
+    "presentation": "Presentation",
+    "googleSlide": "Google Slide",
+    "powerpoint": "PowerPoint",
+    "keynote": "Keynote",
+    "sheets": "Sheets",
+    "googleSheet": "Google Sheet",
+    "excel": "Excel",
+    "numbers": "Number"
+  },
+  "modules": {
+    "storage": {
+      "fileTable": {
+        "head": {
+          "name": "Name",
+          "members": "Members",
+          "lastModified": "Last Modified",
+          "size": "Size",
+          "tooltip": "The first icon is blue if the file is in local storage. The second is green if the file is in space storage. The last icon shows the amount of users the file has been shared with."
+        },
+        "error": {
+          "message": "Failed to fetch files, please try refreshing.",
+          "buttonText": "Refresh Files"
+        },
+        "openError": {
+          "message": "Failed to open file, please try again.",
+          "buttonText": "Okay"
+        },
+        "storageLimitReached": {
+          "warning": "Backup Limit Reached",
+          "description": "This file is not backed up, upgrade to Space Pro to back up this file.",
+          "button": "Upgrade to Space Pro"
+        },
+        "empty": {
+          "title": "Hmm, you don't have any files yet",
+          "message": "Add your first file by dragging it here or use the <0/> icon top left"
+        }
+      },
+      "sharedBy": {
+        "mostRecentShared": "Most Recently Shared",
+        "viewAll": "View All",
+        "emptyList": "No shared files"
+      },
+      "detailsPanel": {
+        "title": "Details Panel",
+        "message": {
+          "members": "Select a bucket to see a detailed breakdown.",
+          "files": "Select a file or folder to see a detailed breakdown."
+        }
+      }
+    },
+    "signin": {
+      "title": "Sign In",
+      "createAnAccount": "Create an account",
+      "login": "Log In",
+      "recover": "Recover Account",
+      "link": "Don't have an account?",
+      "errors": {
+        "torus": "There was an error with torus integration",
+        "noData": "There is no data from torus",
+        "timeout": "Websocket Timeout",
+        "notFound": "User not found.",
+        "generic": "Sorry, there was a problem.",
+        "invalid": "Invalid username or password."
+      },
+      "username": "Username",
+      "password": "Password",
+      "forgotPassword": "Forgot password?"
+    },
+    "signup": {
+      "title": "Sign Up",
+      "logIn": "Log in",
+      "claim": "Claim Username",
+      "doLater": "Do this later",
+      "username": "Pick a username",
+      "helperText": "No special characters allowed, only \"-\".",
+      "email": "Email (Optional)",
+      "link": "Already have an account?",
+      "forgotPassword": "Forgot password?",
+      "agreenment": {
+        "part1": "By signing up, I agree to the",
+        "privacy": "Privacy",
+        "terms": "Terms"
+      },
+      "errors": {
+        "generic": "Sorry, there was a problem.",
+        "username": "Username is taken.",
+        "identity": "Sorry, there was a problem getting your identity.",
+        "address": "Sorry, the current address is already registered.",
+        "torus": "There was an error with torus integration",
+        "noData": "There is no data from torus",
+        "timeout": "Websocket Timeout"
+      }
+    },
+    "restoreKeysMnemonic": {
+      "title": "Enter Seed Phrase",
+      "description": "Enter your Seed Phrase below to gain access to your account on this device.",
+      "inputLabel": "Enter Seed Phrase",
+      "keyNotFound": "No key found.",
+      "submit": "Import Key"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password?",
+      "description": "Choose one of your back up sign in methods to access your account and reset your password. Make sure the option you choose is already added to your Space account.",
+      "recover": {
+        "google": "Recover with Google",
+        "twitter": "Recover with Twitter",
+        "key": "Recover with Seed Phrase"
+      },
+      "errors": {
+        "torus": "There was an error with torus integration",
+        "noData": "There is no data from torus",
+        "timeout": "Websocket Timeout",
+        "notFound": "User not found.",
+        "signin": "Sorry, there was an error when trying to recover your account."
+      }
+    },
+    "shared": {
+      "passwordCheck": {
+        "title": "Password must have:",
+        "requirements": {
+          "number": "At least one number",
+          "upperCase": "Upper & lowercase letters",
+          "charLength": "8 or more characters"
+        }
+      }
+    },
+    "createPassword": {
+      "title": "Create Password",
+      "description": "Please create a new password for your Space account.",
+      "confirm": "Confirm Password",
+      "remind": "<tip>Tip:</tip> Remember it this time"
+    }
+  },
+  "uploadProgressModal": {
+    "message": "<0>{{uploadedNumber}}</0> out of <0>{{totalNumber}}</0> files uploaded",
+    "dismiss": "Dismiss",
+    "defaultMessage": "Upload in progress...",
+    "retry": "Try again"
+  },
+  "errorModal": {
+    "usersNotFound": "Some usernames that you are trying to share with doesn't exists: <0>{{usernames}}</0>",
+    "handleInvitationFailed": "Failed to accept or reject file sharing invitation"
+  },
+  "sharingProgressModal": {
+    "message": "Shared <0>{{fileName}}",
+    "inProgress": "Sharing <0>{{fileName}}...",
+    "failedToShare": "Failed to share file",
+    "dismiss": "Close"
+  },
+  "modals": {
+    "createUsernamePassword": {
+      "title": "Create Username & Password",
+      "username": "Username",
+      "password": "Password",
+      "create": "Create",
+      "cancel": "Cancel",
+      "usernameError": "Username is taken, please try another."
+    },
+    "sharingModal": {
+      "to": "To",
+      "inputPlaceholder": "Username",
+      "shareVia": "Share via Username (Recommended)",
+      "linkTitle": "Share a link instead",
+      "noLinkDescription": "No link created yet.",
+      "linkDescription": "Anyone with this link can view the folder.",
+      "copyLink": "Copy link",
+      "copied": "Copied",
+      "createLink": "Create link",
+      "emailPlaceholder": "Add a message (optional)",
+      "shareEmailButton": "Share",
+      "errors": {
+        "invalidEmail": "Email is invalid",
+        "duplicateEmail": "This email is already selected",
+        "failedShare": "Failed to share file, please try again."
+      },
+      "shareLink": {
+        "title": "Share via Password Protected Link",
+        "resetLink": "Reset link",
+        "createLink": "Create Link",
+        "passwordPlaceholder": "Enter password for link",
+        "copyLink": "Copy Link",
+        "tooltipContent": "This password is used by the receiving user to open the file being sent. Do not use your Space password.",
+        "tooltipButton": "Okay"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "account": {
+        "title": "Account",
+        "profilePicture": "Profile Picture",
+        "edit": "Edit",
+        "displayName": "Display Name",
+        "setDisplayName": "Set Display Name",
+        "username": "Username",
+        "setUsername": "Pick a Username",
+        "changeUsername": "Change Username",
+        "profileId": "Profile ID",
+        "dangerZone": "Danger Zone",
+        "deleteAccount": "Delete Account",
+        "editDisplayName": "Edit Display Name",
+        "displayNameLable": "Display Name",
+        "editUsername": "Edit Username",
+        "usernameLabel": "Username"
+      },
+      "security": {
+        "title": "Security",
+        "password": "Password",
+        "paperKey": "Account Recovery Phrase",
+        "paperKeyTitle": "What is the Account Recovery Phrase?",
+        "downloadPaperKey": "Show Account Recovery Phrase",
+        "changePassword": "Change Password",
+        "paperKeyInfo": "A 12 words mnemonic seed will be created and it's going to be useful to access your account in case you lost your key pair.",
+        "seedPhraseModal": {
+          "title": "Seed Phrase",
+          "description": "Please write down your seed phrase and keep it somewhere safe, this will help you gain access to your account if you forget your password and have no other account recovery method."
+        },
+        "addNew": "Add New",
+        "signIn": "Sign In Methods",
+        "space": "Space",
+        "twitter": "Twitter",
+        "google": "Google",
+        "seedPhrase": "Reveal Seed Phrase",
+        "disconnect": "Disconnect",
+        "showSeed": "Show Seed Phrase",
+        "warning": {
+          "title": "Add Another Sign In Method",
+          "description": "We highly recommend adding another sign in method so you are still able to access your account in case you forget your password or lose access to your default sign in method.",
+          "button": "Add New"
+        },
+        "addNewError": "Failed to connect sign in method, please try again."
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "usage": {
+        "title": "Usage",
+        "using": "Using <0>{{size}}</0>",
+        "usingOf": "Using <0>{{size}}</0> of <0>{{maxSize}}</0>",
+        "storage": "Storage ({{size}})",
+        "transferMonthly": "Transfer - Resets Monthly ({{size}})",
+        "local": {
+          "diagramTitle": "Local Usage"
+        },
+        "backup": {
+          "switchTitle": "Space Storage is <0>{{value}}</0>",
+          "diagramTitle": "Space Usage ({{size}} included in {{plan}})"
+        },
+        "confirmModal": {
+          "title": "Turn Backup Storage Off",
+          "message": "Turning off backup storage will delete your backed up files. This is non reversible. If you would like to continue please enter your password.",
+          "label": "Enter Password",
+          "error": {
+            "requiredPassword": "Password is required."
+          }
+        },
+        "info": {
+          "upgrade": {
+            "title": "Upgrade to Space Pro",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "reachingLimit": {
+            "title": "Reaching Backup Limit",
+            "message": "The free {{backupLimit}} backup storage is coming close to being at capacity. Upgrade to Space Pro in order to keep backing up your data.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "reachedLimit": {
+            "title": "Backup Limit Reached",
+            "message": "The free {{backupLimit}} backup storage is at capacity. Upgrade to Space Pro in order to keep backing up your data. Any new files will not be backed up.",
+            "confirm": "Upgrade to Space Pro",
+            "openBrowser": "Opens in browser"
+          },
+          "backupBenefits": {
+            "title": "Backup Storage Benefits",
+            "message": "Store encrypted backups of your files in Space to ensure you don’t lose your files in case you ever lose your device. Storing encrypted backup copies of your files in Space allows you to access your files from other machines, recover files from a lost machine, and also enables users who you share files with to access those files even if you are offline.",
+            "confirm": "Turn on Backup Storage"
+          }
+        }
+      },
+      "referrals": {
+        "title": "Referrals"
+      },
+      "productKey": {
+        "title": "Space Pro",
+        "addFunds": "Add Funds",
+        "form": {
+          "activated": "Space Pro Activated",
+          "noactivated": "Upgrade to Space Pro",
+          "message": "Input your product key below to activate Space Pro.",
+          "inputLabel": "Product Key",
+          "placeholder": "Enter Product Key",
+          "submit": "Get Space Pro",
+          "price": {
+            "per": "/month",
+            "extra": "$0.10 per extra GB",
+            "usage": "100 GB of Storage & Bandwidth"
+          }
+        },
+        "messageBox": {
+          "title": "Don't have a Product Key yet?",
+          "description": "Visit our store to purchase a product key to activate Space Pro.",
+          "buy": "Buy Product Key"
+        },
+        "planDetails": {
+          "title": "Plan Details",
+          "currentPlan": "Current Plan: <bold>{{plan}}</bold>",
+          "paymentType": "Payment Type: <bold>{{paymentType}}</bold>",
+          "crypto": "Cryptocurrency",
+          "creditCard": "Credit Card",
+          "nextBill": "Next Bill: <bold>{{billDate}}</bold> for <bold>${{price}}</bold>",
+          "creditBalance": "Credit Balance",
+          "replenishBalance": "Replenish your balance",
+          "balanceLow": "Your balance is getting low, add more credits to your account to continue backing up your files.",
+          "addCredits": "Add Credits",
+          "changePaymentMethod": "Change Payment Method",
+          "cancelPlan": "Cancel Plan",
+          "balanceBox": {
+            "balance": "Balance",
+            "addFunds": "Add Funds",
+            "timeRemaining": "Time Remaining:",
+            "tooltipMessage": "Current balance can cover the next {{timeRemaining}} (estimate) based on your last bill. Exact amount is subject to change based on your Space storage & bandwidth usage."
+          }
+        }
+      }
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "currPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "currentPassword": "Current Password",
+      "testKeysError": "Incorrect current password",
+      "backupKeysError": "Failed to update password"
+    },
+    "createFolder": {
+      "title": "Create New Folder",
+      "inputLabel": "Folder Name"
+    },
+    "deleteAccount": {
+      "title": "Delete Account",
+      "description": "Are you sure you want to delete this account?"
+    },
+    "signoutConfirmation": {
+      "title": "Do you know your password?",
+      "description": "If you don't have a password or written down mnemonic then you might not get back access to your files.",
+      "passwordLabel": "Enter your password"
+    },
+    "license": {
+      "title": "Register Space Pro",
+      "description": "To register Space Pro, you’ll need a license key",
+      "description1": "Visit our store to make a purchase if you haven’t already.",
+      "placeholder": "Enter License Key",
+      "buy": "Buy License",
+      "register": "Register",
+      "upgradedTitle": "Upgraded to Space Pro",
+      "upgradedDescription": "Enjoy 100GB more Space storage."
+    },
+    "fileLinkPassword": {
+      "description": "File is locked",
+      "openText": "Enter password to open file",
+      "error": "Incorrect password, please try again."
+    }
+  },
+  "welcome": {
+    "remind": "Remind me later",
+    "backup": {
+      "title": "Add backup sign in method",
+      "description": "Add a backup sign in method to make sure you never lose access to your account."
+    },
+    "username": {
+      "title": "Create a Username & Password",
+      "description": "To log in & out easier we recommend creating a username & password."
+    },
+    "integrations": {
+      "title": "Add Space to your local drive",
+      "description": "Browse files in Space from your computer (not just from the app)."
+    }
+  },
+  "addBackupSignIn": {
+    "title": "Add Backup Sign In Method",
+    "description": "Choose one of the following options to add to your account as an additional sign in method. This will help ensure you never lose access to your account.",
+    "email": "Email",
+    "username": "Username",
+    "google": "Google",
+    "twitter": "Twitter",
+    "seedPhrase": "Seed Phrase",
+    "morePrivate": "More Private",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "torusError": "Something went wrong, please try again later."
+  }
+}
