@@ -15,7 +15,7 @@ const EmailLinkAuth = ({ isSignup }) => {
 
   return (
     <div className={classes.root}>
-      <img src={`${process.env.PUBLIC_URL}/assets/images/magic_wand.png`} alt="" width="42" />
+      <img src={`${process.env.PUBLIC_URL}/assets/images/magic_wand.svg`} alt="" width="42" />
       <Typography className={classes.title} color="inherit">
         {t('modules.emailLinkAuth.title', { action })}
       </Typography>
