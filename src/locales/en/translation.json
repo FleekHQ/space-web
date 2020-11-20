@@ -239,6 +239,14 @@
       "description": "Please create a new password for your Space account.",
       "confirm": "Confirm Password",
       "remind": "<tip>Tip:</tip> Remember it this time"
+    },
+    "emailLinkAuth": {
+      "signup": "sign up",
+      "signin": "sign in",
+      "title": "Magic {{action}} link",
+      "message": "We sent a magic link to <0>{{email}}.</0>\nClick it to {{action}}.",
+      "callToAction": "Didn't receive yet? <0>Resend Email</0>",
+      "back": "Go back"
     }
   },
   "uploadProgressModal": {
