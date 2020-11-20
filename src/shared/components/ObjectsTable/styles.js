@@ -28,6 +28,7 @@ export default makeStyles((theme) => ({
     padding: 6,
     minHeight: 0,
     overflow: 'auto',
+    marginTop: -10,
   },
   errorCardContainer: {
     position: 'absolute',

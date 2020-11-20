@@ -4,11 +4,13 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import { faFolder } from '@fortawesome/pro-solid-svg-icons/faFolder';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Typography from '@material-ui/core/Typography';
 
 import useStyles from './styles';
 
-const Breadcrumbs = ({ items }) => {
+const Breadcrumbs = ({ items, history }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.container}>
       {items.map((item, index) => (
@@ -21,6 +23,7 @@ const Breadcrumbs = ({ items }) => {
           )}
           <ButtonBase
             className={classes.button}
+            onClick={() => history.push(item.path)}
           >
             {item.type === 'folder' && (
               <FontAwesomeIcon
@@ -28,7 +31,9 @@ const Breadcrumbs = ({ items }) => {
                 className={classes.icon}
               />
             )}
-            {item.name}
+            <Typography className={classes.itemName}>
+              {item.name}
+            </Typography>
           </ButtonBase>
         </>
       ))}
@@ -43,6 +48,9 @@ Breadcrumbs.propTypes = {
     type: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   })).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Breadcrumbs;

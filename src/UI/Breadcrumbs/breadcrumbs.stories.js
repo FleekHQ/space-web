@@ -13,21 +13,22 @@ storiesOf(categoryName, module).add('Breadcrumbs', () => {
         id: 'my-files',
         name: 'my-files',
         type: 'root',
-        onClick: () => {},
+        path: '/root',
       },
       {
         id: 'folder-1',
         name: 'Folder 1',
         type: 'folder',
-        onClick: () => {},
+        path: '/root/folder-1',
       },
       {
         id: 'folder-2',
         name: 'Folder 2',
         type: 'folder',
-        onClick: () => {},
+        path: '/root/folder-1/folder-2',
       }
     ]),
+    history: { push: (path) => console.log(path) },
   };
 
   return (
