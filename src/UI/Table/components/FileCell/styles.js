@@ -13,4 +13,18 @@ export default makeStyles({
     overflow: 'hidden',
     flexShrink: 0,
   },
+  arrow: {
+    fontSize: 11,
+    marginRight: 6,
+  },
+  arrowContainer: {
+    width: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabulations: {
+    content: '',
+    width: ({ tabulations }) => (30 * tabulations),
+  },
 });
