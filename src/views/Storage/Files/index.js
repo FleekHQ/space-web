@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import get from 'lodash/get';
-import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
 import { useHistory, matchPath } from 'react-router-dom';
 import { fetchDir } from '@events/objects';
+import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
+import Breadcrumbs from '@ui/Breadcrumbs';
 
 import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 import EmptyState from './components/EmptyState';
@@ -22,6 +23,8 @@ const StorageMainView = () => {
     fetchDir(prefix);
   }, [history.location.pathname]);
 
+  const breadcrumbsItems = mapBreadcrumbs(t('navigation.files'), location.pathname, history);
+
   return (
     <div className={classes.root}>
       <HeaderNav />
@@ -29,9 +32,10 @@ const StorageMainView = () => {
         bucket="personal"
         fetchObjects={() => fetchDir(prefix)}
       />
-      <Typography variant="h6" className={classes.title} weight="medium">
-        {t('navigation.files')}
-      </Typography>
+      <Breadcrumbs
+        items={breadcrumbsItems}
+        history={history}
+      />
       <FileTable
         bucket="personal"
         prefix={prefix}

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import get from 'lodash/get';
 import { useDispatch } from 'react-redux';
-import Typography from '@ui/Typography';
 import { useTranslation } from 'react-i18next';
 import { fetchSharedObjects } from '@events/objects';
 import { useHistory, matchPath, useLocation } from 'react-router-dom';
 
 import { openModal, FILE_LINK_PASSWORD } from '@shared/components/Modal/actions';
+import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
+import Breadcrumbs from '@ui/Breadcrumbs';
 
 import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 import useStyles from './styles';
@@ -40,6 +41,8 @@ const SharedWithMeView = () => {
     }
   }, []);
 
+  const breadcrumbsItems = mapBreadcrumbs(t('navigation.shared-by'), location.pathname, history);
+
   return (
     <div className={classes.root}>
       <HeaderNav />
@@ -47,11 +50,10 @@ const SharedWithMeView = () => {
         bucket="shared-with-me"
         fetchObjects={fetchSharedObjects}
       />
-      <div className={classes.breadcrumbs}>
-        <Typography variant="h6" className={classes.title} weight="medium">
-          {t('navigation.shared-by')}
-        </Typography>
-      </div>
+      <Breadcrumbs
+        items={breadcrumbsItems}
+        history={history}
+      />
       <FileTable
         prefix={prefix}
         bucket="shared-with-me"
