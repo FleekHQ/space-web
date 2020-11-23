@@ -15,16 +15,22 @@ export default makeStyles({
   },
   arrow: {
     fontSize: 11,
-    marginRight: 6,
   },
   arrowContainer: {
     width: 16,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 6,
   },
   tabulations: {
     content: '',
     width: ({ tabulations }) => (30 * tabulations),
+  },
+  arrowButton: {
+    padding: 4,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

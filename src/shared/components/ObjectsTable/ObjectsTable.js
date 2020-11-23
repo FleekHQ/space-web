@@ -192,6 +192,23 @@ const ObjectsTable = ({
     setCurrentFilter(id);
   };
 
+  const arrowOnClick = (clickedRow) => {
+    const rowIndex = sortedRows.findIndex((row) => row.key === clickedRow.key);
+    const newRows = [
+      ...sortedRows.slice(0, rowIndex),
+      {
+        ...clickedRow,
+        collapsed: !clickedRow.collapsed,
+      },
+      ...sortedRows.slice(rowIndex + 1, sortedRows.length),
+    ];
+
+    dispatch({
+      payload: newRows,
+      type: UPDATE_OBJECTS,
+    });
+  };
+
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
@@ -254,7 +271,10 @@ const ObjectsTable = ({
                 onContextMenu={handleRowRightClick({ row })}
                 onDoubleClick={handleDoubleRowClick({ row })}
               >
-                <RenderRow row={row} />
+                <RenderRow
+                  row={row}
+                  arrowOnClick={() => arrowOnClick(row)}
+                />
                 {withRowOptions && (
                   <TableCell align="right">
                     <Button

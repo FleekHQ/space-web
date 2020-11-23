@@ -4,6 +4,7 @@ import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import { faChevronDown } from '@fortawesome/pro-light-svg-icons/faChevronDown';
 import { faChevronRight } from '@fortawesome/pro-light-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 import useStyles from './styles';
 import TableCell from '../TableCell';
@@ -15,6 +16,7 @@ const FileCell = (props) => {
     children,
     collapsed,
     tabulations,
+    arrowOnClick,
     ...tableCellProps
   } = props;
 
@@ -27,10 +29,19 @@ const FileCell = (props) => {
         <div className={classes.tabulations} />
         <div className={classes.arrowContainer}>
           {ext === 'folder' && (
-            <FontAwesomeIcon
-              icon={collapsed ? faChevronRight : faChevronDown}
-              className={classes.arrow}
-            />
+            <ButtonBase
+              className={classes.arrowButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                arrowOnClick();
+              }}
+              onDoubleClick={(e) => e.stopPropagation()}
+            >
+              <FontAwesomeIcon
+                icon={collapsed ? faChevronDown : faChevronRight}
+                className={classes.arrow}
+              />
+            </ButtonBase>
           )}
         </div>
         <div className={classes.iconContainer}>
@@ -49,8 +60,9 @@ FileCell.defaultProps = {
   src: null,
   ext: 'default',
   children: null,
-  collapsed: true,
+  collapsed: false,
   tabulations: 0,
+  arrowOnClick: () => {},
 };
 
 FileCell.propTypes = {
@@ -59,6 +71,7 @@ FileCell.propTypes = {
   children: PropTypes.node,
   collapsed: PropTypes.bool,
   tabulations: PropTypes.number,
+  arrowOnClick: PropTypes.func,
 };
 
 export default FileCell;
