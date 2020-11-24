@@ -30,6 +30,7 @@ const FileCell = (props) => {
         <div className={classes.arrowContainer}>
           {ext === 'folder' && (
             <ButtonBase
+              disableRipple
               className={classes.arrowButton}
               onClick={(e) => {
                 e.stopPropagation();
