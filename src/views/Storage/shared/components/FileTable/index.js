@@ -30,6 +30,7 @@ const FileTable = ({
       bucket,
       prefix,
       '/',
+      true,
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
     state.storage.buckets[bucket].loading,

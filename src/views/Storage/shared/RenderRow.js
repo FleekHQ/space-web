@@ -25,7 +25,8 @@ const RenderRow = ({ row, arrowOnClick }) => {
     const locationWithRoot = location.pathname.split('/').filter((folder) => folder !== '');
     const locationWithoutRoot = locationWithRoot.slice(2, locationWithRoot.length);
     const rootFolderAmount = locationWithoutRoot.length;
-    const currentItemFolderAmount = row.key.split('/').length;
+    const { key = '' } = row;
+    const currentItemFolderAmount = key.split('/').length;
     const tabulations = rootFolderAmount - currentItemFolderAmount + 1;
     return tabulations;
   };
@@ -36,7 +37,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
         ext={row.ext}
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
-        collapsed={row.collapsed}
+        expanded={row.expanded}
         tabulations={getTabulationAmount()}
       >
         <Typography variant="body1" noWrap>
@@ -86,7 +87,7 @@ RenderRow.propTypes = {
     lastModified: PropTypes.instanceOf(Date),
     isLocallyAvailable: PropTypes.bool,
     isAvailableInSpace: PropTypes.bool,
-    collapsed: PropTypes.bool,
+    expanded: PropTypes.bool,
   }).isRequired,
   arrowOnClick: PropTypes.func,
 };

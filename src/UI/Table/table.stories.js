@@ -35,7 +35,7 @@ const renderRow = ({ row }) => (
     <FileCell
       ext={row.ext}
       src={row.src}
-      collapsed={row.collapsed}
+      expanded={row.expanded}
       tabulations={row.tabulations}
     >
       <Typography variant="body1">
@@ -105,7 +105,7 @@ storiesOf(categoryName, module).add('Table', () => {
         lastModified: 'Apr 1, 2020 1:02:56 PM EST',
         size: '429.0 B',
         selected: false,
-        collapsed: true,
+        expanded: true,
       },
       {
         id: 'a1',
@@ -115,7 +115,7 @@ storiesOf(categoryName, module).add('Table', () => {
         lastModified: 'Apr 1, 2020 1:02:56 PM EST',
         size: '429.0 B',
         selected: false,
-        collapsed: false,
+        expanded: false,
       },
       {
         id: 'b2',
@@ -135,7 +135,7 @@ storiesOf(categoryName, module).add('Table', () => {
         lastModified: 'Apr 1, 2020 1:02:56 PM EST',
         size: '429.0 B',
         selected: false,
-        collapsed: false,
+        expanded: false,
         tabulations: 1
       },
       {

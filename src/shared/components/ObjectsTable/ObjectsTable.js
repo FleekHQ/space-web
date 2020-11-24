@@ -198,7 +198,7 @@ const ObjectsTable = ({
       ...sortedRows.slice(0, rowIndex),
       {
         ...clickedRow,
-        collapsed: !clickedRow.collapsed,
+        expanded: !clickedRow.expanded,
       },
       ...sortedRows.slice(rowIndex + 1, sortedRows.length),
     ];

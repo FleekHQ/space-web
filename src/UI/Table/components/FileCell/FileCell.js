@@ -14,7 +14,7 @@ const FileCell = (props) => {
     ext,
     src,
     children,
-    collapsed,
+    expanded,
     tabulations,
     arrowOnClick,
     ...tableCellProps
@@ -38,7 +38,7 @@ const FileCell = (props) => {
               onDoubleClick={(e) => e.stopPropagation()}
             >
               <FontAwesomeIcon
-                icon={collapsed ? faChevronDown : faChevronRight}
+                icon={expanded ? faChevronDown : faChevronRight}
                 className={classes.arrow}
               />
             </ButtonBase>
@@ -60,7 +60,7 @@ FileCell.defaultProps = {
   src: null,
   ext: 'default',
   children: null,
-  collapsed: false,
+  expanded: false,
   tabulations: 0,
   arrowOnClick: () => {},
 };
@@ -69,7 +69,7 @@ FileCell.propTypes = {
   ext: PropTypes.string,
   src: PropTypes.string,
   children: PropTypes.node,
-  collapsed: PropTypes.bool,
+  expanded: PropTypes.bool,
   tabulations: PropTypes.number,
   arrowOnClick: PropTypes.func,
 };
