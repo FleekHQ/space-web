@@ -223,8 +223,6 @@ const ObjectsTable = ({
     ];
 
     if (expanded) {
-      // This works only for files in 'my-space'
-      // update call below once we also support folders in 'shared'
       fetchDir(clickedRow.key);
     }
 
