@@ -28,6 +28,7 @@ const ObjectsTable = ({
   loading,
   renderLoadingRows,
   EmptyState,
+  fetchDir,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -39,7 +40,8 @@ const ObjectsTable = ({
     lastModified: 'desc',
   });
   const [currentFilter, setCurrentFilter] = useState('name');
-  const sortedRows = unsortedRows.sort((rowA, rowB) => {
+
+  const getSortedRows = (rowsToSort) => (rowsToSort.sort((rowA, rowB) => {
     let compareValueA = rowA[currentFilter];
     let compareValueB = rowB[currentFilter];
     if (filtersDirection[currentFilter] === 'desc') {
@@ -64,7 +66,23 @@ const ObjectsTable = ({
     }
 
     return (compareValueA - compareValueB);
-  });
+  }));
+
+  const sortAndAddSubfolders = (rows) => {
+    let sorted = getSortedRows(rows);
+    sorted = sorted.reduce((newArr, row) => {
+      let arrayWithSubfolder = newArr;
+      arrayWithSubfolder.push(row);
+      if (row.expanded) {
+        const subFolderContent = sortAndAddSubfolders(row.folderContent);
+        arrayWithSubfolder = arrayWithSubfolder.concat(subFolderContent);
+      }
+      return arrayWithSubfolder;
+    }, []);
+    return sorted;
+  };
+
+  const sortedRows = sortAndAddSubfolders(unsortedRows);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
@@ -194,14 +212,21 @@ const ObjectsTable = ({
 
   const arrowOnClick = (clickedRow) => {
     const rowIndex = sortedRows.findIndex((row) => row.key === clickedRow.key);
+    const expanded = !clickedRow.expanded;
     const newRows = [
       ...sortedRows.slice(0, rowIndex),
       {
         ...clickedRow,
-        expanded: !clickedRow.expanded,
+        expanded,
       },
       ...sortedRows.slice(rowIndex + 1, sortedRows.length),
     ];
+
+    if (expanded) {
+      // This works only for files in 'my-space'
+      // update call below once we also support folders in 'shared'
+      fetchDir(clickedRow.key);
+    }
 
     dispatch({
       payload: newRows,
@@ -306,6 +331,7 @@ ObjectsTable.defaultProps = {
   renderLoadingRows: () => null,
   loading: false,
   EmptyState: () => null,
+  fetchDir: () => null,
 };
 
 ObjectsTable.propTypes = {
@@ -322,6 +348,7 @@ ObjectsTable.propTypes = {
   renderLoadingRows: PropTypes.func,
   loading: PropTypes.bool,
   EmptyState: PropTypes.elementType,
+  fetchDir: PropTypes.func,
 };
 
 export default ObjectsTable;

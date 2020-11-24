@@ -27,7 +27,8 @@ const RenderRow = ({ row, arrowOnClick }) => {
     const rootFolderAmount = locationWithoutRoot.length;
     const { key = '' } = row;
     const currentItemFolderAmount = key.split('/').length;
-    const tabulations = rootFolderAmount - currentItemFolderAmount + 1;
+    const tabulations = currentItemFolderAmount - rootFolderAmount - 1;
+
     return tabulations;
   };
 
