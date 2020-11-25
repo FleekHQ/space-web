@@ -28,6 +28,7 @@ const ObjectsTable = ({
   loading,
   renderLoadingRows,
   EmptyState,
+  fetchDir,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -39,7 +40,8 @@ const ObjectsTable = ({
     lastModified: 'desc',
   });
   const [currentFilter, setCurrentFilter] = useState('name');
-  const sortedRows = unsortedRows.sort((rowA, rowB) => {
+
+  const getSortedRows = (rowsToSort) => (rowsToSort.sort((rowA, rowB) => {
     let compareValueA = rowA[currentFilter];
     let compareValueB = rowB[currentFilter];
     if (filtersDirection[currentFilter] === 'desc') {
@@ -64,7 +66,23 @@ const ObjectsTable = ({
     }
 
     return (compareValueA - compareValueB);
-  });
+  }));
+
+  const sortAndAddSubfolders = (rows) => {
+    let sorted = getSortedRows(rows);
+    sorted = sorted.reduce((newArr, row) => {
+      let arrayWithSubfolder = newArr;
+      arrayWithSubfolder.push(row);
+      if (row.expanded) {
+        const subFolderContent = sortAndAddSubfolders(row.folderContent);
+        arrayWithSubfolder = arrayWithSubfolder.concat(subFolderContent);
+      }
+      return arrayWithSubfolder;
+    }, []);
+    return sorted;
+  };
+
+  const sortedRows = sortAndAddSubfolders(unsortedRows);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
@@ -192,6 +210,25 @@ const ObjectsTable = ({
     setCurrentFilter(id);
   };
 
+  const arrowOnClick = (clickedRow) => {
+    const expanded = !clickedRow.expanded;
+    const newRows = [
+      {
+        ...clickedRow,
+        expanded,
+      },
+    ];
+
+    if (expanded) {
+      fetchDir(clickedRow.key);
+    }
+
+    dispatch({
+      payload: newRows,
+      type: UPDATE_OBJECTS,
+    });
+  };
+
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
@@ -254,7 +291,10 @@ const ObjectsTable = ({
                 onContextMenu={handleRowRightClick({ row })}
                 onDoubleClick={handleDoubleRowClick({ row })}
               >
-                <RenderRow row={row} />
+                <RenderRow
+                  row={row}
+                  arrowOnClick={() => arrowOnClick(row)}
+                />
                 {withRowOptions && (
                   <TableCell align="right">
                     <Button
@@ -286,6 +326,7 @@ ObjectsTable.defaultProps = {
   renderLoadingRows: () => null,
   loading: false,
   EmptyState: () => null,
+  fetchDir: () => null,
 };
 
 ObjectsTable.propTypes = {
@@ -302,6 +343,7 @@ ObjectsTable.propTypes = {
   renderLoadingRows: PropTypes.func,
   loading: PropTypes.bool,
   EmptyState: PropTypes.elementType,
+  fetchDir: PropTypes.func,
 };
 
 export default ObjectsTable;

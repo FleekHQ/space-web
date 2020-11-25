@@ -58,7 +58,7 @@ const SharedWithMeView = () => {
         prefix={prefix}
         bucket="shared-with-me"
         baseRedirectUrl="/storage/shared-by"
-        fetchObjects={fetchSharedObjects}
+        fetchDir={fetchSharedObjects}
       />
     </div>
   );

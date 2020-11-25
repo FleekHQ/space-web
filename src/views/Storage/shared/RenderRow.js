@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import { formatBytes } from '@utils';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 
-const RenderRow = ({ row }) => {
+const RenderRow = ({ row, arrowOnClick }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const shareAmount = row.shareAmount - 1;
   const iconsCellI18n = {
@@ -19,9 +21,26 @@ const RenderRow = ({ row }) => {
     button: t('modules.storage.fileTable.storageLimitReached.button'),
   };
 
+  const getTabulationAmount = () => {
+    const locationWithRoot = location.pathname.split('/').filter((folder) => folder !== '');
+    const locationWithoutRoot = locationWithRoot.slice(2, locationWithRoot.length);
+    const rootFolderAmount = locationWithoutRoot.length;
+    const { key = '' } = row;
+    const currentItemFolderAmount = key.split('/').length;
+    const tabulations = currentItemFolderAmount - rootFolderAmount - 1;
+
+    return tabulations;
+  };
+
   return (
     <>
-      <FileCell ext={row.ext} src={`file:${row.key}`}>
+      <FileCell
+        ext={row.ext}
+        src={`file:${row.key}`}
+        arrowOnClick={arrowOnClick}
+        expanded={row.expanded}
+        tabulations={getTabulationAmount()}
+      >
         <Typography variant="body1" noWrap>
           {row.name}
         </Typography>
@@ -55,6 +74,10 @@ const RenderRow = ({ row }) => {
   );
 };
 
+RenderRow.defaultProps = {
+  arrowOnClick: () => {},
+};
+
 RenderRow.propTypes = {
   row: PropTypes.shape({
     shareAmount: PropTypes.number,
@@ -65,7 +88,9 @@ RenderRow.propTypes = {
     lastModified: PropTypes.instanceOf(Date),
     isLocallyAvailable: PropTypes.bool,
     isAvailableInSpace: PropTypes.bool,
+    expanded: PropTypes.bool,
   }).isRequired,
+  arrowOnClick: PropTypes.func,
 };
 
 export default RenderRow;

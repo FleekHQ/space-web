@@ -18,8 +18,8 @@ const FileTable = ({
   bucket,
   prefix,
   baseRedirectUrl,
-  fetchObjects,
   EmptyState,
+  fetchDir,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -30,6 +30,7 @@ const FileTable = ({
       bucket,
       prefix,
       '/',
+      true,
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
     state.storage.buckets[bucket].loading,
@@ -71,28 +72,28 @@ const FileTable = ({
       loading={rows.length <= 0 && loading}
       renderLoadingRows={renderLoadingRows}
       renderRow={RenderRow}
-      fetchObjects={fetchObjects}
       heads={getTableHeads(t)}
       getRedirectUrl={(row) => path.posix.join(baseRedirectUrl, prefix, row.name)}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
       EmptyState={EmptyState}
+      fetchDir={fetchDir}
     />
   );
 };
 
 FileTable.defaultProps = {
   baseRedirectUrl: '/storage/files',
-  fetchObjects: () => {},
   EmptyState: () => null,
+  fetchDir: () => null,
 };
 
 FileTable.propTypes = {
   bucket: PropTypes.string.isRequired,
   prefix: PropTypes.string.isRequired,
   baseRedirectUrl: PropTypes.string,
-  fetchObjects: PropTypes.func,
   EmptyState: PropTypes.elementType,
+  fetchDir: PropTypes.func,
 };
 
 export default FileTable;

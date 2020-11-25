@@ -39,8 +39,8 @@ const StorageMainView = () => {
       <FileTable
         bucket="personal"
         prefix={prefix}
-        fetchObjects={() => fetchDir(prefix)}
         EmptyState={EmptyState}
+        fetchDir={fetchDir}
       />
     </div>
   );
