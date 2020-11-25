@@ -211,15 +211,12 @@ const ObjectsTable = ({
   };
 
   const arrowOnClick = (clickedRow) => {
-    const rowIndex = sortedRows.findIndex((row) => row.key === clickedRow.key);
     const expanded = !clickedRow.expanded;
     const newRows = [
-      ...sortedRows.slice(0, rowIndex),
       {
         ...clickedRow,
         expanded,
       },
-      ...sortedRows.slice(rowIndex + 1, sortedRows.length),
     ];
 
     if (expanded) {
