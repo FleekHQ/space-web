@@ -10,6 +10,10 @@ export default makeStyles((theme) => ({
     borderRadius: 6,
   },
   menuItem: {
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent: 'flex-start',
+    padding: '11px 0px 11px 15px',
     borderRight: getOuterBorder(theme),
     borderLeft: getOuterBorder(theme),
     borderBottom: getInnerBorder(theme),
@@ -23,5 +27,17 @@ export default makeStyles((theme) => ({
       borderBottomRightRadius: 6,
       borderBottomLeftRadius: 6,
     },
+  },
+  iconContainer: {
+    width: 21,
+    display: 'flex',
+    alignContent: 'center',
+  },
+  icon: {
+    fontSize: 11,
+    color: '#7F8185',
+  },
+  displayText: {
+    fontSize: 14,
   },
 }));

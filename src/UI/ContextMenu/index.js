@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import useStyles from './styles';
 
 export const CONTEXT_OPTION_IDS = {
@@ -13,25 +16,28 @@ export const CONTEXT_OPTION_IDS = {
 
 const ContextMenu = ({
   menuItemOnClick,
-  i18n,
+  items,
 }) => {
   const classes = useStyles();
-
-  const items = [
-    CONTEXT_OPTION_IDS.open,
-    CONTEXT_OPTION_IDS.share,
-    CONTEXT_OPTION_IDS.rename,
-    CONTEXT_OPTION_IDS.trash,
-  ];
 
   return (
     <Paper className={classes.paper}>
       {items.map((item) => (
         <MenuItem
           className={classes.menuItem}
-          onClick={() => menuItemOnClick(item)}
+          onClick={() => menuItemOnClick(item.id)}
         >
-          {i18n[item]}
+          <div className={classes.iconContainer}>
+            <FontAwesomeIcon
+              icon={item.icon}
+              className={classes.icon}
+            />
+          </div>
+          <Typography
+            className={classes.displayText}
+          >
+            {item.displayText}
+          </Typography>
         </MenuItem>
       ))}
     </Paper>
@@ -46,6 +52,13 @@ ContextMenu.propTypes = {
     rename: PropTypes.string,
     trash: PropTypes.string,
   }).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      displayText: PropTypes.string,
+      icon: PropTypes.element,
+    }),
+  ).isRequired,
 };
 
 export default ContextMenu;
