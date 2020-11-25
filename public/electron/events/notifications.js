@@ -19,6 +19,23 @@ const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotifications
 const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
 /* eslint-disable no-console */
+const fetchNotifications = async (mainWindow, payload = {}) => {
+  try {
+    const res = await spaceClient.getNotifications(payload);
+
+    mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
+      nextOffset: res.getNextoffset(),
+      lastSeenAt: res.getLastseenat(),
+      notifications: res.getNotificationsList().map(
+        (notification) => mapNotification(notification),
+      ),
+    });
+  } catch (err) {
+    console.error('FETCH_NOTIFICATIONS_ERROR', err);
+    mainWindow.webContents.send(FETCH_NOTIFICATIONS_ERROR, err);
+  }
+};
+
 const registerNotificationsEvents = (mainWindow) => {
   ipcMain.on(READ_NOTIFICATION_EVENT, async (event, payload) => {
     try {
@@ -32,20 +49,7 @@ const registerNotificationsEvents = (mainWindow) => {
   });
 
   ipcMain.on(FETCH_NOTIFICATIONS, async (event, payload) => {
-    try {
-      const res = await spaceClient.getNotifications(payload);
-
-      mainWindow.webContents.send(FETCH_NOTIFICATIONS_SUCCESS, {
-        nextOffset: res.getNextoffset(),
-        lastSeenAt: res.getLastseenat(),
-        notifications: res.getNotificationsList().map(
-          (notification) => mapNotification(notification),
-        ),
-      });
-    } catch (err) {
-      console.error('FETCH_NOTIFICATIONS_ERROR', err);
-      mainWindow.webContents.send(FETCH_NOTIFICATIONS_ERROR, err);
-    }
+    await fetchNotifications(mainWindow, payload);
   });
 
   ipcMain.on(HANDLE_FILES_INVITATION, async (event, payload) => {
@@ -57,6 +61,8 @@ const registerNotificationsEvents = (mainWindow) => {
     } catch (err) {
       console.error('HANDLE_FILES_INVITATION_ERROR', err);
       mainWindow.webContents.send(HANDLE_FILES_INVITATION_ERROR, payload, err);
+    } finally {
+      await fetchNotifications(mainWindow, { limit: 10, seek: 0 });
     }
   });
 

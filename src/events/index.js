@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import registerAuthEvents from './auth';
 import registerEventStream from './stream';
 import registerShortcuts from './shortcuts';
@@ -16,28 +19,33 @@ import registerNotificationSubscribe from './notifications-subscribe';
 import walletSubscribe from './wallet';
 import registerSubscriptions from './subscriptions';
 
-const registerEvents = () => {
-  registerShortcuts();
-  registerAuthEvents();
-  registerEventStream();
-  registerShareEvents();
-  registerObjectsEvents();
-  registerTxlSubscribeEvents();
-  registerAddItemsSubscribeEvents();
-  registerBucketEvents();
-  registerKeysEvents();
-  registerNotificationsEvents();
-  registerAccountEvents();
-  registerFolderEvents();
-  registerIdentitiesEvents();
-  registerUsageEvents();
-  registerNotificationSubscribe();
-  walletSubscribe();
-  registerSubscriptions();
-  registerSubscriptions();
+const RegisterEvents = () => {
+  const history = useHistory();
+
+  useEffect(() => {
+    registerShortcuts();
+    registerAuthEvents();
+    registerEventStream();
+    registerShareEvents();
+    registerObjectsEvents();
+    registerTxlSubscribeEvents();
+    registerAddItemsSubscribeEvents();
+    registerBucketEvents();
+    registerKeysEvents();
+    registerNotificationsEvents(history);
+    registerAccountEvents();
+    registerFolderEvents();
+    registerIdentitiesEvents();
+    registerUsageEvents();
+    registerNotificationSubscribe();
+    walletSubscribe();
+    registerSubscriptions();
+  }, []);
+
+  return null;
 };
 
-export default registerEvents;
+export default RegisterEvents;
 export * from './auth';
 export * from './share';
 export * from './objects';

@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron';
 import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
+
 import store from '../store';
 import { NOTIFICATIONS_ACTION_TYPES } from '../reducers/notifications';
 
@@ -17,9 +18,9 @@ const SET_NOTIFICATIONS_LAST_SEEN_AT = `${EVENT_PREFIX}:setNotificationsLastSeen
 const SET_NOTIFICATIONS_LAST_SEEN_AT_SUCCESS = `${EVENT_PREFIX}:setNotificationsLastSeenAt:success`;
 const SET_NOTIFICATIONS_LAST_SEEN_AT_ERROR = `${EVENT_PREFIX}:setNotificationsLastSeenAt:error`;
 
-const registerNotificationEvents = () => {
+/* eslint-disable no-console */
+const registerNotificationEvents = (history) => {
   ipcRenderer.on(FETCH_NOTIFICATIONS_ERROR, (_, error) => {
-    // eslint-disable-next-line no-console
     console.log(error);
   });
 
@@ -39,6 +40,7 @@ const registerNotificationEvents = () => {
   });
 
   ipcRenderer.on(HANDLE_FILES_INVITATION_SUCCESS, () => {
+    history.push('/storage/shared-by');
   });
 
   ipcRenderer.on(HANDLE_FILES_INVITATION_ERROR, (_, payload, err) => {
@@ -88,7 +90,7 @@ export const fetchNotifications = (payload) => {
 export const handleFilesInvitation = (payload) => {
   store.dispatch({
     type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
-    status: payload.accept ? 'ACCEPTED' : 'REJECTED',
+    status: payload.accept ? 'ACCEPTING' : 'REJECTING',
     ...payload,
   });
   ipcRenderer.send(HANDLE_FILES_INVITATION, payload);

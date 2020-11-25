@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import createSpaceTheme from '@terminal-packages/space-ui/core/theme';
 
 import DragableBar from '@shared/components/DragableBar';
-import registerEvents from '@events';
+import RegisterEvents from '@events';
 
 import {
   Route,
@@ -22,8 +22,6 @@ import Splash from './views/Splash';
 import Storage from './views/Storage';
 import PrivateRoute from './shared/components/PrivateRoute';
 
-registerEvents();
-
 const theme = createSpaceTheme();
 
 /* TODO: Remove SetUpWD from Final Version */
@@ -36,6 +34,7 @@ const App = () => (
         <DragableBar />
         <Modal />
         <Router>
+          <RegisterEvents />
           <Switch>
             <Route path="/auth">
               <Auth />
