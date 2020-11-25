@@ -13,6 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import Dropzone from '@shared/components/Dropzone';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import Popper from '@material-ui/core/Popper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Table, { TableCell, TableRow } from '@ui/Table';
 
 import useStyles from './styles';
@@ -33,6 +37,12 @@ const ObjectsTable = ({
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const initialContextState = {
+    mouseX: null,
+    mouseY: null,
+  };
+  const [contextState, setContextState] = React.useState(initialContextState);
+
   const wrapperRef = React.useRef(null);
   const [filtersDirection, setFiltersDirection] = useState({
     name: 'desc',
@@ -165,9 +175,13 @@ const ObjectsTable = ({
   };
 
   const handleRowRightClick = ({ row }) => (event) => {
+    console.log('right click!');
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('TODO: show context menu');
+
+    setContextState({
+      mouseX: event.clientX - 2,
+      mouseY: event.clientY - 4,
+    });
 
     if (row.selected) {
       return;
@@ -185,6 +199,9 @@ const ObjectsTable = ({
     });
   };
 
+  const handleContextClose = () => {
+    setContextState(initialContextState);
+  };
   const handleTableOutsideClick = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
       onOutsideClick(event.target);
@@ -312,6 +329,26 @@ const ObjectsTable = ({
               </TableRow>
             )}
           />
+          <Popper
+            open={contextState.mouseY !== null}
+            onClose={handleContextClose}
+            onClickAway={handleContextClose}
+            style={{
+              top: contextState.mouseY,
+              left: contextState.mouseX,
+            }}
+          >
+            <ClickAwayListener
+              onClickAway={handleContextClose}
+            >
+              <Paper>
+                <MenuItem onClick={handleContextClose}>Copy</MenuItem>
+                <MenuItem onClick={handleContextClose}>Print</MenuItem>
+                <MenuItem onClick={handleContextClose}>Highlight</MenuItem>
+                <MenuItem onClick={handleContextClose}>Email</MenuItem>
+              </Paper>
+            </ClickAwayListener>
+          </Popper>
         </div>
         {!loading && !sortedRows.length && <EmptyState />}
       </Dropzone>
