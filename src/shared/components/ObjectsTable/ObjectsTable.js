@@ -14,9 +14,8 @@ import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import Dropzone from '@shared/components/Dropzone';
 import Popper from '@material-ui/core/Popper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Table, { TableCell, TableRow } from '@ui/Table';
-import ContextMenu from '@ui/ContextMenu';
+import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 
 import getContextMenuItems from './utils/get-context-menu';
 import useStyles from './styles';
@@ -138,7 +137,9 @@ const ObjectsTable = ({
   };
 
   const handleDoubleRowClick = ({ row }) => (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     let newRows = [];
 
     if (row.type === 'folder') {
@@ -181,10 +182,6 @@ const ObjectsTable = ({
       mouseX: event.clientX - 2,
       mouseY: event.clientY - 4,
     });
-
-    if (row.selected) {
-      return;
-    }
 
     const newRows = sortedRows.map((_row) => ({
       ..._row,
@@ -245,8 +242,14 @@ const ObjectsTable = ({
     });
   };
 
-  const menuItemOnClick = (id) => {
-    console.log(id);
+  const menuItemOnClick = (optionId) => {
+    const clickedItem = sortedRows.find((row) => row.selected);
+    switch (optionId) {
+      case CONTEXT_OPTION_IDS.OPEN:
+      default:
+        handleDoubleRowClick({ row: clickedItem })();
+        break;
+    }
     handleContextClose();
   };
   const contextMenuItems = getContextMenuItems();
@@ -342,14 +345,11 @@ const ObjectsTable = ({
               left: contextState.mouseX,
             }}
           >
-            <ClickAwayListener
+            <ContextMenu
               onClickAway={handleContextClose}
-            >
-              <ContextMenu
-                menuItemOnClick={menuItemOnClick}
-                items={contextMenuItems}
-              />
-            </ClickAwayListener>
+              menuItemOnClick={menuItemOnClick}
+              items={contextMenuItems}
+            />
           </Popper>
         </div>
         {!loading && !sortedRows.length && <EmptyState />}

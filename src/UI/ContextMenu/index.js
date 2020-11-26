@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import useStyles from './styles';
 
@@ -17,30 +18,33 @@ export const CONTEXT_OPTION_IDS = {
 const ContextMenu = ({
   menuItemOnClick,
   items,
+  onClickAway,
 }) => {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.paper}>
-      {items.map((item) => (
-        <MenuItem
-          className={classes.menuItem}
-          onClick={() => menuItemOnClick(item.id)}
-        >
-          <div className={classes.iconContainer}>
-            <FontAwesomeIcon
-              icon={item.icon}
-              className={classes.icon}
-            />
-          </div>
-          <Typography
-            className={classes.displayText}
+    <ClickAwayListener onClickAway={onClickAway}>
+      <Paper className={classes.paper}>
+        {items.map((item) => (
+          <MenuItem
+            className={classes.menuItem}
+            onClick={() => menuItemOnClick(item.id)}
           >
-            {item.displayText}
-          </Typography>
-        </MenuItem>
-      ))}
-    </Paper>
+            <div className={classes.iconContainer}>
+              <FontAwesomeIcon
+                icon={item.icon}
+                className={classes.icon}
+              />
+            </div>
+            <Typography
+              className={classes.displayText}
+            >
+              {item.displayText}
+            </Typography>
+          </MenuItem>
+        ))}
+      </Paper>
+    </ClickAwayListener>
   );
 };
 
@@ -59,6 +63,7 @@ ContextMenu.propTypes = {
       icon: PropTypes.element,
     }),
   ).isRequired,
+  onClickAway: PropTypes.func.isRequired,
 };
 
 export default ContextMenu;
