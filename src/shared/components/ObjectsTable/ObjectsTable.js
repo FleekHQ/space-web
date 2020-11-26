@@ -16,6 +16,7 @@ import Dropzone from '@shared/components/Dropzone';
 import Popper from '@material-ui/core/Popper';
 import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
+import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
 
 import getContextMenuItems from './utils/get-context-menu';
 import useStyles from './styles';
@@ -92,6 +93,7 @@ const ObjectsTable = ({
   };
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
+  const clickedItem = sortedRows.find((row) => row.selected);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
@@ -243,16 +245,20 @@ const ObjectsTable = ({
   };
 
   const menuItemOnClick = (optionId) => {
-    const clickedItem = sortedRows.find((row) => row.selected);
     switch (optionId) {
-      case CONTEXT_OPTION_IDS.OPEN:
-      default:
+      case CONTEXT_OPTION_IDS.open:
         handleDoubleRowClick({ row: clickedItem })();
+        break;
+      case CONTEXT_OPTION_IDS.share:
+      default:
+        dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
         break;
     }
     handleContextClose();
   };
-  const contextMenuItems = getContextMenuItems();
+
+  const contextMenuItems = getContextMenuItems(clickedItem);
+
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
