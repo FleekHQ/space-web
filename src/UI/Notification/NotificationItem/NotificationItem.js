@@ -60,6 +60,19 @@ const NotificationItem = (props) => {
             {i18n.accepted}
           </Typography>
         );
+      case 'ACCEPTING':
+      case 'REJECTING':
+        return (
+          <Button
+            loading
+            disabled
+            color="primary"
+            variant="contained"
+            className={classes.button}
+          >
+            {i18n.accept}
+          </Button>
+        );
       case 'REJECTED':
       default:
         return (
