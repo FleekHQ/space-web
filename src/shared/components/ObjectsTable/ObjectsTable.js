@@ -13,12 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import Dropzone from '@shared/components/Dropzone';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
 import Popper from '@material-ui/core/Popper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Table, { TableCell, TableRow } from '@ui/Table';
+import ContextMenu from '@ui/ContextMenu';
 
+import getContextMenuItems from './utils/get-context-menu';
 import useStyles from './styles';
 
 const ObjectsTable = ({
@@ -175,7 +175,6 @@ const ObjectsTable = ({
   };
 
   const handleRowRightClick = ({ row }) => (event) => {
-    console.log('right click!');
     event.preventDefault();
 
     setContextState({
@@ -246,6 +245,11 @@ const ObjectsTable = ({
     });
   };
 
+  const menuItemOnClick = (id) => {
+    console.log(id);
+    handleContextClose();
+  };
+  const contextMenuItems = getContextMenuItems();
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
@@ -341,12 +345,10 @@ const ObjectsTable = ({
             <ClickAwayListener
               onClickAway={handleContextClose}
             >
-              <Paper>
-                <MenuItem onClick={handleContextClose}>Copy</MenuItem>
-                <MenuItem onClick={handleContextClose}>Print</MenuItem>
-                <MenuItem onClick={handleContextClose}>Highlight</MenuItem>
-                <MenuItem onClick={handleContextClose}>Email</MenuItem>
-              </Paper>
+              <ContextMenu
+                menuItemOnClick={menuItemOnClick}
+                items={contextMenuItems}
+              />
             </ClickAwayListener>
           </Popper>
         </div>

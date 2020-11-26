@@ -12,12 +12,6 @@ const categoryName = 'ContextMenu';
 storiesOf(categoryName, module).add('default', () => {
   const defaultProps = {
     menuItemOnClick: (id) => { console.log(id) },
-    i18n: {
-      open: 'Open',
-      share: 'Share',
-      rename: 'Rename',
-      trash: 'Trash',
-    },
     items: [
       {
         id: CONTEXT_OPTION_IDS.open,
