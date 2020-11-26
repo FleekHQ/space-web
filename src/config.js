@@ -1,3 +1,6 @@
+import pickBy from 'lodash/pickBy';
+import identity from 'lodash/identity';
+
 const {
   NODE_ENV,
   REACT_APP_TORUS_NETWORK,
@@ -16,14 +19,14 @@ export default {
     url: REACT_APP_WS_AUTH_CHALLENGE_URL,
   },
   torus: {
-    sdkConfig: {
+    sdkConfig: pickBy({
       enableLogging: NODE_ENV !== 'production',
       redirectToOpener: true,
       redirectPathName: 'redirect.html',
       baseUrl: REACT_APP_TORUS_PROVIDERS_REDIRECT_URL,
       proxyContractAddress: REACT_APP_TORUS_PROXY_CONTRACT, // details for test net
       network: REACT_APP_TORUS_NETWORK, // details for test net
-    },
+    }, identity),
     providers: {
       google: {
         name: 'Google',
