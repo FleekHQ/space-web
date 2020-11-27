@@ -241,12 +241,10 @@ const registerObjectsEvents = (mainWindow) => {
 
   ipcMain.on(DELETE_OBJECT_EVENT, async (event, payload) => {
     try {
-      console.log(payload);
       await spaceClient.removeDirOrFile({
         bucket: payload.bucket,
         path: payload.path,
       });
-      console.log('success');
       mainWindow.webContents.send(DELETE_OBJECT_SUCCESS_EVENT);
     } catch (err) {
       mainWindow.webContents.send(DELETE_OBJECT_ERROR_EVENT, {
