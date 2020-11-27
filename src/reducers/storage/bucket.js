@@ -6,6 +6,7 @@ export const STORE_DIR = 'STORE_DIR';
 export const ADD_OBJECT = 'ADD_OBJECT';
 export const STORE_OBJECTS = 'STORE_OBJECTS';
 export const DELETE_OBJECT = 'DELETE_OBJECT';
+export const DELETE_OBJECT_AND_CHILDREN = 'DELETE_OBJECT_AND_CHILDREN';
 export const UPDATE_OBJECTS = 'UPDATE_OBJECTS';
 export const STORE_BUCKETS = 'STORE_BUCKETS';
 export const UPDATE_OR_ADD_OBJECT = 'UPDATE_OR_ADD_OBJECT';
@@ -95,6 +96,15 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         objects: state.objects.filter(
           (obj) => obj.fullKey !== action.payload.fullKey,
+        ),
+      };
+    }
+
+    case DELETE_OBJECT_AND_CHILDREN: {
+      return {
+        ...state,
+        objects: state.objects.filter(
+          (obj) => !obj.fullKey.startsWith(action.payload.fullKey),
         ),
       };
     }

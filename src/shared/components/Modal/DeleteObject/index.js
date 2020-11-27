@@ -11,6 +11,7 @@ import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
 import { deleteObject } from '@events';
 import { openModal, DELETE_OBJECT_SUCCESS } from '@shared/components/Modal/actions';
+import { DELETE_OBJECT_AND_CHILDREN } from '@reducers/storage/bucket';
 
 import { DELETE_OBJECT_ACTION_TYPES } from '@reducers/delete-object';
 import useStyles from './styles';
@@ -42,8 +43,15 @@ const DeleteFile = ({
 
   React.useEffect(() => {
     if (state.success) {
+      dispatch(openModal(DELETE_OBJECT_SUCCESS, { isFile: item.type === 'file' }));
+      dispatch({
+        type: DELETE_OBJECT_AND_CHILDREN,
+        payload: {
+          fullKey: item.fullKey,
+          bucket: item.bucket,
+        },
+      });
       closeModal();
-      dispatch(openModal(DELETE_OBJECT_SUCCESS, { isFile: item.isDir }));
     }
   }, [state.success]);
 
@@ -109,7 +117,8 @@ DeleteFile.propTypes = {
     name: PropTypes.string,
     bucket: PropTypes.string,
     key: PropTypes.string,
-    isDir: PropTypes.bool,
+    type: PropTypes.string,
+    fullKey: PropTypes.string,
   }).isRequired,
   closeModal: PropTypes.func.isRequired,
 };
