@@ -29,6 +29,7 @@
     "noResults": "No results",
     "comingSoon": "Coming Soon!",
     "goBack": "Go Back",
+    "delete": "Delete",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -451,6 +452,13 @@
       "currentPassword": "Current Password",
       "testKeysError": "Incorrect current password",
       "backupKeysError": "Failed to update password"
+    },
+    "deleteObject": {
+      "title": "Delete",
+      "description": "Confirm you want to delete \"{{filename}}\". This file will be gone forever.",
+      "error": "An error occurred. Please try again.",
+      "successFile": "File Deleted",
+      "successFolder": "Folder Deleted"
     },
     "createFolder": {
       "title": "Create New Folder",

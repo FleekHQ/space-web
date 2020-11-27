@@ -16,7 +16,7 @@ import Dropzone from '@shared/components/Dropzone';
 import Popper from '@material-ui/core/Popper';
 import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
-import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
+import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
 
 import getContextMenuItems from './utils/get-context-menu';
 import useStyles from './styles';
@@ -248,6 +248,9 @@ const ObjectsTable = ({
     switch (optionId) {
       case CONTEXT_OPTION_IDS.open:
         handleDoubleRowClick({ row: clickedItem })();
+        break;
+      case CONTEXT_OPTION_IDS.trash:
+        dispatch(openModal(DELETE_OBJECT, { item: clickedItem }));
         break;
       case CONTEXT_OPTION_IDS.share:
       default:
