@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 
-const RenderRow = ({ row, arrowOnClick }) => {
+const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -39,7 +39,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getTabulationAmount()}
+        tabulations={disableOffset ? 0 : getTabulationAmount()}
       >
         <Typography variant="body1" noWrap>
           {row.name}
@@ -76,6 +76,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
 
 RenderRow.defaultProps = {
   arrowOnClick: () => {},
+  disableOffset: false,
 };
 
 RenderRow.propTypes = {
@@ -90,6 +91,7 @@ RenderRow.propTypes = {
     isAvailableInSpace: PropTypes.bool,
     expanded: PropTypes.bool,
   }).isRequired,
+  disableOffset: PropTypes.bool,
   arrowOnClick: PropTypes.func,
 };
 
