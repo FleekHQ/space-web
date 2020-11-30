@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron');
-const { getAddressByPublicKey } = require('../utils');
+
 const { apiClient, spaceClient } = require('../clients');
+const { getKeyBackupType, getAddressByPublicKey } = require('../utils');
 
 const EVENT_PREFIX = 'auth';
 const SIGNIN_EVENT = `${EVENT_PREFIX}:signin`;
@@ -30,6 +31,7 @@ const registerAuthEvents = (mainWindow) => {
         await spaceClient.recoverKeysByPassphrase({
           uuid: data.data.uuid,
           passphrase: payload.password,
+          type: getKeyBackupType({ typeOfLogin: 'password' }),
         });
 
         user = { ...data.data };
@@ -42,6 +44,7 @@ const registerAuthEvents = (mainWindow) => {
         await spaceClient.recoverKeysByPassphrase({
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
+          type: getKeyBackupType({ typeOfLogin: payload.torusRes.userInfo.typeOfLogin }),
         });
 
         user = { ...data.data };
@@ -98,9 +101,9 @@ const registerAuthEvents = (mainWindow) => {
           token: apiSessionRes.getServicestoken(),
         });
         await spaceClient.backupKeysByPassphrase({
-          type: 0, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.password,
+          type: getKeyBackupType({ typeOfLogin: 'password' }),
         });
 
         user = { ...data.data };
@@ -113,9 +116,9 @@ const registerAuthEvents = (mainWindow) => {
         });
 
         await spaceClient.backupKeysByPassphrase({
-          type: 1, // 0 = PASSWORD; 1 = ETH
           uuid: data.data.uuid,
           passphrase: payload.torusRes.privateKey,
+          type: getKeyBackupType({ typeOfLogin: payload.torusRes.userInfo.typeOfLogin }),
         });
 
         await apiClient.identity.addEthAddress({
