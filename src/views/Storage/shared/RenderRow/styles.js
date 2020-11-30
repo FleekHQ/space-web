@@ -20,4 +20,7 @@ export default makeStyles((theme) => ({
     fontSize: 11,
     color: theme.palette.palette.spaceBlue,
   },
+  highlighted: {
+    color: theme.palette.palette.spaceBlue,
+  },
 }));

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles(() => ({
   root: {
     position: 'relative', // to keep table above the rainbow field
     userSelect: 'none',
@@ -49,8 +49,5 @@ export default makeStyles((theme) => ({
   },
   sortButton: {
     padding: 2,
-  },
-  highlighted: {
-    color: theme.palette.palette.spaceBlue,
   },
 }));
