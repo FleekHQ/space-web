@@ -9,11 +9,16 @@ import Typography from '@material-ui/core/Typography';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 import classnames from 'classnames';
+import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
+import useStyles from './styles';
 
-const RenderRow = ({ row, arrowOnClick, classes }) => {
+const RenderRow = ({ row, arrowOnClick }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
+  const classes = useStyles();
 
   const shareAmount = row.shareAmount - 1;
   const iconsCellI18n = {
@@ -31,6 +36,30 @@ const RenderRow = ({ row, arrowOnClick, classes }) => {
     const tabulations = currentItemFolderAmount - rootFolderAmount - 1;
 
     return tabulations;
+  };
+
+  const getSizeIcon = () => {
+    if (row.isAvailableInSpace) {
+      return (
+        <div className={classes.iconContainer}>
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            className={classnames(classes.checkIcon, {
+              [classes.notAvailableLocally]: !row.isLocallyAvailable,
+            })}
+          />
+        </div>
+      );
+    }
+    return (
+      <div className={classes.iconContainer}>
+        <FontAwesomeIcon
+          spin
+          icon={faSpinner}
+          className={classes.loadingIcon}
+        />
+      </div>
+    );
   };
 
   return (
@@ -52,7 +81,10 @@ const RenderRow = ({ row, arrowOnClick, classes }) => {
           {row.name}
         </Typography>
       </FileCell>
-      <TableCell>
+      <TableCell
+        className={classes.iconSizeContainer}
+      >
+        {getSizeIcon()}
         <Typography variant="body1" color="secondary" noWrap>
           {formatBytes(row.size)}
         </Typography>
@@ -99,9 +131,6 @@ RenderRow.propTypes = {
     selected: PropTypes.bool,
   }).isRequired,
   arrowOnClick: PropTypes.func,
-  classes: PropTypes.shape({
-    highlighted: PropTypes.string,
-  }).isRequired,
 };
 
 export default RenderRow;
