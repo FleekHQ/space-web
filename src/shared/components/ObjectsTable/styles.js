@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
   },
   row: {
     cursor: 'pointer',
+    '&&&:hover': {
+      backgroundColor: '#F5F6F8',
+    },
   },
   headerCell: {
     paddingTop: 6,
@@ -21,7 +24,10 @@ export default makeStyles((theme) => ({
     padding: '0 5px',
   },
   selected: {
-    backgroundColor: `${theme.palette.palette.white} !important`,
+    backgroundColor: '#E5F0FF !important',
+  },
+  error: {
+    backgroundColor: '#F8DEDF !important',
   },
   tableWrapper: {
     flexGrow: 1,
@@ -43,5 +49,8 @@ export default makeStyles((theme) => ({
   },
   sortButton: {
     padding: 2,
+  },
+  highlighted: {
+    color: theme.palette.palette.spaceBlue,
   },
 }));

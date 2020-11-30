@@ -8,8 +8,9 @@ import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { TableCell, FileCell, IconsCell } from '@ui/Table';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
+import classnames from 'classnames';
 
-const RenderRow = ({ row, arrowOnClick }) => {
+const RenderRow = ({ row, arrowOnClick, classes }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -41,7 +42,13 @@ const RenderRow = ({ row, arrowOnClick }) => {
         expanded={row.expanded}
         tabulations={getTabulationAmount()}
       >
-        <Typography variant="body1" noWrap>
+        <Typography
+          variant="body1"
+          noWrap
+          className={classnames({
+            [classes.highlighted]: row.selected,
+          })}
+        >
           {row.name}
         </Typography>
       </FileCell>
@@ -89,8 +96,12 @@ RenderRow.propTypes = {
     isLocallyAvailable: PropTypes.bool,
     isAvailableInSpace: PropTypes.bool,
     expanded: PropTypes.bool,
+    selected: PropTypes.bool,
   }).isRequired,
   arrowOnClick: PropTypes.func,
+  classes: PropTypes.shape({
+    highlighted: PropTypes.string,
+  }).isRequired,
 };
 
 export default RenderRow;

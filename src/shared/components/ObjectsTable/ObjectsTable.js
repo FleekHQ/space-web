@@ -321,6 +321,7 @@ const ObjectsTable = ({
                 key={row.id}
                 className={classNames(classes.row, {
                   [classes.selected]: row.selected,
+                  [classes.error]: row.error,
                 })}
                 onClick={handleRowClick({ row, rowIndex })}
                 onContextMenu={handleRowRightClick({ row })}
@@ -329,6 +330,7 @@ const ObjectsTable = ({
                 <RenderRow
                   row={row}
                   arrowOnClick={() => arrowOnClick(row)}
+                  classes={classes}
                 />
                 {withRowOptions && (
                   <TableCell align="right">
