@@ -20,6 +20,7 @@ const FileTable = ({
   baseRedirectUrl,
   EmptyState,
   fetchDir,
+  disableRowOffset,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -65,6 +66,8 @@ const FileTable = ({
     });
   };
 
+  const getRedirectUrl = (row) => path.posix.join(baseRedirectUrl, prefix, row.key);
+
   return (
     <ObjectsTable
       rows={rows}
@@ -73,11 +76,12 @@ const FileTable = ({
       renderLoadingRows={renderLoadingRows}
       renderRow={RenderRow}
       heads={getTableHeads(t)}
-      getRedirectUrl={(row) => path.posix.join(baseRedirectUrl, prefix, row.name)}
+      getRedirectUrl={getRedirectUrl}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
       EmptyState={EmptyState}
       fetchDir={fetchDir}
+      disableRowOffset={disableRowOffset}
     />
   );
 };
@@ -86,6 +90,7 @@ FileTable.defaultProps = {
   baseRedirectUrl: '/storage/files',
   EmptyState: () => null,
   fetchDir: () => null,
+  disableRowOffset: false,
 };
 
 FileTable.propTypes = {
@@ -94,6 +99,7 @@ FileTable.propTypes = {
   baseRedirectUrl: PropTypes.string,
   EmptyState: PropTypes.elementType,
   fetchDir: PropTypes.func,
+  disableRowOffset: PropTypes.bool,
 };
 
 export default FileTable;

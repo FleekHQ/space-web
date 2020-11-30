@@ -56,6 +56,7 @@ const SharedWithMeView = () => {
       />
       <FileTable
         prefix={prefix}
+        disableRowOffset
         bucket="shared-with-me"
         baseRedirectUrl="/storage/shared-by"
         fetchDir={fetchSharedObjects}
