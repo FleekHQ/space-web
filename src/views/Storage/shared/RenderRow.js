@@ -59,7 +59,7 @@ const RenderRow = ({ row, arrowOnClick, classes }) => {
       </TableCell>
       <TableCell>
         <Typography variant="body1" color="secondary" noWrap>
-          {moment(row.lastModified).format('MMM D, YYYY hh:mm:ss A z')}
+          {moment(row.lastModified).format('MMM D, YYYY')}
           {/* ^ just for testing, after POC should be used line below */}
           {/* {formatMonthDayYear(row.lastModified)} */}
         </Typography>
