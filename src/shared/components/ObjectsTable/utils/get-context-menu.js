@@ -4,19 +4,19 @@ import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 // import { faPencil } from '@fortawesome/pro-regular-svg-icons/faPencil';
 import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 
-const mapContextMenuItems = (clickedItem = {}) => {
+const mapContextMenuItems = (clickedItem = {}, t) => {
   const showShareOption = clickedItem.type === 'file' && clickedItem.isAvailableInSpace;
 
   const shareOption = {
     id: CONTEXT_OPTION_IDS.share,
-    displayText: 'Share',
+    displayText: t('tableMenu.share'),
     icon: faShare,
   };
 
   return ([
     {
       id: CONTEXT_OPTION_IDS.open,
-      displayText: 'Open',
+      displayText: t('tableMenu.open'),
       icon: faExpandArrowsAlt,
     },
     ...(showShareOption ? [shareOption] : []),
@@ -27,7 +27,7 @@ const mapContextMenuItems = (clickedItem = {}) => {
     // },
     {
       id: CONTEXT_OPTION_IDS.trash,
-      displayText: 'Move to Trash',
+      displayText: t('tableMenu.delete'),
       icon: faTrash,
     },
   ]);

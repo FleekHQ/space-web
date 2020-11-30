@@ -516,5 +516,10 @@
     "cancel": "Cancel",
     "continue": "Continue",
     "torusError": "Something went wrong, please try again later."
+  },
+  "tableMenu": {
+    "open": "Open",
+    "share": "Share",
+    "delete": "Delete"
   }
 }

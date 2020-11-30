@@ -17,6 +17,7 @@ import Popper from '@material-ui/core/Popper';
 import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
+import { useTranslation } from 'react-i18next';
 
 import getContextMenuItems from './utils/get-context-menu';
 import useStyles from './styles';
@@ -34,6 +35,7 @@ const ObjectsTable = ({
   EmptyState,
   fetchDir,
 }) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -260,7 +262,7 @@ const ObjectsTable = ({
     handleContextClose();
   };
 
-  const contextMenuItems = getContextMenuItems(clickedItem);
+  const contextMenuItems = getContextMenuItems(clickedItem, t);
 
   return (
     <div className={classes.tableWrapper}>
