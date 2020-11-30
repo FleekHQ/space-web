@@ -10,8 +10,8 @@ import { TableCell, FileCell, IconsCell } from '@ui/Table';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 import classnames from 'classnames';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
+import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 import useStyles from './styles';
 
 const RenderRow = ({ row, arrowOnClick }) => {
@@ -55,7 +55,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
       <div className={classes.iconContainer}>
         <FontAwesomeIcon
           spin
-          icon={faSpinner}
+          icon={faSpinnerThird}
           className={classes.loadingIcon}
         />
       </div>

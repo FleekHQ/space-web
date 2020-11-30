@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
     color: '#7F8185',
   },
   loadingIcon: {
-    fontSize: 16,
+    fontSize: 11,
     color: theme.palette.palette.spaceBlue,
   },
 }));
