@@ -29,6 +29,7 @@
     "noResults": "No results",
     "comingSoon": "Coming Soon!",
     "goBack": "Go Back",
+    "delete": "Delete",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -452,6 +453,13 @@
       "testKeysError": "Incorrect current password",
       "backupKeysError": "Failed to update password"
     },
+    "deleteObject": {
+      "title": "Delete",
+      "description": "Confirm you want to delete \"{{filename}}\". This file will be gone forever.",
+      "error": "An error occurred. Please try again.",
+      "successFile": "File Deleted",
+      "successFolder": "Folder Deleted"
+    },
     "createFolder": {
       "title": "Create New Folder",
       "inputLabel": "Folder Name"
@@ -508,5 +516,10 @@
     "cancel": "Cancel",
     "continue": "Continue",
     "torusError": "Something went wrong, please try again later."
+  },
+  "tableMenu": {
+    "open": "Open",
+    "share": "Share",
+    "delete": "Delete"
   }
 }

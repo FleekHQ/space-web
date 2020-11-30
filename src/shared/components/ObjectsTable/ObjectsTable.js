@@ -13,8 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import Dropzone from '@shared/components/Dropzone';
+import Popper from '@material-ui/core/Popper';
 import Table, { TableCell, TableRow } from '@ui/Table';
+import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
+import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
+import { useTranslation } from 'react-i18next';
 
+import getContextMenuItems from './utils/get-context-menu';
 import useStyles from './styles';
 
 const ObjectsTable = ({
@@ -30,9 +35,16 @@ const ObjectsTable = ({
   EmptyState,
   fetchDir,
 }) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const initialContextState = {
+    mouseX: null,
+    mouseY: null,
+  };
+  const [contextState, setContextState] = React.useState(initialContextState);
+
   const wrapperRef = React.useRef(null);
   const [filtersDirection, setFiltersDirection] = useState({
     name: 'desc',
@@ -83,6 +95,7 @@ const ObjectsTable = ({
   };
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
+  const clickedItem = sortedRows.find((row) => row.selected);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
@@ -128,7 +141,9 @@ const ObjectsTable = ({
   };
 
   const handleDoubleRowClick = ({ row }) => (event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     let newRows = [];
 
     if (row.type === 'folder') {
@@ -166,12 +181,11 @@ const ObjectsTable = ({
 
   const handleRowRightClick = ({ row }) => (event) => {
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('TODO: show context menu');
 
-    if (row.selected) {
-      return;
-    }
+    setContextState({
+      mouseX: event.clientX - 2,
+      mouseY: event.clientY - 4,
+    });
 
     const newRows = sortedRows.map((_row) => ({
       ..._row,
@@ -185,6 +199,9 @@ const ObjectsTable = ({
     });
   };
 
+  const handleContextClose = () => {
+    setContextState(initialContextState);
+  };
   const handleTableOutsideClick = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
       onOutsideClick(event.target);
@@ -228,6 +245,24 @@ const ObjectsTable = ({
       type: UPDATE_OBJECTS,
     });
   };
+
+  const menuItemOnClick = (optionId) => {
+    switch (optionId) {
+      case CONTEXT_OPTION_IDS.open:
+        handleDoubleRowClick({ row: clickedItem })();
+        break;
+      case CONTEXT_OPTION_IDS.trash:
+        dispatch(openModal(DELETE_OBJECT, { item: clickedItem }));
+        break;
+      case CONTEXT_OPTION_IDS.share:
+      default:
+        dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
+        break;
+    }
+    handleContextClose();
+  };
+
+  const contextMenuItems = getContextMenuItems(clickedItem, t);
 
   return (
     <div className={classes.tableWrapper}>
@@ -312,6 +347,21 @@ const ObjectsTable = ({
               </TableRow>
             )}
           />
+          <Popper
+            open={contextState.mouseY !== null}
+            onClose={handleContextClose}
+            onClickAway={handleContextClose}
+            style={{
+              top: contextState.mouseY,
+              left: contextState.mouseX,
+            }}
+          >
+            <ContextMenu
+              onClickAway={handleContextClose}
+              menuItemOnClick={menuItemOnClick}
+              items={contextMenuItems}
+            />
+          </Popper>
         </div>
         {!loading && !sortedRows.length && <EmptyState />}
       </Dropzone>
