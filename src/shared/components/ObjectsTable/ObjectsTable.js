@@ -330,7 +330,6 @@ const ObjectsTable = ({
                 <RenderRow
                   row={row}
                   arrowOnClick={() => arrowOnClick(row)}
-                  classes={classes}
                 />
                 {withRowOptions && (
                   <TableCell align="right">
