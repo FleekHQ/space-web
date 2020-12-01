@@ -2,12 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { formatBytes } from '@utils';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { TableCell, FileNameCell, IconsCell } from '@ui/Table';
-import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
+import { TableCell, FileNameCell } from '@ui/Table';
 import classnames from 'classnames';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
@@ -15,17 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStyles from './styles';
 
 const RenderRow = ({ row, arrowOnClick }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
   const location = useLocation();
   const classes = useStyles();
-
-  const shareAmount = row.shareAmount - 1;
-  const iconsCellI18n = {
-    warning: t('modules.storage.fileTable.storageLimitReached.warning'),
-    description: t('modules.storage.fileTable.storageLimitReached.description'),
-    button: t('modules.storage.fileTable.storageLimitReached.button'),
-  };
 
   const getTabulationAmount = () => {
     const locationWithRoot = location.pathname.split('/').filter((folder) => folder !== '');
@@ -88,19 +76,6 @@ const RenderRow = ({ row, arrowOnClick }) => {
           {/* ^ just for testing, after POC should be used line below */}
           {/* {formatMonthDayYear(row.lastModified)} */}
         </Typography>
-      </TableCell>
-      <TableCell>
-        <IconsCell
-          localStorageActive={row.isLocallyAvailable}
-          spaceStorageActive={row.isAvailableInSpace}
-          sharedCount={shareAmount < 0 ? 0 : shareAmount}
-          storageLimitWarning={false}
-          upgradeOnClick={(e) => {
-            e.stopPropagation();
-            dispatch(openModal(LICENSE_REGISTRATION));
-          }}
-          i18n={iconsCellI18n}
-        />
       </TableCell>
     </>
   );
