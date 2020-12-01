@@ -72,6 +72,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
         tabulations={getTabulationAmount()}
         name={row.name}
         selected={!!row.selected}
+        isShared={row.members.length > 0}
       />
       <TableCell
         className={classes.iconSizeContainer}
@@ -121,6 +122,7 @@ RenderRow.propTypes = {
     isAvailableInSpace: PropTypes.bool,
     expanded: PropTypes.bool,
     selected: PropTypes.bool,
+    members: PropTypes.array,
   }).isRequired,
   arrowOnClick: PropTypes.func,
 };
