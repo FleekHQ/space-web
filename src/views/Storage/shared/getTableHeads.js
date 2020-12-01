@@ -14,6 +14,7 @@ export default (t) => [
     width: '20%',
     title: t('modules.storage.fileTable.head.size'),
     isSortable: true,
+    paddingLeft: 23,
   },
   {
     id: 'lastModified',

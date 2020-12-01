@@ -12,6 +12,10 @@ export default makeStyles(() => ({
     '&&&:hover': {
       backgroundColor: '#F5F6F8',
     },
+    borderTop: '1px solid #EEF1F6',
+    '&:last-child': {
+      borderBottom: '1px solid #EEF1F6',
+    },
   },
   headerCell: {
     paddingTop: 6,

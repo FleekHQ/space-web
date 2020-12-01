@@ -289,8 +289,14 @@ const ObjectsTable = ({
                   title,
                   isSortable,
                   id,
+                  paddingLeft = 0,
                 }) => (
-                  <TableCell key={title || 'options'} className={classes.headerCell} width={width}>
+                  <TableCell
+                    key={title || 'options'}
+                    className={classes.headerCell}
+                    width={width}
+                    style={{ paddingLeft }}
+                  >
                     {isSortable ? (
                       <ButtonBase
                         className={classes.sortButton}
