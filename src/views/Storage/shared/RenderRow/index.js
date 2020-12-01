@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { TableCell, FileCell, IconsCell } from '@ui/Table';
+import { TableCell, FileNameCell, IconsCell } from '@ui/Table';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 import classnames from 'classnames';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
@@ -64,23 +64,15 @@ const RenderRow = ({ row, arrowOnClick }) => {
 
   return (
     <>
-      <FileCell
+      <FileNameCell
         ext={row.ext}
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
         tabulations={getTabulationAmount()}
-      >
-        <Typography
-          variant="body1"
-          noWrap
-          className={classnames({
-            [classes.highlighted]: row.selected,
-          })}
-        >
-          {row.name}
-        </Typography>
-      </FileCell>
+        name={row.name}
+        selected={!!row.selected}
+      />
       <TableCell
         className={classes.iconSizeContainer}
       >

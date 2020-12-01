@@ -35,6 +35,7 @@ export default makeStyles((theme) => ({
     width: 163,
     display: 'flex',
     flexDirection: 'column',
+    borderRight: `1px solid ${theme.palette.palette.gray4}`,
   },
   userContent: {
     display: 'flex',
