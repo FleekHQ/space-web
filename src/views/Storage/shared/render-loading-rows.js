@@ -17,9 +17,6 @@ const renderLoadingRows = () => [...Array(20)].map((_, index) => (
       <LoadingCell />
     </TableCell>
     <TableCell>
-      <LoadingCell />
-    </TableCell>
-    <TableCell>
       <LoadingCell isLastCell />
     </TableCell>
   </TableRow>

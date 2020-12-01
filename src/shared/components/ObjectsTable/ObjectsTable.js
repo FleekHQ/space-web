@@ -289,8 +289,14 @@ const ObjectsTable = ({
                   title,
                   isSortable,
                   id,
+                  paddingLeft = 0,
                 }) => (
-                  <TableCell key={title || 'options'} className={classes.headerCell} width={width}>
+                  <TableCell
+                    key={title || 'options'}
+                    className={classes.headerCell}
+                    width={width}
+                    style={{ paddingLeft }}
+                  >
                     {isSortable ? (
                       <ButtonBase
                         className={classes.sortButton}
@@ -321,6 +327,7 @@ const ObjectsTable = ({
                 key={row.id}
                 className={classNames(classes.row, {
                   [classes.selected]: row.selected,
+                  [classes.error]: row.error,
                 })}
                 onClick={handleRowClick({ row, rowIndex })}
                 onContextMenu={handleRowRightClick({ row })}
