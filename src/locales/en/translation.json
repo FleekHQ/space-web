@@ -136,6 +136,7 @@
           "message": "Failed to open file, please try again.",
           "buttonText": "Okay"
         },
+        "uploadFailed": "Upload Failed",
         "storageLimitReached": {
           "warning": "Backup Limit Reached",
           "description": "This file is not backed up, upgrade to Space Pro to back up this file.",

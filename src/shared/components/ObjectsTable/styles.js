@@ -30,6 +30,9 @@ export default makeStyles(() => ({
   selected: {
     backgroundColor: '#E5F0FF !important',
   },
+  selectedAndUploading: {
+    backgroundColor: '#F5F6F8 !important',
+  },
   error: {
     backgroundColor: '#F8DEDF !important',
   },

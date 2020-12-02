@@ -65,4 +65,7 @@ export default makeStyles((theme) => ({
   tooltipArrow: {
     color: '#171717',
   },
+  uploading: {
+    opacity: '50%',
+  },
 }));

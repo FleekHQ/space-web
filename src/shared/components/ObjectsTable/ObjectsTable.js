@@ -326,8 +326,9 @@ const ObjectsTable = ({
                 hover
                 key={row.id}
                 className={classNames(classes.row, {
+                  [classes.selectedAndUploading]: row.isUploading && row.selected,
                   [classes.selected]: row.selected,
-                  [classes.error]: row.error,
+                  [classes.error]: row.error && !row.isUploading,
                 })}
                 onClick={handleRowClick({ row, rowIndex })}
                 onContextMenu={handleRowRightClick({ row })}
