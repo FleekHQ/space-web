@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import get from 'lodash/get';
 import { useSelector, useDispatch } from 'react-redux';
@@ -42,7 +43,7 @@ const StorageDetailsPanel = () => {
       state,
       bucket,
       prefix,
-      '/',
+      '',
     );
 
     const selectedObjs = objs.filter(({ selected }) => selected);

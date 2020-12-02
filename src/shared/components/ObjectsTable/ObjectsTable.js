@@ -34,6 +34,7 @@ const ObjectsTable = ({
   renderLoadingRows,
   EmptyState,
   fetchDir,
+  disableRowOffset,
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -289,8 +290,14 @@ const ObjectsTable = ({
                   title,
                   isSortable,
                   id,
+                  paddingLeft = 0,
                 }) => (
-                  <TableCell key={title || 'options'} className={classes.headerCell} width={width}>
+                  <TableCell
+                    key={title || 'options'}
+                    className={classes.headerCell}
+                    width={width}
+                    style={{ paddingLeft }}
+                  >
                     {isSortable ? (
                       <ButtonBase
                         className={classes.sortButton}
@@ -321,6 +328,7 @@ const ObjectsTable = ({
                 key={row.id}
                 className={classNames(classes.row, {
                   [classes.selected]: row.selected,
+                  [classes.error]: row.error,
                 })}
                 onClick={handleRowClick({ row, rowIndex })}
                 onContextMenu={handleRowRightClick({ row })}
@@ -328,6 +336,7 @@ const ObjectsTable = ({
               >
                 <RenderRow
                   row={row}
+                  disableOffset={disableRowOffset}
                   arrowOnClick={() => arrowOnClick(row)}
                 />
                 {withRowOptions && (
@@ -377,6 +386,7 @@ ObjectsTable.defaultProps = {
   loading: false,
   EmptyState: () => null,
   fetchDir: () => null,
+  disableRowOffset: false,
 };
 
 ObjectsTable.propTypes = {
@@ -394,6 +404,7 @@ ObjectsTable.propTypes = {
   loading: PropTypes.bool,
   EmptyState: PropTypes.elementType,
   fetchDir: PropTypes.func,
+  disableRowOffset: PropTypes.bool,
 };
 
 export default ObjectsTable;

@@ -25,11 +25,6 @@ const renderLoadingRows = () => [...Array(20)].map((_, index) => (
       />
     </TableCell>
     <TableCell>
-      <LoadingCell
-        width="calc(100% - 25px)"
-      />
-    </TableCell>
-    <TableCell>
       <LoadingCell />
     </TableCell>
   </TableRow>
