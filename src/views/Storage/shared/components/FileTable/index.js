@@ -66,7 +66,10 @@ const FileTable = ({
     });
   };
 
-  const getRedirectUrl = (row) => path.posix.join(baseRedirectUrl, prefix, row.key);
+  const getRedirectUrl = (row) => {
+    const folderPath = row.key.replace(prefix, '');
+    return path.posix.join(baseRedirectUrl, prefix, folderPath);
+  };
 
   return (
     <ObjectsTable
