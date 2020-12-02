@@ -11,7 +11,7 @@ import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThir
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStyles from './styles';
 
-const RenderRow = ({ row, arrowOnClick }) => {
+const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   const location = useLocation();
   const classes = useStyles();
 
@@ -64,6 +64,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
       />
       <TableCell
         className={classes.iconSizeContainer}
+        tabulations={disableOffset ? 0 : getTabulationAmount()}
       >
         {getSizeIcon()}
         <Typography variant="body1" color="secondary" noWrap>
@@ -83,6 +84,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
 
 RenderRow.defaultProps = {
   arrowOnClick: () => {},
+  disableOffset: false,
 };
 
 RenderRow.propTypes = {
@@ -99,6 +101,7 @@ RenderRow.propTypes = {
     selected: PropTypes.bool,
     members: PropTypes.array,
   }).isRequired,
+  disableOffset: PropTypes.bool,
   arrowOnClick: PropTypes.func,
 };
 

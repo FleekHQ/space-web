@@ -34,6 +34,7 @@ const ObjectsTable = ({
   renderLoadingRows,
   EmptyState,
   fetchDir,
+  disableRowOffset,
 }) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -335,6 +336,7 @@ const ObjectsTable = ({
               >
                 <RenderRow
                   row={row}
+                  disableOffset={disableRowOffset}
                   arrowOnClick={() => arrowOnClick(row)}
                 />
                 {withRowOptions && (
@@ -384,6 +386,7 @@ ObjectsTable.defaultProps = {
   loading: false,
   EmptyState: () => null,
   fetchDir: () => null,
+  disableRowOffset: false,
 };
 
 ObjectsTable.propTypes = {
@@ -401,6 +404,7 @@ ObjectsTable.propTypes = {
   loading: PropTypes.bool,
   EmptyState: PropTypes.elementType,
   fetchDir: PropTypes.func,
+  disableRowOffset: PropTypes.bool,
 };
 
 export default ObjectsTable;
