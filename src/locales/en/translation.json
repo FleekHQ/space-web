@@ -522,5 +522,9 @@
     "open": "Open",
     "share": "Share",
     "delete": "Delete"
+  },
+  "hoverMenu": {
+    "retry": "Retry",
+    "cancel": "Cancel"
   }
 }

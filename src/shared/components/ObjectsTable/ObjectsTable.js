@@ -9,6 +9,7 @@ import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowD
 import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
@@ -18,8 +19,10 @@ import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
 import { useTranslation } from 'react-i18next';
+import HoverMenu from '@ui/HoverMenu';
 
 import getContextMenuItems from './utils/get-context-menu';
+import getHoverMenuItems from './utils/get-hover-menu';
 import useStyles from './styles';
 
 const ObjectsTable = ({
@@ -39,6 +42,7 @@ const ObjectsTable = ({
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const initialContextState = {
     mouseX: null,
     mouseY: null,
@@ -96,6 +100,10 @@ const ObjectsTable = ({
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
   const clickedItem = sortedRows.find((row) => row.selected);
+  const hoveredItemKey = anchorEl && anchorEl.dataset.key;
+  const hoveredItem = anchorEl && sortedRows.find((row) => (row.fullKey === hoveredItemKey));
+
+  const hoveredItemOptions = getHoverMenuItems(hoveredItem);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
@@ -264,6 +272,20 @@ const ObjectsTable = ({
 
   const contextMenuItems = getContextMenuItems(clickedItem, t);
 
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const popoverOpen = Boolean(anchorEl);
+
+  const hoverMenuItemOnClick = (id) => {
+    console.log(id);
+  };
+
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
@@ -323,8 +345,11 @@ const ObjectsTable = ({
             )}
             renderRow={({ row, rowIndex }) => (
               <TableRow
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
                 hover
                 key={row.id}
+                data-key={row.fullKey}
                 className={classNames(classes.row, {
                   [classes.selectedAndUploading]: row.isUploading && row.selected,
                   [classes.selected]: row.selected,
@@ -373,6 +398,39 @@ const ObjectsTable = ({
         </div>
         {!loading && !sortedRows.length && <EmptyState />}
       </Dropzone>
+      {
+        anchorEl && hoveredItemOptions.length > 0 && (
+          <Popover
+            id="hover-menu"
+            className={classes.popover}
+            classes={{
+              paper: classes.paper,
+            }}
+            open={popoverOpen}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 16,
+              horizontal: 30 + 32,
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+            style={{ pointerEvents: 'none' }}
+          >
+            <HoverMenu
+              i18n={{
+                retry: t('hoverMenu.retry'),
+                cancel: t('hoverMenu.cancel'),
+              }}
+              items={hoveredItemOptions}
+              menuItemOnClick={hoverMenuItemOnClick}
+            />
+          </Popover>
+        )
+      }
     </div>
   );
 };
