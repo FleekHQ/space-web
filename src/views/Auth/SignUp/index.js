@@ -46,6 +46,7 @@ const SignUp = () => {
       pathname: '/auth/email-link-auth',
       state: {
         email,
+        from: 'signup',
       },
     });
   };

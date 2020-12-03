@@ -34,6 +34,7 @@ const SignIn = () => {
       pathname: '/auth/email-link-auth',
       state: {
         email,
+        from: 'signin',
       },
     });
   };
