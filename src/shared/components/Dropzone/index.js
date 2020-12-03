@@ -70,7 +70,7 @@ const Dropzone = ({
   const classes = useStyles();
 
   const rainbowFieldStyles = get(objectsList, `${rowNumber}.isFolder`) ? {
-    top: headHeight + rowNumber * rowHeight,
+    top: headHeight + rowNumber * rowHeight + 1,
     bottom: wrapperHeight.current - (headHeight + (rowNumber + 1) * rowHeight),
   } : {};
 

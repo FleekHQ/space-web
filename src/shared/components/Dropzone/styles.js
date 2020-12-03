@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const rowHeight = 35;
+export const rowHeight = 36;
 export const headHeight = 39;
 
-const RAINBOW_BORDER_WIDTH = 3;
+const RAINBOW_BORDER_WIDTH = 2;
 
 export default makeStyles({
   root: {
