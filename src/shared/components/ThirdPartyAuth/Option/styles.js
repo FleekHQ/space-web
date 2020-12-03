@@ -29,7 +29,7 @@ export default makeStyles({
       outline: 'none',
     },
     '&:hover': {
-      background: getRainbowColor({ opacity: 1 }),
+      background: getRainbowColor({ opacity: 0.5 }),
     },
     '&:hover .rainbow-bg': {
       background: getRainbowColor({ opacity: 0.1 }),
