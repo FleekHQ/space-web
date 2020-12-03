@@ -18,9 +18,10 @@ const Dropzone = ({
     const { clientY } = event;
     const { top } = wrapperNode.current.getBoundingClientRect();
     const yPosition = clientY - top - headHeight; // y position without top offset and scroll
-    const hoverRowNumber = Math.floor(yPosition / rowHeight);
-    if (hoverRowNumber !== rowNumber) {
-      setRowNumber(hoverRowNumber);
+    const hoverRowIndex = Math.floor(yPosition / rowHeight);
+    const hoverRowTopIndex = get(objectsList, `${hoverRowIndex}.index`, -1);
+    if (hoverRowTopIndex !== rowNumber) {
+      setRowNumber(hoverRowTopIndex);
     }
   };
 
