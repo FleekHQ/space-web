@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { formatBytes } from '@utils';
+import { formatBytes, getTabulations } from '@utils';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
@@ -13,21 +13,10 @@ import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThir
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStyles from './styles';
 
-const RenderRow = ({ row, arrowOnClick }) => {
+const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   const location = useLocation();
   const classes = useStyles({ progress: 0.4 });
   const { t } = useTranslation();
-
-  const getTabulationAmount = () => {
-    const locationWithRoot = location.pathname.split('/').filter((folder) => folder !== '');
-    const locationWithoutRoot = locationWithRoot.slice(2, locationWithRoot.length);
-    const rootFolderAmount = locationWithoutRoot.length;
-    const { key = '' } = row;
-    const currentItemFolderAmount = key.split('/').length;
-    const tabulations = currentItemFolderAmount - rootFolderAmount - 1;
-
-    return tabulations;
-  };
 
   const getSizeIcon = () => {
     if (row.isUploading) {
@@ -103,7 +92,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getTabulationAmount()}
+        tabulations={getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 1}
@@ -111,6 +100,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
       />
       <TableCell
         className={classes.iconSizeContainer}
+        tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
       >
         {getSizeIcon()}
         <Typography
@@ -133,6 +123,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
 
 RenderRow.defaultProps = {
   arrowOnClick: () => {},
+  disableOffset: false,
 };
 
 RenderRow.propTypes = {
@@ -151,6 +142,7 @@ RenderRow.propTypes = {
     isUploading: PropTypes.bool,
     error: PropTypes.bool,
   }).isRequired,
+  disableOffset: PropTypes.bool,
   arrowOnClick: PropTypes.func,
 };
 

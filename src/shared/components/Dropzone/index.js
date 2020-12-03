@@ -18,9 +18,10 @@ const Dropzone = ({
     const { clientY } = event;
     const { top } = wrapperNode.current.getBoundingClientRect();
     const yPosition = clientY - top - headHeight; // y position without top offset and scroll
-    const hoverRowNumber = Math.floor(yPosition / rowHeight);
-    if (hoverRowNumber !== rowNumber) {
-      setRowNumber(hoverRowNumber);
+    const hoverRowIndex = Math.floor(yPosition / rowHeight);
+    const hoverRowTopIndex = get(objectsList, `${hoverRowIndex}.index`, -1);
+    if (hoverRowTopIndex !== rowNumber) {
+      setRowNumber(hoverRowTopIndex);
     }
   };
 
@@ -69,7 +70,7 @@ const Dropzone = ({
   const classes = useStyles();
 
   const rainbowFieldStyles = get(objectsList, `${rowNumber}.isFolder`) ? {
-    top: headHeight + rowNumber * rowHeight,
+    top: headHeight + rowNumber * rowHeight + 1,
     bottom: wrapperHeight.current - (headHeight + (rowNumber + 1) * rowHeight),
   } : {};
 

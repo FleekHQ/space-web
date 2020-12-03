@@ -2,6 +2,7 @@ const fs = require('fs');
 const get = require('lodash/get');
 const { ipcMain } = require('electron');
 
+const { getKeyBackupType } = require('../utils');
 const { spaceClient, apiClient } = require('../clients');
 
 const EVENT_PREFIX = 'account';
@@ -139,6 +140,7 @@ const registerAuthEvents = (mainWindow) => {
       await spaceClient.backupKeysByPassphrase({
         uuid: payload.uuid,
         passphrase: payload.torusRes.privateKey,
+        type: getKeyBackupType({ typeOfLogin: payload.torusRes.userInfo.typeOfLogin }),
       });
       const apiSessionRes = await spaceClient.getAPISessionTokens();
       await apiClient.identity.addEthAddress({

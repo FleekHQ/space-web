@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import get from 'lodash/get';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,8 +17,10 @@ import DetailsPanel, {
 } from '@shared/components/DetailsPanel';
 
 import { OBJECT_TYPES } from './constants';
+import useStyles from './styles';
 
 const StorageDetailsPanel = () => {
+  const classes = useStyles();
   const { t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -42,7 +45,7 @@ const StorageDetailsPanel = () => {
       state,
       bucket,
       prefix,
-      '/',
+      '',
     );
 
     const selectedObjs = objs.filter(({ selected }) => selected);
@@ -59,7 +62,7 @@ const StorageDetailsPanel = () => {
   };
 
   return (
-    <DetailsPanel id="storage-detail-panel">
+    <DetailsPanel id="storage-detail-panel" className={classes.root}>
       {
         selectedObjects.length === 0 ? (
           <Empty

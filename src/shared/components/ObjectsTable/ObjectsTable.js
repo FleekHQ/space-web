@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp';
 import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
@@ -18,7 +18,7 @@ import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
 import { useTranslation } from 'react-i18next';
-
+import { getTabulations } from '@utils';
 import getContextMenuItems from './utils/get-context-menu';
 import getHoverMenuItems from './utils/get-hover-menu';
 import HoverTooltip from './components/Tooltip';
@@ -36,11 +36,13 @@ const ObjectsTable = ({
   renderLoadingRows,
   EmptyState,
   fetchDir,
+  disableRowOffset,
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   const [hoveredElement, setHoveredElement] = React.useState(null);
+  const location = useLocation();
 
   const initialContextState = {
     mouseX: null,
@@ -292,16 +294,28 @@ const ObjectsTable = ({
     console.log(id);
   };
 
+  const getDropzoneObjsList = () => {
+    let indexOfLastVisitedRootObj = 0;
+
+    return sortedRows.map((obj, index) => {
+      if (getTabulations(obj.key, location) === 0) {
+        indexOfLastVisitedRootObj = index;
+      }
+      return {
+        isFolder: obj.type === 'folder',
+        name: obj.key,
+        index: indexOfLastVisitedRootObj,
+      };
+    });
+  };
+
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
         noClick
         onDrop={onDropzoneDrop}
         disabled={!onDropzoneDrop}
-        objectsList={sortedRows.map((obj) => ({
-          isFolder: obj.type === 'folder',
-          name: obj.key,
-        }))}
+        objectsList={getDropzoneObjsList()}
       >
         <div ref={wrapperRef}>
           <Table
@@ -381,6 +395,7 @@ const ObjectsTable = ({
               >
                 <RenderRow
                   row={row}
+                  disableOffset={disableRowOffset}
                   arrowOnClick={() => arrowOnClick(row)}
                 />
                 {withRowOptions && (
@@ -430,6 +445,7 @@ ObjectsTable.defaultProps = {
   loading: false,
   EmptyState: () => null,
   fetchDir: () => null,
+  disableRowOffset: false,
 };
 
 ObjectsTable.propTypes = {
@@ -447,6 +463,7 @@ ObjectsTable.propTypes = {
   loading: PropTypes.bool,
   EmptyState: PropTypes.elementType,
   fetchDir: PropTypes.func,
+  disableRowOffset: PropTypes.bool,
 };
 
 export default ObjectsTable;
