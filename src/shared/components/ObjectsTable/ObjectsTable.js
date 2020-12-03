@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp';
 import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
 import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
-import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
@@ -20,10 +19,10 @@ import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
 import { useTranslation } from 'react-i18next';
-import HoverMenu from '@ui/HoverMenu';
 
 import getContextMenuItems from './utils/get-context-menu';
 import getHoverMenuItems from './utils/get-hover-menu';
+import HoverTooltip from './components/Tooltip';
 import useStyles from './styles';
 
 const ObjectsTable = ({
@@ -306,8 +305,6 @@ const ObjectsTable = ({
     console.log(id);
   };
 
-  console.log(classes);
-  
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
@@ -321,6 +318,7 @@ const ObjectsTable = ({
       >
         <div ref={wrapperRef}>
           <Table
+            onMouseLeave={handleHoverMenuClose}
             head={withRowOptions ? [...heads, { width: 43 }] : heads}
             rows={sortedRows}
             className={classes.root}
@@ -368,7 +366,6 @@ const ObjectsTable = ({
             renderRow={({ row, rowIndex }) => (
               <TableRow
                 onMouseEnter={handleHoverMenuOpen}
-                // onMouseLeave={handleHoverMenuClose}
                 hover
                 key={row.id}
                 data-key={row.fullKey}
@@ -381,44 +378,16 @@ const ObjectsTable = ({
                 onContextMenu={handleRowRightClick({ row })}
                 onDoubleClick={handleDoubleRowClick({ row })}
                 component={
-                  ({  children, ...props }) => {
+                  (rowProps) => {
                     return (
-                      <Tooltip
-                        PopperProps={{
-                          style: {
-                            top: '100px !important',
-                            right: 0 + hoveredItemOptions.length * 32,
-                            left: 'auto !important',
-                            transform: 'none !important',
-                          }
-                        }}
-                        onOpen={() => {
-                          setIsHoverOpen(true);
-                        }}
-                        onClose={() => {
-                          setIsHoverOpen(false);
-                        }}
+                      <HoverTooltip
+                        rowProps={rowProps}
+                        hoveredItemOptions={hoveredItemOptions}
+                        hoveredItemSizePosition={hoveredItemSizePosition}
+                        hoveredItemIndex={hoveredItemIndex}
+                        hoverMenuItemOnClick={hoverMenuItemOnClick}
                         open={hoveredItemKey === row.fullKey}
-                        interactive
-                        classes={{
-                          tooltip: classes.tooltipRoot,
-                          popper: classes.popperRoot,
-                        }}
-                        title={
-                          <HoverMenu
-                            i18n={{
-                              retry: t('hoverMenu.retry'),
-                              cancel: t('hoverMenu.cancel'),
-                            }}
-                            items={hoveredItemOptions}
-                            menuItemOnClick={hoverMenuItemOnClick}
-                          />
-                        }
-                      >
-                        <tr {...props}>
-                          {children}
-                        </tr>
-                      </Tooltip>
+                      />
                     );
                   }
                 }
