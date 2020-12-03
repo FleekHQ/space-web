@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -41,7 +40,6 @@ const ObjectsTable = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [isHoverOpen, setIsHoverOpen] = React.useState(false); 
   const [hoveredElement, setHoveredElement] = React.useState(null);
 
   const initialContextState = {
@@ -111,8 +109,10 @@ const ObjectsTable = ({
   const hoveredItemSizePosition = getHoveredItemSizeAndPosition(hoveredElement);
 
   const hoveredItemKey = hoveredElement && hoveredElement.dataset.key;
-  
-  const hoveredItemIndex = hoveredElement && sortedRows.findIndex((row) => (row.fullKey === hoveredItemKey));
+
+  const hoveredItemIndex = hoveredElement && sortedRows.findIndex(
+    (row) => (row.fullKey === hoveredItemKey),
+  );
 
   const hoveredItem = hoveredElement && sortedRows[hoveredItemIndex];
 
@@ -370,7 +370,10 @@ const ObjectsTable = ({
                 key={row.id}
                 data-key={row.fullKey}
                 className={classNames(classes.row, {
-                  [classes.selectedAndUploading]: (row.isUploading && row.selected) || (row.isUploading && (hoveredItemKey === row.fullKey)),
+                  [classes.selectedAndUploading]: (
+                    (row.isUploading && row.selected)
+                    || (row.isUploading && (hoveredItemKey === row.fullKey))
+                  ),
                   [classes.selected]: row.selected,
                   [classes.error]: row.error && !row.isUploading,
                 })}
@@ -378,18 +381,16 @@ const ObjectsTable = ({
                 onContextMenu={handleRowRightClick({ row })}
                 onDoubleClick={handleDoubleRowClick({ row })}
                 component={
-                  (rowProps) => {
-                    return (
-                      <HoverTooltip
-                        rowProps={rowProps}
-                        hoveredItemOptions={hoveredItemOptions}
-                        hoveredItemSizePosition={hoveredItemSizePosition}
-                        hoveredItemIndex={hoveredItemIndex}
-                        hoverMenuItemOnClick={hoverMenuItemOnClick}
-                        open={hoveredItemKey === row.fullKey}
-                      />
-                    );
-                  }
+                  (rowProps) => (
+                    <HoverTooltip
+                      rowProps={rowProps}
+                      hoveredItemOptions={hoveredItemOptions}
+                      hoveredItemSizePosition={hoveredItemSizePosition}
+                      hoveredItemIndex={hoveredItemIndex}
+                      hoverMenuItemOnClick={hoverMenuItemOnClick}
+                      open={hoveredItemKey === row.fullKey}
+                    />
+                  )
                 }
               >
                 <RenderRow
