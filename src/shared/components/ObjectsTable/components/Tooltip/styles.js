@@ -7,7 +7,7 @@ export default makeStyles(() => ({
   popperRoot: {
     top: ({ hoveredItemIndex }) => (`${(80 + 36 * hoveredItemIndex)}px !important`),
     left: 'auto !important',
-    right: ({ hoveredItemOptions }) => (`${212 + hoveredItemOptions.length * 32}px !important`),
+    right: 220,
     transform: 'none !important',
   },
 }));

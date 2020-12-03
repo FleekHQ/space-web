@@ -10,7 +10,6 @@ import useStyles from './styles';
 const HoverTooltip = ({
   rowProps,
   hoveredItemOptions,
-  hoveredItemSizePosition,
   hoveredItemIndex,
   hoverMenuItemOnClick,
   ...restProps
@@ -19,8 +18,6 @@ const HoverTooltip = ({
   const { children, ...props } = rowProps;
 
   const classes = useStyles({
-    hoveredItemOptions,
-    hoveredItemSizePosition,
     hoveredItemIndex,
   });
 
@@ -52,7 +49,6 @@ const HoverTooltip = ({
 
 HoverTooltip.defaultProps = {
   hoveredItemIndex: 0,
-  hoveredItemSizePosition: {},
 };
 
 HoverTooltip.propTypes = {
@@ -65,7 +61,6 @@ HoverTooltip.propTypes = {
   ).isRequired,
   hoverMenuItemOnClick: PropTypes.func.isRequired,
   hoveredItemIndex: PropTypes.number,
-  hoveredItemSizePosition: PropTypes.shape({}),
 };
 
 export default HoverTooltip;

@@ -99,15 +99,6 @@ const ObjectsTable = ({
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
 
-  const getHoveredItemSizeAndPosition = (item) => {
-    if (!item) {
-      return {};
-    }
-    return item.getBoundingClientRect();
-  };
-
-  const hoveredItemSizePosition = getHoveredItemSizeAndPosition(hoveredElement);
-
   const hoveredItemKey = hoveredElement && hoveredElement.dataset.key;
 
   const hoveredItemIndex = hoveredElement && sortedRows.findIndex(
@@ -118,11 +109,7 @@ const ObjectsTable = ({
 
   const hoveredItemOptions = getHoverMenuItems(hoveredItem);
 
-  const classes = useStyles({
-    hoveredItemOptions,
-    hoveredItemSizePosition,
-    hoveredItemIndex,
-  });
+  const classes = useStyles();
 
   const clickedItem = sortedRows.find((row) => row.selected);
 
@@ -385,7 +372,6 @@ const ObjectsTable = ({
                     <HoverTooltip
                       rowProps={rowProps}
                       hoveredItemOptions={hoveredItemOptions}
-                      hoveredItemSizePosition={hoveredItemSizePosition}
                       hoveredItemIndex={hoveredItemIndex}
                       hoverMenuItemOnClick={hoverMenuItemOnClick}
                       open={hoveredItemKey === row.fullKey}
