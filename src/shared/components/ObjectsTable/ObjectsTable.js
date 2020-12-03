@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -7,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp';
 import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
 import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
+import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
@@ -39,10 +40,11 @@ const ObjectsTable = ({
   fetchDir,
 }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isHoverOpen, setIsHoverOpen] = React.useState(false); 
+  const [hoveredElement, setHoveredElement] = React.useState(null);
+
   const initialContextState = {
     mouseX: null,
     mouseY: null,
@@ -99,11 +101,31 @@ const ObjectsTable = ({
   };
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
-  const clickedItem = sortedRows.find((row) => row.selected);
-  const hoveredItemKey = anchorEl && anchorEl.dataset.key;
-  const hoveredItem = anchorEl && sortedRows.find((row) => (row.fullKey === hoveredItemKey));
+
+  const getHoveredItemSizeAndPosition = (item) => {
+    if (!item) {
+      return {};
+    }
+    return item.getBoundingClientRect();
+  };
+
+  const hoveredItemSizePosition = getHoveredItemSizeAndPosition(hoveredElement);
+
+  const hoveredItemKey = hoveredElement && hoveredElement.dataset.key;
+  
+  const hoveredItemIndex = hoveredElement && sortedRows.findIndex((row) => (row.fullKey === hoveredItemKey));
+
+  const hoveredItem = hoveredElement && sortedRows[hoveredItemIndex];
 
   const hoveredItemOptions = getHoverMenuItems(hoveredItem);
+
+  const classes = useStyles({
+    hoveredItemOptions,
+    hoveredItemSizePosition,
+    hoveredItemIndex,
+  });
+
+  const clickedItem = sortedRows.find((row) => row.selected);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
     event.preventDefault();
@@ -272,20 +294,20 @@ const ObjectsTable = ({
 
   const contextMenuItems = getContextMenuItems(clickedItem, t);
 
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleHoverMenuOpen = (event) => {
+    setHoveredElement(event.currentTarget);
   };
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
+  const handleHoverMenuClose = () => {
+    setHoveredElement(null);
   };
-
-  const popoverOpen = Boolean(anchorEl);
 
   const hoverMenuItemOnClick = (id) => {
     console.log(id);
   };
 
+  console.log(classes);
+  
   return (
     <div className={classes.tableWrapper}>
       <Dropzone
@@ -345,19 +367,61 @@ const ObjectsTable = ({
             )}
             renderRow={({ row, rowIndex }) => (
               <TableRow
-                onMouseEnter={handlePopoverOpen}
-                onMouseLeave={handlePopoverClose}
+                onMouseEnter={handleHoverMenuOpen}
+                // onMouseLeave={handleHoverMenuClose}
                 hover
                 key={row.id}
                 data-key={row.fullKey}
                 className={classNames(classes.row, {
-                  [classes.selectedAndUploading]: row.isUploading && row.selected,
+                  [classes.selectedAndUploading]: (row.isUploading && row.selected) || (row.isUploading && (hoveredItemKey === row.fullKey)),
                   [classes.selected]: row.selected,
                   [classes.error]: row.error && !row.isUploading,
                 })}
                 onClick={handleRowClick({ row, rowIndex })}
                 onContextMenu={handleRowRightClick({ row })}
                 onDoubleClick={handleDoubleRowClick({ row })}
+                component={
+                  ({  children, ...props }) => {
+                    return (
+                      <Tooltip
+                        PopperProps={{
+                          style: {
+                            top: '100px !important',
+                            right: 0 + hoveredItemOptions.length * 32,
+                            left: 'auto !important',
+                            transform: 'none !important',
+                          }
+                        }}
+                        onOpen={() => {
+                          setIsHoverOpen(true);
+                        }}
+                        onClose={() => {
+                          setIsHoverOpen(false);
+                        }}
+                        open={hoveredItemKey === row.fullKey}
+                        interactive
+                        classes={{
+                          tooltip: classes.tooltipRoot,
+                          popper: classes.popperRoot,
+                        }}
+                        title={
+                          <HoverMenu
+                            i18n={{
+                              retry: t('hoverMenu.retry'),
+                              cancel: t('hoverMenu.cancel'),
+                            }}
+                            items={hoveredItemOptions}
+                            menuItemOnClick={hoverMenuItemOnClick}
+                          />
+                        }
+                      >
+                        <tr {...props}>
+                          {children}
+                        </tr>
+                      </Tooltip>
+                    );
+                  }
+                }
               >
                 <RenderRow
                   row={row}
@@ -398,39 +462,6 @@ const ObjectsTable = ({
         </div>
         {!loading && !sortedRows.length && <EmptyState />}
       </Dropzone>
-      {
-        anchorEl && hoveredItemOptions.length > 0 && (
-          <Popover
-            id="hover-menu"
-            className={classes.popover}
-            classes={{
-              paper: classes.paper,
-            }}
-            open={popoverOpen}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 16,
-              horizontal: 30 + 32,
-            }}
-            onClose={handlePopoverClose}
-            disableRestoreFocus
-            style={{ pointerEvents: 'none' }}
-          >
-            <HoverMenu
-              i18n={{
-                retry: t('hoverMenu.retry'),
-                cancel: t('hoverMenu.cancel'),
-              }}
-              items={hoveredItemOptions}
-              menuItemOnClick={hoverMenuItemOnClick}
-            />
-          </Popover>
-        )
-      }
     </div>
   );
 };

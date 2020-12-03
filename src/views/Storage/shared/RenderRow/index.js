@@ -106,7 +106,7 @@ const RenderRow = ({ row, arrowOnClick }) => {
         tabulations={getTabulationAmount()}
         name={row.name}
         selected={!!row.selected}
-        isShared={row.members.length > 0}
+        isShared={row.members.length > 1}
         isUploading={row.isUploading}
       />
       <TableCell

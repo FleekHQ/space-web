@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
@@ -56,5 +57,17 @@ export default makeStyles(() => ({
   },
   sortButton: {
     padding: 2,
+  },
+  tooltipRoot: {
+    backgroundColor: 'transparent',
+  },
+  popperRoot: {
+    top: ({ hoveredItemIndex }) => {
+      const distance = (80 + 36 * hoveredItemIndex);
+      const top = `${distance}px !important`;
+      return top;
+    },
+    right: ({ hoveredItemOptions }) => (`${212 + hoveredItemOptions.length * 32}px !important`),
+    // transform: 'none !important',
   },
 }));
