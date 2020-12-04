@@ -32,6 +32,7 @@ const DetailsPanelHeader = ({ objects }) => {
         name: file.name,
         ipfsHash: file.ipfsHash,
         isPublicLink: file.isPublicLink,
+        fullKey: file.fullKey,
       });
     }
   };
