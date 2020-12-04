@@ -6,7 +6,7 @@ import { object, boolean } from '@storybook/addon-knobs';
 
 import Table from './index';
 import {
-  FileNameCell,
+  FileCell,
   TableRow,
   TableCell,
   IconsCell,

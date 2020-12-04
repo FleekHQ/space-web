@@ -1,30 +1,21 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { formatBytes } from '@utils';
 import { useLocation } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
 import { TableCell, FileNameCell } from '@ui/Table';
-import classnames from 'classnames';
+import Typography from '@material-ui/core/Typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import useStyles from './styles';
+import getRowOffset from '../helpers/get-row-offset';
 
 const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   const location = useLocation();
   const classes = useStyles();
-
-  const getTabulationAmount = () => {
-    const locationWithRoot = location.pathname.split('/').filter((folder) => folder !== '');
-    const locationWithoutRoot = locationWithRoot.slice(2, locationWithRoot.length);
-    const rootFolderAmount = locationWithoutRoot.length;
-    const { key = '' } = row;
-    const currentItemFolderAmount = key.split('/').length;
-    const tabulations = currentItemFolderAmount - rootFolderAmount - 1;
-
-    return tabulations;
-  };
 
   const getSizeIcon = () => {
     if (row.isAvailableInSpace) {
@@ -57,14 +48,14 @@ const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getTabulationAmount()}
+        tabulations={getRowOffset(location, row)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 0}
       />
       <TableCell
         className={classes.iconSizeContainer}
-        tabulations={disableOffset ? 0 : getTabulationAmount()}
+        tabulations={disableOffset ? 0 : getRowOffset(location, row)}
       >
         {getSizeIcon()}
         <Typography variant="body1" color="secondary" noWrap>
