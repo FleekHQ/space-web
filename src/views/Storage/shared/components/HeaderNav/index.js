@@ -69,6 +69,7 @@ const HeaderNav = () => {
       name: item.name,
       ipfsHash: item.ipfsHash,
       isPublicLink: item.isPublicLink,
+      fullKey: item.fullKey,
     });
   };
 

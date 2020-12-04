@@ -36,6 +36,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     members,
     created,
     bytesSize,
+    error: false,
     lastModified,
     isPublicLink,
     isLocallyAvailable,

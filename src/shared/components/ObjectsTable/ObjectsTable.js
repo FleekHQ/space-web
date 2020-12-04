@@ -167,6 +167,7 @@ const ObjectsTable = ({
         name: row.name,
         ipfsHash: row.ipfsHash,
         isPublicLink: row.isPublicLink,
+        fullKey: row.fullKey,
       });
 
       newRows = sortedRows.map((_row) => ({
