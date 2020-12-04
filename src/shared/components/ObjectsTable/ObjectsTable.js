@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import get from 'lodash/get';
 import classNames from 'classnames';
