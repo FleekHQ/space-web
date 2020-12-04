@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { TableCell, FileNameCell } from '@ui/Table';
 import { formatBytes, getTabulations } from '@utils';
-import Typography from '@material-ui/core/Typography';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
