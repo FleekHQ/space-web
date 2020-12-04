@@ -7,4 +7,9 @@ export default makeStyles({
   errorBoxContainer: {
     marginBottom: 10,
   },
+  openError: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

@@ -1,16 +1,18 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { formatBytes, getTabulations } from '@utils';
+import classnames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { TableCell, FileNameCell } from '@ui/Table';
-import classnames from 'classnames';
+import { formatBytes, getTabulations } from '@utils';
+import Typography from '@material-ui/core/Typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import useStyles from './styles';
 
 const RenderRow = ({ row, arrowOnClick, disableOffset }) => {

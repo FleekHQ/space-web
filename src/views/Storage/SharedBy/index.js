@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { fetchSharedObjects } from '@events/objects';
 import { useHistory, matchPath, useLocation } from 'react-router-dom';
 
-import { openModal, FILE_LINK_PASSWORD } from '@shared/components/Modal/actions';
-import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
 import Breadcrumbs from '@ui/Breadcrumbs';
+import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
+import { openModal, FILE_LINK_PASSWORD } from '@shared/components/Modal/actions';
 
-import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 import useStyles from './styles';
+import SharedRenderRow from '../shared/ShareRenderRow';
+import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 
 const SharedWithMeView = () => {
   const classes = useStyles();
@@ -60,6 +61,8 @@ const SharedWithMeView = () => {
         bucket="shared-with-me"
         baseRedirectUrl="/storage/shared-by"
         fetchDir={fetchSharedObjects}
+        renderRow={SharedRenderRow}
+        type="shared"
       />
     </div>
   );
