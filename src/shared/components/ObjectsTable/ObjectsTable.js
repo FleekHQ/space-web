@@ -1,4 +1,6 @@
+/* eslint-disable */
 import React, { useState } from 'react';
+import get from 'lodash/get';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -41,7 +43,7 @@ const ObjectsTable = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [hoveredElement, setHoveredElement] = React.useState(null);
+  const [hoveredItemKey, setHoveredItemKey] = React.useState(null);
   const location = useLocation();
 
   const initialContextState = {
@@ -101,13 +103,11 @@ const ObjectsTable = ({
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
 
-  const hoveredItemKey = hoveredElement && hoveredElement.dataset.key;
-
-  const hoveredItemIndex = hoveredElement && sortedRows.findIndex(
+  const hoveredItemIndex = hoveredItemKey && sortedRows.findIndex(
     (row) => (row.fullKey === hoveredItemKey),
   );
 
-  const hoveredItem = hoveredElement && sortedRows[hoveredItemIndex];
+  const hoveredItem = hoveredItemKey && sortedRows[hoveredItemIndex];
 
   const hoveredItemOptions = getHoverMenuItems(hoveredItem);
 
@@ -283,11 +283,14 @@ const ObjectsTable = ({
   const contextMenuItems = getContextMenuItems(clickedItem, t);
 
   const handleHoverMenuOpen = (event) => {
-    setHoveredElement(event.currentTarget);
+    const newItemKey = get(event, 'target.parentNode.dataset.key');
+    if ((newItemKey && (newItemKey !== hoveredItemKey)) || !hoveredItemKey) {
+      setHoveredItemKey(newItemKey);
+    }
   };
 
   const handleHoverMenuClose = () => {
-    setHoveredElement(null);
+    setHoveredItemKey(null);
   };
 
   const hoverMenuItemOnClick = (id) => {
@@ -366,7 +369,7 @@ const ObjectsTable = ({
             )}
             renderRow={({ row, rowIndex }) => (
               <TableRow
-                onMouseEnter={handleHoverMenuOpen}
+                onMouseOver={handleHoverMenuOpen}
                 hover
                 key={row.id}
                 data-key={row.fullKey}
