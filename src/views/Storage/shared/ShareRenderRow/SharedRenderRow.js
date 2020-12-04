@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import get from 'lodash/get';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { getTabulations } from '@utils';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { TableCell, FileNameCell, MemberCell } from '@ui/Table';
 import { getIdentitiesByAddress } from '@events/identities';
-
-import getRowOffset from '../helpers/get-row-offset';
 
 const ShareRenderRow = ({ row, arrowOnClick }) => {
   const location = useLocation();
@@ -33,7 +32,7 @@ const ShareRenderRow = ({ row, arrowOnClick }) => {
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getRowOffset(location, row)}
+        tabulations={getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 0}

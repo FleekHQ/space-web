@@ -2,16 +2,15 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { formatBytes } from '@utils';
 import { useLocation } from 'react-router-dom';
 import { TableCell, FileNameCell } from '@ui/Table';
+import { formatBytes, getTabulations } from '@utils';
 import Typography from '@material-ui/core/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 
 import useStyles from './styles';
-import getRowOffset from '../helpers/get-row-offset';
 
 const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   const location = useLocation();
@@ -48,14 +47,14 @@ const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getRowOffset(location, row)}
+        tabulations={getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 0}
       />
       <TableCell
         className={classes.iconSizeContainer}
-        tabulations={disableOffset ? 0 : getRowOffset(location, row)}
+        tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
       >
         {getSizeIcon()}
         <Typography variant="body1" color="secondary" noWrap>
