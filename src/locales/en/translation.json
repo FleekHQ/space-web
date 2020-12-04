@@ -22,6 +22,7 @@
     "change": "Change",
     "crypto": "Crypto",
     "card": "Card",
+    "email": "Email",
     "username": "Username",
     "password": "Password",
     "remindMeLater": "Remind me later",
@@ -188,8 +189,8 @@
       "forgotPassword": "Forgot password?",
       "agreenment": {
         "part1": "By signing up, I agree to the",
-        "privacy": "Privacy",
-        "terms": "Terms"
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
       },
       "errors": {
         "generic": "Sorry, there was a problem.",

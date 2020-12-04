@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
-import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
+import PasswordLessForm from '@shared/components/PasswordLessForm';
 
 import { signup, signin } from '@events';
 import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
@@ -41,10 +41,13 @@ const SignUp = () => {
     loading: s.auth.signup.loading || s.auth.signin.loading,
   }));
 
-  const handleUsernamePasswordFormSubmit = ({ username, password }) => {
-    signup({
-      username,
-      password,
+  const handlePasswordLessFormSubmit = ({ email }) => {
+    history.push({
+      pathname: '/auth/email-link-auth',
+      state: {
+        email,
+        from: 'signup',
+      },
     });
   };
 
@@ -83,7 +86,7 @@ const SignUp = () => {
   }, [state.success]);
 
   React.useEffect(() => {
-    if (location.state && location.state.username && location.state.password) {
+    if (location.state && location.state.email) {
       setFormData(location.state);
     }
 
@@ -148,27 +151,23 @@ const SignUp = () => {
             </Box>
           </Box>
           <Box mb="20px" width="100%">
-            <UsernamePasswordForm
-              showPasswordTooltip
+            <PasswordLessForm
               isLoading={state.loading}
               submitBtnText={t('modules.signup.title')}
-              defaultUsername={
+              defaultEmail={
                 location.state
-                && location.state.username ? location.state.username : undefined
+                && location.state.email ? location.state.email : undefined
               }
-              defaultPassword={
-                location.state
-                && location.state.password ? location.state.password : undefined
-              }
-              onSubmit={handleUsernamePasswordFormSubmit}
+              onSubmit={handlePasswordLessFormSubmit}
               onChangeForm={(newFormData) => setFormData(newFormData)}
             />
           </Box>
-          <Box color="common.white" textAlign="center">
+          <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
             <Typography color="inherit">
-              <Box component="span" fontSize="10px" color="common.white">
+              <Box component="span" fontSize="12px">
                 {`${t('modules.signup.agreenment.part1')} `}
                 <ButtonBase
+                  component="a"
                   color="inherit"
                   className={classes.linkButton}
                   onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
@@ -177,6 +176,7 @@ const SignUp = () => {
                 </ButtonBase>
                 &nbsp;&&nbsp;
                 <ButtonBase
+                  component="a"
                   color="inherit"
                   className={classes.linkButton}
                   onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}

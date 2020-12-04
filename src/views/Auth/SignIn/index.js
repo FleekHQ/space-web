@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { signin } from '@events';
 import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
-import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
+import PasswordLessForm from '@shared/components/PasswordLessForm';
 
 import Splash from '../../Splash';
 
@@ -29,10 +29,13 @@ const SignIn = () => {
   const siginState = useSelector((s) => s.auth.signin);
   const [showSplash, setShowSplash] = React.useState(false);
 
-  const handleUsernamePasswordFormSubmit = ({ username, password }) => {
-    signin({
-      username,
-      password,
+  const handlePasswordLessFormSubmit = ({ email }) => {
+    history.push({
+      pathname: '/auth/email-link-auth',
+      state: {
+        email,
+        from: 'signin',
+      },
     });
   };
 
@@ -73,7 +76,7 @@ const SignIn = () => {
   }, [siginState.success]);
 
   React.useEffect(() => {
-    if (location.state && location.state.username && location.state.password) {
+    if (location.state && location.state.email) {
       setFormData(location.state);
     }
 
@@ -139,18 +142,14 @@ const SignIn = () => {
             </Link>
           </Box>
           <Box mb="20px" width="100%">
-            <UsernamePasswordForm
+            <PasswordLessForm
               isLoading={siginState.loading}
               submitBtnText={t('modules.signin.title')}
-              defaultUsername={
+              defaultEmail={
                 location.state
-                && location.state.username ? location.state.username : undefined
+                && location.state.email ? location.state.email : undefined
               }
-              defaultPassword={
-                location.state
-                && location.state.password ? location.state.password : undefined
-              }
-              onSubmit={handleUsernamePasswordFormSubmit}
+              onSubmit={handlePasswordLessFormSubmit}
               onChangeForm={(newFormData) => setFormData(newFormData)}
             />
           </Box>
