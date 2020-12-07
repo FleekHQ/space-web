@@ -17,6 +17,7 @@ const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   const classes = useStyles();
 
   const getSizeIcon = () => {
+    if (row.ext === 'folder') return <div className={classes.iconContainer} />;
     if (row.isAvailableInSpace) {
       return (
         <div className={classes.iconContainer}>
