@@ -56,6 +56,7 @@ const RenderRow = ({
         </div>
       );
     }
+    if (row.ext === 'folder') return <div className={classes.iconContainer} />;
     if (row.isAvailableInSpace) {
       return (
         <div className={classes.iconContainer}>
