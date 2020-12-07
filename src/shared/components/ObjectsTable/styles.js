@@ -28,15 +28,6 @@ export default makeStyles(() => ({
     height: '100%',
     padding: '0 5px',
   },
-  selected: {
-    backgroundColor: '#E5F0FF !important',
-  },
-  selectedAndUploading: {
-    backgroundColor: '#F5F6F8 !important',
-  },
-  error: {
-    backgroundColor: '#F8DEDF !important',
-  },
   tableWrapper: {
     flexGrow: 1,
     padding: 6,
@@ -57,5 +48,14 @@ export default makeStyles(() => ({
   },
   sortButton: {
     padding: 2,
+  },
+  selected: {
+    backgroundColor: '#E5F0FF !important',
+  },
+  selectedAndUploading: {
+    backgroundColor: '#F5F6F8 !important',
+  },
+  error: {
+    backgroundColor: '#F8DEDF !important',
   },
 }));

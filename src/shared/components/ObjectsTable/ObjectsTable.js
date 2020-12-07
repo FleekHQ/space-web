@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import get from 'lodash/get';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp';
 import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
-import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
-import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
@@ -21,8 +17,7 @@ import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Moda
 import { useTranslation } from 'react-i18next';
 import { getTabulations } from '@utils';
 import getContextMenuItems from './utils/get-context-menu';
-import getHoverMenuItems from './utils/get-hover-menu';
-import HoverTooltip from './components/Tooltip';
+
 import useStyles from './styles';
 
 const ObjectsTable = ({
@@ -42,7 +37,6 @@ const ObjectsTable = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [hoveredItemKey, setHoveredItemKey] = React.useState(null);
   const location = useLocation();
 
   const initialContextState = {
@@ -101,14 +95,6 @@ const ObjectsTable = ({
   };
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
-
-  const hoveredItemIndex = hoveredItemKey && sortedRows.findIndex(
-    (row) => (row.fullKey === hoveredItemKey),
-  );
-
-  const hoveredItem = hoveredItemKey && sortedRows[hoveredItemIndex];
-
-  const hoveredItemOptions = getHoverMenuItems(hoveredItem);
 
   const classes = useStyles();
 
@@ -282,21 +268,6 @@ const ObjectsTable = ({
 
   const contextMenuItems = getContextMenuItems(clickedItem, t);
 
-  const handleHoverMenuOpen = (event) => {
-    const newItemKey = get(event, 'target.parentNode.dataset.key');
-    if ((newItemKey && (newItemKey !== hoveredItemKey)) || !hoveredItemKey) {
-      setHoveredItemKey(newItemKey);
-    }
-  };
-
-  const handleHoverMenuClose = () => {
-    setHoveredItemKey(null);
-  };
-
-  const hoverMenuItemOnClick = (id) => {
-    console.log(id);
-  };
-
   const getDropzoneObjsList = () => {
     let indexOfLastVisitedRootObj = 0;
 
@@ -322,7 +293,6 @@ const ObjectsTable = ({
       >
         <div ref={wrapperRef}>
           <Table
-            onMouseLeave={handleHoverMenuClose}
             head={withRowOptions ? [...heads, { width: 43 }] : heads}
             rows={sortedRows}
             className={classes.root}
@@ -368,54 +338,16 @@ const ObjectsTable = ({
               </TableRow>
             )}
             renderRow={({ row, rowIndex }) => (
-              <TableRow
-                onMouseOver={handleHoverMenuOpen}
-                hover
-                key={row.id}
-                data-key={row.fullKey}
-                className={classNames(classes.row, {
-                  [classes.selectedAndUploading]: (
-                    (row.isUploading && row.selected)
-                    || (row.isUploading && (hoveredItemKey === row.fullKey))
-                  ),
-                  [classes.selected]: row.selected,
-                  [classes.error]: row.error && !row.isUploading,
-                })}
-                onClick={handleRowClick({ row, rowIndex })}
-                onContextMenu={handleRowRightClick({ row })}
-                onDoubleClick={handleDoubleRowClick({ row })}
-                component={
-                  (rowProps) => (
-                    <HoverTooltip
-                      rowProps={rowProps}
-                      hoveredItemOptions={hoveredItemOptions}
-                      hoveredItemIndex={hoveredItemIndex}
-                      hoverMenuItemOnClick={hoverMenuItemOnClick}
-                      open={hoveredItemKey === row.fullKey}
-                    />
-                  )
-                }
-              >
-                <RenderRow
-                  row={row}
-                  disableOffset={disableRowOffset}
-                  arrowOnClick={() => arrowOnClick(row)}
-                />
-                {withRowOptions && (
-                  <TableCell align="right">
-                    <Button
-                      className={classes.options}
-                      color="secondary"
-                      disableRipple
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faEllipsisH} />
-                    </Button>
-                  </TableCell>
-                )}
-              </TableRow>
+              <RenderRow
+                row={row}
+                rowIndex={rowIndex}
+                disableOffset={disableRowOffset}
+                arrowOnClick={() => arrowOnClick(row)}
+                handleRowClick={handleRowClick}
+                handleRowRightClick={handleRowRightClick}
+                handleDoubleRowClick={handleDoubleRowClick}
+                rowClasses={classes}
+              />
             )}
           />
           <Popper
@@ -442,7 +374,7 @@ const ObjectsTable = ({
 
 ObjectsTable.defaultProps = {
   onDropzoneDrop: null,
-  withRowOptions: false,
+  withRowOptions: true,
   onOutsideClick: () => null,
   renderLoadingRows: () => null,
   loading: false,

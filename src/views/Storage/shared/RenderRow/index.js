@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -5,19 +6,32 @@ import classnames from 'classnames';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
-import { TableCell, FileNameCell } from '@ui/Table';
+import { TableCell, FileNameCell, TableRow } from '@ui/Table';
 import { formatBytes, getTabulations } from '@utils';
+import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
+import hoverMenuItemOnClick from '@shared/components/ObjectsTable/utils/hover-menu-on-click';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
+import HoverMenu from '@ui/HoverMenu';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import useStyles from './styles';
 
-const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
+const RenderRow = ({
+  row,
+  arrowOnClick,
+  disableOffset,
+  rowIndex,
+  handleRowClick,
+  handleRowRightClick,
+  handleDoubleRowClick,
+  rowClasses,
+}) => {
   const location = useLocation();
-  const classes = useStyles({ progress: 0.4 });
+  const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
 
   const getSizeIcon = () => {
@@ -88,7 +102,46 @@ const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
   };
 
   return (
-    <>
+    <TableRow
+      hover
+      key={row.id}
+      data-key={row.fullKey}
+      className={classnames(rowClasses.row, {
+        [rowClasses.selectedAndUploading]: (
+          (row.isUploading && row.selected)
+        ),
+        [rowClasses.selected]: row.selected,
+        [rowClasses.error]: row.error && !row.isUploading,
+      })}
+      onClick={handleRowClick({ row, rowIndex })}
+      onContextMenu={handleRowRightClick({ row })}
+      onDoubleClick={handleDoubleRowClick({ row })}
+      component={
+        ({ children, ...rowProps }) => (
+          <Tooltip
+            interactive
+            classes={{
+              tooltip: classes.tooltipRoot,
+              popper: classes.popperRoot,
+            }}
+            title={(
+              <HoverMenu
+                i18n={{
+                  retry: t('hoverMenu.retry'),
+                  cancel: t('hoverMenu.cancel'),
+                }}
+                items={getHoverMenuItems(row)}
+                menuItemOnClick={hoverMenuItemOnClick}
+              />
+            )}
+          >
+            <tr {...rowProps}>
+              {children}
+            </tr>
+          </Tooltip>
+        )
+      }
+    >
       <FileNameCell
         ext={row.ext}
         src={`file:${row.key}`}
@@ -119,7 +172,7 @@ const RenderRow = ({ row, arrowOnClick, disableOffset }) => {
       <TableCell>
         {getLastModifiedCell()}
       </TableCell>
-    </>
+    </TableRow>
   );
 };
 
@@ -130,6 +183,8 @@ RenderRow.defaultProps = {
 
 RenderRow.propTypes = {
   row: PropTypes.shape({
+    id: PropTypes.string,
+    fullKey: PropTypes.string,
     shareAmount: PropTypes.number,
     ext: PropTypes.string,
     key: PropTypes.string,
@@ -146,6 +201,16 @@ RenderRow.propTypes = {
   }).isRequired,
   disableOffset: PropTypes.bool,
   arrowOnClick: PropTypes.func,
+  rowIndex: PropTypes.number.isRequired,
+  handleRowClick: PropTypes.func.isRequired,
+  handleRowRightClick: PropTypes.func.isRequired,
+  handleDoubleRowClick: PropTypes.func.isRequired,
+  rowClasses: PropTypes.shape({
+    row: PropTypes.string,
+    selected: PropTypes.string,
+    selectedAndUploading: PropTypes.string,
+    error: PropTypes.string,
+  }).isRequired,
 };
 
 export default RenderRow;

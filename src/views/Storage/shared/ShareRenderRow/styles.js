@@ -23,4 +23,13 @@ export default makeStyles((theme) => ({
   highlighted: {
     color: theme.palette.palette.spaceBlue,
   },
+  tooltipRoot: {
+    backgroundColor: 'transparent',
+  },
+  popperRoot: {
+    top: ({ rowIndex }) => (`${(80 + 36 * rowIndex)}px !important`),
+    left: 'auto !important',
+    right: 260,
+    transform: 'none !important',
+  },
 }));
