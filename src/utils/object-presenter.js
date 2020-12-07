@@ -47,6 +47,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     isAvailableInSpace: backupCount > 0,
     sourceBucket: sourceBucket || bucket,
     shareAmount: Math.max(1, members.length),
+    isUploading: false,
   };
 };
 
