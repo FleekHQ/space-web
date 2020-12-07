@@ -45,14 +45,6 @@ export default makeStyles((theme) => ({
     margin: '0.1em 0 0 7px',
     flexShrink: 0,
   },
-  tooltipRoot: {
-    margin: 0,
-    maxWidth: 300,
-    padding: '5px 10px',
-    color: theme.palette.common.white,
-    backgroundColor: '#171717',
-    borderRadius: 4,
-  },
   name: {
     '&:hover': {
       color: theme.palette.palette.blue1,
@@ -64,5 +56,8 @@ export default makeStyles((theme) => ({
   },
   tooltipArrow: {
     color: '#171717',
+  },
+  uploading: {
+    opacity: '50%',
   },
 }));

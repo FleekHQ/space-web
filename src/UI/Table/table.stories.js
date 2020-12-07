@@ -32,7 +32,7 @@ const renderRow = ({ row }) => (
     key={row.id}
     hover
   >
-    <FileCell
+    <FileNameCell
       ext={row.ext}
       src={row.src}
       expanded={row.expanded}
@@ -41,7 +41,7 @@ const renderRow = ({ row }) => (
       <Typography variant="body1">
         {row.name}
       </Typography>
-    </FileCell>
+    </FileNameCell>
     <TableCell>
       <Typography variant="body1" color="secondary">
         Only you

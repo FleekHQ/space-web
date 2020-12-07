@@ -22,6 +22,7 @@ const FileNameCell = (props) => {
     selected,
     tabulations,
     arrowOnClick,
+    isUploading,
     ...tableCellProps
   } = props;
 
@@ -41,8 +42,10 @@ const FileNameCell = (props) => {
       variant="body1"
       noWrap
       ref={textNode}
-      className={classnames(classes.name, {
-        [classes.selected]: selected,
+      className={classnames({
+        [classes.selected]: selected && !isUploading,
+        [classes.uploading]: isUploading,
+        [classes.nameHover]: !isUploading,
       })}
     >
       {name}
@@ -58,7 +61,9 @@ const FileNameCell = (props) => {
           {isFolder && (
             <ButtonBase
               disableRipple
-              className={classes.arrowButton}
+              className={classnames(classes.arrowButton, {
+                [classes.uploading]: isUploading,
+              })}
               onClick={(e) => {
                 e.stopPropagation();
                 arrowOnClick();
@@ -72,7 +77,11 @@ const FileNameCell = (props) => {
             </ButtonBase>
           )}
         </div>
-        <div className={classes.iconContainer}>
+        <div
+          className={classnames(classes.iconContainer, {
+            [classes.uploading]: isUploading,
+          })}
+        >
           <FileIcon
             src={src}
             ext={ext}
@@ -110,6 +119,7 @@ FileNameCell.defaultProps = {
   tabulations: 0,
   isShared: false,
   arrowOnClick: () => {},
+  isUploading: false,
 };
 
 FileNameCell.propTypes = {
@@ -121,6 +131,7 @@ FileNameCell.propTypes = {
   tabulations: PropTypes.number,
   isShared: PropTypes.bool,
   arrowOnClick: PropTypes.func,
+  isUploading: PropTypes.bool,
 };
 
 export default FileNameCell;

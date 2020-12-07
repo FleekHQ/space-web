@@ -1,18 +1,42 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
+import classnames from 'classnames';
 import get from 'lodash/get';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { getTabulations } from '@utils';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import { TableCell, FileNameCell, MemberCell } from '@ui/Table';
+import {
+  TableCell,
+  FileNameCell,
+  MemberCell,
+  TableRow,
+} from '@ui/Table';
 import { getIdentitiesByAddress } from '@events/identities';
+import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
+import hoverMenuItemOnClick from '@shared/components/ObjectsTable/utils/hover-menu-on-click';
+import HoverMenu from '@ui/HoverMenu';
+import Tooltip from '@material-ui/core/Tooltip';
 
-const ShareRenderRow = ({ row, arrowOnClick }) => {
+import useStyles from './styles';
+
+const ShareRenderRow = ({
+  row,
+  arrowOnClick,
+  rowIndex,
+  handleRowClick,
+  handleRowRightClick,
+  handleDoubleRowClick,
+  rowClasses,
+}) => {
   const location = useLocation();
   const members = get(row, 'members', []) || [];
   const [userAddress, identities] = useSelector((state) => [state.user.address, state.identities]);
+  const classes = useStyles({ progress: 0.4, rowIndex });
+  const { t } = useTranslation();
 
   const firstMember = members.find((item) => item.address !== userAddress);
   const firstMemberIdentity = get(identities, `identities.${firstMember.publicKey}`, {});
@@ -26,7 +50,46 @@ const ShareRenderRow = ({ row, arrowOnClick }) => {
   }, []);
 
   return (
-    <>
+    <TableRow
+      hover
+      key={row.id}
+      data-key={row.fullKey}
+      className={classnames(rowClasses.row, {
+        [rowClasses.selectedAndUploading]: (
+          (row.isUploading && row.selected)
+        ),
+        [rowClasses.selected]: row.selected,
+        [rowClasses.error]: row.error && !row.isUploading,
+      })}
+      onClick={handleRowClick({ row, rowIndex })}
+      onContextMenu={handleRowRightClick({ row })}
+      onDoubleClick={handleDoubleRowClick({ row })}
+      component={
+        ({ children, ...rowProps }) => (
+          <Tooltip
+            interactive
+            classes={{
+              tooltip: classes.tooltipRoot,
+              popper: classes.popperRoot,
+            }}
+            title={(
+              <HoverMenu
+                i18n={{
+                  retry: t('hoverMenu.retry'),
+                  cancel: t('hoverMenu.cancel'),
+                }}
+                items={getHoverMenuItems(row)}
+                menuItemOnClick={hoverMenuItemOnClick}
+              />
+            )}
+          >
+            <tr {...rowProps}>
+              {children}
+            </tr>
+          </Tooltip>
+        )
+      }
+    >
       <FileNameCell
         ext={row.ext}
         src={`file:${row.key}`}
@@ -48,7 +111,7 @@ const ShareRenderRow = ({ row, arrowOnClick }) => {
           {/* {formatMonthDayYear(row.lastModified)} */}
         </Typography>
       </TableCell>
-    </>
+    </TableRow>
   );
 };
 
@@ -58,6 +121,8 @@ ShareRenderRow.defaultProps = {
 
 ShareRenderRow.propTypes = {
   row: PropTypes.shape({
+    id: PropTypes.string,
+    fullKey: PropTypes.string,
     shareAmount: PropTypes.number,
     ext: PropTypes.string,
     key: PropTypes.string,
@@ -69,8 +134,20 @@ ShareRenderRow.propTypes = {
     expanded: PropTypes.bool,
     selected: PropTypes.bool,
     members: PropTypes.array,
+    isUploading: PropTypes.bool,
+    error: PropTypes.bool,
   }).isRequired,
   arrowOnClick: PropTypes.func,
+  rowIndex: PropTypes.number.isRequired,
+  handleRowClick: PropTypes.func.isRequired,
+  handleRowRightClick: PropTypes.func.isRequired,
+  handleDoubleRowClick: PropTypes.func.isRequired,
+  rowClasses: PropTypes.shape({
+    row: PropTypes.string,
+    selected: PropTypes.string,
+    selectedAndUploading: PropTypes.string,
+    error: PropTypes.string,
+  }).isRequired,
 };
 
 export default ShareRenderRow;

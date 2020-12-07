@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp';
 import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
-import { faEllipsisH } from '@fortawesome/pro-regular-svg-icons/faEllipsisH';
-import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import { openObject } from '@events';
@@ -20,6 +17,7 @@ import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Moda
 import { useTranslation } from 'react-i18next';
 import { getTabulations } from '@utils';
 import getContextMenuItems from './utils/get-context-menu';
+
 import useStyles from './styles';
 
 const ObjectsTable = ({
@@ -37,7 +35,6 @@ const ObjectsTable = ({
   disableRowOffset,
 }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -98,6 +95,9 @@ const ObjectsTable = ({
   };
 
   const sortedRows = sortAndAddSubfolders(unsortedRows);
+
+  const classes = useStyles();
+
   const clickedItem = sortedRows.find((row) => row.selected);
 
   const handleRowClick = ({ rowIndex }) => (event) => {
@@ -338,37 +338,16 @@ const ObjectsTable = ({
               </TableRow>
             )}
             renderRow={({ row, rowIndex }) => (
-              <TableRow
-                hover
-                key={row.id}
-                className={classNames(classes.row, {
-                  [classes.selected]: row.selected,
-                  [classes.error]: row.error,
-                })}
-                onClick={handleRowClick({ row, rowIndex })}
-                onContextMenu={handleRowRightClick({ row })}
-                onDoubleClick={handleDoubleRowClick({ row })}
-              >
-                <RenderRow
-                  row={row}
-                  disableOffset={disableRowOffset}
-                  arrowOnClick={() => arrowOnClick(row)}
-                />
-                {withRowOptions && (
-                  <TableCell align="right">
-                    <Button
-                      className={classes.options}
-                      color="secondary"
-                      disableRipple
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faEllipsisH} />
-                    </Button>
-                  </TableCell>
-                )}
-              </TableRow>
+              <RenderRow
+                row={row}
+                rowIndex={rowIndex}
+                disableOffset={disableRowOffset}
+                arrowOnClick={() => arrowOnClick(row)}
+                handleRowClick={handleRowClick}
+                handleRowRightClick={handleRowRightClick}
+                handleDoubleRowClick={handleDoubleRowClick}
+                rowClasses={classes}
+              />
             )}
           />
           <Popper
@@ -395,7 +374,7 @@ const ObjectsTable = ({
 
 ObjectsTable.defaultProps = {
   onDropzoneDrop: null,
-  withRowOptions: false,
+  withRowOptions: true,
   onOutsideClick: () => null,
   renderLoadingRows: () => null,
   loading: false,
