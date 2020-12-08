@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as ReactRouterLink, useHistory, useLocation } from 'react-router-dom';
+import { openExternalLink } from '@events/shell';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link as ReactRouterLink, useHistory, useLocation } from 'react-router-dom';
 import { faExclamationTriangle } from '@fortawesome/pro-regular-svg-icons/faExclamationTriangle';
-import { openExternalLink } from '@events/shell';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
@@ -15,9 +15,11 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
 import PasswordLessForm from '@shared/components/PasswordLessForm';
 
+import config from '@config';
 import { signup, signin } from '@events';
 import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
 
 import Splash from '../../Splash';
 
@@ -32,6 +34,14 @@ const SignUp = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { checkIdentityByEthKey } = useWsChallenge();
+  const { isInitializing, torusTriggerLogin } = useTorusSdk(config.torus.sdkConfig);
+  const {
+    getLoginPayload,
+    sendPasswordlessEmail,
+    loading: passwordlessLoading,
+  } = useAuth0Passwordless();
+
   const [formData, setFormData] = React.useState(null);
   const [showSplash, setShowSplash] = React.useState(false);
   const state = useSelector((s) => ({
@@ -41,14 +51,21 @@ const SignUp = () => {
     loading: s.auth.signup.loading || s.auth.signin.loading,
   }));
 
-  const handlePasswordLessFormSubmit = ({ email }) => {
-    history.push({
-      pathname: '/auth/email-link-auth',
-      state: {
-        email,
-        from: 'signup',
-      },
+  const handlePasswordLessFormSubmit = async ({ email }) => {
+    const isSent = await sendPasswordlessEmail({
+      email,
+      from: 'signup',
     });
+
+    if (isSent) {
+      history.push({
+        pathname: '/auth/email-link-auth',
+        state: {
+          email,
+          from: 'signup',
+        },
+      });
+    }
   };
 
   /**
@@ -99,6 +116,53 @@ const SignUp = () => {
       });
     };
   }, []);
+
+  React.useEffect(() => {
+    if (location.hash) {
+      setShowSplash(true);
+
+      if (!isInitializing) {
+        const getTorusRes = async () => {
+          const { hash, stateFields } = getLoginPayload();
+
+          try {
+            const torusRes = await torusTriggerLogin({
+              hash,
+              queryParameters: {},
+              provider: 'passwordless',
+              extraJwtParams: {
+                login_hint: stateFields.email || '',
+              },
+            });
+
+            const { identityExists } = await checkIdentityByEthKey(torusRes);
+
+            if (identityExists) {
+              signin({
+                torusRes,
+              });
+              return;
+            }
+
+            signup({ torusRes });
+          } catch (error) {
+            setShowSplash(false);
+
+            let errorKey = 'torus';
+            if (error.message.includes('Duplicate token found')) {
+              errorKey = 'retry';
+            }
+
+            dispatch({
+              error: `modules.signup.errors.${errorKey}`,
+              type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
+            });
+          }
+        };
+        getTorusRes();
+      }
+    }
+  }, [isInitializing]);
 
   React.useEffect(() => {
     if (state.error) {
@@ -152,7 +216,7 @@ const SignUp = () => {
           </Box>
           <Box mb="20px" width="100%">
             <PasswordLessForm
-              isLoading={state.loading}
+              isLoading={state.loading || passwordlessLoading}
               submitBtnText={t('modules.signup.title')}
               defaultEmail={
                 location.state
