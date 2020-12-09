@@ -91,6 +91,7 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
         dbId: item.getDbid(),
         sourceBucket: item.getBucket(),
         isPublicLink: item.getIspubliclink(),
+        sharedBy: item.getSharedby(),
         ...entryToObject(entry, 'shared-with-me'),
       };
     });
@@ -102,9 +103,13 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
         dbId: item.getDbid(),
         sourceBucket: item.getBucket(),
         isPublicLink: item.getIspubliclink(),
+        sharedBy: item.getSharedby(),
         ...entryToObject(entry, 'shared-with-me'),
       };
     });
+
+    console.log('withMeItems', withMeItems);
+    console.log('byMeItems', byMeItems);
 
     const objects = {
       nextOffset: withMeRes.getNextoffset(),
