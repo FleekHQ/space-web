@@ -6,11 +6,11 @@ import { object, boolean } from '@storybook/addon-knobs';
 
 import Table from './index';
 import {
-  FileCell,
   TableRow,
   TableCell,
   IconsCell,
   LoadingCell,
+  FileNameCell,
 } from './components';
 
 const categoryName = 'ElementalComponents/Table';

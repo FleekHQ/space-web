@@ -10,9 +10,9 @@ export default makeStyles((theme) => ({
     },
   },
   highlighted: {
-    backgroundColor: `${theme.palette.palette.blue1}26`,
+    backgroundColor: 'rgba(0, 110, 255, 0.05)',
     '&:hover': {
-      backgroundColor: `${theme.palette.palette.blue1}26`,
+      backgroundColor: 'rgba(0, 110, 255, 0.05)',
     },
   },
   button: {
@@ -55,7 +55,7 @@ export default makeStyles((theme) => ({
   },
   rejected: {
     color: theme.palette.palette.red,
-    backgroundColor: `${theme.palette.palette.red}6c`,
+    backgroundColor: `${theme.palette.palette.red}5c`,
   },
   timestamp: {
     marginTop: (props) => (20 + 3 * (props.stackedItems - 1)),
