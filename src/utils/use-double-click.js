@@ -16,25 +16,30 @@ const useDoubleClick = ({
     }
   ),
   []);
+
   const onClick = (event) => {
     const keypresses = {
       shiftKey: event.shiftKey,
       ctrlKey: event.ctrlKey,
       metaKey: event.metaKey,
     };
+
     clickAmount.current += 1;
+
     if (timer.current) {
       return;
     }
+
     timer.current = setTimeout(() => {
       if (clickAmount.current >= 2) {
         doubleClick(event, keypresses);
-      } else {
-        singleClick(event, keypresses);
       }
+
       clickAmount.current = 0;
       timer.current = null;
     }, delay);
+
+    singleClick(event, keypresses);
   };
 
   return onClick;
