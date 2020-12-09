@@ -100,11 +100,11 @@ const ObjectsTable = ({
 
   const clickedItem = sortedRows.find((row) => row.selected);
 
-  const handleRowClick = ({ rowIndex }) => (event) => {
+  const handleRowClick = ({ rowIndex }) => (event, keypresses) => {
     event.preventDefault();
 
-    const isShiftKeyPress = !!event.shiftKey;
-    const isCtrlOrMetaPress = !!(event.ctrlKey || event.metaKey);
+    const isShiftKeyPress = !!keypresses.shiftKey;
+    const isCtrlOrMetaPress = !!(keypresses.ctrlKey || keypresses.metaKey);
     const pivoteRowIndex = sortedRows.findIndex((_row) => _row.pivote);
 
     const payload = sortedRows.reduce((newRows, _row, index) => {
