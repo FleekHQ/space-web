@@ -4,6 +4,7 @@ export default makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
+    paddingRight: 20,
   },
   iconContainer: {
     position: 'relative',
