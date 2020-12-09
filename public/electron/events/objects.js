@@ -108,9 +108,6 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
       };
     });
 
-    console.log('withMeItems', withMeItems);
-    console.log('byMeItems', byMeItems);
-
     const objects = {
       nextOffset: withMeRes.getNextoffset(),
       nextOffsetByMe: byMeRes.getNextoffset(),
