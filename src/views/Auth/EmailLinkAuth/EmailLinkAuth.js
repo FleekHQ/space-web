@@ -5,15 +5,25 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
+import { useAuth0Passwordless } from '@utils';
+
 import useStyles from './styles';
 
 const EmailLinkAuth = () => {
   const classes = useStyles();
   const location = useLocation();
   const { t } = useTranslation();
+  const { sendPasswordlessEmail } = useAuth0Passwordless();
 
   const from = (location.state && location.state.from) || 'signin';
   const action = t(`modules.emailLinkAuth.${from}`);
+
+  const handleOnResendEmail = async () => {
+    await sendPasswordlessEmail({
+      from,
+      email: location.state && location.state.email ? location.state.email : '',
+    });
+  };
 
   return (
     <div className={classes.root}>
@@ -38,7 +48,13 @@ const EmailLinkAuth = () => {
       >
         <Trans
           i18nKey="modules.emailLinkAuth.callToAction"
-          components={[<Button className={classes.callToActionBtn} disableRipple />]}
+          components={[
+            <Button
+              disableRipple
+              className={classes.callToActionBtn}
+              onClick={handleOnResendEmail}
+            />,
+          ]}
         />
       </Typography>
       <Typography

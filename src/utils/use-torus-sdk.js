@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import pickBy from 'lodash/pickBy';
+import identity from 'lodash/identity';
 import TorusSdk from '@toruslabs/torus-direct-web-sdk';
 
 import config from '@config';
@@ -40,7 +42,16 @@ const setTwitterNickname = async (torusRes) => {
   }
 };
 
-export default function useTorusSdk() {
+/**
+ * @param {import('@toruslabs/torus-direct-web-sdk').DirectWebSDKArgs} sdkConfig
+ */
+export default function useTorusSdk(sdkConfig) {
+  /**
+   * @typedef {Object} State
+   * @property {TorusSdk} torusSdk
+   * @property {Boolean} isInitializing
+   * @type {[State, Function]} State
+  */
   const [state, setState] = React.useState({
     torusSdk: null,
     isInitializing: true,
@@ -49,10 +60,18 @@ export default function useTorusSdk() {
   /**
    * Trigger torus login
    * @param {Object} payload
-   * @param {string} payload.provider - Provider to trigger the login
+   * @param {string} payload.provider
+   * @param {string=} payload.hash
+   * @param {Object=} payload.extraJwtParams
+   * @param {Object=} payload.queryParameters
    * @returns {TorusRes}
    */
-  const torusTriggerLogin = async ({ provider }) => {
+  const torusTriggerLogin = async ({
+    hash,
+    provider,
+    extraJwtParams,
+    queryParameters,
+  }) => {
     if (!config.torus.providers[provider]) {
       return null;
     }
@@ -67,13 +86,18 @@ export default function useTorusSdk() {
       } = config.torus.providers[provider];
 
       /** @type {TorusRes} */
-      const tRes = await state.torusSdk.triggerLogin({
+      const tRes = await state.torusSdk.triggerLogin(pickBy({
         name,
+        hash,
         verifier,
         clientId,
-        jwtParams,
         typeOfLogin,
-      });
+        queryParameters,
+        jwtParams: {
+          ...jwtParams,
+          ...extraJwtParams,
+        },
+      }, identity));
 
       if (tRes) {
         tRes.privateKey = `0x${tRes.privateKey}`;
@@ -95,13 +119,13 @@ export default function useTorusSdk() {
   };
 
   React.useEffect(() => {
-    const torusdirectsdk = new TorusSdk(config.torus.sdkConfig);
-
     const initTorusSdk = async () => {
-      await torusdirectsdk.init({ skipSw: true });
+      const torusSdk = new TorusSdk(sdkConfig);
+      await torusSdk.init({ skipSw: true });
+
       setState({
+        torusSdk,
         isInitializing: false,
-        torusSdk: torusdirectsdk,
       });
     };
 

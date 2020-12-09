@@ -171,7 +171,9 @@
         "timeout": "Websocket Timeout",
         "notFound": "User not found.",
         "generic": "Sorry, there was a problem.",
-        "invalid": "Invalid username or password."
+        "invalid": "Invalid username or password.",
+        "retry": "Please retry with another magic link.",
+        "noAccount": "The email is not associated with a Space user, please try again."
       },
       "username": "Username",
       "password": "Password",
@@ -199,7 +201,8 @@
         "address": "Sorry, the current address is already registered.",
         "torus": "There was an error with torus integration",
         "noData": "There is no data from torus",
-        "timeout": "Websocket Timeout"
+        "timeout": "Websocket Timeout",
+        "retry": "Please retry with another magic link."
       }
     },
     "restoreKeysMnemonic": {
