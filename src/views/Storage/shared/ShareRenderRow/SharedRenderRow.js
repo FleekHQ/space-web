@@ -34,17 +34,22 @@ const ShareRenderRow = ({
 }) => {
   const location = useLocation();
   const members = get(row, 'members', []) || [];
-  const [userAddress, identities] = useSelector((state) => [state.user.address, state.identities]);
+  const [userPubKey, identities] = useSelector((state) => [
+    state.user.publicKey,
+    state.identities,
+  ]);
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
 
-  const firstMember = members.find((item) => item.address !== userAddress);
-  const firstMemberIdentity = get(identities, `identities.${firstMember.publicKey}`, {});
+  const sharedByPubKey = get(row, 'sharedBy', userPubKey) || userPubKey;
+  const sharedByIdentity = get(identities, `identities.${sharedByPubKey}`, {});
 
   useEffect(() => {
-    if (!firstMemberIdentity.username) {
+    if (!sharedByIdentity.username) {
+      const member = members.find((item) => item.publicKey === sharedByPubKey);
+
       getIdentitiesByAddress({
-        addresses: [firstMember.address],
+        addresses: [get(member, 'address', '')],
       });
     }
   }, []);
@@ -105,8 +110,8 @@ const ShareRenderRow = ({
         isShared={row.members.length > 0}
       />
       <MemberCell
-        username={firstMemberIdentity.username}
-        avatarUrl={firstMemberIdentity.avatarUrl}
+        username={sharedByIdentity.username}
+        avatarUrl={sharedByIdentity.avatarUrl}
       />
       <TableCell>
         <Typography variant="body1" color="secondary" noWrap>

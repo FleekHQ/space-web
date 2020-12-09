@@ -24,6 +24,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
   const sourceBucket = get(obj, 'sourceBucket');
   const dbId = get(obj, 'dbId');
   const isPublicLink = get(obj, 'isPublicLink', false);
+  const sharedBy = get(obj, 'sharedBy');
 
   return {
     key,
@@ -42,6 +43,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     isLocallyAvailable,
     selected: undefined,
     id: `${bucket}/${key}`,
+    sharedBy: sharedBy === '' ? null : sharedBy,
     fullKey: `${bucket}/${isRootDir ? name : key}`,
     ipfsHash: get(obj, 'ipfsHash'),
     isAvailableInSpace: backupCount > 0,

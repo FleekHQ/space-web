@@ -1682,10 +1682,10 @@
     "@ethersproject/properties" "^5.0.3"
     "@ethersproject/strings" "^5.0.4"
 
-"@fleekhq/space-client@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.1.9.tgz#8ea86b49cbba51dd736e0be24d1defa45962cfa2"
-  integrity sha512-sHnDb0zdrhCxUKPkxnPVg1G2Mq+nTpMvncXm4C58SMd6awmxLPgFWp/Nte6QUW8CJvSQS3sWZMfe35Pt3WYDaA==
+"@fleekhq/space-client@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@fleekhq/space-client/-/space-client-1.1.10.tgz#ddb3e212741685881b626a0754fe910a7ee7144d"
+  integrity sha512-uhSWDr4v6twBbWFxYcR2VRGltAsSESmcf9McEE6ZsoIJYMcv/dAvmj4qxJhq33T0gdCI6R1JeQSL2yoihk20Mw==
   dependencies:
     "@types/google-protobuf" "^3.7.2"
     google-protobuf "^3.12.2"
