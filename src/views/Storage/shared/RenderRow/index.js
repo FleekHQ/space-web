@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { TableCell, FileNameCell, TableRow } from '@ui/Table';
-import { formatBytes, getTabulations } from '@utils';
+import { formatBytes, getTabulations, useDoubleClick } from '@utils';
 import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
 import hoverMenuItemOnClick from '@shared/components/ObjectsTable/utils/hover-menu-on-click';
 
@@ -30,36 +30,14 @@ const RenderRow = ({
   handleDoubleRowClick,
   rowClasses,
 }) => {
-  const clickAmount = useRef(0);
-  const timer = useRef(null);
   const location = useLocation();
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
 
-  useEffect(() => (
-    () => {
-      if (timer) {
-        clearTimeout(timer.current);
-      }
-    }
-  ),
-  []);
-
-  const onClick = (event) => {
-    clickAmount.current += 1;
-    if (timer.current) {
-      return;
-    }
-    timer.current = setTimeout(() => {
-      if (clickAmount.current >= 2) {
-        handleDoubleRowClick({ row })(event);
-      } else {
-        handleRowClick({ rowIndex })(event);
-      }
-      clickAmount.current = 0;
-      timer.current = null;
-    }, 250);
-  };
+  const onClick = useDoubleClick({
+    singleClick: handleRowClick({ rowIndex }),
+    doubleClick: handleDoubleRowClick({ row }),
+  });
 
   const getSizeIcon = () => {
     if (row.isUploading) {

@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import classnames from 'classnames';
 import get from 'lodash/get';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getTabulations } from '@utils';
+import { getTabulations, useDoubleClick } from '@utils';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -32,8 +32,6 @@ const ShareRenderRow = ({
   handleDoubleRowClick,
   rowClasses,
 }) => {
-  const clickAmount = useRef(0);
-  const timer = useRef(null);
   const location = useLocation();
   const members = get(row, 'members', []) || [];
   const [userAddress, identities] = useSelector((state) => [state.user.address, state.identities]);
@@ -51,30 +49,10 @@ const ShareRenderRow = ({
     }
   }, []);
 
-  useEffect(() => (
-    () => {
-      if (timer) {
-        clearTimeout(timer.current);
-      }
-    }
-  ),
-  []);
-
-  const onClick = (event) => {
-    clickAmount.current += 1;
-    if (timer.current) {
-      return;
-    }
-    timer.current = setTimeout(() => {
-      if (clickAmount.current >= 2) {
-        handleDoubleRowClick({ row })(event);
-      } else {
-        handleRowClick({ rowIndex })(event);
-      }
-      clickAmount.current = 0;
-      timer.current = null;
-    }, 250);
-  };
+  const onClick = useDoubleClick({
+    singleClick: handleRowClick({ rowIndex }),
+    doubleClick: handleDoubleRowClick({ row }),
+  });
 
   return (
     <TableRow
