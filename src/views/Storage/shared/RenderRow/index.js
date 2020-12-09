@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -30,9 +30,36 @@ const RenderRow = ({
   handleDoubleRowClick,
   rowClasses,
 }) => {
+  const clickAmount = useRef(0);
+  const timer = useRef(null);
   const location = useLocation();
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
+
+  useEffect(() => (
+    () => {
+      if (timer) {
+        clearTimeout(timer.current);
+      }
+    }
+  ),
+  []);
+
+  const onClick = (event) => {
+    clickAmount.current += 1;
+    if (timer.current) {
+      return;
+    }
+    timer.current = setTimeout(() => {
+      if (clickAmount.current >= 2) {
+        handleDoubleRowClick({ row })(event);
+      } else {
+        handleRowClick({ rowIndex })(event);
+      }
+      clickAmount.current = 0;
+      timer.current = null;
+    }, 250);
+  };
 
   const getSizeIcon = () => {
     if (row.isUploading) {
@@ -114,9 +141,8 @@ const RenderRow = ({
         [rowClasses.selected]: row.selected,
         [rowClasses.error]: row.error && !row.isUploading,
       })}
-      onClick={handleRowClick({ row, rowIndex })}
       onContextMenu={handleRowRightClick({ row })}
-      onDoubleClick={handleDoubleRowClick({ row })}
+      onClick={onClick}
       component={
         ({ children, ...rowProps }) => (
           <Tooltip
