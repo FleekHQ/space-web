@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { TableCell, FileNameCell, TableRow } from '@ui/Table';
-import { formatBytes, getTabulations } from '@utils';
+import { formatBytes, getTabulations, useDoubleClick } from '@utils';
 import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
 import hoverMenuItemOnClick from '@shared/components/ObjectsTable/utils/hover-menu-on-click';
 
@@ -33,6 +33,11 @@ const RenderRow = ({
   const location = useLocation();
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
+
+  const onClick = useDoubleClick({
+    singleClick: handleRowClick({ rowIndex }),
+    doubleClick: handleDoubleRowClick({ row }),
+  });
 
   const getSizeIcon = () => {
     if (row.isUploading) {
@@ -114,9 +119,8 @@ const RenderRow = ({
         [rowClasses.selected]: row.selected,
         [rowClasses.error]: row.error && !row.isUploading,
       })}
-      onClick={handleRowClick({ row, rowIndex })}
       onContextMenu={handleRowRightClick({ row })}
-      onDoubleClick={handleDoubleRowClick({ row })}
+      onClick={onClick}
       component={
         ({ children, ...rowProps }) => (
           <Tooltip

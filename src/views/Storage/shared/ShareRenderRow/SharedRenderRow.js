@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import get from 'lodash/get';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getTabulations } from '@utils';
+import { getTabulations, useDoubleClick } from '@utils';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -49,6 +49,11 @@ const ShareRenderRow = ({
     }
   }, []);
 
+  const onClick = useDoubleClick({
+    singleClick: handleRowClick({ rowIndex }),
+    doubleClick: handleDoubleRowClick({ row }),
+  });
+
   return (
     <TableRow
       hover
@@ -61,9 +66,8 @@ const ShareRenderRow = ({
         [rowClasses.selected]: row.selected,
         [rowClasses.error]: row.error && !row.isUploading,
       })}
-      onClick={handleRowClick({ row, rowIndex })}
+      onClick={onClick}
       onContextMenu={handleRowRightClick({ row })}
-      onDoubleClick={handleDoubleRowClick({ row })}
       component={
         ({ children, ...rowProps }) => (
           <Tooltip

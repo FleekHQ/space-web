@@ -11,3 +11,4 @@ export { default as getShortAddress } from './get-short-address';
 export { default as useTorusSdk } from './use-torus-sdk';
 export { default as useWsChallenge } from './use-ws-challenge';
 export { default as getTabulations } from './get-tabulations';
+export { default as useDoubleClick } from './use-double-click';
