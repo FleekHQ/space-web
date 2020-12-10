@@ -6,8 +6,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grow from '@material-ui/core/Grow';
-import { addItems } from '@events/add-items-subscribe';
-import classnames from 'classnames';
 import useStyles from './styles';
 
 const TRANSITION_TIMEOUT = 300;
@@ -33,6 +31,14 @@ const UploadProgress = ({ id, closeModal }) => {
   };
 
   useEffect(() => {
+    if (errorMessage) {
+      setTimeoutId(
+        setTimeout(closeModal, TRANSITION_TIMEOUT),
+      );
+    }
+  }, [errorMessage]);
+
+  useEffect(() => {
     if (completedFiles === totalFiles && totalFiles !== 0) {
       setTimeoutId(
         setTimeout(closeModal, TRANSITION_TIMEOUT),
@@ -41,18 +47,6 @@ const UploadProgress = ({ id, closeModal }) => {
   }, [completedFiles]);
 
   useEffect(() => () => clearTimeout(timeoutId), []);
-
-  const retry = () => {
-    const sourcePaths = Object.entries(state.wasUploaded)
-      .filter(([, wasUploaded]) => !wasUploaded)
-      .map(([key]) => key);
-
-    addItems({
-      sourcePaths,
-      targetPath: state.targetPath,
-    });
-    onClickDismiss();
-  };
 
   const isShownDefaultMsg = completedFiles === 0 && totalFiles === 0;
 
@@ -75,16 +69,6 @@ const UploadProgress = ({ id, closeModal }) => {
             )}
           </Typography>
           <div className={classes.buttons}>
-            {errorMessage && (
-              <Button
-                color="primary"
-                className={classnames(classes.button, classes.tryAgainButton)}
-                onClick={retry}
-                disableRipple
-              >
-                {t('uploadProgressModal.retry')}
-              </Button>
-            )}
             <Button
               color="secondary"
               className={classes.button}
