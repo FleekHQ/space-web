@@ -66,7 +66,12 @@ const DetailsPanelHeader = ({ objects }) => {
       </Typography>
       <div className={classes.buttonsGroup}>
         {objects.length === 1 && (
-          <Button variant="secondary" className={classes.openBtn} onClick={onClickOpen}>
+          <Button
+            variant="secondary"
+            className={classes.openBtn}
+            onClick={onClickOpen}
+            disabled={(objects[0].isUploading && objects[0].error)}
+          >
             {t('detailsPanel.open')}
           </Button>
         )}
@@ -82,6 +87,8 @@ DetailsPanelHeader.propTypes = {
       name: PropTypes.string.isRequired,
       key: PropTypes.string.isRequired,
       src: PropTypes.string,
+      isUploading: PropTypes.bool,
+      error: PropTypes.bool,
     }),
   ).isRequired,
 };
