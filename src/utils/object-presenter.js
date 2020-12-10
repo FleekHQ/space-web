@@ -24,6 +24,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
   const sourceBucket = get(obj, 'sourceBucket');
   const dbId = get(obj, 'dbId');
   const isPublicLink = get(obj, 'isPublicLink', false);
+  const sharedBy = get(obj, 'sharedBy');
 
   return {
     key,
@@ -36,16 +37,19 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     members,
     created,
     bytesSize,
+    error: false,
     lastModified,
     isPublicLink,
     isLocallyAvailable,
     selected: undefined,
     id: `${bucket}/${key}`,
+    sharedBy: sharedBy === '' ? null : sharedBy,
     fullKey: `${bucket}/${isRootDir ? name : key}`,
     ipfsHash: get(obj, 'ipfsHash'),
     isAvailableInSpace: backupCount > 0,
     sourceBucket: sourceBucket || bucket,
     shareAmount: Math.max(1, members.length),
+    isUploading: false,
   };
 };
 

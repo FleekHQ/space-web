@@ -39,7 +39,7 @@ const NotificationItem = (props) => {
           <>
             <Button
               onClick={onAccept}
-              variant="contained"
+              variant="primary"
               color="primary"
               className={classes.button}
             >

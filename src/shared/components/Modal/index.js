@@ -14,6 +14,8 @@ import LicenseRegistration from './LicenseRegistration';
 import FileLinkPassword from './FileLinkPassword';
 import AddBackUpSignIn from './AddBackupSignIn';
 import CreateUsernamePassword from './CreateUsernamePassword';
+import DeleteObject from './DeleteObject';
+import DeleteObjectSuccess from './DeleteObjectSuccess';
 import useStyles from './styles';
 
 import {
@@ -31,6 +33,8 @@ import {
   ADD_BACK_UP_SIGN_IN,
   FILE_LINK_PASSWORD,
   CREATE_USERNAME_PASSWORD,
+  DELETE_OBJECT,
+  DELETE_OBJECT_SUCCESS,
 } from './actions';
 
 const MODALS = {
@@ -47,6 +51,8 @@ const MODALS = {
   [FILE_LINK_PASSWORD]: FileLinkPassword,
   [ADD_BACK_UP_SIGN_IN]: AddBackUpSignIn,
   [CREATE_USERNAME_PASSWORD]: CreateUsernamePassword,
+  [DELETE_OBJECT]: DeleteObject,
+  [DELETE_OBJECT_SUCCESS]: DeleteObjectSuccess,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {

@@ -11,16 +11,21 @@ const renderLoadingRows = () => [...Array(20)].map((_, index) => (
     key={index}
   >
     <TableCell>
-      <LoadingCell isIconCell />
+      <LoadingCell
+        width="calc(100% - 25px)"
+      />
+    </TableCell>
+    <TableCell>
+      <LoadingCell
+        width={24}
+        style={{ marginRight: 10 }}
+      />
+      <LoadingCell
+        width="calc(100% - 54px)"
+      />
     </TableCell>
     <TableCell>
       <LoadingCell />
-    </TableCell>
-    <TableCell>
-      <LoadingCell />
-    </TableCell>
-    <TableCell>
-      <LoadingCell isLastCell />
     </TableCell>
   </TableRow>
 ));

@@ -28,10 +28,6 @@ const StorageMainView = () => {
   return (
     <div className={classes.root}>
       <HeaderNav />
-      <FilesErrors
-        bucket="personal"
-        fetchObjects={() => fetchDir(prefix)}
-      />
       <Breadcrumbs
         items={breadcrumbsItems}
         history={history}
@@ -41,6 +37,10 @@ const StorageMainView = () => {
         prefix={prefix}
         EmptyState={EmptyState}
         fetchDir={fetchDir}
+      />
+      <FilesErrors
+        bucket="personal"
+        fetchObjects={() => fetchDir(prefix)}
       />
     </div>
   );

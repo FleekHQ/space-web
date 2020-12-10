@@ -8,6 +8,7 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
     backgroundColor: theme.palette.palette.white,
     flex: `0 0 ${SIDEBAR_WIDTH}px`,
+    borderRight: `1px solid ${theme.palette.palette.gray4}`,
   },
   trafficLightsSpot: {
     height: 34,
