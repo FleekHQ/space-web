@@ -47,9 +47,7 @@ const CreateNewButton = () => {
       if (filePaths.length) {
         addItems({
           targetPath: prefix,
-          // sourcePaths: filePaths,
-          // TODO: remove, for testing puposes
-          sourcePaths: ['1234', '/home/piraya/my-file'],
+          sourcePaths: filePaths,
         });
       }
     } catch (error) {
