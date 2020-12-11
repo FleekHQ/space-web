@@ -92,10 +92,29 @@ const registerAddItemsSubscribe = (mainWindow) => {
       eventStream.on('error', (error) => {
         // eslint-disable-next-line no-console
         console.error('SUBSCRIBE_ERROR_EVENT', error);
-
+        const files = payload.sourcePaths.map((sourcePath) => {
+          let isDir = false;
+          let size = 0;
+          if (fs.existsSync(sourcePath)) {
+            const stats = fs.lstatSync(sourcePath);
+            isDir = stats.isDirectory();
+            size = stats.size;
+          }
+          return ({
+            sourcePath,
+            isDir,
+            size,
+          });
+        });
         mainWindow.webContents.send(
           SUBSCRIBE_ERROR_EVENT,
-          { id, payload: error },
+          {
+            id,
+            error,
+            targetPath: payload.targetPath,
+            files,
+            bucket,
+          }
         );
       });
 

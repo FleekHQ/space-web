@@ -147,6 +147,9 @@ const ObjectsTable = ({
     if (event) {
       event.preventDefault();
     }
+    if (row.isUploading && row.error) {
+      return;
+    }
     let newRows = [];
 
     if (row.type === 'folder') {

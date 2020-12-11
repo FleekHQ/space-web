@@ -1,10 +1,14 @@
 import { ipcRenderer } from 'electron';
-import { objectPresenter } from '@utils';
+import {
+  objectPresenter,
+  createErrorObject,
+} from '@utils';
 import {
   SET_UPLOAD_SUCCESS_STATE,
   SET_UPLOAD_ERROR_STATE,
   INIT_UPLOAD_STATE,
   ADD_OBJECT,
+  UPDATE_OR_ADD_OBJECT,
 } from '@reducers/storage';
 import {
   openModal, UPLOAD_PROGRESS_TOAST,
@@ -29,10 +33,24 @@ const registerAddItemsSubscribeEvents = () => {
     });
   });
 
-  ipcRenderer.on(SUBSCRIBE_ERROR_EVENT, (event, error) => {
+  ipcRenderer.on(SUBSCRIBE_ERROR_EVENT, (event, payload) => {
     store.dispatch({
-      payload: error,
+      payload,
       type: SET_UPLOAD_ERROR_STATE,
+    });
+
+    payload.files.forEach((file) => {
+      const errorObject = createErrorObject({
+        targetPath: payload.targetPath,
+        sourcePath: file.sourcePath,
+        isDir: file.isDir,
+        size: file.size,
+        bucket: payload.bucket,
+      });
+      store.dispatch({
+        payload: errorObject,
+        type: UPDATE_OR_ADD_OBJECT,
+      });
     });
   });
 };

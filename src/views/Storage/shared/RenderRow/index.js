@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +31,7 @@ const RenderRow = ({
   handleDoubleRowClick,
   rowClasses,
 }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
@@ -136,7 +138,7 @@ const RenderRow = ({
                   cancel: t('hoverMenu.cancel'),
                 }}
                 items={getHoverMenuItems(row)}
-                menuItemOnClick={hoverMenuItemOnClick}
+                menuItemOnClick={hoverMenuItemOnClick(row, dispatch)}
               />
             )}
           >

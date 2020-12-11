@@ -5,6 +5,10 @@ import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 
 const mapContextMenuItems = (clickedItem = {}, t) => {
+  if (clickedItem.isUploading && clickedItem.error) {
+    return [];
+  }
+
   const showShareOption = clickedItem.type === 'file' && clickedItem.isAvailableInSpace;
 
   const shareOption = {

@@ -111,7 +111,7 @@ export default (state = DEFAULT_STATE, action) => {
           ...state.uploadsList,
           [action.payload.id]: {
             ...state.uploadsList[action.payload.id],
-            errorMessage: action.payload.payload.message,
+            errorMessage: action.payload.error.message,
           },
         },
       };
