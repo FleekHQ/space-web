@@ -1,6 +1,6 @@
 {
   "name": "space-app",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "main": "public/electron-app.js",
   "author": "Fleek Labs Inc.",
