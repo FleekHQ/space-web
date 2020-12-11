@@ -9,6 +9,7 @@ const createErrorObject = ({
   const filename = splitSourcePath[splitSourcePath.length - 1];
   const folderPath = targetPath === '' ? '' : `/${targetPath}`;
   const fullKey = `${bucket}${folderPath}/${filename}`;
+  const splitFullKey = fullKey.split('/');
   const timestamp = new Date().getTime();
 
   const getFileExtension = () => {
@@ -20,7 +21,7 @@ const createErrorObject = ({
   };
 
   return ({
-    key: filename,
+    key: targetPath === '' ? filename : splitFullKey.slice(1, splitFullKey.length - 1).join('/'),
     ext: getFileExtension(),
     dbId: undefined,
     type: isDir ? 'folder' : 'file',
@@ -42,6 +43,7 @@ const createErrorObject = ({
     sourceBucket: bucket,
     shareAmount: 1,
     isUploading: true,
+    sourcePath,
   });
 };
 
