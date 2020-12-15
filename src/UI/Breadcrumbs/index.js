@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { faAngleRight } from '@fortawesome/pro-regular-svg-icons/faAngleRight';
@@ -25,14 +25,14 @@ const Breadcrumbs = ({ items, history }) => {
     itemsWithThreeDots = [
       items[0],
       { type: 'three-dots', items: itemsInThreeDotsMenu },
-      ...items.slice(-(MAX_ITEMS - 1))
+      ...items.slice(-(MAX_ITEMS - 1)),
     ];
   } else {
     itemsWithThreeDots = items;
   }
 
   const onItemClick = (item) => {
-    history.push(item.path)
+    history.push(item.path);
   };
 
   const handleClose = () => {
@@ -62,7 +62,7 @@ const Breadcrumbs = ({ items, history }) => {
             </>
           );
         }
-        
+
         return (
           <>
             {(index > 0) && (
@@ -86,7 +86,7 @@ const Breadcrumbs = ({ items, history }) => {
               </Typography>
             </ButtonBase>
           </>
-        )
+        );
       })}
       <Popover
         id="breadcrumb-three-dots"
@@ -104,7 +104,7 @@ const Breadcrumbs = ({ items, history }) => {
       >
         <Dropdown
           items={itemsInThreeDotsMenu}
-          onItemClick={onItemClick}
+          onItemClick={(item) => { onItemClick(item); handleClose(); }}
         />
       </Popover>
     </div>

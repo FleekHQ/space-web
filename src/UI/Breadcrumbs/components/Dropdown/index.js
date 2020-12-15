@@ -37,7 +37,7 @@ const MenuDropdown = ({
                   className={classes.icon}
                 />
               </div>
-              <Typography className={classes.name} >
+              <Typography className={classes.name}>
                 {item.name}
               </Typography>
             </ListItem>

@@ -10,7 +10,7 @@ import useStyles from './styles';
 
 const ThreeDotsButton = ({
   isActive,
-  onClick
+  onClick,
 }) => {
   const classes = useStyles();
 
