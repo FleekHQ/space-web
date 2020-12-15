@@ -1,3 +1,25 @@
+### Sync `space-web` repo with `space-desktop` develop branch
+
+Add a new remote:
+```sh
+git remote add space-desktop https://github.com/FleekHQ/space-desktop.git
+```
+
+Create a temp branch from develop
+```sh
+git checkout -b <some-temp-branch-from-develop>/upgrade
+```
+
+Fetch latest changes from space-desktop
+```sh
+git fetch space-desktop
+```
+
+Merge space-desktop develop branch into current branch
+```sh
+git merge space-desktop/develop
+```
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,12 +88,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-### Sync with space-desktop
-
-```
-git remote add space-desktop https://github.com/FleekHQ/space-desktop.git
-git checkout -b <some-temp-branch-from-develop>/upgrade
-git fetch space-desktop
-git merge space-desktop/develop
-```
