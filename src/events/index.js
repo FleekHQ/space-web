@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
-import registerAuthEvents from './auth';
+/* import registerAuthEvents from './auth';
 import registerEventStream from './stream';
 import registerShortcuts from './shortcuts';
 import registerShareEvents from './share';
@@ -17,13 +17,13 @@ import registerIdentitiesEvents from './identities';
 import registerUsageEvents from './usage';
 import registerNotificationSubscribe from './notifications-subscribe';
 import walletSubscribe from './wallet';
-import registerSubscriptions from './subscriptions';
+import registerSubscriptions from './subscriptions'; */
 
 const RegisterEvents = () => {
-  const history = useHistory();
+  // const history = useHistory();
 
   useEffect(() => {
-    registerShortcuts();
+    /* registerShortcuts();
     registerAuthEvents();
     registerEventStream();
     registerShareEvents();
@@ -39,7 +39,7 @@ const RegisterEvents = () => {
     registerUsageEvents();
     registerNotificationSubscribe();
     walletSubscribe();
-    registerSubscriptions();
+    registerSubscriptions(); */
   }, []);
 
   return null;

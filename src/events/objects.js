@@ -1,5 +1,6 @@
+// Uncomment once payload parameter is ussed
+/* eslint-disable no-unused-vars */
 import get from 'lodash/get';
-import { ipcRenderer } from 'electron';
 import { objectPresenter } from '@utils';
 import {
   STORE_DIR,
@@ -16,186 +17,11 @@ import { DELETE_OBJECT_ACTION_TYPES } from '@reducers/delete-object';
 
 import store from '../store';
 
-const EVENT_PREFIX = 'objects';
-const OPEN_EVENT = `${EVENT_PREFIX}:open`;
-const OPEN_ERROR_EVENT = `${EVENT_PREFIX}:open:error`;
-const FETCH_EVENT = `${EVENT_PREFIX}:fetch`;
-const ERROR_EVENT = `${EVENT_PREFIX}:error`;
-const SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
-const FETCH_DIR_EVENT = `${EVENT_PREFIX}:fetchDir`;
-const SUCCESS_DIR_EVENT = `${EVENT_PREFIX}:successDir`;
-const FETCH_SHARED_OBJECTS_EVENT = `${EVENT_PREFIX}:fetchShared`;
-const FETCH_SHARED_OBJECTS_ERROR_EVENT = `${EVENT_PREFIX}:fetchShared:error`;
-const FETCH_SHARED_OBJECTS_SUCCESS_EVENT = `${EVENT_PREFIX}:fetchShared:success`;
-const OPEN_PUBLIC_FILE_EVENT = `${EVENT_PREFIX}:openPublicFile`;
-const OPEN_PUBLIC_FILE_ERROR_EVENT = `${EVENT_PREFIX}:openPublicFile:error`;
-const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
-const SEARCH_EVENT = `${EVENT_PREFIX}:search`;
-const SEARCH_ERROR_EVENT = `${SEARCH_EVENT}:error`;
-const SEARCH_SUCCESS_EVENT = `${SEARCH_EVENT}:success`;
-const DELETE_OBJECT_EVENT = `${EVENT_PREFIX}:deleteObject`;
-const DELETE_OBJECT_ERROR_EVENT = `${EVENT_PREFIX}:deleteObject:error`;
-const DELETE_OBJECT_SUCCESS_EVENT = `${EVENT_PREFIX}:deleteObject:success`;
-
 const ERROR_TIMEOUT = 5000;
-let openErrorTimeout = null;
+// let openErrorTimeout = null;
 
 const registerObjectsEvents = () => {
-  ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
-    const entries = get(payload, 'entries', []) || [];
-    const objects = entries.map((obj) => objectPresenter(obj));
-
-    store.dispatch({
-      payload: false,
-      type: SET_LOADING_STATE,
-    });
-
-    store.dispatch({
-      payload: objects,
-      type: STORE_OBJECTS,
-    });
-  });
-
-  ipcRenderer.on(SUCCESS_DIR_EVENT, (event, payload) => {
-    const entries = get(payload, 'entries', []) || [];
-    const objects = entries.map((obj) => objectPresenter(obj));
-    store.dispatch({
-      payload: {
-        loading: false,
-        bucket: payload.bucket,
-      },
-      type: SET_LOADING_STATE_BUCKET,
-    });
-
-    store.dispatch({
-      payload: objects,
-      type: STORE_DIR,
-    });
-  });
-
-  ipcRenderer.on(ERROR_EVENT, (event, payload) => {
-    store.dispatch({
-      payload,
-      type: SET_ERROR_BUCKET,
-    });
-  });
-
-  ipcRenderer.on(FETCH_SHARED_OBJECTS_SUCCESS_EVENT, (event, payload) => {
-    const entries = get(payload, 'objects.items', []) || [];
-    const objects = entries.map((obj) => objectPresenter(obj, true));
-
-    store.dispatch({
-      payload: {
-        loading: false,
-        bucket: payload.bucket,
-      },
-      type: SET_LOADING_STATE_BUCKET,
-    });
-
-    store.dispatch({
-      payload: objects,
-      type: STORE_DIR,
-    });
-  });
-
-  ipcRenderer.on(FETCH_SHARED_OBJECTS_ERROR_EVENT, (event, payload) => {
-    store.dispatch({
-      payload,
-      type: SET_ERROR_BUCKET,
-    });
-  });
-
-  ipcRenderer.on(OPEN_PUBLIC_FILE_ERROR_EVENT, (event, error) => {
-    // eslint-disable-next-line no-console
-    console.error('Error when trying to opening a public file: ', error.message);
-
-    store.dispatch({
-      error: error.message,
-      type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_ERROR,
-    });
-  });
-
-  ipcRenderer.on(OPEN_PUBLIC_FILE_SUCCESS_EVENT, (event, payload) => {
-    store.dispatch({
-      location: payload.location,
-      type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_SUCCESS,
-    });
-  });
-
-  ipcRenderer.on(SEARCH_SUCCESS_EVENT, (event, payload) => {
-    const entries = get(payload, 'entries', []) || [];
-    const objects = entries.map((obj) => objectPresenter(obj));
-
-    store.dispatch({
-      type: SEARCH_ACTION_TYPES.SET_RESULTS,
-      payload: objects,
-    });
-  });
-
-  ipcRenderer.on(SEARCH_ERROR_EVENT, () => {
-    store.dispatch({
-      type: SEARCH_ACTION_TYPES.SET_RESULTS,
-      payload: null,
-    });
-  });
 };
-
-ipcRenderer.on(OPEN_ERROR_EVENT, (event, payload) => {
-  store.dispatch({
-    payload: {
-      ...payload,
-      error: true,
-    },
-    type: SET_OPEN_ERROR_BUCKET,
-  });
-
-  const baseErrorPayload = {
-    fullKey: payload.fullKey,
-    bucket: payload.bucket === 'personal' ? 'personal' : 'shared-with-me',
-  };
-
-  store.dispatch({
-    type: UPDATE_OBJECT,
-    payload: {
-      error: true,
-      ...baseErrorPayload,
-    },
-  });
-
-  setTimeout(() => {
-    store.dispatch({
-      type: UPDATE_OBJECT,
-      payload: {
-        error: false,
-        ...baseErrorPayload,
-      },
-    });
-  }, ERROR_TIMEOUT);
-
-  window.clearTimeout(openErrorTimeout);
-  openErrorTimeout = setTimeout(() => {
-    store.dispatch({
-      payload: {
-        ...payload,
-        error: false,
-      },
-      type: SET_OPEN_ERROR_BUCKET,
-    });
-  }, ERROR_TIMEOUT);
-});
-
-ipcRenderer.on(DELETE_OBJECT_SUCCESS_EVENT, () => {
-  store.dispatch({
-    type: DELETE_OBJECT_ACTION_TYPES.ON_SUCCESS,
-  });
-});
-
-ipcRenderer.on(DELETE_OBJECT_ERROR_EVENT, (event, payload) => {
-  store.dispatch({
-    error: payload.error,
-    type: DELETE_OBJECT_ACTION_TYPES.ON_ERROR,
-  });
-});
 
 export const fetchSharedObjects = (seek = '', limit = 100) => {
   store.dispatch({
@@ -205,7 +31,53 @@ export const fetchSharedObjects = (seek = '', limit = 100) => {
     },
     type: SET_LOADING_STATE_BUCKET,
   });
-  ipcRenderer.send(FETCH_SHARED_OBJECTS_EVENT, { seek, limit });
+
+  // TODO: remove mock
+  setTimeout(() => {
+    store.dispatch({
+      payload: {
+        loading: false,
+        bucket: 'shared-with-me',
+      },
+      type: SET_LOADING_STATE_BUCKET,
+    });
+
+    store.dispatch({
+      type: STORE_DIR,
+      payload: [
+        {
+          key: 'hello7 copy.txt',
+          ext: 'txt',
+          dbId: '',
+          type: 'file',
+          name: 'hello7 copy.txt',
+          size: 97,
+          bucket: 'shared-with-me',
+          members: [
+            {
+              address: '0x8c69a8c9b104a05f3d131b92da6bfd5d23c6',
+              publicKey: '7979f71095b4cd209d827ddb143c02004e90225e0606a3d8c9a9e967ffa86466',
+            },
+            {
+              address: '0xa6d52d390bb4ebac5865ea3e8774bcc2eb96',
+              publicKey: '6d4e6ba704f1f4cd65a7f7008235d7048a2b917c27948945f4e36b7ff40e23a8',
+            },
+          ],
+          created: '2020-11-20T20:26:15.000Z',
+          bytesSize: '97.00 Bytes',
+          lastModified: '2020-11-20T20:26:27.000Z',
+          isPublicLink: false,
+          isLocallyAvailable: true,
+          id: 'shared-with-me/hello7 copy.txt',
+          fullKey: 'shared-with-me/hello7 copy.txt',
+          ipfsHash: 'bafkreidfc3urh374v3t4uxmvnm2mpn6bprl3wkhusenzhbpweuscs5sylm',
+          isAvailableInSpace: true,
+          sourceBucket: 'personal',
+          shareAmount: 2,
+        },
+      ],
+    });
+  }, 1000);
 };
 
 export const fetchObjects = (bucket = 'personal') => {
@@ -213,8 +85,6 @@ export const fetchObjects = (bucket = 'personal') => {
     payload: true,
     type: SET_LOADING_STATE,
   });
-
-  ipcRenderer.send(FETCH_EVENT, { bucket });
 };
 
 export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true) => {
@@ -226,7 +96,62 @@ export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true)
     type: SET_LOADING_STATE_BUCKET,
   });
 
-  ipcRenderer.send(FETCH_DIR_EVENT, { path, bucket, fetchSubFolders });
+  // TODO: remove mock
+  setTimeout(() => {
+    store.dispatch({
+      payload: {
+        loading: false,
+        bucket: 'personal',
+      },
+      type: SET_LOADING_STATE_BUCKET,
+    });
+
+    store.dispatch({
+      type: STORE_DIR,
+      payload: [
+        {
+          key: 'hello7 copy.txt',
+          ext: 'txt',
+          type: 'file',
+          name: 'hello7 copy.txt',
+          size: 97,
+          bucket: 'personal',
+          members: [],
+          created: '2020-11-20T20:17:09.000Z',
+          bytesSize: '97.00 Bytes',
+          lastModified: '2020-11-20T20:17:09.000Z',
+          isPublicLink: false,
+          isLocallyAvailable: true,
+          id: 'personal/hello7 copy.txt',
+          fullKey: 'personal/hello7 copy.txt',
+          ipfsHash: 'bafkreif3wsqbb6v5x6uh7nzz6aky63pztgdzcqxs36p4sadhp3w5n5udou',
+          isAvailableInSpace: false,
+          sourceBucket: 'personal',
+          shareAmount: 1,
+        },
+        {
+          key: 'hello.txt',
+          ext: 'txt',
+          type: 'file',
+          name: 'hello.txt',
+          size: 97,
+          bucket: 'personal',
+          members: [],
+          created: '2020-11-20T20:17:08.000Z',
+          bytesSize: '97.00 Bytes',
+          lastModified: '2020-11-20T20:17:08.000Z',
+          isPublicLink: false,
+          isLocallyAvailable: true,
+          id: 'personal/hello.txt',
+          fullKey: 'personal/hello.txt',
+          ipfsHash: 'bafkreidd4tulvhvgvgp4pmj7ne4mtrblionurqwmau235toxnconozmbb4',
+          isAvailableInSpace: false,
+          sourceBucket: 'personal',
+          shareAmount: 1,
+        },
+      ],
+    });
+  }, 1000);
 };
 
 export const openObject = ({
@@ -239,26 +164,14 @@ export const openObject = ({
   bucket = 'personal',
 }) => {
   if (isPublicLink) {
-    ipcRenderer.send(OPEN_PUBLIC_FILE_EVENT, {
-      filename: name,
-      fileCid: ipfsHash,
-    });
-    return;
+    // return;
   }
-
-  ipcRenderer.send(OPEN_EVENT, {
-    path,
-    bucket,
-    fullKey,
-    ...(dbId && { dbId }),
-  });
 };
 
 export const openPublicFile = (payload) => {
   store.dispatch({
     type: OPEN_PUBLIC_FILE_ACTION_TYPES.ON_OPEN,
   });
-  ipcRenderer.send(OPEN_PUBLIC_FILE_EVENT, payload);
 };
 
 export const searchFiles = (searchTerm) => {
@@ -272,8 +185,6 @@ export const searchFiles = (searchTerm) => {
       type: SEARCH_ACTION_TYPES.SET_RESULTS,
       payload: null,
     });
-  } else {
-    ipcRenderer.send(SEARCH_EVENT, searchTerm);
   }
 };
 
@@ -281,7 +192,6 @@ export const deleteObject = (payload) => {
   store.dispatch({
     type: DELETE_OBJECT_ACTION_TYPES.ON_SUBMIT,
   });
-  ipcRenderer.send(DELETE_OBJECT_EVENT, payload);
 };
 
 export default registerObjectsEvents;

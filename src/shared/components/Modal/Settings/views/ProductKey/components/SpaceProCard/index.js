@@ -1,5 +1,4 @@
 import React from 'react';
-import { shell } from 'electron';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -90,7 +89,11 @@ const SpaceProCard = ({
                   classes={{
                     root: classes.btnRoot,
                   }}
-                  onClick={() => shell.openExternal(`https://square-truth-2906.on.fleek.co/#/checkout?username=${username}`)}
+                  onClick={() => {
+                    window
+                      .open(`https://square-truth-2906.on.fleek.co/#/checkout?username=${username}`, '_blank')
+                      .focus();
+                  }}
                 >
                   {t('modals.settings.productKey.form.submit')}
                 </Button>

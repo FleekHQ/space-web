@@ -1,4 +1,5 @@
-import { ipcRenderer } from 'electron';
+// Uncomment once payload parameter is ussed
+/* eslint-disable no-unused-vars */
 import { objectPresenter } from '@utils';
 import {
   SET_UPLOAD_SUCCESS_STATE,
@@ -12,29 +13,7 @@ import {
 
 import store from '../store';
 
-const EVENT_PREFIX = 'addItemsSubscribe';
-const SUBSCRIBE_START_EVENT = `${EVENT_PREFIX}:start`;
-const SUBSCRIBE_ERROR_EVENT = `${EVENT_PREFIX}:error`;
-const SUBSCRIBE_SUCCESS_EVENT = `${EVENT_PREFIX}:success`;
-
 const registerAddItemsSubscribeEvents = () => {
-  ipcRenderer.on(SUBSCRIBE_SUCCESS_EVENT, (event, payload) => {
-    store.dispatch({
-      payload,
-      type: SET_UPLOAD_SUCCESS_STATE,
-    });
-    store.dispatch({
-      type: ADD_OBJECT,
-      payload: objectPresenter(payload.object),
-    });
-  });
-
-  ipcRenderer.on(SUBSCRIBE_ERROR_EVENT, (event, error) => {
-    store.dispatch({
-      payload: error,
-      type: SET_UPLOAD_ERROR_STATE,
-    });
-  });
 };
 
 /**
@@ -52,7 +31,6 @@ export const addItems = (payload) => {
       targetPath: payload.targetPath,
     },
   });
-  ipcRenderer.send(SUBSCRIBE_START_EVENT, { id: modalId, payload });
 };
 
 export default registerAddItemsSubscribeEvents;

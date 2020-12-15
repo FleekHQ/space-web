@@ -1,5 +1,4 @@
 import React from 'react';
-import { shell } from 'electron';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -105,7 +104,11 @@ const LicenseRegistration = ({
                   variant="outlined"
                   disabled={state.loading}
                   // TODO: change to real space billing url
-                  onClick={() => shell.openExternal('https://space.storage')}
+                  onClick={() => {
+                    window
+                      .open('/https://space.storage', '_blank')
+                      .focus();
+                  }}
                 >
                   {t('modals.license.buy')}
                 </Button>

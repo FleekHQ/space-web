@@ -1,5 +1,4 @@
 import pick from 'lodash/pick';
-import electronStore from '@electron-store';
 
 import { SIGNIN_ACTION_TYPES } from './auth/signin';
 import { SIGNUP_ACTION_TYPES } from './auth/signup';
@@ -21,11 +20,17 @@ export const USER_ACTION_TYPES = {
   ON_CREATE_PASSWORD_AND_USERNAME_SUCCESS: 'ON_CREATE_PASSWORD_AND_USERNAME_SUCCESS',
 };
 
-let user;
+let user = {
+  uuid: '1f43cec7-472b-47d8-b4ec-08d1d8f5e687',
+  address: '0x9fa66f2cc560cbeaf85cb6ce6756ba77f655',
+  publicKey: '4a0d2893c9e57839195acb5dfb818c9782f89136ff6d5a4dcea9626c3d74d502',
+  username: 'teester20m',
+  avatarUrl: '',
+};
 const USER_KEY = '_u';
 
 try {
-  user = JSON.parse(electronStore.get(USER_KEY));
+  user = JSON.parse(window.localStorage.getItem(USER_KEY));
 } catch (error) {
   user = null;
 }
@@ -37,7 +42,7 @@ const writeUser = (state, userInfo) => {
     ...userInfo,
   };
 
-  electronStore.set(
+  window.localStorage.setItem(
     USER_KEY,
     JSON.stringify(
       pick(newUserState, ['uuid', 'address', 'publicKey', 'displayName', 'avatarUrl', 'username']),
@@ -91,7 +96,7 @@ export default (state = user, action) => {
     }
 
     case USER_ACTION_TYPES.ON_USER_LOGOUT: {
-      electronStore.delete(USER_KEY);
+      window.localStorage.removeItem(USER_KEY);
       return null;
     }
 

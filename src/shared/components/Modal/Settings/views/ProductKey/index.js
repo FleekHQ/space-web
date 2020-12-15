@@ -1,5 +1,4 @@
 import React from 'react';
-import { shell } from 'electron';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -52,7 +51,14 @@ const ProductKey = () => {
               </Typography>
             </Box>
             {/* TODO: change to real space billing url */}
-            <Button variant="contained" onClick={() => shell.openExternal(`https://square-truth-2906.on.fleek.co/#/checkout?username=${user.username}`)}>
+            <Button
+              variant="contained"
+              onClick={() => {
+                window
+                  .open(`https://square-truth-2906.on.fleek.co/#/checkout?username=${user.username}`, '_blank')
+                  .focus();
+              }}
+            >
               {t('modals.settings.productKey.messageBox.buy')}
             </Button>
           </MessageBox>

@@ -1,6 +1,5 @@
 import React from 'react';
 import get from 'lodash/get';
-import { remote } from 'electron';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
@@ -38,18 +37,14 @@ const CreateNewButton = () => {
     setAnchorEl(null);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const openDialog = async ({ properties }) => {
     try {
-      const { filePaths = [] } = await remote.dialog.showOpenDialog({
-        properties: ['multiSelections', ...properties],
+      // TODO: handle native HTML5 file/folder upload
+      addItems({
+        targetPath: prefix,
+        sourcePaths: [],
       });
-
-      if (filePaths.length) {
-        addItems({
-          targetPath: prefix,
-          sourcePaths: filePaths,
-        });
-      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error when selecting a folder or a file: ', error.message);

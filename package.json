@@ -1,23 +1,18 @@
 {
-  "name": "space-app",
-  "version": "1.0.5",
+  "name": "space-web",
+  "version": "0.1.0",
   "private": true,
-  "main": "public/electron-app.js",
   "author": "Fleek Labs Inc.",
   "homepage": "./",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FleekHQ/space-desktop.git"
+    "url": "https://github.com/FleekHQ/space-web.git"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "download-daemon": "rimraf resources && node scripts/download-daemon.js",
     "lint": "eslint ./ --ext .js --ext .jsx",
-    "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron-app.js",
-    "preelectron-pack": "npm run clean && npm run build",
     "clean": "rimraf build dist",
     "storybook": "start-storybook -p 9001 -c .storybook -s public",
     "build-storybook": "build-storybook -s public"
@@ -41,9 +36,6 @@
     "chokidar": "^3.4.0",
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.3.1",
-    "electron-is-dev": "^1.2.0",
-    "electron-store": "^5.2.0",
-    "electron-updater": "^4.3.1",
     "eth-crypto": "^1.8.0",
     "glob": "^7.1.6",
     "i18next": "^19.4.4",
@@ -56,7 +48,6 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
-    "react-electron-contextmenu": "^1.0.0",
     "react-i18next": "^11.7.3",
     "react-masonry-css": "^1.0.14",
     "react-redux": "^7.2.0",
@@ -93,9 +84,6 @@
     "css-loader": "3.4.2",
     "dotenv": "^8.2.0",
     "dotenv-expand": "5.1.0",
-    "electron": "^8.2.5",
-    "electron-builder": "^22.7.0",
-    "electron-notarize": "^1.0.0",
     "eslint": "^7.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-react-app": "^5.2.1",
@@ -154,72 +142,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "build": {
-    "productName": "Space",
-    "appId": "com.electron.space-app",
-    "afterSign": "./scripts/notarize.js",
-    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
-    "protocols": {
-      "name": "space-protocol",
-      "schemes": [
-        "space"
-      ]
-    },
-    "publish": {
-      "provider": "github",
-      "repo": "space-desktop",
-      "owner": "FleekHQ"
-    },
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    },
-    "extraResources": [
-      {
-        "from": "./resources",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ],
-    "mac": {
-      "icon": "build/icon.png",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "electronLanguages": [
-        "en"
-      ],
-      "entitlements": "./build/entitlements.mac.plist",
-      "entitlementsInherit": "./build/entitlements.mac.plist"
-    },
-    "win": {
-      "icon": "build/icon.png"
-    },
-    "linux": {
-      "icon": "build/icon.png"
-    },
-    "dmg": {
-      "background": "build/background.png",
-      "icon": "build/icon.png",
-      "iconSize": 70,
-      "contents": [
-        {
-          "x": 129,
-          "y": 217,
-          "type": "file"
-        },
-        {
-          "x": 481,
-          "y": 217,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    }
   },
   "jest": {
     "roots": [

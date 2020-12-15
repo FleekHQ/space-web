@@ -129,7 +129,7 @@ module.exports = function(webpackEnv) {
   };
 
   return {
-    target: 'electron-renderer',
+    target: 'web',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -300,7 +300,6 @@ module.exports = function(webpackEnv) {
         '@events': path.resolve(process.cwd(), 'src', 'events'),
         '@reducers': path.resolve(process.cwd(), 'src', 'reducers'),
         '@utils': path.resolve(process.cwd(), 'src', 'utils'),
-        '@electron-store': path.resolve(process.cwd(), 'src', 'electron-store'),
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
@@ -539,14 +538,7 @@ module.exports = function(webpackEnv) {
                   minifyURLs: true,
                 },
               }
-            : {
-                meta: {
-                  'Content-Security-Policy': {
-                    'http-equiv': 'Content-Security-Policy',
-                    'content': "script-src 'self'"
-                  }
-                },
-              },
+            : {},
         )
       ),
       // Inlines the webpack runtime script. This script is too small to warrant

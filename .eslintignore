@@ -5,10 +5,5 @@ config/*
 dist/*
 node_modules/*
 public/*
-!public/electron
-!public/electron-app.js
-resources/*
 scripts/*
-!scripts/notarize.js
-!scripts/download-daemon.js
 *.stories.js
