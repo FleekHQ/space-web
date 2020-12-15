@@ -194,25 +194,29 @@ const SignUp = () => {
         justifyContent="center"
       >
         <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
-          <Box display="inherit" flexDirection="row" alignItems="flex-end" mb="31px">
+          <Box
+            mb="31px"
+            display="inherit"
+            flexDirection="row"
+            alignItems="flex-end"
+            justifyContent="space-between"
+          >
             <Typography>
               <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
                 {t('modules.signup.title')}
               </Box>
             </Typography>
-            <Box ml="111px">
-              <Link
-                component={ReactRouterLink}
-                to={{
-                  pathname: '/auth/signin',
-                  state: formData,
-                }}
-              >
-                <Box component="span" color="#006EFF" fontSize="14px">
-                  {t('modules.signin.title')}
-                </Box>
-              </Link>
-            </Box>
+            <Link
+              component={ReactRouterLink}
+              to={{
+                pathname: '/auth/signin',
+                state: formData,
+              }}
+            >
+              <Box component="span" color="#006EFF" fontSize="14px">
+                {t('modules.signin.title')}
+              </Box>
+            </Link>
           </Box>
           <Box mb="20px" width="100%">
             <PasswordLessForm
