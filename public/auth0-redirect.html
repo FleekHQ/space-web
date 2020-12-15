@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Fleek"
+    />
+
+    <script>
+      var locationHash = window.location.hash;
+      const urlParams = new URLSearchParams(window.location.search);
+      const from = urlParams.get('from') || 'signin';
+
+      var origin = window.location.origin.includes('localhost:8080')
+        ? 'http://localhost:3000': window.location.origin;
+
+      var redirectTo = origin + `/#/auth/${from}` + locationHash;
+      console.log('redirectTo', redirectTo);
+      window.location.replace(redirectTo);
+    </script>
+
+    <title>Fleek</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>

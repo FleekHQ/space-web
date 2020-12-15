@@ -35,7 +35,7 @@ export default function useAuth0Passwordless() {
         authParams: {
           scope: 'openid profile email',
           response_type: 'token id_token',
-          redirect_uri: `${process.env.REACT_APP_AUTH0_PASSWORDLESS_REDIRECT_URI}/${from}`,
+          redirect_uri: `${process.env.REACT_APP_AUTH0_PASSWORDLESS_REDIRECT_URI}?from=${from}`,
           nonce: new Date().getMilliseconds().toString(),
           prompt: 'login',
           state: encodeURIComponent(
