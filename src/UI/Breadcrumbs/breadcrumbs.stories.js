@@ -25,6 +25,24 @@ storiesOf(categoryName, module).add('Breadcrumbs', () => {
         id: 'folder-2',
         name: 'Folder 2',
         type: 'folder',
+        path: '/root/folder-1',
+      },
+      {
+        id: 'folder-3',
+        name: 'Folder 3',
+        type: 'folder',
+        path: '/root/folder-1/folder-2',
+      },
+      {
+        id: 'folder-4',
+        name: 'Folder 4',
+        type: 'folder',
+        path: '/root/folder-1/folder-2',
+      },
+      {
+        id: 'folder-5',
+        name: 'Folder 5',
+        type: 'folder',
         path: '/root/folder-1/folder-2',
       }
     ]),

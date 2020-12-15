@@ -14,26 +14,32 @@ storiesOf(categoryName, module).add('Dropdown', () => {
       {
         id: 'id-1',
         name: 'File Upload',
+        path: '/path',
       },
       {
         id: 'id-2',
         name: 'Folder Upload',
+        path: '/path',
       },
       {
         id: 'id-3',
         name: 'Folder',
+        path: '/path',
       },
       {
         id: 'id-4',
         name: 'File Upload',
+        path: '/path',
       },
       {
         id: 'id-5',
         name: 'Folder Upload',
+        path: '/path',
       },
       {
         id: 'id-6',
         name: 'Folder',
+        path: '/path',
       },
     ]),
   };
