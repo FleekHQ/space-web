@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import Box from '@material-ui/core/Box';
 
+import config from '@config';
 import { useTorusSdk, useWsChallenge } from '@utils';
 
 import Option from './Option';
@@ -19,8 +20,12 @@ const ThirdPartyAuth = ({
   onStartLoading,
 }) => {
   const { t } = useTranslation();
-  const { isInitializing, torusTriggerLogin } = useTorusSdk();
   const { checkIdentityByEthKey } = useWsChallenge();
+  const { isInitializing, torusTriggerLogin } = useTorusSdk({
+    ...config.torus.sdkConfig,
+    redirectToOpener: true,
+  });
+
   const [state, setState] = React.useState({
     loading: false,
     torusRes: null,

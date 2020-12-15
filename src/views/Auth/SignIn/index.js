@@ -10,10 +10,12 @@ import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
+import config from '@config';
 import { signin } from '@events';
 import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import ThirdPartyAuth from '@shared/components/ThirdPartyAuth';
-import UsernamePasswordForm from '@shared/components/UsernamePasswordForm';
+import PasswordLessForm from '@shared/components/PasswordLessForm';
+import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
 
 import Splash from '../../Splash';
 
@@ -28,12 +30,29 @@ const SignIn = () => {
   const [formData, setFormData] = React.useState(null);
   const siginState = useSelector((s) => s.auth.signin);
   const [showSplash, setShowSplash] = React.useState(false);
+  const { checkIdentityByEthKey } = useWsChallenge();
+  const { isInitializing, torusTriggerLogin } = useTorusSdk(config.torus.sdkConfig);
+  const {
+    getLoginPayload,
+    sendPasswordlessEmail,
+    loading: passwordlessLoading,
+  } = useAuth0Passwordless();
 
-  const handleUsernamePasswordFormSubmit = ({ username, password }) => {
-    signin({
-      username,
-      password,
+  const handlePasswordLessFormSubmit = async ({ email }) => {
+    const isSent = await sendPasswordlessEmail({
+      email,
+      from: 'signin',
     });
+
+    if (isSent) {
+      history.push({
+        pathname: '/auth/email-link-auth',
+        state: {
+          email,
+          from: 'signin',
+        },
+      });
+    }
   };
 
   /**
@@ -73,7 +92,7 @@ const SignIn = () => {
   }, [siginState.success]);
 
   React.useEffect(() => {
-    if (location.state && location.state.username && location.state.password) {
+    if (location.state && location.state.email) {
       setFormData(location.state);
     }
 
@@ -89,6 +108,56 @@ const SignIn = () => {
       setShowSplash(false);
     }
   }, [siginState.error]);
+
+  React.useEffect(() => {
+    if (location.hash) {
+      setShowSplash(true);
+
+      if (!isInitializing) {
+        const getTorusRes = async () => {
+          const { hash, stateFields } = getLoginPayload();
+
+          try {
+            const torusRes = await torusTriggerLogin({
+              hash,
+              queryParameters: {},
+              provider: 'passwordless',
+              extraJwtParams: {
+                login_hint: stateFields.email || '',
+              },
+            });
+
+            const { identityExists } = await checkIdentityByEthKey(torusRes);
+
+            if (identityExists) {
+              signin({
+                torusRes,
+              });
+              return;
+            }
+            // TODO: user is not signup
+            dispatch({
+              error: 'modules.signin.errors.noAccount',
+              type: SIGNIN_ACTION_TYPES.ON_SUBMIT_ERROR,
+            });
+          } catch (error) {
+            setShowSplash(false);
+
+            let errorKey = 'torus';
+            if (error.message.includes('Duplicate token found')) {
+              errorKey = 'retry';
+            }
+
+            dispatch({
+              error: `modules.signin.errors.${errorKey}`,
+              type: SIGNIN_ACTION_TYPES.ON_SUBMIT_ERROR,
+            });
+          }
+        };
+        getTorusRes();
+      }
+    }
+  }, [isInitializing]);
 
   return (
     <>
@@ -139,18 +208,14 @@ const SignIn = () => {
             </Link>
           </Box>
           <Box mb="20px" width="100%">
-            <UsernamePasswordForm
+            <PasswordLessForm
               isLoading={siginState.loading}
               submitBtnText={t('modules.signin.title')}
-              defaultUsername={
+              defaultEmail={
                 location.state
-                && location.state.username ? location.state.username : undefined
+                && location.state.email ? location.state.email : undefined
               }
-              defaultPassword={
-                location.state
-                && location.state.password ? location.state.password : undefined
-              }
-              onSubmit={handleUsernamePasswordFormSubmit}
+              onSubmit={handlePasswordLessFormSubmit}
               onChangeForm={(newFormData) => setFormData(newFormData)}
             />
           </Box>
@@ -179,7 +244,7 @@ const SignIn = () => {
         </Box>
         <Box flex={1} maxWidth={247} mt="59px">
           <ThirdPartyAuth
-            isLoading={siginState.loading}
+            isLoading={siginState.loading || passwordlessLoading}
             type={t('modules.signin.title')}
             onError={handleThirdPartyAuthError}
             onSuccess={handleThirdPartyAuthSuccess}
