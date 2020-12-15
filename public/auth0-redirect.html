@@ -8,16 +8,16 @@
     />
 
     <script>
-      var locationHash = window.location.hash;
+      'use strict';
+
+      const locationHash = window.location.hash;
       const urlParams = new URLSearchParams(window.location.search);
       const from = urlParams.get('from') || 'signin';
 
-      var origin = window.location.origin.includes('localhost:8080')
+      const origin = window.location.origin.includes('localhost:8080')
         ? 'http://localhost:3000': window.location.origin;
 
-      var redirectTo = origin + `/#/auth/${from}` + locationHash;
-      console.log('redirectTo', redirectTo);
-      window.location.replace(redirectTo);
+      window.location.replace(`${origin}/#/auth/${from}` + locationHash);
     </script>
 
     <title>Fleek</title>
