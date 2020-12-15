@@ -20,6 +20,9 @@ const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
 const SEARCH_EVENT = `${EVENT_PREFIX}:search`;
 const SEARCH_ERROR_EVENT = `${SEARCH_EVENT}:error`;
 const SEARCH_SUCCESS_EVENT = `${SEARCH_EVENT}:success`;
+const DELETE_OBJECT_EVENT = `${EVENT_PREFIX}:deleteObject`;
+const DELETE_OBJECT_ERROR_EVENT = `${EVENT_PREFIX}:deleteObject:error`;
+const DELETE_OBJECT_SUCCESS_EVENT = `${EVENT_PREFIX}:deleteObject:success`;
 
 const DEFAULT_BUCKET = 'personal';
 
@@ -88,6 +91,7 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
         dbId: item.getDbid(),
         sourceBucket: item.getBucket(),
         isPublicLink: item.getIspubliclink(),
+        sharedBy: item.getSharedby(),
         ...entryToObject(entry, 'shared-with-me'),
       };
     });
@@ -99,6 +103,7 @@ const listSharedFiles = async (mainWindow, payload = {}) => {
         dbId: item.getDbid(),
         sourceBucket: item.getBucket(),
         isPublicLink: item.getIspubliclink(),
+        sharedBy: item.getSharedby(),
         ...entryToObject(entry, 'shared-with-me'),
       };
     });
@@ -232,6 +237,20 @@ const registerObjectsEvents = (mainWindow) => {
       console.error('SEARCH_ERROR_EVENT', err);
       mainWindow.webContents.send(SEARCH_ERROR_EVENT, {
         message: err.message,
+      });
+    }
+  });
+
+  ipcMain.on(DELETE_OBJECT_EVENT, async (event, payload) => {
+    try {
+      await spaceClient.removeDirOrFile({
+        bucket: payload.bucket,
+        path: payload.path,
+      });
+      mainWindow.webContents.send(DELETE_OBJECT_SUCCESS_EVENT);
+    } catch (err) {
+      mainWindow.webContents.send(DELETE_OBJECT_ERROR_EVENT, {
+        error: err.message,
       });
     }
   });

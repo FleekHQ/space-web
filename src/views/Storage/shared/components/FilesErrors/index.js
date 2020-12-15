@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import ErrorCard from '@ui/ErrorCard';
 import { useSelector } from 'react-redux';
 import ErrorCardButton from '@ui/ErrorCardButton';
 import { useTranslation } from 'react-i18next';
 
-import store from '../../../../../store';
-import { SET_OPEN_ERROR_BUCKET } from '../../../../../reducers/storage/bucket';
 import useStyles from './styles';
 
+/* eslint-disable react/jsx-props-no-spreading */
 const FilesErrors = ({
   bucket,
   fetchObjects,
@@ -35,16 +36,6 @@ const FilesErrors = ({
     errors.push({
       id: 'open-error',
       message: t('modules.storage.fileTable.openError.message'),
-      buttonText: t('modules.storage.fileTable.openError.buttonText'),
-      buttonOnClick: () => {
-        store.dispatch({
-          payload: {
-            bucket,
-            error: false,
-          },
-          type: SET_OPEN_ERROR_BUCKET,
-        });
-      },
     });
   }
 
@@ -52,15 +43,22 @@ const FilesErrors = ({
     <>
       {errors.length > 0 && (
         <div className={classes.container}>
-          {errors.map((error) => (
-            <div key={error.id} className={classes.errorBoxContainer}>
-              <ErrorCardButton
-                message={error.message}
-                buttonText={error.buttonText}
-                buttonOnClick={error.buttonOnClick}
-              />
-            </div>
-          ))}
+          {errors.map(({ id, ...errorProps }) => {
+            const isOpenError = id === 'open-error';
+            const ErrorComponent = isOpenError ? ErrorCard : ErrorCardButton;
+
+            return (
+              <div
+                key={id}
+                className={classnames(
+                  classes.errorBoxContainer,
+                  isOpenError && classes.openError,
+                )}
+              >
+                <ErrorComponent {...errorProps} />
+              </div>
+            );
+          })}
         </div>
       )}
     </>

@@ -8,9 +8,11 @@ import {
   SET_ERROR_BUCKET,
   SET_LOADING_STATE,
   SET_OPEN_ERROR_BUCKET,
+  UPDATE_OBJECT,
 } from '@reducers/storage';
 import { SEARCH_ACTION_TYPES } from '@reducers/search';
 import { OPEN_PUBLIC_FILE_ACTION_TYPES } from '@reducers/open-public-file';
+import { DELETE_OBJECT_ACTION_TYPES } from '@reducers/delete-object';
 
 import store from '../store';
 
@@ -31,6 +33,12 @@ const OPEN_PUBLIC_FILE_SUCCESS_EVENT = `${EVENT_PREFIX}:openPublicFile:success`;
 const SEARCH_EVENT = `${EVENT_PREFIX}:search`;
 const SEARCH_ERROR_EVENT = `${SEARCH_EVENT}:error`;
 const SEARCH_SUCCESS_EVENT = `${SEARCH_EVENT}:success`;
+const DELETE_OBJECT_EVENT = `${EVENT_PREFIX}:deleteObject`;
+const DELETE_OBJECT_ERROR_EVENT = `${EVENT_PREFIX}:deleteObject:error`;
+const DELETE_OBJECT_SUCCESS_EVENT = `${EVENT_PREFIX}:deleteObject:success`;
+
+const ERROR_TIMEOUT = 5000;
+let openErrorTimeout = null;
 
 const registerObjectsEvents = () => {
   ipcRenderer.on(SUCCESS_EVENT, (event, payload) => {
@@ -140,6 +148,53 @@ ipcRenderer.on(OPEN_ERROR_EVENT, (event, payload) => {
     },
     type: SET_OPEN_ERROR_BUCKET,
   });
+
+  const baseErrorPayload = {
+    fullKey: payload.fullKey,
+    bucket: payload.bucket === 'personal' ? 'personal' : 'shared-with-me',
+  };
+
+  store.dispatch({
+    type: UPDATE_OBJECT,
+    payload: {
+      error: true,
+      ...baseErrorPayload,
+    },
+  });
+
+  setTimeout(() => {
+    store.dispatch({
+      type: UPDATE_OBJECT,
+      payload: {
+        error: false,
+        ...baseErrorPayload,
+      },
+    });
+  }, ERROR_TIMEOUT);
+
+  window.clearTimeout(openErrorTimeout);
+  openErrorTimeout = setTimeout(() => {
+    store.dispatch({
+      payload: {
+        ...payload,
+        error: false,
+      },
+      type: SET_OPEN_ERROR_BUCKET,
+    });
+  }, ERROR_TIMEOUT);
+});
+
+ipcRenderer.on(DELETE_OBJECT_SUCCESS_EVENT, () => {
+  store.dispatch({
+    type: DELETE_OBJECT_ACTION_TYPES.ON_SUCCESS,
+  });
+});
+
+ipcRenderer.on(DELETE_OBJECT_ERROR_EVENT, (event, payload) => {
+  store.dispatch({
+    error: payload.error,
+    type: DELETE_OBJECT_ACTION_TYPES.ON_ERROR,
+  });
 });
 
 export const fetchSharedObjects = (seek = '', limit = 100) => {
@@ -178,6 +233,7 @@ export const openObject = ({
   path,
   dbId,
   name,
+  fullKey,
   ipfsHash,
   isPublicLink = false,
   bucket = 'personal',
@@ -193,6 +249,7 @@ export const openObject = ({
   ipcRenderer.send(OPEN_EVENT, {
     path,
     bucket,
+    fullKey,
     ...(dbId && { dbId }),
   });
 };
@@ -218,6 +275,13 @@ export const searchFiles = (searchTerm) => {
   } else {
     ipcRenderer.send(SEARCH_EVENT, searchTerm);
   }
+};
+
+export const deleteObject = (payload) => {
+  store.dispatch({
+    type: DELETE_OBJECT_ACTION_TYPES.ON_SUBMIT,
+  });
+  ipcRenderer.send(DELETE_OBJECT_EVENT, payload);
 };
 
 export default registerObjectsEvents;

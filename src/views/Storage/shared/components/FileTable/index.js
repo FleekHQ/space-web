@@ -10,16 +10,18 @@ import { UPDATE_OBJECTS } from '@reducers/storage';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import { SHARING_MODAL } from '@shared/components/Modal/actions';
 
-import renderLoadingRows from '../../render-loading-rows';
 import RenderRow from '../../RenderRow';
 import getTableHeads from '../../getTableHeads';
+import renderLoadingRows from '../../render-loading-rows';
 
 const FileTable = ({
+  type,
   bucket,
   prefix,
-  baseRedirectUrl,
-  EmptyState,
   fetchDir,
+  renderRow,
+  EmptyState,
+  baseRedirectUrl,
   disableRowOffset,
 }) => {
   const dispatch = useDispatch();
@@ -66,7 +68,10 @@ const FileTable = ({
     });
   };
 
-  const getRedirectUrl = (row) => path.posix.join(baseRedirectUrl, prefix, row.key);
+  const getRedirectUrl = (row) => {
+    const folderPath = row.key.replace(prefix, '');
+    return path.posix.join(baseRedirectUrl, prefix, folderPath);
+  };
 
   return (
     <ObjectsTable
@@ -74,8 +79,8 @@ const FileTable = ({
       bucket={bucket}
       loading={rows.length <= 0 && loading}
       renderLoadingRows={renderLoadingRows}
-      renderRow={RenderRow}
-      heads={getTableHeads(t)}
+      renderRow={renderRow}
+      heads={getTableHeads(t, type)}
       getRedirectUrl={getRedirectUrl}
       onDropzoneDrop={onDropzoneDrop}
       onOutsideClick={handleTableOutsideClick}
@@ -87,19 +92,23 @@ const FileTable = ({
 };
 
 FileTable.defaultProps = {
-  baseRedirectUrl: '/storage/files',
-  EmptyState: () => null,
   fetchDir: () => null,
+  renderRow: RenderRow,
+  EmptyState: () => null,
   disableRowOffset: false,
+  baseRedirectUrl: '/storage/files',
+  type: 'personal',
 };
 
 FileTable.propTypes = {
+  fetchDir: PropTypes.func,
+  renderRow: PropTypes.elementType,
+  EmptyState: PropTypes.elementType,
+  disableRowOffset: PropTypes.bool,
+  baseRedirectUrl: PropTypes.string,
   bucket: PropTypes.string.isRequired,
   prefix: PropTypes.string.isRequired,
-  baseRedirectUrl: PropTypes.string,
-  EmptyState: PropTypes.elementType,
-  fetchDir: PropTypes.func,
-  disableRowOffset: PropTypes.bool,
+  type: PropTypes.oneOf(['personal', 'shared']),
 };
 
 export default FileTable;

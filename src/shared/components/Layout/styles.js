@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     height: '100%',
-    backgroundColor: theme.palette.palette.gray5,
+    backgroundColor: theme.palette.palette.white,
   },
   mainContent: {
     flexGrow: 1,

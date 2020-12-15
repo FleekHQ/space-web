@@ -6,11 +6,11 @@ import { object, boolean } from '@storybook/addon-knobs';
 
 import Table from './index';
 import {
-  FileCell,
   TableRow,
   TableCell,
   IconsCell,
   LoadingCell,
+  FileNameCell,
 } from './components';
 
 const categoryName = 'ElementalComponents/Table';
@@ -32,7 +32,7 @@ const renderRow = ({ row }) => (
     key={row.id}
     hover
   >
-    <FileCell
+    <FileNameCell
       ext={row.ext}
       src={row.src}
       expanded={row.expanded}
@@ -41,7 +41,7 @@ const renderRow = ({ row }) => (
       <Typography variant="body1">
         {row.name}
       </Typography>
-    </FileCell>
+    </FileNameCell>
     <TableCell>
       <Typography variant="body1" color="secondary">
         Only you
@@ -73,16 +73,26 @@ const renderLoadingRows = () => [...Array(20)].map((_, index) => (
     key={index}
   >
     <TableCell>
-      <LoadingCell isIconCell />
+      <LoadingCell
+        width="calc(100% - 25px)"
+      />
     </TableCell>
     <TableCell>
-      <LoadingCell />
+      <LoadingCell
+        width={24}
+        style={{ marginRight: 10 }}
+      />
+      <LoadingCell
+        width="calc(100% - 54px)"
+      />
     </TableCell>
     <TableCell>
-      <LoadingCell />
+      <LoadingCell
+        width="calc(100% - 25px)"
+      />
     </TableCell>
     <TableCell>
-      <LoadingCell isLastCell/>
+      <LoadingCell/>
     </TableCell>
   </TableRow>
 ));
