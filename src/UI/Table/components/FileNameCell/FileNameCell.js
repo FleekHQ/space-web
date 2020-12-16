@@ -22,6 +22,7 @@ const FileNameCell = (props) => {
     selected,
     tabulations,
     arrowOnClick,
+    onNameClick,
     isUploading,
     ...tableCellProps
   } = props;
@@ -39,10 +40,11 @@ const FileNameCell = (props) => {
 
   const nameComponent = (
     <Typography
+      onClick={onNameClick}
       variant="body1"
       noWrap
       ref={textNode}
-      className={classnames({
+      className={classnames(classes.name, {
         [classes.selected]: selected && !isUploading,
         [classes.uploading]: isUploading,
         [classes.nameHover]: !isUploading,
@@ -119,6 +121,7 @@ FileNameCell.defaultProps = {
   tabulations: 0,
   isShared: false,
   arrowOnClick: () => {},
+  onNameClick: () => {},
   isUploading: false,
 };
 
@@ -131,6 +134,7 @@ FileNameCell.propTypes = {
   tabulations: PropTypes.number,
   isShared: PropTypes.bool,
   arrowOnClick: PropTypes.func,
+  onNameClick: PropTypes.func,
   isUploading: PropTypes.bool,
 };
 

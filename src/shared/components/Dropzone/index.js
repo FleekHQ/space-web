@@ -82,7 +82,7 @@ const Dropzone = ({
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={`calc(100% - ${RAINBOW_BORDER_WIDTH}px)`}
+        width="100%"
         height={`${defaultHeight + RAINBOW_BORDER_WIDTH / 2}px`}
         className={classes.rainbowField}
       >
@@ -98,8 +98,6 @@ const Dropzone = ({
           x={`${RAINBOW_BORDER_WIDTH / 2}px`}
           width={`calc(100% - ${RAINBOW_BORDER_WIDTH}px)`}
           height={rainbowFieldStyles.top ? rowHeight : defaultHeight - headHeight}
-          rx="6"
-          ry="6"
           style={{ transition: 'y ease .17s, height ease .17s' }}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...overrideSvgProps}

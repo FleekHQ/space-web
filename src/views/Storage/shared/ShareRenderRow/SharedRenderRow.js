@@ -31,6 +31,7 @@ const ShareRenderRow = ({
   handleRowRightClick,
   handleDoubleRowClick,
   rowClasses,
+  disableOffset,
 }) => {
   const location = useLocation();
   const members = get(row, 'members', []) || [];
@@ -104,7 +105,7 @@ const ShareRenderRow = ({
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getTabulations(row.key, location)}
+        tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 0}
@@ -126,6 +127,7 @@ const ShareRenderRow = ({
 
 ShareRenderRow.defaultProps = {
   arrowOnClick: () => {},
+  disableOffset: false,
 };
 
 ShareRenderRow.propTypes = {
@@ -157,6 +159,7 @@ ShareRenderRow.propTypes = {
     selectedAndUploading: PropTypes.string,
     error: PropTypes.string,
   }).isRequired,
+  disableOffset: PropTypes.bool,
 };
 
 export default ShareRenderRow;

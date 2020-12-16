@@ -2,7 +2,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const rowHeight = 36;
-export const headHeight = 39;
+export const headHeight = 27;
 
 export default makeStyles({
   root: {

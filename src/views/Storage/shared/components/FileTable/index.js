@@ -87,6 +87,7 @@ const FileTable = ({
       EmptyState={EmptyState}
       fetchDir={fetchDir}
       disableRowOffset={disableRowOffset}
+      withRowOptions={false}
     />
   );
 };

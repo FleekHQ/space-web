@@ -463,7 +463,7 @@
       "successFolder": "Folder Deleted"
     },
     "createFolder": {
-      "title": "Create New Folder",
+      "title": "New Folder",
       "inputLabel": "Folder Name"
     },
     "deleteAccount": {
