@@ -7,24 +7,21 @@ export default makeStyles((theme) => ({
   forwardButton: {
     margin: '0 18px 0 8px',
   },
-  searchField: {
-    flexGrow: 1,
-  },
   icon: {
     color: theme.palette.palette.gray1,
   },
   resultContainer: {
-    zIndex: 10,
     maxHeight: 320,
     overflow: 'auto',
   },
   rootSearchBar: {
     display: 'flex',
-    flex: 1,
+    flex: '0 1 458px',
+    zIndex: 1,
   },
   noResults: {
-    display: 'flex',
-    padding: '8px 5px',
-    justifyContent: 'center',
+    padding: '13px 0 16px',
+    textAlign: 'center',
+    textTransform: 'capitalize',
   },
 }));

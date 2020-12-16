@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import path from 'path';
-import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
@@ -74,12 +73,16 @@ const HeaderNav = () => {
   };
 
   const noResults = (
-    <Typography className={classes.noResults}>
-      <Box fontSize={12}>
-        {t('common.noResults')}
-      </Box>
+    <Typography className={classes.noResults} color="secondary">
+      {t('common.noResults')}
     </Typography>
   );
+
+  const searchResults = results ? results.map((item) => ({
+    ext: item.ext,
+    key: item.id,
+    fileName: item.key,
+  })) : null;
 
   return (
     <div className={classes.root}>
@@ -102,16 +105,11 @@ const HeaderNav = () => {
       />
       <SearchBar
         debounce={200}
-        results={results}
+        results={searchResults}
         value={searchTerm}
         noResults={noResults}
         placeholder={t('common.search')}
         onChange={(val) => searchFiles(val)}
-        mapItemToFileItemProps={(item) => ({
-          ext: item.ext,
-          key: item.id,
-          fileName: item.key,
-        })}
         onClickResult={(item, hideResults) => {
           navigateToFolder(item, history);
           openItem(item);
