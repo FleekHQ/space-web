@@ -14,6 +14,7 @@ import bucketReducer, {
   SET_OPEN_ERROR_BUCKET,
   UPDATE_OR_ADD_OBJECT,
   UPDATE_SHARE_AMOUNT_OBJECTS,
+  DESELECT_ALL_OBJECTS,
 } from './bucket';
 
 import { CREATE_FOLDER_ACTION_TYPES } from '../create-folder';
@@ -165,7 +166,8 @@ export default (state = DEFAULT_STATE, action) => {
     case UPDATE_OBJECTS:
     case UPDATE_OR_ADD_OBJECT:
     case UPDATE_SHARE_AMOUNT_OBJECTS:
-    case CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT_SUCCESS: {
+    case CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT_SUCCESS:
+    case DESELECT_ALL_OBJECTS: {
       let bucket = null;
 
       if (Array.isArray(action.payload)) {
