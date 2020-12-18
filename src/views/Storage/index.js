@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 import { getLinkedAddresses, subscribeToStreams } from '@events';
 
-import Layout from '@shared/components/Layout';
+import Sidebar from '@shared/components/Sidebar';
+import Layout from '@terminal-packages/space-ui/core/Layout';
 
 import Files from './Files';
 import SharedWithMe from './SharedBy';
@@ -28,7 +29,9 @@ const Storage = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout
+      sidebar={<Sidebar />}
+    >
       <div className={classes.root}>
         <div className={classes.viewContent}>
           <Switch>

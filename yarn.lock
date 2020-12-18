@@ -2575,10 +2575,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@terminal-packages/space-ui@^0.3.10":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.10.tgz#48e46ae2866939be2f0c401b392893442de44833"
-  integrity sha512-3v8jzvW06KSwzh1Xh/Mz/kKcNvwOBW4CdhKLrK2vr60WsaaHJ/VE4NgV56Gvc2JMhlKuZLvTw9yVKHDXGY69QQ==
+"@terminal-packages/space-ui@^0.3.11":
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.11.tgz#dcf9238f680807ff931d268bca278072c90d1f40"
+  integrity sha512-PdgTk/Ozn88gJhe7umiaer/29hVVZ0/nBSzu+wnoieiu80gRDsL/ttOaD5IcWGVENv4E4z7SaYCJtbcrFH/fTQ==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"
