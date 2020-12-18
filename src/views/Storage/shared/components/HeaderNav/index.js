@@ -110,8 +110,6 @@ const HeaderNav = () => {
           fileName: item.key,
         })}
         onClickResult={(item, hideResults) => {
-          /* eslint-disable */
-          console.log('item', item);
           navigateToFolder(item, history);
           openItem(item);
           hideResults();
