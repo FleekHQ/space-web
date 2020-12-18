@@ -15,9 +15,9 @@ export default makeStyles((theme) => ({
     overflow: 'auto',
   },
   rootSearchBar: {
-    display: 'flex',
-    flex: '0 1 458px',
+    flex: 1,
     zIndex: 1,
+    display: 'flex',
   },
   noResults: {
     padding: '13px 0 16px',
