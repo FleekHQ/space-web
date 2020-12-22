@@ -1,4 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import get from 'lodash/get';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
@@ -59,11 +64,11 @@ const Dropzone = ({
     getFilesFromEvent,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (wrapperNode.current) {
       wrapperHeight.current = wrapperNode.current.getBoundingClientRect().height;
     }
-  }, [wrapperNode.current, objectsList.length, window.innerHeight]);
+  });
 
   useEffect(() => {
     setRowNumber(-1);

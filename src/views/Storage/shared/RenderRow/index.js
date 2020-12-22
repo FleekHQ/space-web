@@ -17,7 +17,6 @@ import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import HoverMenu from '@ui/HoverMenu';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import useStyles from './styles';
 
@@ -127,27 +126,24 @@ const RenderRow = ({
       onClick={onClick}
       component={
         ({ children, ...rowProps }) => (
-          <Tooltip
-            interactive
-            classes={{
-              tooltip: classes.tooltipRoot,
-              popper: classes.popperRoot,
-            }}
-            title={(
-              <HoverMenu
-                i18n={{
-                  retry: t('hoverMenu.retry'),
-                  cancel: t('hoverMenu.cancel'),
-                }}
-                items={getHoverMenuItems(row)}
-                menuItemOnClick={hoverMenuItemOnClick(row, dispatch)}
-              />
-            )}
+          <tr
+            {...rowProps}
+            className={[rowProps.className, classes.rowWrapper].join(' ')}
           >
-            <tr {...rowProps}>
-              {children}
-            </tr>
-          </Tooltip>
+            {children}
+            {row.isUploading && (
+              <div className={classes.tooltip}>
+                <HoverMenu
+                  i18n={{
+                    retry: t('hoverMenu.retry'),
+                    cancel: t('hoverMenu.cancel'),
+                  }}
+                  items={getHoverMenuItems(row)}
+                  menuItemOnClick={hoverMenuItemOnClick(row, dispatch)}
+                />
+              </div>
+            )}
+          </tr>
         )
       }
     >
