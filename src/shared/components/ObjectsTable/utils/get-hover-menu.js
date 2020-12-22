@@ -1,6 +1,6 @@
 import { HOVER_OPTION_IDS } from '@ui/HoverMenu';
 import { faSyncAlt } from '@fortawesome/pro-regular-svg-icons/faSyncAlt';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 
 const mapHoverMenuItems = (hoveredItem) => {
   if (!hoveredItem || !hoveredItem.isUploading) {

@@ -53,13 +53,18 @@ export default makeStyles((theme) => ({
     fontSize: 12,
     color: theme.palette.palette.red,
   },
-  tooltipRoot: {
-    backgroundColor: 'transparent',
+  tooltip: {
+    position: 'absolute',
+    marginTop: -16,
+    right: 10,
+    opacity: 0,
+    pointerEvents: 'none',
+    transition: 'opacity 0.2s ease',
   },
-  popperRoot: {
-    top: ({ rowIndex }) => (`${(80 + 36 * rowIndex)}px !important`),
-    left: 'auto !important',
-    right: 260,
-    transform: 'none !important',
+  rowWrapper: {
+    '&:hover $tooltip, $tooltip:hover': {
+      opacity: 1,
+      pointerEvents: 'auto',
+    },
   },
 }));

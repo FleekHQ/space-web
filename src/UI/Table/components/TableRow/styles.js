@@ -10,13 +10,9 @@ export default makeStyles((theme) => ({
     },
     '& td:first-child': {
       paddingLeft: 4,
-      borderTopLeftRadius: 4,
-      borderBottomLeftRadius: 4,
     },
     '& td:last-child': {
       paddingRight: 4,
-      borderTopRightRadius: 4,
-      borderBottomRightRadius: 4,
     },
     '&$hover:hover': {
       borderRadius: 4,

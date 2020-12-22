@@ -114,7 +114,7 @@ const registerAddItemsSubscribe = (mainWindow) => {
             targetPath: payload.targetPath,
             files,
             bucket,
-          }
+          },
         );
       });
 
