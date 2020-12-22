@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -235,7 +236,9 @@ const ObjectsTable = ({
   };
 
   const arrowOnClick = (clickedRow) => {
+    if (clickedRow.error) return;
     const expanded = !clickedRow.expanded;
+
     const newRows = [
       {
         ...clickedRow,
