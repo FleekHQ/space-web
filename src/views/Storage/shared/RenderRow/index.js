@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import get from 'lodash/get';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
+import Typography from '@material-ui/core/Typography';
+import { useLocation, matchPath } from 'react-router-dom';
 import { TableCell, FileNameCell, TableRow } from '@ui/Table';
 import { formatBytes, getTabulations, useDoubleClick } from '@utils';
 import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
@@ -34,6 +35,9 @@ const RenderRow = ({
   const location = useLocation();
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
+
+  const match = matchPath(location.pathname, { path: '/storage/files/*' });
+  const currentPath = get(match, 'params.0', '') || '';
 
   const rowDoubleClickHandler = handleDoubleRowClick({ row });
 
@@ -139,7 +143,7 @@ const RenderRow = ({
                     cancel: t('hoverMenu.cancel'),
                   }}
                   items={getHoverMenuItems(row)}
-                  menuItemOnClick={hoverMenuItemOnClick(row, dispatch)}
+                  menuItemOnClick={hoverMenuItemOnClick(row, currentPath, dispatch)}
                 />
               </div>
             )}

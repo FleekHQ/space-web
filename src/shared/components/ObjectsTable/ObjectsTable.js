@@ -235,7 +235,9 @@ const ObjectsTable = ({
   };
 
   const arrowOnClick = (clickedRow) => {
+    if (clickedRow.error) return;
     const expanded = !clickedRow.expanded;
+
     const newRows = [
       {
         ...clickedRow,
