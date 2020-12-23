@@ -38,13 +38,33 @@ const CreateNewButton = () => {
   };
 
   // eslint-disable-next-line no-unused-vars
-  const openDialog = async ({ properties }) => {
+  const openDialog = async ({ type }) => {
     try {
-      // TODO: handle native HTML5 file/folder upload
-      addItems({
-        targetPath: prefix,
-        sourcePaths: [],
-      });
+      const fileInput = document.createElement('input');
+      if (type === 'folder') {
+        fileInput.setAttribute('multiple', '');
+        fileInput.setAttribute('directory', '');
+        fileInput.setAttribute('odirectory', '');
+        fileInput.setAttribute('msdirectory', '');
+        fileInput.setAttribute('mozdirectory', '');
+        fileInput.setAttribute('webkitdirectory', '');
+      }
+      // eslint-disable-next-line prefer-arrow-callback
+      fileInput.addEventListener('change', (event) => {
+        const sourcePaths = Array.from(event.target.files).map((file) => ({
+          name: file.name,
+          data: file.stream(),
+          path: file.webkitRelativePath || file.name,
+        }));
+
+        addItems({
+          sourcePaths,
+          targetPath: prefix,
+        });
+      }, false);
+
+      fileInput.type = 'file';
+      fileInput.click();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error when selecting a folder or a file: ', error.message);
@@ -54,12 +74,12 @@ const CreateNewButton = () => {
   const handleMenuItemClick = (item) => {
     setAnchorEl(null);
     if (item.id === MENU_DROPDOWN_ITEMS.fileUpload) {
-      openDialog({ properties: ['openFile'] });
+      openDialog({ type: 'file' });
       return;
     }
 
     if (item.id === MENU_DROPDOWN_ITEMS.folderUpload) {
-      openDialog({ properties: ['openDirectory'] });
+      openDialog({ type: 'folder' });
       return;
     }
 

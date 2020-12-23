@@ -17,18 +17,25 @@ const registerAddItemsSubscribeEvents = () => {
 };
 
 /**
+ * @typedef {Object} SourcePaths
+ * @property {string} name
+ * @property {string} path
+ * @property {ReadableStream} data
  * @param {Object} payload
  * @param {string} payload.targetPath
- * @param {Array<string>} payload.sourcePaths
+ * @param {Array<SourcePaths>} payload.sourcePaths
  */
 export const addItems = (payload) => {
   const modalId = store.dispatch(openModal(UPLOAD_PROGRESS_TOAST));
+
+  // eslint-disable-next-line no-console
+  console.log('Add Items payload:', payload);
   store.dispatch({
     type: INIT_UPLOAD_STATE,
     payload: {
       id: modalId,
-      sourcePaths: payload.sourcePaths,
       targetPath: payload.targetPath,
+      sourcePaths: payload.sourcePaths,
     },
   });
 };
