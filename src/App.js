@@ -20,6 +20,7 @@ import store from './store';
 import Auth from './views/Auth';
 import Splash from './views/Splash';
 import Storage from './views/Storage';
+import EmailLinkAuth from './views/Auth/EmailLinkAuth';
 import PrivateRoute from './shared/components/PrivateRoute';
 
 const theme = createSpaceTheme();
@@ -36,8 +37,11 @@ const App = () => (
         <Router>
           <RegisterEvents />
           <Switch>
-            <Route path="/auth">
+            <Route path="/(signin|signup)">
               <Auth />
+            </Route>
+            <Route path="/magic-link">
+              <EmailLinkAuth />
             </Route>
             <Route path="/splash">
               <Splash />

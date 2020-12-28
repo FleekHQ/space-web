@@ -9,4 +9,13 @@ export default makeStyles({
     justifyContent: 'center',
     backgroundColor: '#171717',
   },
+  dividerRoot: {
+    color: '#5A5A5A',
+    backgroundColor: '#5A5A5A',
+  },
+  linkButton: {
+    marginTop: -2,
+    font: 'inherit',
+    textDecoration: 'underline',
+  },
 });

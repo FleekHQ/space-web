@@ -59,7 +59,7 @@ const EmailLinkAuth = () => {
       </Typography>
       <Typography
         color="inherit"
-        to={`/auth/${from}`}
+        to={`/${from}`}
         component={Link}
         variant="body2"
         className={classes.resetLinkStyle}

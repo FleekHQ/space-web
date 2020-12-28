@@ -17,7 +17,7 @@
       const origin = window.location.origin.includes('localhost:8080')
         ? 'http://localhost:3000': window.location.origin;
 
-      window.location.replace(`${origin}/#/auth/${from}` + locationHash);
+      window.location.replace(`${origin}/#/${from}` + locationHash);
     </script>
 
     <title>Fleek</title>
