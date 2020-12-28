@@ -1,36 +1,26 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const getBorder = () => ('1px solid #D8D8d8');
-
 export default makeStyles((theme) => ({
   paper: {
-    width: 'fit-content',
+    display: 'flex',
+    padding: '4px 6px',
     boxShadow: '0px 3px 6px #00000029',
     borderRadius: 6,
-    display: 'flex',
-    flexDirection: 'row',
-    height: 32,
+    border: '1px solid #D8D8d8',
   },
   menuItem: {
-    width: 32,
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
-    borderBottom: getBorder(theme),
-    borderTop: getBorder(theme),
-    '&:first-child': {
-      borderTopLeftRadius: 6,
-      borderBottomLeftRadius: 6,
-      borderLeft: getBorder(theme),
+    padding: 0,
+    height: 22,
+    borderRadius: 2,
+    '&:hover': {
+      backgroundColor: '#ECEEF1',
     },
-    '&:last-child': {
-      borderTopRightRadius: 6,
-      borderBottomRightRadius: 6,
-      borderRight: getBorder(theme),
+    '&:not(:first-child)': {
+      marginLeft: 4,
     },
   },
   iconContainer: {
-    width: 21,
+    padding: 4,
     display: 'flex',
     alignContent: 'center',
   },

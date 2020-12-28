@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes';
 import { faSpinner } from '@fortawesome/pro-regular-svg-icons/faSpinner';
 
 import BaseModal from '@ui/BaseModal';
@@ -64,7 +65,9 @@ const CreateFolder = ({
     >
       <div className={classes.header}>
         <Typography variant="h6">
-          {t('modals.createFolder.title')}
+          <Box fontWeight={600}>
+            {t('modals.createFolder.title')}
+          </Box>
         </Typography>
         <ButtonBase onClick={closeModal}>
           <FontAwesomeIcon
@@ -100,6 +103,7 @@ const CreateFolder = ({
             <Button
               type="submit"
               variant="contained"
+              color="primary"
               disabled={state.loading}
             >
               {

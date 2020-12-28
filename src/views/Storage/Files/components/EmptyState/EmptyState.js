@@ -31,7 +31,7 @@ const StorageMainView = () => {
       <img
         alt="drag&drop"
         className={classes.dragndropImg}
-        src={`${process.env.PUBLIC_URL}/assets/images/dragndrop.png`}
+        src={`${process.env.PUBLIC_URL}/assets/images/dragndrop.svg`}
       />
     </div>
   );

@@ -38,7 +38,7 @@ const FileTable = ({ bucket, prefix }) => {
       renderRow={RenderRow}
       renderLoadingRows={renderLoadingRows}
       loading={loading}
-      withRowOptions
+      withRowOptions={false}
       onDropzoneDrop={onDropzoneDrop}
       getRedirectUrl={(row) => path.posix.join('/storage/files', prefix, row.name)}
     />

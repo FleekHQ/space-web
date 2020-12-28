@@ -1,4 +1,4 @@
-const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+const units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
 const formatBytes = (bytes, decimals = 2) => {
   if (bytes === 0) return '0 Bytes';

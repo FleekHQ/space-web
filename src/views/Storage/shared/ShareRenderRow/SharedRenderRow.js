@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { getTabulations, useDoubleClick } from '@utils';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import {
   TableCell,
@@ -16,12 +15,6 @@ import {
   TableRow,
 } from '@ui/Table';
 import { getIdentitiesByAddress } from '@events/identities';
-import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
-import hoverMenuItemOnClick from '@shared/components/ObjectsTable/utils/hover-menu-on-click';
-import HoverMenu from '@ui/HoverMenu';
-import Tooltip from '@material-ui/core/Tooltip';
-
-import useStyles from './styles';
 
 const ShareRenderRow = ({
   row,
@@ -31,6 +24,7 @@ const ShareRenderRow = ({
   handleRowRightClick,
   handleDoubleRowClick,
   rowClasses,
+  disableOffset,
 }) => {
   const location = useLocation();
   const members = get(row, 'members', []) || [];
@@ -38,8 +32,6 @@ const ShareRenderRow = ({
     state.user.publicKey,
     state.identities,
   ]);
-  const classes = useStyles({ progress: 0.4, rowIndex });
-  const { t } = useTranslation();
 
   const sharedByPubKey = get(row, 'sharedBy', userPubKey) || userPubKey;
   const sharedByIdentity = get(identities, `identities.${sharedByPubKey}`, {});
@@ -73,38 +65,13 @@ const ShareRenderRow = ({
       })}
       onClick={onClick}
       onContextMenu={handleRowRightClick({ row })}
-      component={
-        ({ children, ...rowProps }) => (
-          <Tooltip
-            interactive
-            classes={{
-              tooltip: classes.tooltipRoot,
-              popper: classes.popperRoot,
-            }}
-            title={(
-              <HoverMenu
-                i18n={{
-                  retry: t('hoverMenu.retry'),
-                  cancel: t('hoverMenu.cancel'),
-                }}
-                items={getHoverMenuItems(row)}
-                menuItemOnClick={hoverMenuItemOnClick}
-              />
-            )}
-          >
-            <tr {...rowProps}>
-              {children}
-            </tr>
-          </Tooltip>
-        )
-      }
     >
       <FileNameCell
         ext={row.ext}
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getTabulations(row.key, location)}
+        tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 0}
@@ -126,6 +93,7 @@ const ShareRenderRow = ({
 
 ShareRenderRow.defaultProps = {
   arrowOnClick: () => {},
+  disableOffset: false,
 };
 
 ShareRenderRow.propTypes = {
@@ -157,6 +125,7 @@ ShareRenderRow.propTypes = {
     selectedAndUploading: PropTypes.string,
     error: PropTypes.string,
   }).isRequired,
+  disableOffset: PropTypes.bool,
 };
 
 export default ShareRenderRow;

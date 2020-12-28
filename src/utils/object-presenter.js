@@ -25,6 +25,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
   const dbId = get(obj, 'dbId');
   const isPublicLink = get(obj, 'isPublicLink', false);
   const sharedBy = get(obj, 'sharedBy');
+  const sourcePath = get(obj, 'sourcePath', '');
 
   return {
     key,
@@ -50,6 +51,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     sourceBucket: sourceBucket || bucket,
     shareAmount: Math.max(1, members.length),
     isUploading: false,
+    sourcePath,
   };
 };
 

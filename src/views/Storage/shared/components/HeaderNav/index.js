@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import path from 'path';
-import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
@@ -74,10 +73,8 @@ const HeaderNav = () => {
   };
 
   const noResults = (
-    <Typography className={classes.noResults}>
-      <Box fontSize={12}>
-        {t('common.noResults')}
-      </Box>
+    <Typography className={classes.noResults} color="secondary">
+      {t('common.noResults')}
     </Typography>
   );
 

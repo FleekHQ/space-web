@@ -15,6 +15,7 @@ export const SET_LOADING_STATE_BUCKET = 'SET_LOADING_STATE_BUCKET';
 export const SET_ERROR_BUCKET = 'SET_ERROR_BUCKET';
 export const SET_OPEN_ERROR_BUCKET = 'SET_OPEN_ERROR_BUCKET';
 export const UPDATE_SHARE_AMOUNT_OBJECTS = 'UPDATE_SHARE_AMOUNT_OBJECTS';
+export const DESELECT_ALL_OBJECTS = 'DESELECT_ALL_OBJECTS';
 
 const DEFAULT_STATE = {
   membersList: [],
@@ -175,6 +176,16 @@ export default (state = DEFAULT_STATE, action) => {
       return {
         ...state,
         objects: action.payload.concat(newObjs),
+      };
+    }
+
+    case DESELECT_ALL_OBJECTS: {
+      return {
+        ...state,
+        objects: state.objects.map((obj) => ({
+          ...obj,
+          selected: false,
+        })),
       };
     }
 
