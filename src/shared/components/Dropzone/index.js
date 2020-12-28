@@ -1,8 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import get from 'lodash/get';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
 import useStyles, { rowHeight, headHeight } from './styles';
+
+const RAINBOW_BORDER_WIDTH = 2;
 
 const Dropzone = ({
   children,
@@ -57,11 +64,11 @@ const Dropzone = ({
     getFilesFromEvent,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (wrapperNode.current) {
       wrapperHeight.current = wrapperNode.current.getBoundingClientRect().height;
     }
-  }, [wrapperNode.current, objectsList.length, window.innerHeight]);
+  });
 
   useEffect(() => {
     setRowNumber(-1);
@@ -74,6 +81,36 @@ const Dropzone = ({
     bottom: wrapperHeight.current - (headHeight + (rowNumber + 1) * rowHeight),
   } : {};
 
+  const getSvg = (overrideSvgProps) => {
+    const defaultHeight = Math.max(objectsList.length * rowHeight, wrapperHeight.current);
+
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height={`${defaultHeight + RAINBOW_BORDER_WIDTH / 2}px`}
+        className={classes.rainbowField}
+      >
+        <linearGradient id="dropzone-gradient" x1="0%" y1="25%" x2="100%" y2="75%">
+          <stop offset="18%" stopColor="#ed55eb" />
+          <stop offset="42%" stopColor="#17e0d8" />
+          <stop offset="59%" stopColor="#00ffc2" />
+          <stop offset="81%" stopColor="#ffec06" />
+        </linearGradient>
+        <rect
+          fill="transparent"
+          y={rainbowFieldStyles.top ? rainbowFieldStyles.top : headHeight}
+          x={`${RAINBOW_BORDER_WIDTH / 2}px`}
+          width={`calc(100% - ${RAINBOW_BORDER_WIDTH}px)`}
+          height={rainbowFieldStyles.top ? rowHeight : defaultHeight - headHeight}
+          style={{ transition: 'y ease .17s, height ease .17s' }}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...overrideSvgProps}
+        />
+      </svg>
+    );
+  };
+
   return (
     <div
       // eslint-disable-next-line react/jsx-props-no-spreading
@@ -82,10 +119,15 @@ const Dropzone = ({
     >
       <div ref={wrapperNode} className={classes.wrapper}>
         {isDragActive && (
-          <div
-            className={classes.rainbowField}
-            style={rainbowFieldStyles}
-          />
+          <>
+            {getSvg({
+              fill: 'url(#dropzone-gradient)',
+            })}
+            {getSvg({
+              stroke: 'url(#dropzone-gradient)',
+              strokeWidth: RAINBOW_BORDER_WIDTH,
+            })}
+          </>
         )}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <input {...getInputProps()} />

@@ -2,7 +2,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
   rootWelcome: {
-    padding: '0 21px 12px 17px',
+    position: 'absolute',
+    bottom: 5,
+    right: 10,
+    left: 10,
+    margin: 'auto',
+    maxWidth: 559,
     '& > div': {
       margin: '10px 0',
     },

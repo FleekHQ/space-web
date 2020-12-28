@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   root: {
     width: '100%',
-    marginTop: 24,
+    marginTop: 61,
     textAlign: 'center',
   },
   emoji: {
-    width: 53,
+    width: 40,
   },
   title: {
     fontSize: 20,
@@ -23,6 +23,8 @@ export default makeStyles((theme) => ({
     boxShadow: '0 0 9px 0 rgba(222, 222, 222, 0.8)',
   },
   dragndropImg: {
-    marginTop: 20,
+    marginTop: 25,
+    width: 298,
+    opacity: 0.5,
   },
 }));

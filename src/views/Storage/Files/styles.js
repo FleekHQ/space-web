@@ -5,7 +5,7 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    padding: '6px 0',
+    padding: '6px 14px',
   },
   title: {
     margin: '11px 18px 1px',

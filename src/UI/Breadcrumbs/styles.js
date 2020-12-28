@@ -5,8 +5,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 12,
-    marginLeft: 17,
+    marginTop: 11,
     height: 25,
   },
   separator: {
