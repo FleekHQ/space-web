@@ -31,16 +31,33 @@ export const getMenuDropdownItems = (t) => [
 ];
 
 // eslint-disable-next-line no-unused-vars
-const openDialog = async (prefix, properties) => {
+const openDialog = async ({ prefix, type }) => {
   try {
-    const filePaths = [];
-
-    if (filePaths.length) {
-      addItems({
-        targetPath: prefix,
-        sourcePaths: filePaths,
-      });
+    const fileInput = document.createElement('input');
+    if (type === MENU_DROPDOWN_ITEMS.folderUpload) {
+      fileInput.setAttribute('multiple', '');
+      fileInput.setAttribute('directory', '');
+      fileInput.setAttribute('odirectory', '');
+      fileInput.setAttribute('msdirectory', '');
+      fileInput.setAttribute('mozdirectory', '');
+      fileInput.setAttribute('webkitdirectory', '');
     }
+    // eslint-disable-next-line prefer-arrow-callback
+    fileInput.addEventListener('change', (event) => {
+      const sourcePaths = Array.from(event.target.files).map((file) => ({
+        name: file.name,
+        data: file.stream(),
+        path: file.webkitRelativePath || file.name,
+      }));
+
+      addItems({
+        sourcePaths,
+        targetPath: prefix,
+      });
+    }, false);
+
+    fileInput.type = 'file';
+    fileInput.click();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error when selecting a folder or a file: ', error.message);
@@ -53,5 +70,5 @@ export const getOnMenuItemClick = (dispatch, prefix) => (itemId, objPath) => {
     return;
   }
 
-  openDialog(prefix, [itemId]);
+  openDialog({ prefix, type: itemId });
 };
