@@ -1,11 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import get from 'lodash/get';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { useLocation } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import Typography from '@material-ui/core/Typography';
+import { useLocation, matchPath } from 'react-router-dom';
 import { TableCell, FileNameCell, TableRow } from '@ui/Table';
 import { formatBytes, getTabulations, useDoubleClick } from '@utils';
 import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
@@ -16,7 +18,6 @@ import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import HoverMenu from '@ui/HoverMenu';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import useStyles from './styles';
 
@@ -30,13 +31,19 @@ const RenderRow = ({
   handleDoubleRowClick,
   rowClasses,
 }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
 
+  const match = matchPath(location.pathname, { path: '/storage/files/*' });
+  const currentPath = get(match, 'params.0', '') || '';
+
+  const rowDoubleClickHandler = handleDoubleRowClick({ row });
+
   const onClick = useDoubleClick({
     singleClick: handleRowClick({ rowIndex }),
-    doubleClick: handleDoubleRowClick({ row }),
+    doubleClick: rowDoubleClickHandler,
   });
 
   const getSizeIcon = () => {
@@ -123,27 +130,24 @@ const RenderRow = ({
       onClick={onClick}
       component={
         ({ children, ...rowProps }) => (
-          <Tooltip
-            interactive
-            classes={{
-              tooltip: classes.tooltipRoot,
-              popper: classes.popperRoot,
-            }}
-            title={(
-              <HoverMenu
-                i18n={{
-                  retry: t('hoverMenu.retry'),
-                  cancel: t('hoverMenu.cancel'),
-                }}
-                items={getHoverMenuItems(row)}
-                menuItemOnClick={hoverMenuItemOnClick}
-              />
-            )}
+          <tr
+            {...rowProps}
+            className={[rowProps.className, classes.rowWrapper].join(' ')}
           >
-            <tr {...rowProps}>
-              {children}
-            </tr>
-          </Tooltip>
+            {children}
+            {row.isUploading && (
+              <div className={classes.tooltip}>
+                <HoverMenu
+                  i18n={{
+                    retry: t('hoverMenu.retry'),
+                    cancel: t('hoverMenu.cancel'),
+                  }}
+                  items={getHoverMenuItems(row)}
+                  menuItemOnClick={hoverMenuItemOnClick(row, currentPath, dispatch)}
+                />
+              </div>
+            )}
+          </tr>
         )
       }
     >
@@ -152,16 +156,14 @@ const RenderRow = ({
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
         expanded={row.expanded}
-        tabulations={getTabulations(row.key, location)}
+        tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 1}
         isUploading={row.isUploading}
+        onNameClick={rowDoubleClickHandler}
       />
-      <TableCell
-        className={classes.iconSizeContainer}
-        tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
-      >
+      <TableCell className={classes.iconSizeContainer}>
         {getSizeIcon()}
         <Typography
           variant="body1"

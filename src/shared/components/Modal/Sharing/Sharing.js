@@ -155,6 +155,7 @@ const SharingModal = (props) => {
       }}
     >
       <Paper
+        elevation={0}
         className={classnames(
           classes.root,
           className,
@@ -186,6 +187,7 @@ const SharingModal = (props) => {
         />
       </Paper>
       <Paper
+        elevation={0}
         className={classes.footer}
       >
         <ShareLink

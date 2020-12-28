@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    padding: '12px 15px',
-    maxWidth: 345,
+    padding: '15px 18px 19px',
+    maxWidth: 321,
   },
   header: {
     display: 'flex',
@@ -11,13 +11,13 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   textField: {
-    marginTop: 15,
+    marginTop: 20,
   },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 22,
     '& > button': {
       width: 84,
     },
@@ -30,7 +30,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.palette.red,
   },
   icon: {
-    fontSize: 12,
+    fontSize: 13,
     color: theme.palette.palette.gray1,
   },
 }));

@@ -19,9 +19,7 @@ export default makeStyles(() => ({
     },
   },
   headerCell: {
-    paddingTop: 6,
     height: 'auto',
-    paddingBottom: 6,
   },
   options: {
     fontSize: 18,
@@ -30,10 +28,9 @@ export default makeStyles(() => ({
   },
   tableWrapper: {
     flexGrow: 1,
-    padding: 6,
+    padding: '6px 0',
     minHeight: 0,
     overflow: 'auto',
-    marginTop: -10,
   },
   errorCardContainer: {
     position: 'absolute',

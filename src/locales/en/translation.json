@@ -22,11 +22,12 @@
     "change": "Change",
     "crypto": "Crypto",
     "card": "Card",
+    "email": "Email",
     "username": "Username",
     "password": "Password",
     "remindMeLater": "Remind me later",
     "highlyRecommended": "Highly Recommended",
-    "noResults": "No results",
+    "noResults": "No search results",
     "comingSoon": "Coming Soon!",
     "goBack": "Go Back",
     "delete": "Delete",
@@ -173,7 +174,9 @@
         "timeout": "Websocket Timeout",
         "notFound": "User not found.",
         "generic": "Sorry, there was a problem.",
-        "invalid": "Invalid username or password."
+        "invalid": "Invalid username or password.",
+        "retry": "Please retry with another magic link.",
+        "noAccount": "The email is not associated with a Space user, please try again."
       },
       "username": "Username",
       "password": "Password",
@@ -191,8 +194,8 @@
       "forgotPassword": "Forgot password?",
       "agreenment": {
         "part1": "By signing up, I agree to the",
-        "privacy": "Privacy",
-        "terms": "Terms"
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
       },
       "errors": {
         "generic": "Sorry, there was a problem.",
@@ -201,7 +204,8 @@
         "address": "Sorry, the current address is already registered.",
         "torus": "There was an error with torus integration",
         "noData": "There is no data from torus",
-        "timeout": "Websocket Timeout"
+        "timeout": "Websocket Timeout",
+        "retry": "Please retry with another magic link."
       }
     },
     "restoreKeysMnemonic": {
@@ -463,7 +467,7 @@
       "successFolder": "Folder Deleted"
     },
     "createFolder": {
-      "title": "Create New Folder",
+      "title": "New Folder",
       "inputLabel": "Folder Name"
     },
     "deleteAccount": {

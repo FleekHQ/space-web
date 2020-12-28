@@ -27,10 +27,7 @@ const HoverMenu = ({
         <>
           <Tooltip
             key={item.id}
-            enterDelay={1000}
-            enterNextDelay={1000}
             arrow
-            interactive
             placement="top"
             classes={{
               popper: classes.popperRoot,
@@ -41,7 +38,7 @@ const HoverMenu = ({
           >
             <MenuItem
               className={classes.menuItem}
-              onClick={() => menuItemOnClick(item.id)}
+              onClick={(event) => menuItemOnClick(item.id, event)}
             >
               <div className={classes.iconContainer}>
                 <FontAwesomeIcon

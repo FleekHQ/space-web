@@ -7,14 +7,14 @@ const getPersonalHeaders = (t) => [
   },
   {
     id: 'size',
-    width: '25%',
+    width: '28%',
     title: t('modules.storage.fileTable.head.size'),
     isSortable: true,
     paddingLeft: 23,
   },
   {
     id: 'lastModified',
-    width: '25%',
+    width: '22%',
     title: t('modules.storage.fileTable.head.lastModified'),
     isSortable: true,
   },
@@ -29,13 +29,13 @@ const getSharedHeaders = (t) => [
   },
   {
     id: 'size',
-    width: '25%',
+    width: '28%',
     title: t('modules.storage.fileTable.head.sharedBy'),
     isSortable: true,
   },
   {
     id: 'lastModified',
-    width: '25%',
+    width: '22%',
     title: t('modules.storage.fileTable.head.lastModified'),
     isSortable: true,
   },

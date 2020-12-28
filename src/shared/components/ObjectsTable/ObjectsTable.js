@@ -147,6 +147,9 @@ const ObjectsTable = ({
     if (event) {
       event.preventDefault();
     }
+    if (row.isUploading && row.error) {
+      return;
+    }
     let newRows = [];
 
     if (row.type === 'folder') {
@@ -232,7 +235,9 @@ const ObjectsTable = ({
   };
 
   const arrowOnClick = (clickedRow) => {
+    if (clickedRow.error) return;
     const expanded = !clickedRow.expanded;
+
     const newRows = [
       {
         ...clickedRow,

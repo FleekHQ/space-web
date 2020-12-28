@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { DETAILS_PANEL_WIDTH } from '@shared/components/DetailsPanel/styles';
-import { SIDEBAR_WIDTH } from '@shared/components/Layout/components/Sidebar/styles';
+
+const SIDEBAR_WIDTH = 220;
 
 export default makeStyles({
   toastsContainer: {

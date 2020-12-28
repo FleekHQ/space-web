@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation } from 'react-router-dom';
+import classnames from 'classnames';
 
 import { objectsSelector, getShortAddress } from '@utils';
 import { openModal, SHARING_MODAL } from '@shared/components/Modal/actions';
@@ -62,56 +63,49 @@ const StorageDetailsPanel = () => {
   };
 
   return (
-    <DetailsPanel id="storage-detail-panel" className={classes.root}>
-      {
-        selectedObjects.length === 0 ? (
-          <Empty
-            title={t('modules.storage.detailsPanel.title')}
-            message={t(`modules.storage.detailsPanel.message.${objectsType}`)}
-          />
-        ) : (
-          <>
-            {
-                objectsType === OBJECT_TYPES.files ? <Header objects={selectedObjects} /> : (
-                  <AvatarHeader objects={selectedObjects} />
-                )
-            }
-            <Divider />
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <ObjectDetails {...selectedObjects[0]} />
-            {
-              selectedObjects.length === 1
-              && selectedObjects[0].type === 'file'
-              && selectedObjects[0].isAvailableInSpace
-              && (
-                <>
-                  <Divider />
-                  <SharePanel
-                    onShare={handleShare}
-                    members={(
-                      [
-                        user,
-                        ...selectedObjects[0].members.filter((member) => (
-                          member.address !== user.address
-                        )),
-                      ].map((member) => {
-                        const m = { ...member };
+    <div className={classnames(classes.root, {
+      [classes.expanded]: !!selectedObjects.length,
+    })}>
+      <DetailsPanel id="storage-detail-panel">
+        {
+          objectsType === OBJECT_TYPES.files ? <Header objects={selectedObjects} /> : (
+            <AvatarHeader objects={selectedObjects} />
+          )
+        }
+        <Divider />
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <ObjectDetails {...selectedObjects[0]} />
+        {
+          selectedObjects.length === 1
+          && selectedObjects[0].type === 'file'
+          && selectedObjects[0].isAvailableInSpace
+          && (
+            <>
+              <Divider />
+              <SharePanel
+                onShare={handleShare}
+                members={(
+                  [
+                    user,
+                    ...selectedObjects[0].members.filter((member) => (
+                      member.address !== user.address
+                    )),
+                  ].map((member) => {
+                    const m = { ...member };
 
-                        if (!m.username || (m.username && m.username.length === 0)) {
-                          m.username = getShortAddress(m.address);
-                        }
+                    if (!m.username || (m.username && m.username.length === 0)) {
+                      m.username = getShortAddress(m.address);
+                    }
 
-                        return m;
-                      })
-                    )}
-                  />
-                </>
-              )
-            }
-          </>
-        )
-      }
-    </DetailsPanel>
+                    return m;
+                  })
+                )}
+              />
+            </>
+          )
+        }
+      </DetailsPanel>
+    </div>
   );
 };
 

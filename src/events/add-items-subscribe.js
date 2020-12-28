@@ -6,6 +6,7 @@ import {
   SET_UPLOAD_ERROR_STATE,
   INIT_UPLOAD_STATE,
   ADD_OBJECT,
+  UPDATE_OR_ADD_OBJECT,
 } from '@reducers/storage';
 import {
   openModal, UPLOAD_PROGRESS_TOAST,
