@@ -58,7 +58,7 @@ const Auth = () => {
           <RestoreKeysMnemonic />
         </Route>
         <Route path={`${match.path}/email-link-auth`} exact>
-          <EmailLinkAuth isSignup />
+          <EmailLinkAuth />
         </Route>
         <Redirect to={`${match.path}/signup`} exact />
       </Switch>

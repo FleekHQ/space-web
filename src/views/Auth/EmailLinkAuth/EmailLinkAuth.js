@@ -1,17 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 
+import { useAuth0Passwordless } from '@utils';
+
 import useStyles from './styles';
 
-const EmailLinkAuth = ({ isSignup }) => {
+const EmailLinkAuth = () => {
   const classes = useStyles();
+  const location = useLocation();
   const { t } = useTranslation();
-  const action = t(`modules.emailLinkAuth.${isSignup ? 'signup' : 'signin'}`);
+  const { sendPasswordlessEmail } = useAuth0Passwordless();
+
+  const from = (location.state && location.state.from) || 'signin';
+  const action = t(`modules.emailLinkAuth.${from}`);
+
+  const handleOnResendEmail = async () => {
+    await sendPasswordlessEmail({
+      from,
+      email: location.state && location.state.email ? location.state.email : '',
+    });
+  };
 
   return (
     <div className={classes.root}>
@@ -22,8 +34,11 @@ const EmailLinkAuth = ({ isSignup }) => {
       <Typography color="inherit" className={classes.message}>
         <Trans
           i18nKey="modules.emailLinkAuth.message"
-          values={{ email: 'jasonkerro@gmail.com', action }}
           components={[<Box fontWeight={600} component="span" />]}
+          values={{
+            action,
+            email: location.state && location.state.email ? location.state.email : '',
+          }}
         />
       </Typography>
       <Typography
@@ -33,12 +48,18 @@ const EmailLinkAuth = ({ isSignup }) => {
       >
         <Trans
           i18nKey="modules.emailLinkAuth.callToAction"
-          components={[<Button className={classes.callToActionBtn} disableRipple />]}
+          components={[
+            <Button
+              disableRipple
+              className={classes.callToActionBtn}
+              onClick={handleOnResendEmail}
+            />,
+          ]}
         />
       </Typography>
       <Typography
         color="inherit"
-        to={`/auth/${isSignup ? 'signup' : 'signin'}`}
+        to={`/auth/${from}`}
         component={Link}
         variant="body2"
         className={classes.resetLinkStyle}
@@ -47,14 +68,6 @@ const EmailLinkAuth = ({ isSignup }) => {
       </Typography>
     </div>
   );
-};
-
-EmailLinkAuth.defaultProps = {
-  isSignup: false,
-};
-
-EmailLinkAuth.propTypes = {
-  isSignup: PropTypes.bool,
 };
 
 export default EmailLinkAuth;
