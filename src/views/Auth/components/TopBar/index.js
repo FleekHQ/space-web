@@ -42,7 +42,7 @@ const Topbar = () => {
             component={ReactRouterLink}
             classes={{ root: classes.logoLink }}
           >
-            <img width={36} height={31} src={`${process.env.PUBLIC_URL}/assets/images/space.svg`} alt="logo" />
+            <img height={35} src={`${process.env.PUBLIC_URL}/assets/images/space_text.svg`} alt="logo" />
           </Link>
           <Hidden smDown>
             <Box flex={1} display="flex" justifyContent="center">

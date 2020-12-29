@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
   },
   rainbowBg: {
     color: theme.palette.common.black,
-    background: 'transparent linear-gradient(105deg, #ED55EB 0%, #17E0D8 37%, #00FFC2 60%, #FFEC06 100%) 0% 0% no-repeat padding-box;',
+    background: 'transparent linear-gradient(105deg, #ED55EB 0%, #17E0D8 37%, #00FFC2 60%, #FFEC06 100%) 0% 0% no-repeat padding-box',
   },
   iconBtnRoot: {
     width: 21,
