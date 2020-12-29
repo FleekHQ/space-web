@@ -2,10 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
+    minHeight: '100vh',
+    minWidth: '100vw',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#171717',
     color: theme.palette.palette.white,
   },
   title: {
