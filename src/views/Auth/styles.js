@@ -2,12 +2,12 @@ import { makeStyles } from '@material-ui/styles';
 
 export default makeStyles({
   root: {
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 64px)',
     minWidth: '100vw',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#171717',
+    backgroundColor: '#151515',
   },
   dividerRoot: {
     color: '#5A5A5A',

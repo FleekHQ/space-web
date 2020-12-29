@@ -26,6 +26,7 @@ import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
 import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
 import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
 
+import Layout from './components/Layout';
 import Splash from '../Splash';
 
 import useStyles from './styles';
@@ -61,7 +62,7 @@ const Auth = () => {
   const handlePasswordLessFormSubmit = async ({ email }) => {
     const isSent = await sendPasswordlessEmail({
       email,
-      from: 'signup',
+      from: currentView,
     });
 
     if (isSent) {
@@ -178,7 +179,7 @@ const Auth = () => {
   }, [state.error]);
 
   return (
-    <div className={classes.root}>
+    <>
       {
         showSplash && (
           <Box
@@ -186,133 +187,137 @@ const Auth = () => {
             width="100%"
             height="100vh"
             position="absolute"
-            zIndex={2}
+            zIndex={9999}
             justifyContent="center"
           >
             <Splash />
           </Box>
         )
       }
-      <Box
-        display="flex"
-        width={580}
-        height={288}
-        position="relative"
-        justifyContent="center"
-      >
-        <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
+      <Layout>
+        <div className={classes.root}>
           <Box
-            mb="31px"
-            display="inherit"
-            flexDirection="row"
-            alignItems="flex-end"
-            justifyContent="space-between"
+            display="flex"
+            width={580}
+            height={288}
+            position="relative"
+            justifyContent="center"
           >
-            <Typography>
-              <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
-                {t(`modules.${currentView}.title`)}
-              </Box>
-            </Typography>
-            <Link
-              component={ReactRouterLink}
-              to={{
-                pathname: currentView === 'signin' ? '/signup' : '/signin',
-                state: formData,
-              }}
-            >
-              <Box component="span" color="#006EFF" fontSize="14px">
-                {t(`modules.${currentView === 'signin' ? 'signup' : 'signin'}.title`)}
-              </Box>
-            </Link>
-          </Box>
-          <Box mb="20px" width="100%">
-            <PasswordLessForm
-              isLoading={state.loading || passwordlessLoading}
-              submitBtnText={t(`modules.${currentView}.title`)}
-              defaultEmail={
-                location.state
-                && location.state.email ? location.state.email : undefined
-              }
-              onSubmit={handlePasswordLessFormSubmit}
-              onChangeForm={(newFormData) => setFormData(newFormData)}
-            />
-          </Box>
-          <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
-            <Typography color="inherit">
-              <Box component="span" fontSize="12px">
-                {`${t('modules.signup.agreenment.part1')} `}
-                <ButtonBase
-                  component="a"
-                  color="inherit"
-                  className={classes.linkButton}
-                  onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
+            <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
+              <Box
+                mb="31px"
+                display="inherit"
+                flexDirection="row"
+                alignItems="flex-end"
+                justifyContent="space-between"
+              >
+                <Typography>
+                  <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
+                    {t(`modules.${currentView}.title`)}
+                  </Box>
+                </Typography>
+                <Link
+                  component={ReactRouterLink}
+                  to={{
+                    pathname: currentView === 'signin' ? '/signup' : '/signin',
+                    state: formData,
+                  }}
                 >
-                  {`${t('modules.signup.agreenment.privacy')}`}
-                </ButtonBase>
-                &nbsp;&&nbsp;
-                <ButtonBase
-                  component="a"
-                  color="inherit"
-                  className={classes.linkButton}
-                  onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}
-                >
-                  {t('modules.signup.agreenment.terms')}
-                </ButtonBase>
+                  <Box component="span" color="#006EFF" fontSize="14px">
+                    {t(`modules.${currentView === 'signin' ? 'signup' : 'signin'}.title`)}
+                  </Box>
+                </Link>
               </Box>
-            </Typography>
-          </Box>
-        </Box>
-        <Box mt="59px" mb="75px" mx="35px" display="flex" flexDirection="column" alignItems="center">
-          <Box flex={1}>
-            <Divider orientation="vertical" classes={{ root: classes.dividerRoot }} />
-          </Box>
-          <Box mt="8px" mb="10px">
-            <Typography>
-              <Box component="span" color="#5A5A5A">
-                or
+              <Box mb="20px" width="100%">
+                <PasswordLessForm
+                  isLoading={state.loading || passwordlessLoading}
+                  submitBtnText={t(`modules.${currentView}.title`)}
+                  defaultEmail={
+                    location.state
+                    && location.state.email ? location.state.email : undefined
+                  }
+                  onSubmit={handlePasswordLessFormSubmit}
+                  onChangeForm={(newFormData) => setFormData(newFormData)}
+                />
               </Box>
-            </Typography>
-          </Box>
-          <Box flex={1}>
-            <Divider light orientation="vertical" classes={{ root: classes.dividerRoot }} />
-          </Box>
-        </Box>
-        <Box flex={1} maxWidth={247} mt="59px">
-          <ThirdPartyAuth
-            isLoading={state.loading}
-            type={t(`modules.${currentView}.title`)}
-            onError={handleThirdPartyAuthError}
-            onCancel={() => setShowSplash(false)}
-            onSuccess={handleThirdPartyAuthSuccess}
-            onStartLoading={() => setShowSplash(true)}
-          />
-        </Box>
-        {
-          state.error && (
-            <Box
-              pl="10px"
-              pr="14px"
-              bottom={0}
-              border={1}
-              height={33}
-              display="flex"
-              color="#EF6A6E"
-              borderRadius={4}
-              bgcolor="#240F10"
-              alignSelf="center"
-              position="absolute"
-              alignItems="center"
-              borderColor="#EF6A6E"
-            >
-              <FontAwesomeIcon icon={faExclamationTriangle} />
-              <Box ml="7px" component="span" color="common.white">
-                {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
+              <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
+                <Typography color="inherit">
+                  <Box component="span" fontSize="12px">
+                    {`${t('modules.signup.agreenment.part1')} `}
+                    <ButtonBase
+                      component="a"
+                      color="inherit"
+                      className={classes.linkButton}
+                      onClick={() => openExternalLink(PRIVACY_POLICY_URL)}
+                    >
+                      {`${t('modules.signup.agreenment.privacy')}`}
+                    </ButtonBase>
+                    &nbsp;&&nbsp;
+                    <ButtonBase
+                      component="a"
+                      color="inherit"
+                      className={classes.linkButton}
+                      onClick={() => openExternalLink(TERMS_OF_SERVICE_URL)}
+                    >
+                      {t('modules.signup.agreenment.terms')}
+                    </ButtonBase>
+                  </Box>
+                </Typography>
               </Box>
             </Box>
-          )
-        }
-      </Box>
-    </div>
+            <Box mt="59px" mb="75px" mx="35px" display="flex" flexDirection="column" alignItems="center">
+              <Box flex={1}>
+                <Divider orientation="vertical" classes={{ root: classes.dividerRoot }} />
+              </Box>
+              <Box mt="8px" mb="10px">
+                <Typography>
+                  <Box component="span" color="#5A5A5A">
+                    or
+                  </Box>
+                </Typography>
+              </Box>
+              <Box flex={1}>
+                <Divider light orientation="vertical" classes={{ root: classes.dividerRoot }} />
+              </Box>
+            </Box>
+            <Box flex={1} maxWidth={247} mt="59px">
+              <ThirdPartyAuth
+                isLoading={state.loading}
+                type={t(`modules.${currentView}.title`)}
+                onError={handleThirdPartyAuthError}
+                onCancel={() => setShowSplash(false)}
+                onSuccess={handleThirdPartyAuthSuccess}
+                onStartLoading={() => setShowSplash(true)}
+              />
+            </Box>
+            {
+              state.error && (
+                <Box
+                  pl="10px"
+                  pr="14px"
+                  bottom={0}
+                  border={1}
+                  height={33}
+                  display="flex"
+                  color="#EF6A6E"
+                  borderRadius={4}
+                  bgcolor="#240F10"
+                  alignSelf="center"
+                  position="absolute"
+                  alignItems="center"
+                  borderColor="#EF6A6E"
+                >
+                  <FontAwesomeIcon icon={faExclamationTriangle} />
+                  <Box ml="7px" component="span" color="common.white">
+                    {t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
+                  </Box>
+                </Box>
+              )
+            }
+          </Box>
+        </div>
+      </Layout>
+    </>
   );
 };
 
