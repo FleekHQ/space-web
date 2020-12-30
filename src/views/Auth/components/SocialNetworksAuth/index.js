@@ -11,7 +11,7 @@ import Option from './Option';
 
 import * as constants from './constants';
 
-const ThirdPartyAuth = ({
+const SocialNetworksAuth = ({
   type,
   onError,
   onCancel,
@@ -104,7 +104,14 @@ const ThirdPartyAuth = ({
   const disabledOptions = state.loading || isLoading || isInitializing;
 
   return (
-    <>
+    <Box
+      flex={1}
+      maxWidth={247}
+      mt={{
+        xs: 0,
+        md: '59px',
+      }}
+    >
       <Option
         type={type}
         disabled={disabledOptions}
@@ -138,17 +145,17 @@ const ThirdPartyAuth = ({
           {t('common.comingSoon')}
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 
-ThirdPartyAuth.defaultProps = {
+SocialNetworksAuth.defaultProps = {
   isLoading: false,
   onCancel: () => null,
   onStartLoading: () => null,
 };
 
-ThirdPartyAuth.propTypes = {
+SocialNetworksAuth.propTypes = {
   isLoading: PropTypes.bool,
   onCancel: PropTypes.func,
   onStartLoading: PropTypes.func,
@@ -157,4 +164,4 @@ ThirdPartyAuth.propTypes = {
   type: PropTypes.oneOf([constants.SIGNIN, constants.SIGNUP]).isRequired,
 };
 
-export default ThirdPartyAuth;
+export default SocialNetworksAuth;

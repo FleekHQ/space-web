@@ -8,13 +8,11 @@ export default makeStyles((theme) => ({
       color: theme.palette.palette.gray18,
     },
   },
-  options: {
-    '& > div': {
-      marginBottom: 14,
+  btnDisabled: {
+    '&.MuiButton-contained': {
+      color: '#7B7B7B',
+      backgroundColor: '#373838',
     },
-  },
-  keyIcon: {
-    fontSize: 17,
   },
   iconButton: {
     width: 18,
@@ -23,10 +21,9 @@ export default makeStyles((theme) => ({
     fontSize: 14,
     color: theme.palette.palette.gray18,
   },
-  btnDisabled: {
-    '&.MuiButton-contained': {
-      color: '#7B7B7B',
-      backgroundColor: '#373838',
-    },
+  linkButton: {
+    marginTop: -2,
+    font: 'inherit',
+    textDecoration: 'underline',
   },
 }));
