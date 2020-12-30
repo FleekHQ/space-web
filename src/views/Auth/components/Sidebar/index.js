@@ -2,8 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
+import ListItem from '@material-ui/core/ListItem';
 
 import { SidebarContext } from '../../../../contexts';
 
@@ -38,13 +41,27 @@ const Sidebar = () => {
     >
       <Toolbar />
       <Box height="100%" display="flex" flexDirection="column">
-        {
-          sidebar.links.map((link) => (
-            <span key={link.id}>
-              {link.name}
-            </span>
-          ))
-        }
+        <List>
+          {
+            sidebar.links.map((link) => (
+              <li key={link.id}>
+                <ListItem
+                  button
+                  underline="none"
+                  href={link.to}
+                  component={Link}
+                  classes={{
+                    button: classes.itemBtn,
+                  }}
+                >
+                  <Box component="span" color="white" fontSize={20} fontWeight={500}>
+                    {link.name}
+                  </Box>
+                </ListItem>
+              </li>
+            ))
+          }
+        </List>
       </Box>
     </Drawer>
   );

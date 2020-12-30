@@ -3,15 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const DRAWER_WIDTH = 240;
 
 export default makeStyles((theme) => ({
-  active: {
-    backgroundColor: 'transparent',
-    color: theme.palette.primary.main,
-    '& .MuiListItemIcon-root': {
-      color: theme.palette.primary.main,
-    },
-  },
   paper: {
     boxShadow: theme.shadows[3],
+    backgroundColor: '#373a47',
   },
   drawer: {
     width: DRAWER_WIDTH,
@@ -34,6 +28,11 @@ export default makeStyles((theme) => ({
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1,
+    },
+  },
+  itemBtn: {
+    '&:hover': {
+      backgroundColor: 'transparent',
     },
   },
 }));
