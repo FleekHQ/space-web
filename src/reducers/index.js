@@ -18,6 +18,7 @@ import openPublicFileReducer from './open-public-file';
 import searchReducer from './search';
 import linkedAddressesReducer from './linked-addresses';
 import deleteObjectReducer from './delete-object';
+import toastReducer from './toast';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   linkedAddresses: linkedAddressesReducer,
   deleteObject: deleteObjectReducer,
+  toast: toastReducer,
 });
 
 /* eslint-disable no-param-reassign */

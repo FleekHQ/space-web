@@ -1,40 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
-import { useTranslation } from 'react-i18next';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Button from '@terminal-packages/space-ui/core/Button';
-import classnames from 'classnames';
-import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Typography from '@material-ui/core/Typography';
 
 import useStyles from './styles';
 
-const CopyLink = ({ url }) => {
+const CopyLink = ({ url, onClick, buttonText }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
-  const [showChecked, setShowChecked] = useState(false);
-  const [timerId, setTimerId] = useState(null);
 
-  const onClick = () => {
+  const handleOnClick = (e) => {
     copy(url);
-    setShowChecked(true);
-
-    clearTimeout(timerId);
-    const timer = setTimeout(() => {
-      setShowChecked(false);
-      setTimerId(null);
-    }, 3000);
-
-    setTimerId(timer);
+    onClick(e);
   };
-
-  useEffect(() => () => {
-    if (timerId) {
-      clearTimeout(timerId);
-    }
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -44,27 +23,13 @@ const CopyLink = ({ url }) => {
         className={classes.input}
       />
       <Button
-        onClick={onClick}
-        variant="primary"
-        className={classnames(classes.button, {
-          [classes.checkedButton]: showChecked,
-        })}
+        color="primary"
+        onClick={handleOnClick}
+        className={classes.button}
       >
-        {showChecked ? (
-          <>
-            <FontAwesomeIcon
-              icon={faCheck}
-              className={classes.iconCheck}
-            />
-            <Typography
-              className={classes.copiedText}
-            >
-              {t('modals.sharingModal.shareLink.copyLink')}
-            </Typography>
-          </>
-        ) : (
-          t('modals.sharingModal.shareLink.copyLink')
-        )}
+        <Box fontWeight={500}>
+          {buttonText}
+        </Box>
       </Button>
     </div>
   );
@@ -76,6 +41,8 @@ CopyLink.defaultProps = {
 
 CopyLink.propTypes = {
   url: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  buttonText: PropTypes.string.isRequired,
 };
 
 export default CopyLink;
