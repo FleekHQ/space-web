@@ -11,7 +11,6 @@ import Sidebar from '@shared/components/Sidebar';
 import Layout from '@terminal-packages/space-ui/core/Layout';
 
 import Files from './Files';
-import SharedWithMe from './SharedBy';
 import DetailsPanel from './DetailsPanel';
 import WelcomeMessages from './shared/components/WelcomeMessages';
 
@@ -35,13 +34,10 @@ const Storage = () => {
       <div className={classes.root}>
         <div className={classes.viewContent}>
           <Switch>
-            <Route path={`${match.path}/files/*`}>
+            <Route path={`${match.path}/*`}>
               <Files />
             </Route>
-            <Route path={`${match.path}/shared-by`}>
-              <SharedWithMe />
-            </Route>
-            <Redirect to={`${match.path}/files/`} />
+            <Redirect to={`${match.path}/`} />
           </Switch>
           <WelcomeMessages />
         </div>

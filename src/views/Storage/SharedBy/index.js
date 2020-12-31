@@ -5,11 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { fetchSharedObjects } from '@events/objects';
 import { useHistory, matchPath, useLocation } from 'react-router-dom';
 
+import Box from '@material-ui/core/Box';
 import Breadcrumbs from '@ui/Breadcrumbs';
+import Sidebar from '@shared/components/Sidebar';
 import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
+import Layout from '@terminal-packages/space-ui/core/Layout';
 import { openModal, FILE_LINK_PASSWORD } from '@shared/components/Modal/actions';
 
 import useStyles from './styles';
+import DetailsPanel from '../DetailsPanel';
 import SharedRenderRow from '../shared/ShareRenderRow';
 import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
 
@@ -21,7 +25,7 @@ const SharedWithMeView = () => {
   const { location } = history;
   const { t } = useTranslation();
 
-  const match = matchPath(location.pathname, { path: '/storage/shared-by/*' });
+  const match = matchPath(location.pathname, { path: '/shared/*' });
   const prefix = get(match, 'params.0', '') || '';
 
   useEffect(() => {
@@ -45,26 +49,35 @@ const SharedWithMeView = () => {
   const breadcrumbsItems = mapBreadcrumbs(t('navigation.shared-by'), location.pathname, history);
 
   return (
-    <div className={classes.root}>
-      <HeaderNav />
-      <FilesErrors
-        bucket="shared-with-me"
-        fetchObjects={fetchSharedObjects}
-      />
-      <Breadcrumbs
-        items={breadcrumbsItems}
-        history={history}
-      />
-      <FileTable
-        prefix={prefix}
-        disableRowOffset
-        bucket="shared-with-me"
-        baseRedirectUrl="/storage/shared-by"
-        fetchDir={fetchSharedObjects}
-        renderRow={SharedRenderRow}
-        type="shared"
-      />
-    </div>
+    <Layout
+      sidebar={<Sidebar />}
+    >
+      <Box display="flex" flexGrow={1}>
+        <div className={classes.viewContent}>
+          <div className={classes.root}>
+            <HeaderNav />
+            <FilesErrors
+              bucket="shared-with-me"
+              fetchObjects={fetchSharedObjects}
+            />
+            <Breadcrumbs
+              items={breadcrumbsItems}
+              history={history}
+            />
+            <FileTable
+              prefix={prefix}
+              disableRowOffset
+              bucket="shared-with-me"
+              baseRedirectUrl="/shared"
+              fetchDir={fetchSharedObjects}
+              renderRow={SharedRenderRow}
+              type="shared"
+            />
+          </div>
+        </div>
+        <DetailsPanel />
+      </Box>
+    </Layout>
   );
 };
 

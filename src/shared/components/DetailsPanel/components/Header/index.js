@@ -21,7 +21,7 @@ const DetailsPanelHeader = ({ objects }) => {
     const file = get(objects, '[0]', {}) || {};
     const fileBucket = file.sourceBucket || file.bucket;
     if (file.type === 'folder') {
-      const baseRedirectUrl = fileBucket === 'shared-with-me' ? '/storage/shared-by' : '/storage/files';
+      const baseRedirectUrl = fileBucket === 'shared-with-me' ? '/shared' : '/home';
       const redirectUrl = `${baseRedirectUrl}/${file.key}`;
       history.push(redirectUrl);
     } else {

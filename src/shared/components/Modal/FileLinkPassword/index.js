@@ -37,7 +37,7 @@ const FileLinkPassword = ({
     if (openPublicFileState.location) {
       closeModal();
       // remove fname and hash from qs
-      history.replace('/storage/shared-by');
+      history.replace('/shared');
     }
   }, [openPublicFileState.location]);
 

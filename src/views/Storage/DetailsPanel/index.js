@@ -29,8 +29,8 @@ const StorageDetailsPanel = () => {
     let prefix;
     let bucket;
 
-    const filesMatch = matchPath(location.pathname, { path: '/storage/files/*' });
-    const sharedBucketMatch = matchPath(location.pathname, { path: '/storage/shared-by*' });
+    const filesMatch = matchPath(location.pathname, { path: '/home/*' });
+    const sharedBucketMatch = matchPath(location.pathname, { path: '/shared*' });
 
     if (filesMatch) {
       bucket = 'personal';

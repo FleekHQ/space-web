@@ -36,7 +36,7 @@ const RenderRow = ({
   const classes = useStyles({ progress: 0.4, rowIndex });
   const { t } = useTranslation();
 
-  const match = matchPath(location.pathname, { path: '/storage/files/*' });
+  const match = matchPath(location.pathname, { path: '/home/*' });
   const currentPath = get(match, 'params.0', '') || '';
 
   const rowDoubleClickHandler = handleDoubleRowClick({ row });

@@ -56,10 +56,10 @@ const SharedBy = () => {
             objectsList={bucket.objects.slice(0, MAX_SHOWN_OBJECTS)}
             showViewAllBtn={bucket.objects.length > MAX_SHOWN_OBJECTS}
             onViewAllClick={() => {
-              history.push(`/storage/shared-by/${bucket.name}`);
+              history.push(`/shared/${bucket.name}`);
             }}
             onObjectClick={(obj) => {
-              history.push(`/storage/shared-by/${bucket.name}/${obj.name}`);
+              history.push(`/shared/${bucket.name}/${obj.name}`);
             }}
             i18n={i18n}
           />
@@ -70,7 +70,7 @@ const SharedBy = () => {
   return (
     <div className={classes.root}>
       {/* Todo: Remove this */}
-      <Link to="/storage/shared-by/bucket-test">Bucket test</Link>
+      <Link to="/shared/bucket-test">Bucket test</Link>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className={classes.masonryGrid}
