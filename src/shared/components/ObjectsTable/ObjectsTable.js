@@ -45,7 +45,6 @@ const ObjectsTable = ({
   };
   const [contextState, setContextState] = React.useState(initialContextState);
 
-  const wrapperRef = React.useRef(null);
   const [filtersDirection, setFiltersDirection] = useState({
     name: 'desc',
     size: 'desc',
@@ -209,19 +208,6 @@ const ObjectsTable = ({
   const handleContextClose = () => {
     setContextState(initialContextState);
   };
-  const handleTableOutsideClick = (event) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      onOutsideClick(event.target);
-    }
-  };
-
-  React.useEffect(() => {
-    document.addEventListener('click', handleTableOutsideClick);
-
-    return () => {
-      document.removeEventListener('click', handleTableOutsideClick);
-    };
-  }, [sortedRows]);
 
   const sortButtonOnClick = (id) => {
     if (currentFilter === id) {
@@ -296,81 +282,80 @@ const ObjectsTable = ({
         disabled={!onDropzoneDrop}
         objectsList={getDropzoneObjsList()}
       >
-        <div ref={wrapperRef}>
-          <Table
-            head={withRowOptions ? [...heads, { width: 43 }] : heads}
-            rows={sortedRows}
-            className={classes.root}
-            renderLoadingRows={renderLoadingRows}
-            loading={loading}
-            renderHead={({ head = [] }) => (
-              <TableRow>
-                {head.map(({
-                  width,
-                  title,
-                  isSortable,
-                  id,
-                  paddingLeft = 0,
-                }) => (
-                  <TableCell
-                    key={title || 'options'}
-                    className={classes.headerCell}
-                    width={width}
-                    style={{ paddingLeft }}
-                  >
-                    {isSortable ? (
-                      <ButtonBase
-                        className={classes.sortButton}
-                        onClick={() => sortButtonOnClick(id)}
-                      >
-                        <Typography variant="body2">
-                          {title}
-                        </Typography>
-                        {(currentFilter === id) && (
-                          <FontAwesomeIcon
-                            icon={(filtersDirection[currentFilter] === 'desc') ? faLongArrowDown : faLongArrowUp}
-                            className={classes.filterDirectionIcon}
-                          />
-                        )}
-                      </ButtonBase>
-                    ) : (
+        <Table
+          head={withRowOptions ? [...heads, { width: 43 }] : heads}
+          rows={sortedRows}
+          className={classes.root}
+          renderLoadingRows={renderLoadingRows}
+          onOutsideClick={onOutsideClick}
+          loading={loading}
+          renderHead={({ head = [] }) => (
+            <TableRow>
+              {head.map(({
+                width,
+                title,
+                isSortable,
+                id,
+                paddingLeft = 0,
+              }) => (
+                <TableCell
+                  key={title || 'options'}
+                  className={classes.headerCell}
+                  width={width}
+                  style={{ paddingLeft }}
+                >
+                  {isSortable ? (
+                    <ButtonBase
+                      className={classes.sortButton}
+                      onClick={() => sortButtonOnClick(id)}
+                    >
                       <Typography variant="body2">
                         {title}
                       </Typography>
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            )}
-            renderRow={({ row, rowIndex }) => (
-              <RenderRow
-                row={row}
-                rowIndex={rowIndex}
-                disableOffset={disableRowOffset}
-                arrowOnClick={() => arrowOnClick(row)}
-                handleRowClick={handleRowClick}
-                handleRowRightClick={handleRowRightClick}
-                handleDoubleRowClick={handleDoubleRowClick}
-                rowClasses={classes}
-              />
-            )}
-          />
-          <Popper
-            open={contextState.mouseY !== null}
-            onClose={handleContextClose}
-            onClickAway={handleContextClose}
-            style={{
-              top: contextState.mouseY,
-              left: contextState.mouseX,
-            }}
-          >
-            <ContextMenu
-              onClickAway={handleContextClose}
-              menuItemOnClick={menuItemOnClick}
-              items={contextMenuItems}
+                      {(currentFilter === id) && (
+                        <FontAwesomeIcon
+                          icon={(filtersDirection[currentFilter] === 'desc') ? faLongArrowDown : faLongArrowUp}
+                          className={classes.filterDirectionIcon}
+                        />
+                      )}
+                    </ButtonBase>
+                  ) : (
+                    <Typography variant="body2">
+                      {title}
+                    </Typography>
+                  )}
+                </TableCell>
+              ))}
+            </TableRow>
+          )}
+          renderRow={({ row, rowIndex }) => (
+            <RenderRow
+              row={row}
+              rowIndex={rowIndex}
+              disableOffset={disableRowOffset}
+              arrowOnClick={() => arrowOnClick(row)}
+              handleRowClick={handleRowClick}
+              handleRowRightClick={handleRowRightClick}
+              handleDoubleRowClick={handleDoubleRowClick}
+              rowClasses={classes}
             />
-          </Popper>
-        </div>
+          )}
+        />
+        <Popper
+          open={contextState.mouseY !== null}
+          onClose={handleContextClose}
+          onClickAway={handleContextClose}
+          style={{
+            top: contextState.mouseY,
+            left: contextState.mouseX,
+          }}
+        >
+          <ContextMenu
+            onClickAway={handleContextClose}
+            menuItemOnClick={menuItemOnClick}
+            items={contextMenuItems}
+          />
+        </Popper>
         {!loading && !sortedRows.length && <EmptyState />}
       </Dropzone>
     </div>
