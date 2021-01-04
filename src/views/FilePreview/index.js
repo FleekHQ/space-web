@@ -3,11 +3,10 @@ import { useParams } from 'react-router-dom';
 
 const FilePreview = () => {
   const { hash } = useParams();
-  console.log('hash: ', hash);
 
   return (
     <div>
-      FilePreview
+      FilePreview for file: {`${hash}`}
     </div>
   );
 };
