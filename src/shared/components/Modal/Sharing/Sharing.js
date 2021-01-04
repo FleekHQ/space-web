@@ -9,12 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
+import { openToast } from '@shared/components/Toast/actions';
 import { shareFiles, generatePublicFileLink } from '@events/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 import { openModal, SHARE_PROGRESS_TOAST } from '@shared/components/Modal/actions';
 
 import useStyles from './styles';
-import getOptions from './options';
+import getOptions, { getShareLinkOptions } from './options';
 import {
   getCollaboratorsInfo,
   mapIdentitiesToCollaborators,
@@ -54,8 +55,18 @@ const SharingModal = (props) => {
     identities,
   );
 
-  const [step, setStep] = useState(0);
   const [usernames, setUsernames] = useState([]);
+  const [shareLinkOptions, setShareLinkOptions] = useState(getShareLinkOptions(t));
+
+  const selectedShareLinkOption = shareLinkOptions.find(
+    (option) => option.selected,
+  ) || shareLinkOptions[0];
+
+  // TODO: call SDK event to change type of sharing link
+  const onShareLinkOptionClick = (option) => setShareLinkOptions(shareLinkOptions.map((opt) => ({
+    ...opt,
+    selected: opt.id === option.id,
+  })));
 
   const { error } = publicFileLink;
 
@@ -130,12 +141,6 @@ const SharingModal = (props) => {
   };
 
   React.useEffect(() => {
-    if (publicFileLink.linkInfo.link) {
-      setStep(2);
-    }
-  }, [publicFileLink.linkInfo.link]);
-
-  React.useEffect(() => {
     fetchRecentlyMembers();
 
     return () => {
@@ -191,19 +196,17 @@ const SharingModal = (props) => {
         className={classes.footer}
       >
         <ShareLink
-          step={step}
-          onSave={onSave}
-          defaultStep={step}
-          onReset={() => setStep(1)}
-          onCreateLink={() => setStep(1)}
-          loading={get(publicFileLink, 'loading')}
-          url={get(publicFileLink, 'linkInfo.link')}
-          onCancel={() => {
-            setStep(0);
-            dispatch({
-              type: PUBLIC_LINK_ACTION_TYPES.PUBLIC_LINK_ON_RESTART,
-            });
+          options={shareLinkOptions}
+          onClickCopyLink={() => dispatch(openToast({
+            message: t('modals.sharingModal.shareLink.linkCopied'),
+          }))}
+          i18n={{
+            title: t('modals.sharingModal.shareLink.title'),
+            copyLink: t('modals.sharingModal.shareLink.copyLink'),
           }}
+          icon={selectedShareLinkOption.id}
+          onOptionClick={onShareLinkOptionClick}
+          url={get(publicFileLink, 'linkInfo.link', 'space.app-documents/techdocsv2.docx')}
         />
       </Paper>
       {error && (

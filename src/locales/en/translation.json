@@ -299,13 +299,13 @@
         "failedShare": "Failed to share file, please try again."
       },
       "shareLink": {
-        "title": "Share via Password Protected Link",
-        "resetLink": "Reset link",
-        "createLink": "Create Link",
-        "passwordPlaceholder": "Enter password for link",
+        "title": "get Link",
         "copyLink": "Copy Link",
-        "tooltipContent": "This password is used by the receiving user to open the file being sent. Do not use your Space password.",
-        "tooltipButton": "Okay"
+        "public": "Public",
+        "publicDescription": "Anyone with this link can view",
+        "private": "Only people invited",
+        "privateDescription": "Only people added to this file can access this link",
+        "linkCopied": "Link copied"
       }
     },
     "settings": {

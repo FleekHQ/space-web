@@ -1,37 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles({
   root: {
     display: 'flex',
     alignItems: 'center',
   },
   input: {
-    height: 28,
+    height: 34,
     width: '100%',
   },
   button: {
-    height: 28,
-    fontSize: 12,
-    padding: '0 11px',
-    marginLeft: 5,
-    minWidth: 100,
+    marginLeft: 14,
+    paddingLeft: 0,
+    paddingRight: 0,
   },
-  checkedButton: {
-    backgroundColor: `${theme.palette.palette.green2} !important`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '&:hover': {
-      backgroundColor: `${theme.palette.palette.green2}EE !important`,
-    },
-  },
-  iconCheck: {
-    color: theme.palette.palette.white,
-    fontSize: 15,
-    marginRight: 3,
-  },
-  copiedText: {
-    color: theme.palette.palette.white,
-    fontSize: 12,
-  },
-}));
+});

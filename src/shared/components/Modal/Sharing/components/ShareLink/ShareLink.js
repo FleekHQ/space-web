@@ -1,52 +1,108 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
-import { useTranslation } from 'react-i18next';
+import Box from '@material-ui/core/Box';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
+import { faGlobe } from '@fortawesome/pro-light-svg-icons/faGlobe';
+import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
+import { faUserFriends } from '@fortawesome/pro-regular-svg-icons/faUserFriends';
+import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 
 import useStyles from './styles';
-import getContent from './get-content';
+import { CopyLink } from './components';
 
 const ShareLink = (props) => {
   const {
     url,
-    step,
-    onSave,
-    onReset,
-    loading,
-    onCancel,
-    onCreateLink,
+    i18n,
+    icon,
+    options,
+    onOptionClick,
+    onClickCopyLink,
   } = props;
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const classes = useStyles();
-  const { t } = useTranslation();
+  const classes = useStyles({ icon });
 
-  const content = getContent({
-    url,
-    step,
-    onSave,
-    loading,
-    onReset,
-    onCancel,
-    onCreateLink,
-  });
+  const handleClose = () => setAnchorEl(null);
+  const selectedOption = options.find((option) => option.selected) || options[0];
+
+  const iconComponent = icon === 'public' ? faGlobe : faUserFriends;
+
+  const handleItemClick = (item) => {
+    handleClose();
+    onOptionClick(item);
+  };
 
   return (
     <div>
       <div className={classes.header}>
+        <FontAwesomeIcon
+          icon={faLink}
+          className={classes.titleIcon}
+        />
         <Typography variant="body1" weight="medium">
-          {t('modals.sharingModal.shareLink.title')}
+          {i18n.title}
         </Typography>
-        {step === 2 && (
-          <ButtonBase onClick={onReset}>
-            <Typography variant="body2" weight="medium" color="textSecondary">
-              {t('modals.sharingModal.shareLink.resetLink')}
-            </Typography>
-          </ButtonBase>
-        )}
       </div>
       <div className={classes.content}>
-        { content }
+        <CopyLink
+          url={url}
+          buttonText={i18n.copyLink}
+          onClick={onClickCopyLink}
+        />
+      </div>
+      <div className={classes.optionsContainer}>
+        <div className={classes.iconContainer}>
+          <FontAwesomeIcon icon={iconComponent} />
+        </div>
+        <ButtonBase
+          className={classes.optionsButton}
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+        >
+          <Typography variant="body1">
+            <Box fontWeight={500}>
+              {selectedOption.title}
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={classes.arrowIcon}
+              />
+            </Box>
+          </Typography>
+          <Typography variant="body2" color="secondary">
+            {selectedOption.description}
+          </Typography>
+        </ButtonBase>
+        <Menu
+          keepMounted
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          open={Boolean(anchorEl)}
+          getContentAnchorEl={null}
+          classes={{ paper: classes.paper }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        >
+          {options.map((option) => (
+            <MenuItem
+              key={option.id}
+              onClick={() => handleItemClick(option)}
+            >
+              <div className={classes.optionsIconContainer}>
+                {option.selected && (
+                  <FontAwesomeIcon icon={faCheck} />
+                )}
+              </div>
+              <Typography variant="body1">
+                {option.title}
+              </Typography>
+            </MenuItem>
+          ))}
+        </Menu>
       </div>
     </div>
   );
@@ -54,17 +110,24 @@ const ShareLink = (props) => {
 
 ShareLink.defaultProps = {
   url: null,
-  loading: false,
+  icon: 'private',
 };
 
 ShareLink.propTypes = {
   url: PropTypes.string,
-  loading: PropTypes.bool,
-  step: PropTypes.number.isRequired,
-  onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onCreateLink: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired,
+  onOptionClick: PropTypes.func.isRequired,
+  onClickCopyLink: PropTypes.func.isRequired,
+  icon: PropTypes.oneOf(['public', 'private']),
+  options: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    selected: PropTypes.bool,
+  })).isRequired,
+  i18n: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    copyLink: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default ShareLink;
