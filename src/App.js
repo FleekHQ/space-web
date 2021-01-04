@@ -8,6 +8,7 @@ import createSpaceTheme from '@terminal-packages/space-ui/core/theme';
 
 import DragableBar from '@shared/components/DragableBar';
 import RegisterEvents from '@events';
+import Toast from '@shared/components/Toast';
 
 import {
   Route,
@@ -56,6 +57,7 @@ const App = () => (
             <Redirect to="/home" />
           </Switch>
         </Router>
+        <Toast />
       </Box>
     </ThemeProvider>
   </Provider>

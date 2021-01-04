@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
   footer: {
     marginTop: 10,
     marginBottom: 2,
-    padding: '12px 25px',
+    padding: '12px 25px 22px',
   },
   error: {
     marginTop: 10,

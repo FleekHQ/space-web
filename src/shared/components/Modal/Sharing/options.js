@@ -25,3 +25,18 @@ export default (t, withRemoveOption = false) => {
     },
   ];
 };
+
+export const getShareLinkOptions = (t) => [
+  {
+    id: 'private',
+    title: t('modals.sharingModal.shareLink.private'),
+    description: t('modals.sharingModal.shareLink.privateDescription'),
+    selected: true,
+  },
+  {
+    id: 'public',
+    title: t('modals.sharingModal.shareLink.public'),
+    description: t('modals.sharingModal.shareLink.publicDescription'),
+    selected: false,
+  },
+];
