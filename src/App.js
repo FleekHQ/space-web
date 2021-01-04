@@ -20,6 +20,7 @@ import Modal from '@shared/components/Modal';
 import store from './store';
 import Auth from './views/Auth';
 import Splash from './views/Splash';
+import FilePreview from './views/FilePreview';
 import Storage from './views/Storage';
 import Shared from './views/Storage/SharedBy';
 import EmailLinkAuth from './views/Auth/EmailLinkAuth';
@@ -47,6 +48,9 @@ const App = () => (
             </Route>
             <Route path="/splash">
               <Splash />
+            </Route>
+            <Route path="/file/:hash">
+              <FilePreview />
             </Route>
             <PrivateRoute path="/home">
               <Storage />
