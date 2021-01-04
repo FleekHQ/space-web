@@ -91,7 +91,7 @@ const Auth = () => {
 
   React.useEffect(() => {
     if (state.success) {
-      history.push('/storage');
+      history.push('/home');
     }
   }, [state.success]);
 

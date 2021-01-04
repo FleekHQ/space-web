@@ -77,8 +77,8 @@ export default function useAuth0Passwordless() {
       let stateFields = {};
 
       try {
-        hash = location.hash.substr(1);
-        const hashParams = hash.split('&').reduce((params, item) => {
+        hash = location.hash.split('#');
+        const hashParams = hash[hash.length - 1].split('&').reduce((params, item) => {
           const [key, value] = item.split('=');
 
           return {
@@ -96,8 +96,8 @@ export default function useAuth0Passwordless() {
       }
 
       return {
-        hash,
         stateFields,
+        hash: hash[hash.length - 1],
       };
     },
   };
