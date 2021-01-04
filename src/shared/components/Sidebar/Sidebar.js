@@ -36,7 +36,7 @@ const Sidebar = () => {
     state.linkedAddresses,
   ]);
 
-  const match = matchPath(location.pathname, { path: '/storage/files/*' });
+  const match = matchPath(location.pathname, { path: '/home/*' });
   const prefix = get(match, 'params.0', '');
 
   return (

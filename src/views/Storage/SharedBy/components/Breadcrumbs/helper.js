@@ -1,4 +1,4 @@
-const DEFAULT_SHARED_BY_ROUTE = '/storage/shared-by';
+const DEFAULT_SHARED_BY_ROUTE = '/shared';
 
 const { PUBLIC_URL } = process.env;
 

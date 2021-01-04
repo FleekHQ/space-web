@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import path from 'path';
+// import path from 'path';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -70,7 +70,7 @@ const FileTable = ({
 
   const getRedirectUrl = (row) => {
     const folderPath = row.key.replace(prefix, '');
-    return path.posix.join(baseRedirectUrl, prefix, folderPath);
+    return `${baseRedirectUrl}/${prefix}${folderPath}`;
   };
 
   useEffect(() => {
@@ -104,7 +104,7 @@ FileTable.defaultProps = {
   renderRow: RenderRow,
   EmptyState: () => null,
   disableRowOffset: false,
-  baseRedirectUrl: '/storage/files',
+  baseRedirectUrl: '/home',
   type: 'personal',
 };
 

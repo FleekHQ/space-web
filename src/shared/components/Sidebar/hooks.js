@@ -1,20 +1,21 @@
 import { matchPath, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+// TODO: remove it if not necessary
 const getDefaultConfig = (location) => ([
   {
     key: 'storage',
     icon: 'files',
-    to: '/storage/files',
+    to: '/home',
     active: !!matchPath(location.pathname, { path: '/storage' }),
     subNav: [
       {
         key: 'files',
-        to: '/storage/files',
+        to: '/home',
       },
       {
         key: 'shared-by',
-        to: '/storage/shared-by',
+        to: '/shared',
       },
     ],
   },
@@ -26,21 +27,29 @@ export const useNavigations = () => {
   const { t } = useTranslation();
 
   const generalNav = getDefaultConfig(location);
-  const { key, subNav } = generalNav.find((navItem) => navItem.active) || {
+  const { key } = generalNav.find((navItem) => navItem.active) || {
     key: '',
     subNav: [],
   };
-  const specificNavList = subNav.map((navItem) => ({
-    ...navItem,
-    text: t(`navigation.${navItem.key}`),
-    active: !!matchPath(location.pathname, { path: navItem.to }),
-  }));
 
   return {
     generalNav,
     specificNav: {
       title: t(`navigation.${key}`),
-      list: specificNavList,
+      list: [
+        {
+          key: 'home',
+          text: 'Files',
+          to: '/home',
+          active: !!matchPath(location.pathname, { path: '/home' }),
+        },
+        {
+          key: 'shared',
+          text: 'Shared',
+          to: '/shared',
+          active: !!matchPath(location.pathname, { path: '/shared' }),
+        },
+      ],
     },
   };
 };

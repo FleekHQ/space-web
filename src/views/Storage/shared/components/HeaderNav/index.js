@@ -46,8 +46,8 @@ const HeaderNav = () => {
       : item.key.split('/').slice(0, -1);
 
     const basePath = item.sourceBucket === 'personal'
-      ? '/storage/files'
-      : '/storage/shared-by';
+      ? '/home'
+      : '/shared';
 
     const redirectPath = path.posix.join(basePath, ...folderPath);
     const isSamePath = matchPath(redirectPath, { path: _history.location.pathname, exact: true });

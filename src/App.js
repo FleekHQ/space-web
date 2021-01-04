@@ -21,6 +21,7 @@ import store from './store';
 import Auth from './views/Auth';
 import Splash from './views/Splash';
 import Storage from './views/Storage';
+import Shared from './views/Storage/SharedBy';
 import EmailLinkAuth from './views/Auth/EmailLinkAuth';
 import PrivateRoute from './shared/components/PrivateRoute';
 
@@ -47,10 +48,13 @@ const App = () => (
             <Route path="/splash">
               <Splash />
             </Route>
-            <PrivateRoute path="/storage">
+            <PrivateRoute path="/home">
               <Storage />
             </PrivateRoute>
-            <Redirect to="/storage" />
+            <PrivateRoute path="/shared">
+              <Shared />
+            </PrivateRoute>
+            <Redirect to="/home" />
           </Switch>
         </Router>
         <Toast />

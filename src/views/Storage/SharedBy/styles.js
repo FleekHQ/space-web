@@ -10,4 +10,9 @@ export default makeStyles({
   breadcrumbs: {
     margin: '11px 18px 1px',
   },
+  viewContent: {
+    display: 'flex',
+    position: 'relative',
+    flexDirection: 'column',
+  },
 });
