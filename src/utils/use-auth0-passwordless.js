@@ -87,7 +87,9 @@ export default function useAuth0Passwordless() {
           };
         }, {});
 
-        stateFields = JSON.parse(window.atob(decodeURIComponent(hashParams.state)));
+        stateFields = JSON.parse(
+          window.atob(decodeURIComponent(decodeURIComponent(hashParams.state))),
+        );
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(`Error when trying to get torus passwordless login payload: ${error.message}`);
