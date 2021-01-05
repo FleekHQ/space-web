@@ -4,7 +4,7 @@
 - Change 2
 - Change 3
 
-## Type of changes included:
+### Type of changes included:
 
 - [ ] Components
 - [ ] Business Logic
@@ -12,21 +12,21 @@
 - [ ] Styling
 - [ ] Code Refactor
 
-## Clubhouse Tickets Related:
+### Clubhouse Tickets Related:
 
 - Ticket 1
 - Ticket 2
 - Ticket 3
 
-## Screenshots:
+### Screenshots:
 
 *Place you changes screenshots here*
 
-## Notes:
+### Notes:
 
 *Place special notes here*
 
-## Tested on:
+### Tested on:
 
 - [ ] Chrome
 - [ ] Firefox
