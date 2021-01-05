@@ -18,7 +18,7 @@
 - Ticket 2
 - Ticket 3
 
-### Screenshots:
+### Screenshots/Gifs:
 
 *Place you changes screenshots here*
 
