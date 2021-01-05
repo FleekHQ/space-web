@@ -1,16 +1,30 @@
 ## Changelog
 
-## Changes included:
+- Change 1
+- Change 2
+- Change 3
+
+## Type of changes included:
 
 - [ ] Components
 - [ ] Business Logic
-- [ ] Bug fixing
+- [ ] Bug fixes
 - [ ] Styling
 - [ ] Code Refactor
 
+## Clubhouse Tickets Related:
+
+- Ticket 1
+- Ticket 2
+- Ticket 3
+
 ## Screenshots:
 
+*Place you changes screenshots here*
+
 ## Notes:
+
+*Place special notes here*
 
 ## Tested on:
 
