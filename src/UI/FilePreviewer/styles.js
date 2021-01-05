@@ -9,7 +9,7 @@ export default makeStyles(() => ({
     alignItems: 'center',
   },
   image: {
-    maxWidth: '100%',
+    minWidth: 500,
   },
   iframe: {
     width: '100%',
