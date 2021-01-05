@@ -34,18 +34,20 @@ const Topbar = () => {
     <AppBar elevation={0} position="fixed" className={classes.appBar}>
       <Toolbar classes={{ root: classes.toolbarRoot }}>
         <Box display="flex" alignItems="center" flex={1} justifyContent="space-between" height={36}>
-          <Link
-            to="/"
-            component={ReactRouterLink}
-            classes={{ root: classes.logoLink }}
-          >
-            <img height={35} src={`${process.env.PUBLIC_URL}/assets/images/space_text.svg`} alt="logo" />
-          </Link>
+          <Box ml={2}>
+            <Link
+              to="/"
+              component={ReactRouterLink}
+              classes={{ root: classes.logoLink }}
+            >
+              <img height={35} src={`${process.env.PUBLIC_URL}/assets/images/space_text.svg`} alt="logo" />
+            </Link>
+          </Box>
           <Hidden smDown>
             <Box flex={1} display="flex" justifyContent="center">
               {
                 sidebarState.links.map((link) => (
-                  <Box key={link.id} component="span" color="white" fontSize={15} px="20px" fontWeight={500}>
+                  <Box key={link.id} component="span" color="white" fontSize={15} px={2} fontWeight={500}>
                     <Link color="inherit" underline="hover" href={link.to}>
                       {link.name}
                     </Link>
