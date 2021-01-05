@@ -1,78 +1,154 @@
-// Uncomment once payload parameter is ussed
-/* eslint-disable no-unused-vars */
-import store from '../store';
-import { SIGNUP_ACTION_TYPES } from '../reducers/auth/signup';
-import { SIGNIN_ACTION_TYPES } from '../reducers/auth/signin';
+import { sdk, apiClient } from '@clients';
+
+import { AUTH_ACTION_TYPES } from '../reducers/auth';
+import { USER_ACTION_TYPES } from '../reducers/user';
 
 const registerAuthEvents = () => {
+};
+
+export const signout = (user) => async (dispatch) => {
+  try {
+    const { users } = await sdk;
+    if (!users) {
+      return;
+    }
+
+    const userIdentity = users.list().find((u) => {
+      const pubKey = Buffer.from(u.identity.public.pubKey).toString('hex');
+
+      return pubKey === user.publicKey;
+    });
+
+    if (userIdentity) {
+      await users.remove(userIdentity.identity.public.toString());
+    }
+
+    dispatch({
+      type: USER_ACTION_TYPES.ON_USER_LOGOUT,
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error when trying remove identity: ${error.message}`);
+  }
 };
 
 /**
  * User signin
  * @param {Object} payload
- * @param {string=} payload.username
- * @param {string=} payload.password
  * @param {Object=} payload.torusRes
  */
-export const signin = (payload) => {
-  store.dispatch({
-    type: SIGNIN_ACTION_TYPES.ON_SUBMIT,
+export const signin = (payload) => async (dispatch) => {
+  dispatch({
+    type: AUTH_ACTION_TYPES.ON_AUTHENTICATION,
   });
-  // TODO: remove mock
-  const user = {
-    username: '',
-    uuid: '1f43cec7-472b-47d8-b4ec-08d1d8f5e687',
-    address: '0x9fa66f2cc560cbeaf85cb6ce6756ba77f655',
-    publicKey: '4a0d2893c9e57839195acb5dfb818c9782f89136ff6d5a4dcea9626c3d74d502',
-  };
-  if (payload.torusRes) {
-    user.address = payload.torusRes.publicAddress;
-  } else {
-    user.username = payload.username;
-  }
 
-  store.dispatch({
-    user,
-    type: SIGNIN_ACTION_TYPES.ON_SUBMIT_SUCCESS,
-  });
+  try {
+    const { users } = await sdk;
+    const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;
+
+    const { data } = await apiClient.identities.getByAddress({
+      token: '',
+      addresses: [payload.torusRes.publicAddress],
+    });
+
+    await users.recoverKeysByPassphrase(
+      data.data.uuid,
+      payload.torusRes.privateKey,
+      backupType,
+    );
+
+    dispatch({
+      type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
+      user: {
+        ...data.data,
+      },
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('SIGNIN_ERROR_EVENT', error);
+
+    let message = error.message || '';
+
+    if (
+      (error.code && error.code === 2)
+        || (error.response && error.response.data)
+    ) {
+      message = 'modules.signin.errors.invalid';
+    }
+
+    dispatch({
+      error: message,
+      type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_ERROR,
+    });
+  }
 };
 
 /**
  * User signup
  * @param {Object} payload
- * @param {string=} payload.username
- * @param {string=} payload.password
  * @param {Object=} payload.torusRes
  */
-export const signup = (payload) => {
-  store.dispatch({
-    type: SIGNUP_ACTION_TYPES.ON_SUBMIT,
+export const signup = (payload) => async (dispatch) => {
+  dispatch({
+    type: AUTH_ACTION_TYPES.ON_AUTHENTICATION,
   });
-  // TODO: remove mock
-  setTimeout(() => {
-    const user = {
-      username: '',
-      uuid: '1f43cec7-472b-47d8-b4ec-08d1d8f5e687',
-      address: '0x9fa66f2cc560cbeaf85cb6ce6756ba77f655',
-      publicKey: '4a0d2893c9e57839195acb5dfb818c9782f89136ff6d5a4dcea9626c3d74d502',
-    };
-    if (payload.torusRes) {
-      user.address = payload.torusRes.publicAddress;
-    } else {
-      user.username = payload.username;
+
+  try {
+    const { users } = await sdk;
+    const identity = await users.createIdentity();
+    const spaceUser = await users.authenticate(identity);
+    const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;
+
+    const { data } = await apiClient.identity.update({
+      token: spaceUser.token,
+      displayName: payload.torusRes.userInfo.name,
+    });
+
+    await users.backupKeysByPassphrasese(
+      data.data.uuid,
+      payload.torusRes.privateKey,
+      backupType,
+      identity,
+    );
+
+    await apiClient.identity.addEthAddress({
+      token: spaceUser.token,
+      address: payload.torusRes.publicAddress,
+      provider: payload.torusRes.userInfo.typeOfLogin,
+      metadata: {
+        name: payload.torusRes.userInfo.name,
+        email: payload.torusRes.userInfo.email,
+        nickname: payload.torusRes.userInfo.nickname,
+      },
+    });
+
+    dispatch({
+      type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
+      user: {
+        ...data.data,
+      },
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('SIGNUP_ERROR_EVENT', error);
+
+    let message = error.message || '';
+
+    if (error.response && error.response.data) {
+      if (error.response.status === 404) {
+        message = 'modules.signup.errors.identity';
+      }
+
+      if (error.response.status === 409) {
+        message = 'modules.signup.errors.username';
+      }
     }
 
-    store.dispatch({
-      user,
-      type: SIGNIN_ACTION_TYPES.ON_SUBMIT_SUCCESS,
+    dispatch({
+      error: message,
+      type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_ERROR,
     });
-  }, 1000);
-};
-
-export const checkUsername = (payload) => {
-};
-
-export const restoreKeyPairViaMnemonic = (payload) => {
+  }
 };
 
 export default registerAuthEvents;

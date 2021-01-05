@@ -11,8 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
 import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 
-import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
-import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { AUTH_ACTION_TYPES } from '@reducers/auth';
 
 import useStyles from './styles';
 
@@ -53,10 +52,7 @@ const EmailAuth = ({
 
     return () => {
       dispatch({
-        type: SIGNUP_ACTION_TYPES.ON_RESET,
-      });
-      dispatch({
-        type: SIGNIN_ACTION_TYPES.ON_RESET,
+        type: AUTH_ACTION_TYPES.ON_RESET,
       });
     };
   }, []);

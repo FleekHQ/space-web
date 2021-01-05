@@ -28,11 +28,9 @@ const Sidebar = () => {
 
   const [
     user,
-    signoutState,
     linkedAddresses,
   ] = useSelector((state) => [
     state.user,
-    state.auth.signout,
     state.linkedAddresses,
   ]);
 
@@ -46,12 +44,12 @@ const Sidebar = () => {
       platform={process.platform}
       navLinks={specificNav.list}
       account={{
-        signoutState,
+        signoutState: { success: false },
         items: getAccountItems(t),
         label: t('account.personal'),
         onUserLogout: getOnUserLogout(dispatch),
         onSignoutReset: getOnSignoutReset(dispatch),
-        onMenuItemClick: getAccountItemClick(dispatch, linkedAddresses),
+        onMenuItemClick: getAccountItemClick({ user, dispatch, linkedAddresses }),
         account: {
           membersNumber: 0,
           id: user.username,

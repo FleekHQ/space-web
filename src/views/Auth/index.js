@@ -6,8 +6,8 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 
 import config from '@config';
-import { signup, signin } from '@events';
-import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { signin, signup } from '@events';
+import { AUTH_ACTION_TYPES } from '@reducers/auth';
 import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
 
 import Layout from './components/Layout';
@@ -26,6 +26,7 @@ const Auth = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const state = useSelector((s) => s.auth);
   const { checkIdentityByEthKey } = useWsChallenge();
   const { isInitializing, torusTriggerLogin } = useTorusSdk(config.torus.sdkConfig);
   const {
@@ -35,12 +36,6 @@ const Auth = () => {
   } = useAuth0Passwordless();
 
   const [showSplash, setShowSplash] = React.useState(false);
-  const state = useSelector((s) => ({
-    ...s.auth.signup,
-    error: s.auth.signup.error || s.auth.signin.error,
-    success: s.auth.signup.success || s.auth.signin.success,
-    loading: s.auth.signup.loading || s.auth.signin.loading,
-  }));
 
   const currentView = match.params[0];
 
@@ -69,13 +64,13 @@ const Auth = () => {
   const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
     setShowSplash(true);
     if (keyNotExists) {
-      signup({
+      dispatch(signup({
         torusRes,
-      });
+      }));
       return;
     }
 
-    signin({ torusRes });
+    dispatch(signin({ torusRes }));
   };
 
   /**
@@ -85,15 +80,15 @@ const Auth = () => {
     setShowSplash(false);
     dispatch({
       error: `modules.signup.errors.${errorKey}`,
-      type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
+      type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_ERROR,
     });
   };
 
   React.useEffect(() => {
-    if (state.success) {
+    if (state.isAuthenticated) {
       history.push('/home');
     }
-  }, [state.success]);
+  }, [state.isAuthenticated]);
 
   React.useEffect(() => {
     if (location.hash) {
@@ -116,13 +111,13 @@ const Auth = () => {
             const { identityExists } = await checkIdentityByEthKey(torusRes);
 
             if (identityExists) {
-              signin({
+              dispatch(signin({
                 torusRes,
-              });
+              }));
               return;
             }
 
-            signup({ torusRes });
+            dispatch(signup({ torusRes }));
           } catch (error) {
             setShowSplash(false);
 
@@ -133,7 +128,7 @@ const Auth = () => {
 
             dispatch({
               error: `modules.signup.errors.${errorKey}`,
-              type: SIGNUP_ACTION_TYPES.ON_SUBMIT_ERROR,
+              type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_ERROR,
             });
           }
         };
@@ -181,7 +176,7 @@ const Auth = () => {
           >
             <EmailAuth
               currentView={currentView}
-              isLoading={state.loading || passwordlessLoading}
+              isLoading={state.isAuthenticating || passwordlessLoading}
               submitBtnText={t(`modules.${currentView}.title`)}
               defaultEmail={
                 location.state
@@ -191,7 +186,7 @@ const Auth = () => {
             />
             <Separator />
             <SocialNetworksAuth
-              isLoading={state.loading}
+              isLoading={state.isAuthenticating}
               type={t(`modules.${currentView}.title`)}
               onError={handleThirdPartyAuthError}
               onCancel={() => setShowSplash(false)}
@@ -199,9 +194,9 @@ const Auth = () => {
               onStartLoading={() => setShowSplash(true)}
             />
             {
-              state.error && (
+              state.authenticatingError && (
                 <ErrorMessage
-                  message={t(state.error, { defaultValue: t('modules.signup.errors.generic') })}
+                  message={t(state.authenticatingError, { defaultValue: t('modules.signup.errors.generic') })}
                 />
               )
             }

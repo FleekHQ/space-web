@@ -1,10 +1,9 @@
-import { testKeysAndDelete } from '@events';
+import { signout } from '@events';
 import { USER_ACTION_TYPES } from '@reducers/user';
-import { SIGNOUT_ACTION_TYPES } from '@reducers/auth/signout';
 import { faCog } from '@fortawesome/pro-regular-svg-icons/faCog';
 import { faSignOut } from '@fortawesome/pro-regular-svg-icons/faSignOut';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
-import { openModal, SETTINGS_MODAL, SIGNOUT_CONFIRMATION } from '@shared/components/Modal/actions';
+import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 
 export const MENU_DROPDOWN_ITEMS = {
   help: 'help',
@@ -33,15 +32,15 @@ export const getMenuDropdownItems = (t) => [
   },
 ];
 
-export const getOnUserLogout = (dispatch) => () => dispatch({
-  type: USER_ACTION_TYPES.ON_USER_LOGOUT,
-});
+export const getOnUserLogout = (dispatch) => () => {
+  dispatch({
+    type: USER_ACTION_TYPES.ON_USER_LOGOUT,
+  });
+};
 
-export const getOnSignoutReset = (dispatch) => () => dispatch({
-  type: SIGNOUT_ACTION_TYPES.ON_SIGNOUT_RESET,
-});
+export const getOnSignoutReset = () => () => {};
 
-export const getOnMenuItemClick = (dispatch, linkedAddresses) => (item) => {
+export const getOnMenuItemClick = ({ user, dispatch }) => (item) => {
   if (item.id === MENU_DROPDOWN_ITEMS.settings) {
     dispatch(openModal(SETTINGS_MODAL));
     return;
@@ -52,11 +51,5 @@ export const getOnMenuItemClick = (dispatch, linkedAddresses) => (item) => {
     return;
   }
 
-  // we only ask for a password if the user DOES NOT have google/twitter account
-  if (linkedAddresses.data.length === 0) {
-    dispatch(openModal(SIGNOUT_CONFIRMATION));
-    return;
-  }
-
-  testKeysAndDelete();
+  dispatch(signout(user));
 };

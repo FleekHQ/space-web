@@ -39,7 +39,7 @@
           ["@shared", "./src/shared"],
           ["@events", "./src/events"],
           ["@reducers", "./src/reducers"],
-          ["@electron-store", "./src/electron-store"]
+          ["@clients", "./src/clients"]
         ]
       }
     }
