@@ -53,6 +53,11 @@ storiesOf(categoryName, module).add('Topbar', () => {
   };
 
   return (
-    <Topbar {...defaultProps} />
+    <div style={{
+      height: '500px',
+      backgroundColor: 'rgba(0, 0, 0, .85)',
+    }}>
+      <Topbar {...defaultProps} />
+    </div>
   );
 });

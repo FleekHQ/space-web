@@ -4,7 +4,6 @@ export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
     color: theme.palette.palette.white,
     padding: '15px 22px',
   },
