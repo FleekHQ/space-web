@@ -45,7 +45,7 @@ function getByUsername(payload) {
   });
 }
 
-module.exports = {
+export default {
   getByAddress,
   getByUsername,
 };

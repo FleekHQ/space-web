@@ -1,7 +1,7 @@
-const axios = require('axios');
+import axios from 'axios';
 
-const identityEndpoints = require('./endpoints/identity');
-const identitiesEndpoints = require('./endpoints/identities');
+import identityEndpoints from './endpoints/identity';
+import identitiesEndpoints from './endpoints/identities';
 
 /**
  * @class
@@ -55,4 +55,4 @@ function Client({
   }), {});
 }
 
-module.exports = Client;
+export default Client;
