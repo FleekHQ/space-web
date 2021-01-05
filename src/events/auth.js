@@ -71,7 +71,7 @@ export const signin = (payload) => async (dispatch) => {
 
     if (
       (error.code && error.code === 2)
-        || (error.response && error.response.data)
+      || (error.response && error.response.data)
     ) {
       message = 'modules.signin.errors.invalid';
     }
@@ -104,7 +104,7 @@ export const signup = (payload) => async (dispatch) => {
       displayName: payload.torusRes.userInfo.name,
     });
 
-    await users.backupKeysByPassphrasese(
+    await users.backupKeysByPassphrase(
       data.data.uuid,
       payload.torusRes.privateKey,
       backupType,
