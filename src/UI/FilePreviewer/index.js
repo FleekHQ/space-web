@@ -4,8 +4,16 @@ import useStyles from './styles';
 
 const FilePreviewer = ({
   url,
+  isImage,
 }) => {
   const classes = useStyles();
+  if (isImage) {
+    return (
+      <div className={classes.imgContainer}>
+        <img src={url} className={classes.image} />
+      </div>
+    );
+  }
 
   return (
     <iframe
@@ -18,6 +26,7 @@ const FilePreviewer = ({
 
 FilePreviewer.propTypes = {
   url: PropTypes.string.isRequired,
+  isImage: PropTypes.bool.isRequired,
 };
 
 export default FilePreviewer;
