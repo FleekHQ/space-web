@@ -17,7 +17,7 @@ const ThirdPartyAuthOption = ({
   return (
     <Box
       mb="23px"
-      height={36}
+      height={43}
       tabIndex="0"
       width="100%"
       role="button"

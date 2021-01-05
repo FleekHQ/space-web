@@ -102,6 +102,7 @@ const EmailAuth = ({
             type="submit"
             loading={isLoading && email.length > 0}
             classes={{
+              root: classes.btnRoot,
               disabled: classes.btnDisabled,
             }}
             disabled={isLoading || email.length === 0 || !EMAIL_REGEX.test(email)}

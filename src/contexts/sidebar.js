@@ -32,11 +32,6 @@ const SidebarContextProvider = ({ children }) => {
         to: '/faqs',
         name: 'FAQ',
       },
-      {
-        id: 'changelog',
-        to: '/changelog',
-        name: 'Changelog',
-      },
     ],
   });
 

@@ -8,6 +8,9 @@ export default makeStyles((theme) => ({
       color: theme.palette.palette.gray18,
     },
   },
+  btnRoot: {
+    height: 41,
+  },
   btnDisabled: {
     '&.MuiButton-contained': {
       color: '#7B7B7B',

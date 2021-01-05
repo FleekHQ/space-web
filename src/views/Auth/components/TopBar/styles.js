@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   appBar: {
+    height: 96,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -9,11 +10,14 @@ export default makeStyles((theme) => ({
     }),
   },
   toolbarRoot: {
-    paddingTop: 22,
+    height: 96,
+    padding: '0 16px',
     backgroundColor: '#151515',
   },
   authBtnRoot: {
-    width: 79,
+    width: 87,
+    height: 44,
+    fontSize: 16,
     fontWeight: 600,
     padding: '10px 14px',
     color: theme.palette.common.white,
