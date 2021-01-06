@@ -3,6 +3,8 @@ import { Users, BrowserStorage, UserStorage } from '@spacehq/sdk';
 
 /** @type {Users} */
 let users;
+
+/** @type {UserStorage} */
 let storage;
 
 /**
