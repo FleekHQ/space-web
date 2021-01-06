@@ -1,7 +1,11 @@
-import { Users, BrowserStorage } from '@spacehq/sdk';
+/* eslint-disable */
+import { Users, BrowserStorage, UserStorage } from '@spacehq/sdk';
 
 /** @type {Users} */
 let users;
+
+/** @type {UserStorage} */
+let storage;
 
 /**
  * @typedef {Object} Sdk
@@ -9,9 +13,10 @@ let users;
  * @returns {Sdk}
  */
 const init = async () => {
-  if (typeof users !== 'undefined') {
+  if (typeof users !== 'undefined' && typeof storage !== 'undefined') {
     return {
       users,
+      storage,
     };
   }
 
@@ -28,8 +33,12 @@ const init = async () => {
     console.log('identity', identity);
   });
 
+  const usersList = users.list();
+  storage = new UserStorage(usersList[0]);
+
   return {
     users,
+    storage,
   };
 };
 
