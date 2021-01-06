@@ -19,7 +19,7 @@ const init = async () => {
   }
 
   users = await Users.withStorage(new BrowserStorage(), {
-    endpoint: 'wss://gqo1oqz055.execute-api.us-west-2.amazonaws.com/dev',
+    endpoint: 'wss://auth-dev.space.storage',
     vaultServiceConfig: {
       serviceUrl: 'https://vault-dev.space.storage',
       saltSecret: 'WXpKd2JrMUlUbXhhYW10M1RWUkNlV0Z0YkhCYU1tUn',
