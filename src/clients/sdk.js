@@ -1,7 +1,9 @@
-import { Users, BrowserStorage } from '@spacehq/sdk';
+/* eslint-disable */
+import { Users, BrowserStorage, UserStorage } from '@spacehq/sdk';
 
 /** @type {Users} */
 let users;
+let storage;
 
 /**
  * @typedef {Object} Sdk
@@ -9,14 +11,15 @@ let users;
  * @returns {Sdk}
  */
 const init = async () => {
-  if (typeof users !== 'undefined') {
+  if (typeof users !== 'undefined' && typeof storage !== 'undefined') {
     return {
       users,
+      storage,
     };
   }
 
   users = await Users.withStorage(new BrowserStorage(), {
-    endpoint: 'wss://auth-dev.space.storage',
+    endpoint: 'wss://gqo1oqz055.execute-api.us-west-2.amazonaws.com/dev',
     vaultServiceConfig: {
       serviceUrl: 'https://vault-dev.space.storage',
       saltSecret: 'WXpKd2JrMUlUbXhhYW10M1RWUkNlV0Z0YkhCYU1tUn',
@@ -28,8 +31,12 @@ const init = async () => {
     console.log('identity', identity);
   });
 
+  const usersList = users.list();
+  storage = new UserStorage(usersList[0]);
+
   return {
     users,
+    storage,
   };
 };
 
