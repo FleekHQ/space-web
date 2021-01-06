@@ -33,7 +33,14 @@ const Topbar = () => {
   return (
     <AppBar elevation={0} position="fixed" className={classes.appBar}>
       <Toolbar classes={{ root: classes.toolbarRoot }}>
-        <Box display="flex" alignItems="center" flex={1} justifyContent="space-between" height={36}>
+        <Box
+          flex={1}
+          height={36}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          fontFamily="Inter"
+        >
           <Box ml={2}>
             <Link
               to="/"
@@ -47,7 +54,7 @@ const Topbar = () => {
             <Box flex={1} display="flex" justifyContent="center">
               {
                 sidebarState.links.map((link) => (
-                  <Box key={link.id} component="span" color="white" fontSize={15} px={2} fontWeight={500}>
+                  <Box key={link.id} component="span" color="white" fontSize={15} px={2} fontWeight={600}>
                     <Link color="inherit" underline="hover" href={link.to}>
                       {link.name}
                     </Link>

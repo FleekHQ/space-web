@@ -67,7 +67,7 @@ const EmailAuth = ({
         justifyContent="space-between"
       >
         <Typography>
-          <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
+          <Box component="span" fontSize="24px" fontWeight={600} color="common.white" fontFamily="Inter">
             {t(`modules.${currentView}.title`)}
           </Box>
         </Typography>
@@ -79,7 +79,7 @@ const EmailAuth = ({
             state: formData,
           }}
         >
-          <Box component="span" color="#006EFF" fontSize="14px">
+          <Box component="span" color="#006EFF" fontSize="14px" fontFamily="Inter">
             {t(`modules.${currentView === 'signin' ? 'signup' : 'signin'}.title`)}
           </Box>
         </Link>
@@ -115,7 +115,7 @@ const EmailAuth = ({
         currentView === 'signup' && (
           <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
             <Typography color="inherit">
-              <Box component="span" fontSize="12px">
+              <Box component="span" fontSize="12px" fontFamily="Inter">
                 {`${t('modules.signup.agreenment.part1')} `}
                 <ButtonBase
                   component="a"

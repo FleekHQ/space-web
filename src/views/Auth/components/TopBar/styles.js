@@ -19,6 +19,7 @@ export default makeStyles((theme) => ({
     height: 44,
     fontSize: 16,
     fontWeight: 600,
+    fontFamily: 'Inter',
     padding: '10px 14px',
     color: theme.palette.common.white,
   },
