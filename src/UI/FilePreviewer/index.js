@@ -10,7 +10,7 @@ const FilePreviewer = ({
   if (isImage) {
     return (
       <div className={classes.imgContainer}>
-        <img alt="image-preview" src={url} className={classes.image} />
+        <img alt="file-preview" src={url} className={classes.image} />
       </div>
     );
   }
