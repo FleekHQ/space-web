@@ -10,7 +10,7 @@ const FilePreviewer = ({
   if (isImage) {
     return (
       <div className={classes.imgContainer}>
-        <img src={url} className={classes.image} />
+        <img alt="image-preview" src={url} className={classes.image} />
       </div>
     );
   }
@@ -20,8 +20,8 @@ const FilePreviewer = ({
       className={classes.iframe}
       title="document-preview"
       src={url}
-  />
-  )
+    />
+  );
 };
 
 FilePreviewer.propTypes = {
