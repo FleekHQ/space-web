@@ -28,11 +28,6 @@ export const createFolder = async (payload) => {
   const folderPath = path.length === 0 ? folderName : `${path}/${folderName}`;
 
   try {
-    console.log('payload', {
-      bucket,
-      path: folderPath,
-    });
-
     await storage.createFolder({
       bucket,
       path: folderPath,
