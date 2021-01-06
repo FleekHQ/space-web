@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
+import { Link as ReactRouterLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
-import { useRouteMatch, Link as ReactRouterLink } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
@@ -18,10 +18,7 @@ import useStyles from './styles';
 
 const Topbar = () => {
   const classes = useStyles();
-  const match = useRouteMatch();
   const [sidebarState, setSidebar] = React.useContext(SidebarContext);
-
-  const currentView = match.params[0];
 
   // eslint-disable-next-line no-unused-vars
   const handleMenuClick = (event) => {
@@ -36,19 +33,28 @@ const Topbar = () => {
   return (
     <AppBar elevation={0} position="fixed" className={classes.appBar}>
       <Toolbar classes={{ root: classes.toolbarRoot }}>
-        <Box display="flex" alignItems="center" flex={1} justifyContent="space-between" height={36}>
-          <Link
-            to="/"
-            component={ReactRouterLink}
-            classes={{ root: classes.logoLink }}
-          >
-            <img height={35} src={`${process.env.PUBLIC_URL}/assets/images/space_text.svg`} alt="logo" />
-          </Link>
+        <Box
+          flex={1}
+          height={36}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          fontFamily="Inter"
+        >
+          <Box ml={2}>
+            <Link
+              to="/"
+              component={ReactRouterLink}
+              classes={{ root: classes.logoLink }}
+            >
+              <img height={35} src={`${process.env.PUBLIC_URL}/assets/images/space_text.svg`} alt="logo" />
+            </Link>
+          </Box>
           <Hidden smDown>
             <Box flex={1} display="flex" justifyContent="center">
               {
                 sidebarState.links.map((link) => (
-                  <Box key={link.id} component="span" color="white" fontSize={14} px="20px">
+                  <Box key={link.id} component="span" color="white" fontSize={15} px={2} fontWeight={600}>
                     <Link color="inherit" underline="hover" href={link.to}>
                       {link.name}
                     </Link>
@@ -63,9 +69,7 @@ const Topbar = () => {
                 color="inherit"
                 to="/signin"
                 component={ReactRouterLink}
-                className={clsx(classes.authBtnRoot, {
-                  [classes.rainbowBg]: currentView === 'signin',
-                })}
+                className={classes.authBtnRoot}
               >
                 Sign In
               </Button>
@@ -74,9 +78,7 @@ const Topbar = () => {
                   color="inherit"
                   to="/signup"
                   component={ReactRouterLink}
-                  className={clsx(classes.authBtnRoot, {
-                    [classes.rainbowBg]: currentView === 'signup',
-                  })}
+                  className={clsx(classes.authBtnRoot, classes.rainbowBg)}
                 >
                   Sign Up
                 </Button>

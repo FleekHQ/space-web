@@ -17,7 +17,7 @@ const ThirdPartyAuthOption = ({
   return (
     <Box
       mb="23px"
-      height={36}
+      height={43}
       tabIndex="0"
       width="100%"
       role="button"
@@ -50,7 +50,7 @@ const ThirdPartyAuthOption = ({
             {icon}
           </Box>
           <Typography>
-            <Box component="span" color={disabled ? '#616161' : 'common.white'} fontSize="14px">
+            <Box component="span" color={disabled ? '#616161' : 'common.white'} fontSize="14px" fontFamily="Inter">
               {text}
             </Box>
           </Typography>

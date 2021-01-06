@@ -8,6 +8,10 @@ export default makeStyles((theme) => ({
       color: theme.palette.palette.gray18,
     },
   },
+  btnRoot: {
+    height: 41,
+    fontFamily: 'Inter',
+  },
   btnDisabled: {
     '&.MuiButton-contained': {
       color: '#7B7B7B',
@@ -23,7 +27,7 @@ export default makeStyles((theme) => ({
   },
   linkButton: {
     marginTop: -2,
-    font: 'inherit',
+    fontFamily: 'Inter',
     textDecoration: 'underline',
   },
 }));

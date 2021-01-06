@@ -11,8 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
 import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
 
-import { SIGNIN_ACTION_TYPES } from '@reducers/auth/signin';
-import { SIGNUP_ACTION_TYPES } from '@reducers/auth/signup';
+import { AUTH_ACTION_TYPES } from '@reducers/auth';
 
 import useStyles from './styles';
 
@@ -53,10 +52,7 @@ const EmailAuth = ({
 
     return () => {
       dispatch({
-        type: SIGNUP_ACTION_TYPES.ON_RESET,
-      });
-      dispatch({
-        type: SIGNIN_ACTION_TYPES.ON_RESET,
+        type: AUTH_ACTION_TYPES.ON_RESET,
       });
     };
   }, []);
@@ -71,7 +67,7 @@ const EmailAuth = ({
         justifyContent="space-between"
       >
         <Typography>
-          <Box component="span" fontSize="24px" fontWeight={600} color="common.white">
+          <Box component="span" fontSize="24px" fontWeight={600} color="common.white" fontFamily="Inter">
             {t(`modules.${currentView}.title`)}
           </Box>
         </Typography>
@@ -83,7 +79,7 @@ const EmailAuth = ({
             state: formData,
           }}
         >
-          <Box component="span" color="#006EFF" fontSize="14px">
+          <Box component="span" color="#006EFF" fontSize="14px" fontFamily="Inter">
             {t(`modules.${currentView === 'signin' ? 'signup' : 'signin'}.title`)}
           </Box>
         </Link>
@@ -106,6 +102,7 @@ const EmailAuth = ({
             type="submit"
             loading={isLoading && email.length > 0}
             classes={{
+              root: classes.btnRoot,
               disabled: classes.btnDisabled,
             }}
             disabled={isLoading || email.length === 0 || !EMAIL_REGEX.test(email)}
@@ -118,7 +115,7 @@ const EmailAuth = ({
         currentView === 'signup' && (
           <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
             <Typography color="inherit">
-              <Box component="span" fontSize="12px">
+              <Box component="span" fontSize="12px" fontFamily="Inter">
                 {`${t('modules.signup.agreenment.part1')} `}
                 <ButtonBase
                   component="a"
