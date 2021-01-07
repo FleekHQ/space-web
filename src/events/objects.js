@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import get from 'lodash/get';
 import { objectPresenter } from '@utils';
+import { sdk } from '@clients';
 import {
   STORE_DIR,
   STORE_OBJECTS,
@@ -133,7 +134,8 @@ export const fetchObjects = (bucket = 'personal') => {
   });
 };
 
-export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true) => {
+/* eslint-disable */
+export const fetchDir = async (path = '', bucket = 'personal', fetchSubFolders = true) => {
   store.dispatch({
     payload: {
       loading: true,
@@ -141,6 +143,34 @@ export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true)
     },
     type: SET_LOADING_STATE_BUCKET,
   });
+
+  const { storage } = await sdk;
+
+  try {
+    const { items: entries } = await storage.listDirectory({
+      path,
+      bucket,
+      recursive: false,
+    });
+
+    const objects = entries.map((entry) => objectPresenter({
+      bucket,
+      name: entry.name,
+      isDir: entry.isDir,
+      created: '2020-12-30T14:28:21-03:00',
+      updated: '2020-12-30T14:28:21-03:00',
+      ipfsHash: 'bafybeidx3joqde735fdx7i4ayelrwemvuok5k3veq5crywnutgb5cxym3u',
+      sizeInBytes: entry.size,
+      backupCount: 1,
+      fileExtension: '',
+      isLocallyAvailable: true,
+      members: [],
+    }));
+
+    console.log('objects', objects);
+  } catch (error) {
+    console.error(error);
+  }
 
   // TODO: remove mock
   setTimeout(() => {
