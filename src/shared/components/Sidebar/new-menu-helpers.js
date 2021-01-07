@@ -48,7 +48,7 @@ const openDialog = async ({ dispatch, prefix, type }) => {
         name: file.name,
         size: file.size,
         data: file.stream(),
-        path: file.webkitRelativePath || file.name,
+        path: prefix.length === 0 ? file.webkitRelativePath || file.name : `${prefix}/${file.webkitRelativePath || file.name}`,
       }));
 
       dispatch(addItems({
