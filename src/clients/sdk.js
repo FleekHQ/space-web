@@ -10,6 +10,7 @@ let storage;
 /**
  * @typedef {Object} Sdk
  * @property {Users} users
+ * @property {UserStorage} storage
  * @returns {Sdk}
  */
 const init = async () => {
