@@ -1,4 +1,4 @@
-import get from 'lodash/get';
+import { fileToBase64 } from '@utils';
 import { updateIdentity, uploadProfilePic } from '@events/account';
 
 import { openModal, PROMPT_MODAL, DELETE_ACCOUNT } from '../../../actions';
@@ -53,12 +53,15 @@ export default ({
     dispatch(openModal(PROMPT_MODAL, modalProps));
   };
 
-  const onChangeImage = (e) => {
-    const imagePath = get(e, 'target.files[0].path');
+  /* eslint-disable no-console */
+  const onChangeImage = async (e) => {
+    try {
+      const file = await fileToBase64(e.target.files[0]);
 
-    uploadProfilePic({
-      imagePath,
-    });
+      uploadProfilePic({ file });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onDeleteAccount = (e) => {
