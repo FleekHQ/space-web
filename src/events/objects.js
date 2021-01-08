@@ -1,7 +1,8 @@
 // Uncomment once payload parameter is ussed
 /* eslint-disable no-unused-vars */
 import get from 'lodash/get';
-import { objectPresenter } from '@utils';
+import { sdk } from '@clients';
+import { objectPresenter, typedArrayToUrl } from '@utils';
 import {
   STORE_DIR,
   STORE_OBJECTS,
@@ -120,6 +121,52 @@ export const deleteObject = (payload) => {
   store.dispatch({
     type: DELETE_OBJECT_ACTION_TYPES.ON_SUBMIT,
   });
+};
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.bucket
+ * @param {string} payload.path
+ * @param {string} payload.mimeType
+ */
+export const getFileUrlFromInterable = async (payload) => {
+  const chunks = [];
+  const { storage } = await sdk;
+
+  const response = await storage.openFile(payload);
+
+  /* eslint-disable no-restricted-syntax */
+  for await (const chunk of response.stream) {
+    chunks.push(chunk);
+  }
+
+  const bufferLength = chunks.reduce((acc, chunk) => chunk.length + acc, 0);
+  const fileArray = new Uint8Array(bufferLength);
+
+  let index = 0;
+  chunks.forEach((chunk) => {
+    fileArray.set(chunk, index);
+    index += chunk.length;
+  });
+
+  // TODO: replace payload.mimeType by openFile response.mimeType (need BE integration first)
+  return typedArrayToUrl([fileArray.buffer], payload.mimeType);
+};
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.bucket
+ * @param {string} payload.path
+ * @param {string} payload.mimeType
+ */
+export const getFileUrl = async (payload) => {
+  const { storage } = await sdk;
+
+  const response = await storage.openFile(payload);
+  const fileBytes = await response.consumeStream();
+
+  // TODO: replace payload.mimeType by openFile response.mimeType (need BE integration first)
+  return typedArrayToUrl([fileBytes.buffer], payload.mimeType);
 };
 
 export default registerObjectsEvents;
