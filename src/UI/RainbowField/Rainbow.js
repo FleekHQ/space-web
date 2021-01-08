@@ -107,14 +107,14 @@ const RainbowField = (props) => {
 };
 
 RainbowField.defaultProps = {
-  errorMsg: undefined,
+  errorMsg: null,
   error: false,
-  onChange: undefined,
-  onBlur: undefined,
-  onFocus: undefined,
-  isDark: undefined,
-  className: undefined,
-  endAdornment: undefined,
+  onChange: null,
+  onBlur: null,
+  onFocus: null,
+  isDark: null,
+  className: null,
+  endAdornment: null,
 };
 
 RainbowField.propTypes = {
