@@ -31,3 +31,4 @@
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Safari
+- [ ] Brave
