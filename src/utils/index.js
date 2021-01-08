@@ -14,3 +14,4 @@ export { default as useAuth0Passwordless } from './use-auth0-passwordless';
 export { default as getTabulations } from './get-tabulations';
 export { default as useDoubleClick } from './use-double-click';
 export { default as createErrorObject } from './create-error-objects';
+export { default as fileToBase64 } from './file-to-base64';
