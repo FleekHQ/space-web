@@ -83,11 +83,9 @@ export const getLinkedAddresses = () => async (dispatch) => {
     const { users } = await sdk;
 
     const { token } = users.list()[0];
-    console.log('token', token);
     const { data } = await apiClient.identity.getLinkedAddresses({
       token,
     });
-    console.log('data', data);
 
     dispatch({
       addresses: data.data,
@@ -110,7 +108,59 @@ export const getLinkedAddresses = () => async (dispatch) => {
  * @param {string} payload.provider
  * @param {string} payload.uuid
  */
-export const addLinkedAddress = () => {
+export const addLinkedAddress = (payload) => async (dispatch) => {
+  try {
+    const { users } = await sdk;
+    const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;
+
+    const spaceUser = users.list()[0];
+    await users.backupKeysByPassphrase(
+      payload.uuid,
+      payload.torusRes.privateKey,
+      backupType,
+      spaceUser.identity,
+    );
+
+    await apiClient.identity.addEthAddress({
+      token: spaceUser.token,
+      address: payload.torusRes.publicAddress,
+      provider: payload.provider,
+      metadata: {
+        name: payload.torusRes.userInfo.name,
+        email: payload.torusRes.userInfo.email,
+        nickname: payload.torusRes.userInfo.nickname,
+      },
+    });
+
+    dispatch({
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_ADD_NEW_LINKED_ADDRESS_SUCCESS,
+      payload: {
+        uuid: payload.uuid,
+        address: payload.torusRes.publicAddress,
+        provider: payload.provider,
+        createdAt: new Date().toISOString(),
+        metadata: {
+          name: payload.torusRes.userInfo.name,
+          email: payload.torusRes.userInfo.email,
+          nickname: payload.torusRes.userInfo.nickname,
+        },
+      },
+    });
+  } catch (error) {
+    console.error('ADD_LINKED_ADDRESS_ERROR_EVENT', error);
+    let message = error.message || '';
+
+    if (error.response && error.response.data) {
+      if (error.response.status === 409) {
+        message = error.response.data.error;
+      }
+    }
+
+    dispatch({
+      error: message,
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_ADD_NEW_LINKED_ADDRESS_ERROR,
+    });
+  }
 };
 
 export default registerAccountEvents;

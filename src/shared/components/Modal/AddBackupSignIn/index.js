@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
-import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
+// import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
 import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import classnames from 'classnames';
 import { OPTION_IDS } from './constants';
@@ -37,11 +37,6 @@ const AddBackUpSignIn = ({
       text: t('addBackupSignIn.email'),
       icon: faEnvelope,
     },
-    [OPTION_IDS.USERNAME]: {
-      id: OPTION_IDS.USERNAME,
-      text: t('addBackupSignIn.username'),
-      imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
-    },
     [OPTION_IDS.GOOGLE]: {
       id: OPTION_IDS.GOOGLE,
       text: t('addBackupSignIn.google'),
@@ -52,12 +47,17 @@ const AddBackUpSignIn = ({
       text: t('addBackupSignIn.twitter'),
       imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Twitter_Logo_Blue.svg',
     },
+    /* [OPTION_IDS.USERNAME]: {
+      id: OPTION_IDS.USERNAME,
+      text: t('addBackupSignIn.username'),
+      imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
+    },
     [OPTION_IDS.SEED_PHRASE]: {
       id: OPTION_IDS.SEED_PHRASE,
       text: t('addBackupSignIn.seedPhrase'),
       text2: t('addBackupSignIn.morePrivate'),
       icon: faKey,
-    },
+    }, */
   };
 
   const optionList = options.map((id) => signInMethods[id]);

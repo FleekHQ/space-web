@@ -119,4 +119,7 @@ export default makeStyles((theme) => ({
   error: {
     color: theme.palette.palette.red,
   },
+  continue: {
+    width: 101,
+  },
 }));
