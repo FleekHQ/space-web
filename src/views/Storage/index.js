@@ -5,6 +5,7 @@ import {
   Redirect,
   useRouteMatch,
 } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { getLinkedAddresses, subscribeToStreams } from '@events';
 
 import Sidebar from '@shared/components/Sidebar';
@@ -19,11 +20,12 @@ import useStyles from './styles';
 const Storage = () => {
   const classes = useStyles();
   const match = useRouteMatch();
+  const dispatch = useDispatch();
 
   // pre-fetching data for Settings
   // subscribing to streams, which occurs only for a logged in user
   useEffect(() => {
-    getLinkedAddresses();
+    dispatch(getLinkedAddresses());
     subscribeToStreams();
   }, []);
 

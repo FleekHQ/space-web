@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
 import AddBackUpSignIn from '@shared/components/Modal/AddBackupSignIn';
 import classnames from 'classnames';
+import config from '@config';
 import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
@@ -48,7 +49,7 @@ const Security = ({ t }) => {
   const classes = useStyles();
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const { torusTriggerLogin } = useTorusSdk();
+  const { torusTriggerLogin } = useTorusSdk(config.torus.sdkConfig);
   const [user, linkedAddresses] = useSelector((reduxState) => [
     reduxState.user,
     reduxState.linkedAddresses,

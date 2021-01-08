@@ -1,5 +1,4 @@
-// Uncomment once payload parameter is ussed
-/* eslint-disable no-unused-vars, no-console */
+/* eslint-disable no-console */
 import { sdk, apiClient } from '@clients';
 
 import store from '../store';
@@ -73,16 +72,35 @@ export const updateIdentity = async (payload) => {
  * @param {string} payload.username
  * @param {string} payload.password
  */
-export const createUsernameAndPassword = (payload) => {
+export const createUsernameAndPassword = () => {
   store.dispatch({
     type: USER_ACTION_TYPES.ON_CREATE_PASSWORD_AND_USERNAME,
   });
 };
 
-export const getLinkedAddresses = () => {
-  store.dispatch({
-    type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES,
-  });
+export const getLinkedAddresses = () => async (dispatch) => {
+  try {
+    const { users } = await sdk;
+
+    const { token } = users.list()[0];
+    console.log('token', token);
+    const { data } = await apiClient.identity.getLinkedAddresses({
+      token,
+    });
+    console.log('data', data);
+
+    dispatch({
+      addresses: data.data,
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_SUCCESS,
+    });
+  } catch (error) {
+    console.error('GET_LINKED_ADDRESSES_ERROR_EVENT', error);
+
+    dispatch({
+      error,
+      type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_ERROR,
+    });
+  }
 };
 
 /**
@@ -92,7 +110,7 @@ export const getLinkedAddresses = () => {
  * @param {string} payload.provider
  * @param {string} payload.uuid
  */
-export const addLinkedAddress = (payload) => {
+export const addLinkedAddress = () => {
 };
 
 export default registerAccountEvents;
