@@ -50,7 +50,7 @@ const StorageDetailsPanel = () => {
     );
 
     const selectedObjs = objs.filter(({ selected }) => selected);
-
+    console.log(selectedObjs);
     return {
       user: state.user,
       objectsType: OBJECT_TYPES.files,

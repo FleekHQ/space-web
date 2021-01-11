@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const HORIZONTAL_PADDING = 22;
+export const HORIZONTAL_PADDING = 0;
 
 export default makeStyles({
   root: {

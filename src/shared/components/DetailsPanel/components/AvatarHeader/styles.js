@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
   root: {
-    padding: '26px 22px 18px',
+    padding: '26px 0px 18px',
   },
   avatarList: {
     display: 'flex',
