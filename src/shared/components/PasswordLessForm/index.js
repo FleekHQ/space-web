@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import Box from '@material-ui/core/Box';
 import Button from '@terminal-packages/space-ui/core/Button';
-import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
+import RainbowField from '@ui/RainbowField';
 
 import useStyles from './styles';
 
