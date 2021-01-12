@@ -13,8 +13,8 @@ import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 
-const DetailsPanelHeader = ({ objects }) => {
-  const classes = useStyles();
+const DetailsPanelHeader = ({ objects, viewMode }) => {
+  const classes = useStyles({ viewMode });
   const { t } = useTranslation();
   const allFolders = objects.filter((obj) => obj.type === 'folder');
 
@@ -86,6 +86,7 @@ DetailsPanelHeader.propTypes = {
       error: PropTypes.bool,
     }),
   ).isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default DetailsPanelHeader;

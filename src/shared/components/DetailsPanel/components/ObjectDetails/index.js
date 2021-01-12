@@ -9,8 +9,9 @@ const ObjectDetails = ({
   created,
   bytesSize,
   lastModified,
+  viewMode,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ viewMode });
   const { t } = useTranslation();
 
   const formatTime = (date) => (
@@ -42,10 +43,10 @@ const ObjectDetails = ({
     <div className={classes.root}>
       {dataSet.map((data) => (
         <div className={classes.dataRow} key={data.label}>
-          <Typography variant="body2" color="secondary">
+          <Typography variant="body2" className={classes.label}>
             {data.label}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" className={classes.value}>
             {data.value}
           </Typography>
         </div>
@@ -63,6 +64,7 @@ ObjectDetails.propTypes = {
   created: PropTypes.instanceOf(Date),
   lastModified: PropTypes.instanceOf(Date),
   bytesSize: PropTypes.string.isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default ObjectDetails;

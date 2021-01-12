@@ -4,8 +4,13 @@ import classnames from 'classnames';
 
 import useStyles from './styles';
 
-const DetailsPanel = ({ id, children, className }) => {
-  const classes = useStyles();
+const DetailsPanel = ({
+  id,
+  children,
+  className,
+  viewMode,
+}) => {
+  const classes = useStyles({ viewMode });
 
   return (
     <div
@@ -28,6 +33,7 @@ DetailsPanel.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default DetailsPanel;

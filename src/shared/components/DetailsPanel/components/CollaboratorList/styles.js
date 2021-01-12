@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { VIEW_MODES } from '../../constants';
 
 export default makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ export default makeStyles((theme) => ({
     },
   },
   ownerLabel: {
-    color: theme.palette.palette.gray1,
+    color: ({ viewMode }) => (viewMode !== VIEW_MODES.PREVIEW ? theme.palette.palette.gray1 : '#7F8185'),
     '&&&': {
       marginLeft: 8,
     },

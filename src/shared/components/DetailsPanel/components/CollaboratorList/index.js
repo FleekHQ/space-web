@@ -15,13 +15,14 @@ const COLLABORATOR_ITEM_HEIGHT = 27;
 const SharePanel = ({
   t,
   collaborators,
+  viewMode,
 }) => {
   const [state, setState] = React.useState({
     listMaxHeight: 0,
     maxCollaborators: 0,
     currentDocBodyHeight: window.innerHeight,
   });
-  const classes = useStyles({ listMaxHeight: state.listMaxHeight });
+  const classes = useStyles({ viewMode, listMaxHeight: state.listMaxHeight });
   const collaboratorList = React.useRef(null);
 
   /* eslint-disable react/prop-types */
@@ -168,6 +169,7 @@ SharePanel.propTypes = {
     username: PropTypes.string.isRequired,
     publicKey: PropTypes.string.isRequired,
   }).isRequired),
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default SharePanel;

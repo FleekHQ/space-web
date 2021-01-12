@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { VIEW_MODES } from '@shared/components/DetailsPanel';
 
 export const HORIZONTAL_PADDING = 0;
 
@@ -27,6 +28,7 @@ export default makeStyles((theme) => ({
   },
   title: {
     margin: '15px 0',
+    color: ({ viewMode }) => viewMode !== VIEW_MODES.LIGHT && theme.palette.palette.white,
   },
   arrowIcon: {
     fontSize: 11,
@@ -54,6 +56,6 @@ export default makeStyles((theme) => ({
   },
   actionIcon: {
     fontSize: 14,
-    color: theme.palette.palette.gray1,
+    color: ({ viewMode }) => (viewMode !== VIEW_MODES.PREVIEW ? theme.palette.palette.gray1 : '#7F8185'),
   },
 }));

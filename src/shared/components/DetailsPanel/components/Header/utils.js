@@ -1,8 +1,7 @@
-import { HORIZONTAL_PADDING } from './styles';
 import { DETAILS_PANEL_WIDTH } from '../../styles';
 
 export const MAX_NUMBER_OF_ICONS_PREVIEW = 4;
-const ICON_CONTAINER_WIDTH = DETAILS_PANEL_WIDTH - 2 * HORIZONTAL_PADDING;
+const ICON_CONTAINER_WIDTH = DETAILS_PANEL_WIDTH - 2 * 23;
 const ICON_MAX_WIDTH = 120;
 const SIZE_SCALAR = 0.378;
 // ^ smaller -> bigger icon, bigger -> smaller icon, ∈ (0, 1)
