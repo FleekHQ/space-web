@@ -4,7 +4,7 @@ import formatBytes from './format-bytes';
 
 const objectPresenter = (obj = {}, isRootDir = false) => {
   const bucket = get(obj, 'bucket', '') || '';
-  const key = get(obj, 'path', '');
+  const key = (get(obj, 'path', '') || '').replace(/^\//, '');
 
   const isFolder = get(obj, 'isDir', false);
   const name = get(obj, 'name');
