@@ -21,18 +21,23 @@ import store from '../store';
 const ERROR_TIMEOUT = 5000;
 // let openErrorTimeout = null;
 
-const listDirectory = async (path, bucket, fetchSubFolders) => {
+const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
+  ...acc,
+  ...(entry.isDir ? flatEntries(entry.items) : []),
+  entry,
+], []);
+
+const listDirectory = async (path, bucket) => {
   const { storage } = await sdk;
 
   try {
-    const { items: entries } = await storage.listDirectory({
+    const { items } = await storage.listDirectory({
       path,
       bucket,
       recursive: false,
     });
 
-    /* eslint-disable-next-line no-console */
-    console.log('entries', entries);
+    const entries = flatEntries(items);
 
     const objects = entries.map((entry) => objectPresenter({
       bucket,
@@ -64,15 +69,6 @@ const listDirectory = async (path, bucket, fetchSubFolders) => {
       payload: objects,
       type: STORE_DIR,
     });
-
-    if (fetchSubFolders) {
-      const fetchSubDirs = entries
-        .filter((entry) => entry.isDir)
-        .map((entry) => entry.path.replace(/^\//, ''))
-        .map((subDir) => listDirectory(subDir, bucket, false));
-
-      await Promise.all(fetchSubDirs);
-    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -121,7 +117,7 @@ export const fetchDir = async (path = '', bucket = 'personal', fetchSubFolders =
     type: SET_LOADING_STATE_BUCKET,
   });
 
-  await listDirectory(path, bucket, fetchSubFolders);
+  await listDirectory(path, bucket);
 };
 
 export const openObject = ({
