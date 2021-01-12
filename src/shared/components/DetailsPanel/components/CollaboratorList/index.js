@@ -143,8 +143,13 @@ const SharePanel = ({
                 })
               }
               <Typography noWrap variant="body1">
-                {`${collaborator.username}${index === 0 ? t('detailsPanel.share.you') : ''}`}
+                {collaborator.username}
               </Typography>
+              {index === 0 && (
+                <Typography className={classes.ownerLabel}>
+                  {t('detailsPanel.share.owner')}
+                </Typography>
+              )}
             </div>
           ))
       }

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const HORIZONTAL_PADDING = 0;
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
     padding: `13px ${HORIZONTAL_PADDING}px 0px`,
   },
@@ -40,4 +40,20 @@ export default makeStyles({
   centerIcon: {
     margin: 'auto',
   },
-});
+  actionButtons: {
+    marginBottom: 19,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& button': {
+      marginRight: 10,
+    },
+    '& button:last-child': {
+      marginRight: 0,
+    },
+  },
+  actionIcon: {
+    fontSize: 14,
+    color: theme.palette.palette.gray1,
+  },
+}));

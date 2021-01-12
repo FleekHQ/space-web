@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import Typography from '@ui/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
+import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
+import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
+import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
 
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
@@ -39,7 +45,32 @@ const DetailsPanelHeader = ({ objects }) => {
             { count: objects.length - allFolders.length },
           )}`}
       </Typography>
-      TODO MENU ICONS
+      <div className={classes.actionButtons}>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faEye}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faLink}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faShare}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faEllipsisV}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+      </div>
     </div>
   );
 };

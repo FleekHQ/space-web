@@ -86,7 +86,7 @@
       "with": "Shared with",
       "manage": "Manage",
       "group": "+{{number}} others",
-      "you": " (you)"
+      "owner": "Owner"
     },
     "copy": {
       "copy": "Copy",

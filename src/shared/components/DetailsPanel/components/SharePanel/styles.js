@@ -16,7 +16,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: '5px 0 10px 0',
+    margin: '14px 0 10px 0',
     '& > .manageLink': {
       cursor: 'pointer',
     },

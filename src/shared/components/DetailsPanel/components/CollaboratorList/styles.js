@@ -28,4 +28,10 @@ export default makeStyles((theme) => ({
       color: theme.palette.palette.gray1,
     },
   },
+  ownerLabel: {
+    color: theme.palette.palette.gray1,
+    '&&&': {
+      marginLeft: 8,
+    },
+  },
 }));
