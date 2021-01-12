@@ -1,6 +1,6 @@
-// Uncomment once payload parameter is ussed
-/* eslint-disable no-unused-vars */
-import { objectPresenter } from '@utils';
+import { sdk } from '@clients';
+
+import { objectPresenter, createErrorObject } from '@utils';
 import {
   SET_UPLOAD_SUCCESS_STATE,
   SET_UPLOAD_ERROR_STATE,
@@ -12,8 +12,6 @@ import {
   openModal, UPLOAD_PROGRESS_TOAST,
 } from '@shared/components/Modal/actions';
 
-import store from '../store';
-
 const registerAddItemsSubscribeEvents = () => {
 };
 
@@ -21,23 +19,153 @@ const registerAddItemsSubscribeEvents = () => {
  * @typedef {Object} SourcePaths
  * @property {string} name
  * @property {string} path
+ * @property {number} size
  * @property {ReadableStream} data
  * @param {Object} payload
+ * @param {string} payload.bucket
  * @param {string} payload.targetPath
  * @param {Array<SourcePaths>} payload.sourcePaths
  */
-export const addItems = (payload) => {
-  const modalId = store.dispatch(openModal(UPLOAD_PROGRESS_TOAST));
+export const addItems = ({
+  targetPath,
+  sourcePaths,
+  bucket = 'personal',
+}) => async (dispatch) => {
+  const { storage } = await sdk;
+  const modalId = dispatch(openModal(UPLOAD_PROGRESS_TOAST));
 
-  // eslint-disable-next-line no-console
-  console.log('Add Items payload:', payload);
-  store.dispatch({
+  dispatch({
     type: INIT_UPLOAD_STATE,
     payload: {
+      targetPath,
+      sourcePaths,
       id: modalId,
-      targetPath: payload.targetPath,
-      sourcePaths: payload.sourcePaths,
     },
+  });
+
+  let totalCompletedFiles = 0;
+  const uploadResponse = await storage.addItems({
+    bucket,
+    files: sourcePaths.map(({ data, path }) => ({
+      data,
+      path,
+    })),
+  });
+
+  uploadResponse.on('error', (data) => {
+    // eslint-disable-next-line no-console
+    console.error('SUBSCRIBE_ERROR_EVENT', data);
+
+    dispatch({
+      type: SET_UPLOAD_ERROR_STATE,
+      payload: {
+        id: modalId,
+        error: {
+          message: 'Upload error',
+        },
+      },
+    });
+
+    if (data.files && Array.isArray(data.files)) {
+      data.files.forEach((file) => {
+        const currentFile = sourcePaths.find((f) => f.path === file.path);
+        if (currentFile) {
+          const errorObject = createErrorObject({
+            bucket,
+            targetPath,
+            isDir: false,
+            size: currentFile.size,
+            sourcePath: currentFile.path,
+          });
+          dispatch({
+            payload: errorObject,
+            type: UPDATE_OR_ADD_OBJECT,
+          });
+        }
+      });
+      return;
+    }
+
+    const currentFile = sourcePaths.find((f) => f.path === data.path);
+    const errorObject = createErrorObject({
+      bucket,
+      targetPath,
+      isDir: false,
+      size: currentFile.size,
+      sourcePath: currentFile.path,
+    });
+    dispatch({
+      payload: errorObject,
+      type: UPDATE_OR_ADD_OBJECT,
+    });
+  });
+
+  uploadResponse.on('data', (data) => {
+    const currentFile = sourcePaths.find((f) => f.path === data.path);
+
+    if (currentFile) {
+      if (data.status === 'success') {
+        totalCompletedFiles += 1;
+        const lastDot = currentFile.name.lastIndexOf('.');
+        const ext = currentFile.name.substring(lastDot + 1);
+
+        dispatch({
+          type: SET_UPLOAD_SUCCESS_STATE,
+          payload: {
+            id: modalId,
+            payload: {
+              result: {
+                bucketPath: bucket,
+                sourcePath: currentFile.path,
+                error: null,
+              },
+              totalBytes: currentFile.size,
+              completedBytes: currentFile.size,
+              completedFiles: totalCompletedFiles,
+              totalFiles: sourcePaths.length,
+            },
+          },
+        });
+        dispatch({
+          type: ADD_OBJECT,
+          payload: objectPresenter({
+            bucket,
+            fileExtension: ext,
+            backupCount: 0,
+            path: currentFile.path,
+            name: currentFile.name,
+            sizeInBytes: currentFile.size,
+            isLocallyAvailable: false,
+            created: (new Date()).toISOString(),
+            updated: (new Date()).toISOString(),
+            ipfsHash: '',
+            isDir: false,
+          }),
+        });
+      } else {
+        dispatch({
+          type: SET_UPLOAD_ERROR_STATE,
+          payload: {
+            id: modalId,
+            error: {
+              message: 'Upload error',
+            },
+          },
+        });
+
+        const errorObject = createErrorObject({
+          bucket,
+          targetPath,
+          isDir: false,
+          size: currentFile.size,
+          sourcePath: currentFile.path,
+        });
+        dispatch({
+          payload: errorObject,
+          type: UPDATE_OR_ADD_OBJECT,
+        });
+      }
+    }
   });
 };
 

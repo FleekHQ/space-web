@@ -31,7 +31,7 @@ export const getMenuDropdownItems = (t) => [
 ];
 
 // eslint-disable-next-line no-unused-vars
-const openDialog = async ({ prefix, type }) => {
+const openDialog = async ({ dispatch, prefix, type }) => {
   try {
     const fileInput = document.createElement('input');
     if (type === MENU_DROPDOWN_ITEMS.folderUpload) {
@@ -46,14 +46,15 @@ const openDialog = async ({ prefix, type }) => {
     fileInput.addEventListener('change', (event) => {
       const sourcePaths = Array.from(event.target.files).map((file) => ({
         name: file.name,
+        size: file.size,
         data: file.stream(),
-        path: file.webkitRelativePath || file.name,
+        path: prefix.length === 0 ? file.webkitRelativePath || file.name : `${prefix}/${file.webkitRelativePath || file.name}`,
       }));
 
-      addItems({
+      dispatch(addItems({
         sourcePaths,
         targetPath: prefix,
-      });
+      }));
     }, false);
 
     fileInput.type = 'file';
@@ -70,5 +71,5 @@ export const getOnMenuItemClick = (dispatch, prefix) => (itemId, objPath) => {
     return;
   }
 
-  openDialog({ prefix, type: itemId });
+  openDialog({ dispatch, prefix, type: itemId });
 };

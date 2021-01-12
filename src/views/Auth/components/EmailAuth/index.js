@@ -9,7 +9,7 @@ import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
-import RainbowField from '@terminal-packages/space-ui/core/RainbowField';
+import RainbowField from '@ui/RainbowField';
 
 import { AUTH_ACTION_TYPES } from '@reducers/auth';
 
