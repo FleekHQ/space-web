@@ -39,13 +39,13 @@ export const useNavigations = () => {
       list: [
         {
           key: 'home',
-          text: 'Files',
+          text: 'My Space',
           to: '/home',
           active: !!matchPath(location.pathname, { path: '/home' }),
         },
         {
           key: 'shared',
-          text: 'Shared',
+          text: 'Shared with me',
           to: '/shared',
           active: !!matchPath(location.pathname, { path: '/shared' }),
         },

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
 import { openObject, searchFiles } from '@events';
-import { getShortAddress } from '@utils';
+import { getShortAddress, useBrowserStatus } from '@utils';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
@@ -16,19 +16,18 @@ import Account from '@terminal-packages/space-ui/core/Account';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/pro-regular-svg-icons/faCog';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
+import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 
 import useStyles from './styles';
 
 import {
-  getOnUserLogout,
-  getOnSignoutReset,
   getMenuDropdownItems as getAccountItems,
   getOnMenuItemClick as getAccountItemClick,
 } from './account-menu-helpers';
 
 const isBackButtonDisabled = (pathname) => {
-  const isFileRootPath = /^\/storage\/files\/?$/.test(pathname);
-  const isSharedRootPath = /^\/storage\/shared-by\/?$/.test(pathname);
+  const isFileRootPath = /^\/home\/?$/.test(pathname);
+  const isSharedRootPath = /^\/shared\/?$/.test(pathname);
   return isFileRootPath || isSharedRootPath;
 };
 
@@ -39,6 +38,7 @@ const HeaderNav = () => {
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { isOnline } = useBrowserStatus();
 
   const {
     searchTerm,
@@ -103,7 +103,7 @@ const HeaderNav = () => {
 
   return (
     <div className={classes.root}>
-      <img width={24} src={`${process.env.PUBLIC_URL}/assets/images/space.svg`} alt="space-logo" />
+      <img width={73} src={`${process.env.PUBLIC_URL}/assets/images/space-logo-black.svg`} alt="space-logo" />
       <Box display="flex" alignItems="center">
         <FolderNavButton
           direction="back"
@@ -147,11 +147,16 @@ const HeaderNav = () => {
       </Box>
       <Box display="flex" alignItems="center">
         <div className={classes.iconBtnsContainer}>
-          <ButtonBase>
+          <ButtonBase
+            onClick={(event) => {
+              event.preventDefault();
+              window.location.href = 'mailto:hi@space.storage?subject=I have a question about Space!';
+            }}
+          >
             <FontAwesomeIcon icon={faQuestionCircle} />
           </ButtonBase>
           <Notifications />
-          <ButtonBase>
+          <ButtonBase onClick={() => dispatch(openModal(SETTINGS_MODAL))}>
             <FontAwesomeIcon icon={faCog} />
           </ButtonBase>
         </div>
@@ -159,16 +164,13 @@ const HeaderNav = () => {
           <Divider light orientation="vertical" />
         </Box>
         <Account
-          signoutState={{ success: false }}
           items={getAccountItems(t)}
-          label={t('account.personal')}
-          onUserLogout={getOnUserLogout(dispatch)}
-          onSignoutReset={getOnSignoutReset(dispatch)}
           onMenuItemClick={getAccountItemClick({ user, dispatch, linkedAddresses })}
           account={{
+            isOnline,
             membersNumber: 0,
-            id: user.username,
-            name: user.username || getShortAddress(user.address),
+            id: user.uuid,
+            name: user.displayName || getShortAddress(user.address),
           }}
         />
       </Box>
