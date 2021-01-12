@@ -129,7 +129,7 @@ export const deleteObject = (payload) => {
  * @param {string} payload.path
  * @param {string} payload.mimeType
  */
-export const getFileUrlFromInterable = async (payload) => {
+export const getFileUrlFromIterable = async (payload) => {
   const chunks = [];
   const { storage } = await sdk;
 
