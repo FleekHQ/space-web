@@ -4,7 +4,7 @@ export const HORIZONTAL_PADDING = 0;
 
 export default makeStyles({
   root: {
-    padding: `13px ${HORIZONTAL_PADDING}px 18px`,
+    padding: `13px ${HORIZONTAL_PADDING}px 0px`,
   },
   fileIconWrapper: {
     margin: '15px auto',

@@ -87,6 +87,12 @@
       "manage": "Manage",
       "group": "+{{number}} others",
       "you": " (you)"
+    },
+    "copy": {
+      "copy": "Copy",
+      "link": "Copy Link",
+      "hash": "Copy IPFS Hash",
+      "deal": "Copy Deal ID"
     }
   },
   "account": {

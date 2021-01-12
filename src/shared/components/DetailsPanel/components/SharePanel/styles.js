@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
+    marginTop: 20,
     display: 'flex',
     flexDirection: 'column',
-    padding: '15px 0px 0 22px',
     '& > button': {
       margin: '5px 0',
     },
@@ -24,4 +24,23 @@ export default makeStyles({
   collaboratorList: {
     flex: 1,
   },
-});
+  copyButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 32,
+    '&&': {
+      borderColor: theme.palette.palette.black,
+    },
+    '& span': {
+      color: theme.palette.palette.black,
+    },
+  },
+  downAngle: {
+    fontSize: 18,
+    color: theme.palette.palette.black,
+    position: 'relative',
+    top: 1,
+    marginLeft: 5,
+  },
+}));

@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
 
 import { getIdentitiesByAddress } from '@events';
 
@@ -44,12 +46,21 @@ const SharePanel = (props) => {
       >
         {t('detailsPanel.share.share')}
       </Button>
+      <Button
+        variant="secondary"
+        fullWidth
+        onClick={() => {}}
+        className={classes.copyButton}
+      >
+        {t('detailsPanel.copy.copy')}
+        <FontAwesomeIcon
+          className={classes.downAngle}
+          icon={faAngleDown}
+        />
+      </Button>
       <div className={classes.shareWidth}>
         <Typography variant="body1">
           {t('detailsPanel.share.with')}
-        </Typography>
-        <Typography component="a" variant="body1" color="textSecondary" className="manageLink" onClick={onShare}>
-          {t('detailsPanel.share.manage')}
         </Typography>
       </div>
       <CollaboratorList
