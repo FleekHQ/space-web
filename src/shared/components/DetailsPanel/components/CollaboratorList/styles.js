@@ -35,4 +35,7 @@ export default makeStyles((theme) => ({
       marginLeft: 8,
     },
   },
+  username: {
+    color: ({ viewMode }) => ((viewMode !== VIEW_MODES.LIGHT) && (theme.palette.palette.white)),
+  },
 }));

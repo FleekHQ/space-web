@@ -1,4 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { VIEW_MODES } from '../../constants';
+
+const getColor = (viewMode, theme) => {
+  if (viewMode === VIEW_MODES.LIGHT) {
+    return theme.palette.palette.black;
+  }
+  return theme.palette.palette.white;
+};
 
 export default makeStyles((theme) => ({
   root: {
@@ -30,17 +38,20 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     height: 32,
     '&&': {
-      borderColor: theme.palette.palette.black,
+      borderColor: ({ viewMode }) => getColor(viewMode, theme),
     },
     '& span': {
-      color: theme.palette.palette.black,
+      color: ({ viewMode }) => getColor(viewMode, theme),
     },
   },
   downAngle: {
     fontSize: 18,
-    color: theme.palette.palette.black,
+    color: ({ viewMode }) => getColor(viewMode, theme),
     position: 'relative',
     top: 1,
     marginLeft: 5,
+  },
+  subtitle: {
+    color: ({ viewMode }) => getColor(viewMode, theme),
   },
 }));

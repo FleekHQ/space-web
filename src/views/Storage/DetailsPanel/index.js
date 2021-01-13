@@ -22,7 +22,7 @@ import { OBJECT_TYPES } from './constants';
 import useStyles from './styles';
 
 const StorageDetailsPanel = () => {
-  const viewMode = VIEW_MODES.DARK;
+  const viewMode = VIEW_MODES.LIGHT;
 
   const classes = useStyles();
   const { t } = useTranslation();

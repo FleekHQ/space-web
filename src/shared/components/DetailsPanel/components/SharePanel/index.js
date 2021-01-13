@@ -17,9 +17,10 @@ const SharePanel = (props) => {
   const {
     members,
     onShare,
+    viewMode,
   } = props;
 
-  const classes = useStyles();
+  const classes = useStyles({ viewMode });
   const { t } = useTranslation();
   const state = useSelector((s) => s.identities);
 
@@ -59,11 +60,15 @@ const SharePanel = (props) => {
         />
       </Button>
       <div className={classes.shareWidth}>
-        <Typography variant="body1">
+        <Typography
+          variant="body1"
+          className={classes.subtitle}
+        >
           {t('detailsPanel.share.with')}
         </Typography>
       </div>
       <CollaboratorList
+        viewMode={viewMode}
         t={t}
         collaborators={members.map((member) => {
           if (state.identities[member.publicKey]) {
@@ -90,6 +95,7 @@ SharePanel.propTypes = {
     publicKey: PropTypes.string.isRequired,
   }).isRequired),
   onShare: PropTypes.func.isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default SharePanel;

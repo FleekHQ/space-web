@@ -22,6 +22,7 @@ const SharePanel = ({
     maxCollaborators: 0,
     currentDocBodyHeight: window.innerHeight,
   });
+  console.log('viewMode', viewMode);
   const classes = useStyles({ viewMode, listMaxHeight: state.listMaxHeight });
   const collaboratorList = React.useRef(null);
 
@@ -143,7 +144,11 @@ const SharePanel = ({
                   isLast: index === arr.length - 1,
                 })
               }
-              <Typography noWrap variant="body1">
+              <Typography
+                noWrap
+                variant="body1"
+                className={classes.username}
+              >
                 {collaborator.username}
               </Typography>
               {index === 0 && (
