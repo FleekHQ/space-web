@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import identityEndpoints from './endpoints/identity';
-import identitiesEndpoints from './endpoints/identities';
+import * as identityEndpoints from './endpoints/identity';
+import * as identitiesEndpoints from './endpoints/identities';
 
 /**
  * @class
