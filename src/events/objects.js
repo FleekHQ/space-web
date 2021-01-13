@@ -185,7 +185,6 @@ export const getFileUrlFromIterable = async (payload) => {
     index += chunk.length;
   });
 
-  // TODO: replace payload.mimeType by openFile response.mimeType (need BE integration first)
   return typedArrayToUrl([fileArray.buffer], response.mimeType);
 };
 
@@ -200,7 +199,6 @@ export const getFileUrl = async (payload) => {
   const response = await storage.openFile(payload);
   const fileBytes = await response.consumeStream();
 
-  // TODO: replace payload.mimeType by openFile response.mimeType (need BE integration first)
   return typedArrayToUrl([fileBytes.buffer], response.mimeType);
 };
 
