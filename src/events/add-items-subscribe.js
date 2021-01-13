@@ -1,6 +1,6 @@
 import { sdk } from '@clients';
 
-import { objectPresenter, createErrorObject } from '@utils';
+import { objectPresenter, createErrorObject, normalizePath } from '@utils';
 import {
   SET_UPLOAD_SUCCESS_STATE,
   SET_UPLOAD_ERROR_STATE,
@@ -101,7 +101,7 @@ export const addItems = ({
   });
 
   uploadResponse.on('data', (data) => {
-    const currentFile = sourcePaths.find((f) => f.path === data.path);
+    const currentFile = sourcePaths.find((f) => f.path === normalizePath(data.path));
 
     if (currentFile) {
       if (data.status === 'success') {
@@ -131,11 +131,12 @@ export const addItems = ({
           payload: objectPresenter({
             bucket,
             fileExtension: ext,
-            backupCount: 0,
+            backupCount: 1,
             path: currentFile.path,
             name: currentFile.name,
             sizeInBytes: currentFile.size,
             isLocallyAvailable: false,
+            isBackupInProgress: false,
             created: (new Date()).toISOString(),
             updated: (new Date()).toISOString(),
             ipfsHash: '',

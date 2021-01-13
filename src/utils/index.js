@@ -15,3 +15,4 @@ export { default as getTabulations } from './get-tabulations';
 export { default as useDoubleClick } from './use-double-click';
 export { default as createErrorObject } from './create-error-objects';
 export { default as fileToBase64 } from './file-to-base64';
+export { default as normalizePath } from './normalize-path';
