@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import get from 'lodash/get';
 import { objectPresenter } from '@utils';
+import { sdk } from '@clients';
 import {
   STORE_DIR,
   STORE_OBJECTS,
@@ -19,6 +20,64 @@ import store from '../store';
 
 const ERROR_TIMEOUT = 5000;
 // let openErrorTimeout = null;
+
+const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
+  ...acc,
+  ...(entry.isDir ? flatEntries(entry.items) : []),
+  entry,
+], []);
+
+const listDirectory = async (path, bucket) => {
+  const { storage } = await sdk;
+
+  try {
+    const { items } = await storage.listDirectory({
+      path,
+      bucket,
+      recursive: false,
+    });
+
+    const entries = flatEntries(items);
+
+    const objects = entries.map((entry) => objectPresenter({
+      bucket,
+      path: entry.path,
+      name: entry.name,
+      isDir: entry.isDir,
+      created: '2020-12-30T14:28:21-03:00',
+      updated: '2020-12-30T14:28:21-03:00',
+      ipfsHash: entry.ipfsHash,
+      sizeInBytes: entry.sizeInBytes,
+      backupCount: entry.backupCount,
+      fileExtension: entry.fileExtension,
+      isLocallyAvailable: entry.isLocallyAvailable,
+      members: entry.members.map((member) => ({
+        address: member.address,
+        publicKey: member.publicKey,
+      })),
+    }));
+
+    store.dispatch({
+      payload: {
+        bucket,
+        loading: false,
+      },
+      type: SET_LOADING_STATE_BUCKET,
+    });
+
+    store.dispatch({
+      payload: objects,
+      type: STORE_DIR,
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    store.dispatch({
+      payload: { bucket, error },
+      type: SET_ERROR_BUCKET,
+    });
+  }
+};
 
 const registerObjectsEvents = () => {
 };
@@ -49,37 +108,16 @@ export const fetchSharedObjects = (seek = '', limit = 100) => {
   }, 1000);
 };
 
-export const fetchObjects = (bucket = 'personal') => {
-  store.dispatch({
-    payload: true,
-    type: SET_LOADING_STATE,
-  });
-};
-
-export const fetchDir = (path = '', bucket = 'personal', fetchSubFolders = true) => {
+export const fetchDir = async (path = '', bucket = 'personal', fetchSubFolders = true) => {
   store.dispatch({
     payload: {
-      loading: true,
       bucket,
+      loading: true,
     },
     type: SET_LOADING_STATE_BUCKET,
   });
 
-  // TODO: remove mock
-  setTimeout(() => {
-    store.dispatch({
-      payload: {
-        loading: false,
-        bucket: 'personal',
-      },
-      type: SET_LOADING_STATE_BUCKET,
-    });
-
-    store.dispatch({
-      type: STORE_DIR,
-      payload: [],
-    });
-  }, 1000);
+  await listDirectory(path, bucket);
 };
 
 export const openObject = ({

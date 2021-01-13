@@ -2085,20 +2085,20 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@spacehq/sdk@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.3.tgz#b7ed8d446f1bab43910bb6126ccbf153b9fd8e06"
-  integrity sha512-//8IRA7tVLndDbZH8EToei0Wz07hEtWmmTcirMoG/8oXNxtCuq49QC18ny8K9Uoz4b9mz7YBxc7k2ktyCTwIvA==
+"@spacehq/sdk@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.4.tgz#3b8e5408fef5078b9dc44a27042fc9b1d7864151"
+  integrity sha512-1VcIcw/mENB4jqZt7+ZwfFdBSKy+35W2AalUoeDAPh5XrgTBxpzHY4glJQpM3S3er+JGmwf8wDYWvc+7GcKRhA==
   dependencies:
-    "@spacehq/storage" "^0.0.3"
-    "@spacehq/users" "^0.0.3"
+    "@spacehq/storage" "^0.0.4"
+    "@spacehq/users" "^0.0.4"
 
-"@spacehq/storage@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.3.tgz#2ebafb1de8ffb43754d70f36093a5c7bb98ff26f"
-  integrity sha512-+9IR/hJ+iv7iAEniuRYxnZlsoc+S9ZGSBFYffL5F8Ve0lEGQoUrD+HvDKUit2OGUydyY40IgEWe+SL45rYdkuQ==
+"@spacehq/storage@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.4.tgz#e066a45f68010613cd108ce6cf370372be694ba9"
+  integrity sha512-MzH/9YuucMysTFrz0WxWuXyFsPUOeChMzDi6qQaq/1i9KNy6kuCqbu45f9+cCag/cJjMVDC6BM4Z+A3yoqT+/g==
   dependencies:
-    "@spacehq/users" "^0.0.3"
+    "@spacehq/users" "^0.0.4"
     "@textile/crypto" "^2.0.0"
     "@textile/hub" "^4.1.0"
     "@textile/threads-id" "^0.4.0"
@@ -2107,10 +2107,10 @@
     multihashes "^3.1.0"
     varint "^6.0.0"
 
-"@spacehq/users@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.3.tgz#a4de2a30871d8458d9355882c7b4b6e08261a63f"
-  integrity sha512-lx4Oq21FZH0KMnYkGUI+uomS5QN6kXdDZyXnH8udh3ZPYFX3BqEIuKStSQSm/8A4iVc39SZVbO0KrDaRWjilhw==
+"@spacehq/users@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.4.tgz#b0209fd9e17220fc959f8df7155a5f59e9de7483"
+  integrity sha512-03db+TualgVwEc7VZ+zamhsayuRI5HIf1mrnZbpvs87nk/8AL9WQNbni4wfuLCtd22OjNJw5NAwe3EDk11pq6g==
   dependencies:
     "@textile/crypto" "^2.0.0"
     "@types/lodash" "^4.14.165"
@@ -2594,10 +2594,10 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@terminal-packages/space-ui@^0.3.12":
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.12.tgz#5f0ea7727d9043e56b0e86f6f6f0fb56972988cb"
-  integrity sha512-y/aztTRAmD8v3y4bEfTIWHwaWO51fijS/dRRoJj/0kjx/ZmHl/5N1vodnijJpA/N9KySstL8GrUdv5YoJ1chgA==
+"@terminal-packages/space-ui@^0.3.13":
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.13.tgz#08c72c73dee27cf515bc834e87651d90583013ab"
+  integrity sha512-I9ain5TJ46Smfwin2AQRNYwXMr5MJBAC8ktwHySVqUQRmFK4SbcQHR5VVjBwHzsLZN42bhBTDKs+a+0n4pol9g==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"
