@@ -15,14 +15,15 @@ import DetailsPanel, {
   SharePanel,
   AvatarHeader,
   ObjectDetails,
-  VIEW_MODES,
 } from '@shared/components/DetailsPanel';
+
+import { VIEW_MODES } from '@shared/components/DetailsPanel/constants';
 
 import { OBJECT_TYPES } from './constants';
 import useStyles from './styles';
 
 const StorageDetailsPanel = () => {
-  const viewMode = VIEW_MODES.PREVIEW;
+  const viewMode = VIEW_MODES.LIGHT;
 
   const classes = useStyles();
   const { t } = useTranslation();

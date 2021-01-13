@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { VIEW_MODES } from '@shared/components/DetailsPanel';
+import { VIEW_MODES } from '@shared/components/DetailsPanel/constants';
 
 export const HORIZONTAL_PADDING = 0;
 
