@@ -22,7 +22,7 @@ const SharePanel = ({
     maxCollaborators: 0,
     currentDocBodyHeight: window.innerHeight,
   });
-  console.log('viewMode', viewMode);
+
   const classes = useStyles({ viewMode, listMaxHeight: state.listMaxHeight });
   const collaboratorList = React.useRef(null);
 

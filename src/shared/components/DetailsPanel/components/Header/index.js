@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import Typography from '@ui/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Popper from '@material-ui/core/Popper';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
 import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
 import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
+import ContextMenu from '@ui/ContextMenu';
+import getContextMenuItems from '@shared/components/ObjectsTable/utils/get-context-menu';
 
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
@@ -16,7 +19,33 @@ import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 const DetailsPanelHeader = ({ objects, viewMode }) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
+
+  const initialContextState = {
+    mouseX: null,
+    mouseY: null,
+  };
+
+  const [contextState, setContextState] = useState(initialContextState);
   const allFolders = objects.filter((obj) => obj.type === 'folder');
+
+  const handleContextClose = () => {
+    setContextState(initialContextState);
+  };
+
+  const menuItemOnClick = () => {
+    handleContextClose();
+  };
+
+  const contextMenuItems = getContextMenuItems(objects[0], t);
+
+  const handleContextMenuOpen = (event) => {
+    event.preventDefault();
+
+    setContextState({
+      mouseX: event.clientX - 170,
+      mouseY: event.clientY - 34,
+    });
+  };
 
   return (
     <div className={classes.root}>
@@ -64,12 +93,29 @@ const DetailsPanelHeader = ({ objects, viewMode }) => {
             className={classes.actionIcon}
           />
         </ButtonBase>
-        <ButtonBase>
+        <ButtonBase
+          onClick={handleContextMenuOpen}
+        >
           <FontAwesomeIcon
             icon={faEllipsisV}
             className={classes.actionIcon}
           />
         </ButtonBase>
+        <Popper
+          open={contextState.mouseY !== null}
+          onClose={handleContextClose}
+          onClickAway={handleContextClose}
+          style={{
+            top: contextState.mouseY,
+            left: contextState.mouseX,
+          }}
+        >
+          <ContextMenu
+            onClickAway={handleContextClose}
+            menuItemOnClick={menuItemOnClick}
+            items={contextMenuItems}
+          />
+        </Popper>
       </div>
     </div>
   );
