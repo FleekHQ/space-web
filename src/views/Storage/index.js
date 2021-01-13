@@ -13,7 +13,7 @@ import Layout from '@terminal-packages/space-ui/core/Layout';
 
 import Files from './Files';
 import DetailsPanel from './DetailsPanel';
-import WelcomeMessages from './shared/components/WelcomeMessages';
+import { HeaderNav, WelcomeMessages } from './shared/components';
 
 import useStyles from './styles';
 
@@ -32,6 +32,7 @@ const Storage = () => {
   return (
     <Layout
       sidebar={<Sidebar />}
+      topbar={<HeaderNav />}
     >
       <div className={classes.root}>
         <div className={classes.viewContent}>

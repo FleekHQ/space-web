@@ -2627,10 +2627,10 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@terminal-packages/space-ui@^0.3.11":
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.11.tgz#dcf9238f680807ff931d268bca278072c90d1f40"
-  integrity sha512-PdgTk/Ozn88gJhe7umiaer/29hVVZ0/nBSzu+wnoieiu80gRDsL/ttOaD5IcWGVENv4E4z7SaYCJtbcrFH/fTQ==
+"@terminal-packages/space-ui@^0.3.13":
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.13.tgz#08c72c73dee27cf515bc834e87651d90583013ab"
+  integrity sha512-I9ain5TJ46Smfwin2AQRNYwXMr5MJBAC8ktwHySVqUQRmFK4SbcQHR5VVjBwHzsLZN42bhBTDKs+a+0n4pol9g==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"

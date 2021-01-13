@@ -15,7 +15,11 @@ import { openModal, FILE_LINK_PASSWORD } from '@shared/components/Modal/actions'
 import useStyles from './styles';
 import DetailsPanel from '../DetailsPanel';
 import SharedRenderRow from '../shared/ShareRenderRow';
-import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
+import {
+  FileTable,
+  HeaderNav,
+  FilesErrors,
+} from '../shared/components';
 
 const SharedWithMeView = () => {
   const classes = useStyles();
@@ -51,11 +55,11 @@ const SharedWithMeView = () => {
   return (
     <Layout
       sidebar={<Sidebar />}
+      topbar={<HeaderNav />}
     >
       <Box display="flex" flexGrow={1}>
         <div className={classes.viewContent}>
           <div className={classes.root}>
-            <HeaderNav />
             <FilesErrors
               bucket="shared-with-me"
               fetchObjects={fetchSharedObjects}

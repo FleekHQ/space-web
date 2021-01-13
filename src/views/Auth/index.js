@@ -86,7 +86,7 @@ const Auth = () => {
 
   React.useEffect(() => {
     if (state.isAuthenticated) {
-      history.push('/home');
+      history.replace('/home');
     }
   }, [state.isAuthenticated]);
 

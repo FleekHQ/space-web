@@ -6,7 +6,7 @@ import { fetchDir } from '@events/objects';
 import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
 import Breadcrumbs from '@ui/Breadcrumbs';
 
-import { FileTable, HeaderNav, FilesErrors } from '../shared/components';
+import { FileTable, FilesErrors } from '../shared/components';
 import EmptyState from './components/EmptyState';
 import useStyles from './styles';
 
@@ -27,7 +27,6 @@ const StorageMainView = () => {
 
   return (
     <div className={classes.root}>
-      <HeaderNav />
       <Breadcrumbs
         items={breadcrumbsItems}
         history={history}

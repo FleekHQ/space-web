@@ -35,12 +35,13 @@ const openDialog = async ({ dispatch, prefix, type }) => {
   try {
     const fileInput = document.createElement('input');
     if (type === MENU_DROPDOWN_ITEMS.folderUpload) {
-      fileInput.setAttribute('multiple', '');
       fileInput.setAttribute('directory', '');
       fileInput.setAttribute('odirectory', '');
       fileInput.setAttribute('msdirectory', '');
       fileInput.setAttribute('mozdirectory', '');
       fileInput.setAttribute('webkitdirectory', '');
+    } else {
+      fileInput.setAttribute('multiple', '');
     }
     // eslint-disable-next-line prefer-arrow-callback
     fileInput.addEventListener('change', (event) => {

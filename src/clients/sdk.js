@@ -22,6 +22,7 @@ const init = async () => {
   }
 
   users = await Users.withStorage(new BrowserStorage(), {
+    // TODO: get it from config or env variable
     endpoint: 'wss://auth-dev.space.storage',
     vaultServiceConfig: {
       serviceUrl: 'https://vault-dev.space.storage',
@@ -35,7 +36,9 @@ const init = async () => {
   });
 
   const usersList = users.list();
-  storage = new UserStorage(usersList[0]);
+  storage = new UserStorage(usersList[0], {
+    textileHubAddress: 'https://hub-dev-web.space.storage:3007', // TODO: get it from config or env variable
+  });
 
   return {
     users,
