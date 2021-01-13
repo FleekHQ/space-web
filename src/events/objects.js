@@ -27,7 +27,7 @@ const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
   entry,
 ], []);
 
-const listDirectory = async (path, bucket) => {
+const listDirectory = async (path, bucket, fetchSubFolders = true) => {
   const { storage } = await sdk.get();
 
   try {
@@ -44,8 +44,8 @@ const listDirectory = async (path, bucket) => {
       path: entry.path,
       name: entry.name,
       isDir: entry.isDir,
-      created: '2020-12-30T14:28:21-03:00',
-      updated: '2020-12-30T14:28:21-03:00',
+      created: entry.created,
+      updated: entry.updated,
       ipfsHash: entry.ipfsHash,
       sizeInBytes: entry.sizeInBytes,
       backupCount: entry.backupCount,
@@ -69,6 +69,15 @@ const listDirectory = async (path, bucket) => {
       payload: objects,
       type: STORE_DIR,
     });
+
+    if (fetchSubFolders) {
+      const fetchSubDirs = entries
+        .filter((entry) => entry.isDir)
+        .map((entry) => entry.path.replace(/^\//, ''))
+        .map((subDir) => listDirectory(subDir, bucket, false));
+
+      await Promise.all(fetchSubDirs);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
@@ -164,11 +173,10 @@ export const deleteObject = (payload) => {
  * @param {Object} payload
  * @param {string} payload.bucket
  * @param {string} payload.path
- * @param {string} payload.mimeType
  */
 export const getFileUrlFromIterable = async (payload) => {
   const chunks = [];
-  const { storage } = await sdk;
+  const { storage } = await sdk.get();
 
   const response = await storage.openFile(payload);
 
@@ -186,24 +194,21 @@ export const getFileUrlFromIterable = async (payload) => {
     index += chunk.length;
   });
 
-  // TODO: replace payload.mimeType by openFile response.mimeType (need BE integration first)
-  return typedArrayToUrl([fileArray.buffer], payload.mimeType);
+  return typedArrayToUrl([fileArray.buffer], response.mimeType);
 };
 
 /**
  * @param {Object} payload
  * @param {string} payload.bucket
  * @param {string} payload.path
- * @param {string} payload.mimeType
  */
 export const getFileUrl = async (payload) => {
-  const { storage } = await sdk;
+  const { storage } = await sdk.get();
 
   const response = await storage.openFile(payload);
   const fileBytes = await response.consumeStream();
 
-  // TODO: replace payload.mimeType by openFile response.mimeType (need BE integration first)
-  return typedArrayToUrl([fileBytes.buffer], payload.mimeType);
+  return typedArrayToUrl([fileBytes.buffer], response.mimeType);
 };
 
 export default registerObjectsEvents;
