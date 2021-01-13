@@ -6,10 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
+import ContextMenu from '@ui/ContextMenu';
+import Popper from '@material-ui/core/Popper';
 
 import { getIdentitiesByAddress } from '@events';
 
 import CollaboratorList from '../CollaboratorList';
+import getContextMenuItems from '../../utils/get-copy-menu';
 
 import useStyles from './styles';
 
@@ -23,6 +26,35 @@ const SharePanel = (props) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
   const state = useSelector((s) => s.identities);
+
+  const initialContextState = {
+    mouseX: null,
+    mouseY: null,
+  };
+
+  const [contextState, setContextState] = React.useState(initialContextState);
+
+  const contextMenuItems = getContextMenuItems(t);
+
+  const handleContextClose = () => {
+    setContextState(initialContextState);
+  };
+
+  const menuItemOnClick = () => {
+    handleContextClose();
+  };
+
+  const handleContextMenuOpen = (event) => {
+    event.preventDefault();
+
+    const copyButton = document.getElementById('copy-button');
+    const boundaries = copyButton.getBoundingClientRect();
+
+    setContextState({
+      mouseX: boundaries.left,
+      mouseY: boundaries.top + boundaries.height + 3,
+    });
+  };
 
   React.useEffect(() => {
     const addresses = members.slice(1).reduce((addrs, member) => {
@@ -48,10 +80,11 @@ const SharePanel = (props) => {
         {t('detailsPanel.share.share')}
       </Button>
       <Button
+        id="copy-button"
         variant="secondary"
         fullWidth
-        onClick={() => {}}
         className={classes.copyButton}
+        onClick={handleContextMenuOpen}
       >
         {t('detailsPanel.copy.copy')}
         <FontAwesomeIcon
@@ -59,6 +92,21 @@ const SharePanel = (props) => {
           icon={faAngleDown}
         />
       </Button>
+      <Popper
+        open={contextState.mouseY !== null}
+        onClose={handleContextClose}
+        onClickAway={handleContextClose}
+        style={{
+          top: contextState.mouseY,
+          left: contextState.mouseX,
+        }}
+      >
+        <ContextMenu
+          onClickAway={handleContextClose}
+          menuItemOnClick={menuItemOnClick}
+          items={contextMenuItems}
+        />
+      </Popper>
       <div className={classes.shareWidth}>
         <Typography
           variant="body1"

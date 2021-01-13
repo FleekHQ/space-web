@@ -48,11 +48,13 @@
     "star": "Star",
     "share": "Share...",
     "copyLink": "Copy Link",
+    "copyIPFSHash": "Copy IPFS Hash",
+    "copyDealId": "Copy Deal ID",
     "duplicate": "Duplicate",
     "rename": "Rename",
     "copy": "Copy",
     "delete": "Delete",
-    "viewInFolder": "View in Finder"
+    "viewInFolder": "View in Finder"    
   },
   "notifications": {
     "accept": "Accept",

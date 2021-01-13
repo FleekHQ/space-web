@@ -13,6 +13,9 @@ export const CONTEXT_OPTION_IDS = {
   share: 'share',
   rename: 'rename',
   trash: 'trash',
+  copyLink: 'copyLink',
+  copyIPFSHash: 'copyIPFSHash',
+  copyDealId: 'copyDealId',
 };
 
 const ContextMenu = ({
@@ -31,10 +34,20 @@ const ContextMenu = ({
             onClick={() => menuItemOnClick(item.id)}
           >
             <div className={classes.iconContainer}>
-              <FontAwesomeIcon
-                icon={item.icon}
-                className={classes.icon}
-              />
+              {
+                item.icon ? (
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={classes.icon}
+                  />
+                ) : (
+                  <img
+                    className={classes.image}
+                    src={item.image}
+                    alt={item.id}
+                  />
+                )
+              }
             </div>
             <Typography
               className={classes.displayText}
@@ -61,6 +74,7 @@ ContextMenu.propTypes = {
       id: PropTypes.string,
       displayText: PropTypes.string,
       icon: PropTypes.element,
+      image: PropTypes.string,
     }),
   ).isRequired,
   onClickAway: PropTypes.func.isRequired,
