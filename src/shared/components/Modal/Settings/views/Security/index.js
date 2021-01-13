@@ -4,13 +4,13 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
-import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
-// import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
+import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
 import AddBackUpSignIn from '@shared/components/Modal/AddBackupSignIn';
 import classnames from 'classnames';
+import config from '@config';
 import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
 import { useTheme } from '@material-ui/core/styles';
@@ -46,9 +46,12 @@ const Security = ({ t }) => {
 
   const theme = useTheme();
   const classes = useStyles();
-  const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const { torusTriggerLogin } = useTorusSdk();
+  const [error, setError] = useState(false);
+  const { torusTriggerLogin } = useTorusSdk({
+    ...config.torus.sdkConfig,
+    redirectToOpener: true,
+  });
   const [user, linkedAddresses] = useSelector((reduxState) => [
     reduxState.user,
     reduxState.linkedAddresses,
@@ -79,11 +82,11 @@ const Security = ({ t }) => {
     const tRes = await torusTriggerLogin({ provider });
 
     if (tRes) {
-      addLinkedAddress({
+      dispatch(addLinkedAddress({
         torusRes: tRes,
         provider,
         uuid: user.uuid,
-      });
+      }));
     } else {
       dispatch({
         type: LINKED_ADDRESSES_ACTION_TYPES.ON_ADD_NEW_LINKED_ADDRESS_ERROR,
@@ -126,35 +129,12 @@ const Security = ({ t }) => {
     setError(false);
   };
 
-  const options = ({
-    // [OPTION_IDS.EMAIL]: {
-    //   id: OPTION_IDS.EMAIL,
-    //   text: t('addBackupSignIn.email'),
-    //   text2: 's***********a@gmail.com',
-    //   text3: t('modals.settings.security.disconnect'),
-    //   redText3: true,
-    //   icon: faEnvelope,
-    // },
-    [OPTION_IDS.SEED_PHRASE]: {
-      id: OPTION_IDS.SEED_PHRASE,
-      text: t('addBackupSignIn.seedPhrase'),
-      text3: t('modals.settings.security.seedPhrase'),
-      icon: faKey,
-    },
-    ...(user.username && {
-      [OPTION_IDS.USERNAME]: {
-        id: OPTION_IDS.USERNAME,
-        text: t('modals.settings.security.space'),
-        text2: user.username,
-        text3: t('modals.settings.security.changePassword'),
-        imgSrc: 'https://fleek-team-bucket.storage.fleek.co/space-branding/space-logo.svg',
-      },
-    }),
-  });
+  const options = {};
 
   linkedAddresses.data.forEach((linkedAddress) => {
     const { provider } = linkedAddress;
     const metadata = linkedAddress.metadata || {};
+
     switch (provider) {
       case 'google':
         options[OPTION_IDS.GOOGLE] = {
@@ -175,6 +155,15 @@ const Security = ({ t }) => {
           // text3: t('modals.settings.security.disconnect'),
           imgSrc: 'https://fleek-team-bucket.storage.fleek.co/third-party-logo/Twitter_Logo_Blue.svg',
           redText3: true,
+        };
+        break;
+      case 'passwordless':
+        options[OPTION_IDS.EMAIL] = {
+          id: OPTION_IDS.EMAIL,
+          text: t('addBackupSignIn.email'),
+          text2: metadata.email,
+          // text3: t('modals.settings.security.disconnect'),
+          icon: faEnvelope,
         };
         break;
       default:

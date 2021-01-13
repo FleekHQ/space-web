@@ -125,7 +125,7 @@ function getLinkedAddresses(payload) {
   });
 }
 
-export default {
+export {
   update,
   deleteAccount,
   addEthAddress,
