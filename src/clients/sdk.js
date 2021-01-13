@@ -35,7 +35,9 @@ const init = async () => {
   });
 
   const usersList = users.list();
-  storage = new UserStorage(usersList[0]);
+  storage = new UserStorage(usersList[0], {
+    textileHubAddress: 'https://hub-dev-web.space.storage:3007', // TODO: get it from config or env variable
+  });
 
   return {
     users,
