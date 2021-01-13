@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
-// import { faKey } from '@fortawesome/pro-solid-svg-icons/faKey';
 import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
