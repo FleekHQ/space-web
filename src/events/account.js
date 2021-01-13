@@ -20,7 +20,7 @@ export const uploadProfilePic = async (payload) => {
     type: USER_ACTION_TYPES.ON_UPDATE_AVATAR,
   });
 
-  const { users } = await sdk;
+  const { users } = await sdk.get();
 
   try {
     const { token } = users.list()[0];
@@ -47,7 +47,7 @@ export const updateIdentity = async (payload) => {
     type: USER_ACTION_TYPES.ON_UPDATING_USER,
   });
 
-  const { users } = await sdk;
+  const { users } = await sdk.get();
 
   try {
     const { token } = users.list()[0];
