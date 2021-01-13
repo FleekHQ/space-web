@@ -22,6 +22,7 @@ const init = async () => {
   }
 
   users = await Users.withStorage(new BrowserStorage(), {
+    // TODO: get it from config or env variable
     endpoint: 'wss://auth-dev.space.storage',
     vaultServiceConfig: {
       serviceUrl: 'https://vault-dev.space.storage',

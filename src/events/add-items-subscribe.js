@@ -166,6 +166,51 @@ export const addItems = ({
           type: UPDATE_OR_ADD_OBJECT,
         });
       }
+    } else {
+      const currenFilesFromFolder = sourcePaths.filter((f) => (
+        f.path.includes(normalizePath(data.path))
+      ));
+
+      if (currenFilesFromFolder.length > 0) {
+        const totalFolderBytes = currenFilesFromFolder.reduce((total, file) => (
+          total + file.size
+        ), 0);
+
+        dispatch({
+          type: SET_UPLOAD_SUCCESS_STATE,
+          payload: {
+            id: modalId,
+            payload: {
+              result: {
+                bucketPath: bucket,
+                sourcePath: data.path,
+                error: null,
+              },
+              completedBytes: 0,
+              totalFiles: sourcePaths.length,
+              totalBytes: totalFolderBytes,
+              completedFiles: totalCompletedFiles,
+            },
+          },
+        });
+        dispatch({
+          type: ADD_OBJECT,
+          payload: objectPresenter({
+            bucket,
+            fileExtension: '',
+            backupCount: 1,
+            path: data.path,
+            name: data.path.split('/').pop(),
+            sizeInBytes: totalFolderBytes,
+            isLocallyAvailable: false,
+            isBackupInProgress: false,
+            created: (new Date()).toISOString(),
+            updated: (new Date()).toISOString(),
+            ipfsHash: '',
+            isDir: true,
+          }),
+        });
+      }
     }
   });
 };

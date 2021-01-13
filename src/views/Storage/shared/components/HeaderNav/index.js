@@ -170,6 +170,7 @@ const HeaderNav = () => {
             isOnline,
             membersNumber: 0,
             id: user.uuid,
+            avatarUrl: user.avatarUrl,
             name: user.displayName || getShortAddress(user.address),
           }}
         />
