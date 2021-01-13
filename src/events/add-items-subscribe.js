@@ -46,9 +46,10 @@ export const addItems = ({
   let totalCompletedFiles = 0;
   const uploadResponse = await storage.addItems({
     bucket,
-    files: sourcePaths.map(({ data, path }) => ({
+    files: sourcePaths.map(({ data, path, mimeType }) => ({
       data,
       path,
+      mimeType,
     })),
   });
 

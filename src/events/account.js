@@ -80,7 +80,7 @@ export const createUsernameAndPassword = () => {
 
 export const getLinkedAddresses = () => async (dispatch) => {
   try {
-    const { users } = await sdk;
+    const { users } = await sdk.get();
 
     const { token } = users.list()[0];
     const { data } = await apiClient.identity.getLinkedAddresses({
@@ -110,7 +110,7 @@ export const getLinkedAddresses = () => async (dispatch) => {
  */
 export const addLinkedAddress = (payload) => async (dispatch) => {
   try {
-    const { users } = await sdk;
+    const { users } = await sdk.get();
     const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;
 
     const spaceUser = users.list()[0];
