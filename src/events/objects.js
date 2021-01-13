@@ -27,7 +27,7 @@ const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
   entry,
 ], []);
 
-const listDirectory = async (path, bucket) => {
+const listDirectory = async (path, bucket, fetchSubFolders = true) => {
   const { storage } = await sdk.get();
 
   try {
@@ -69,6 +69,15 @@ const listDirectory = async (path, bucket) => {
       payload: objects,
       type: STORE_DIR,
     });
+
+    if (fetchSubFolders) {
+      const fetchSubDirs = entries
+        .filter((entry) => entry.isDir)
+        .map((entry) => entry.path.replace(/^\//, ''))
+        .map((subDir) => listDirectory(subDir, bucket, false));
+
+      await Promise.all(fetchSubDirs);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
