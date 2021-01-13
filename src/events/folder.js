@@ -17,7 +17,7 @@ export const createFolder = async (payload) => {
     type: CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT,
   });
 
-  const { storage } = await sdk;
+  const { storage } = await sdk.get();
 
   const {
     path,

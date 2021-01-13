@@ -43,4 +43,10 @@ const init = async () => {
   };
 };
 
-export default init();
+export default {
+  get: () => init(),
+  updateStorage: () => {
+    const usersList = users.list();
+    storage = new UserStorage(usersList[0]);
+  },
+};
