@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { VIEW_MODES } from '@shared/components/DetailsPanel/constants';
 
-export const HORIZONTAL_PADDING = 22;
+export const HORIZONTAL_PADDING = 0;
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
-    padding: `13px ${HORIZONTAL_PADDING}px 18px`,
+    padding: `13px ${HORIZONTAL_PADDING}px 0px`,
   },
   fileIconWrapper: {
     margin: '15px auto',
@@ -27,6 +28,7 @@ export default makeStyles({
   },
   title: {
     margin: '15px 0',
+    color: ({ viewMode }) => viewMode !== VIEW_MODES.LIGHT && theme.palette.palette.white,
   },
   arrowIcon: {
     fontSize: 11,
@@ -40,4 +42,20 @@ export default makeStyles({
   centerIcon: {
     margin: 'auto',
   },
-});
+  actionButtons: {
+    marginBottom: 19,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& button': {
+      marginRight: 10,
+    },
+    '& button:last-child': {
+      marginRight: 0,
+    },
+  },
+  actionIcon: {
+    fontSize: 14,
+    color: ({ viewMode }) => (viewMode !== VIEW_MODES.PREVIEW ? theme.palette.palette.gray1 : '#7F8185'),
+  },
+}));

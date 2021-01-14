@@ -13,6 +13,9 @@ export const CONTEXT_OPTION_IDS = {
   share: 'share',
   rename: 'rename',
   trash: 'trash',
+  copyLink: 'copyLink',
+  copyIPFSHash: 'copyIPFSHash',
+  copyDealId: 'copyDealId',
 };
 
 const ContextMenu = ({
@@ -27,14 +30,29 @@ const ContextMenu = ({
       <Paper className={classes.paper}>
         {items.map((item) => (
           <MenuItem
+            data-prevent-details-panel-collapse="true"
             className={classes.menuItem}
             onClick={() => menuItemOnClick(item.id)}
           >
-            <div className={classes.iconContainer}>
-              <FontAwesomeIcon
-                icon={item.icon}
-                className={classes.icon}
-              />
+            <div
+              className={classes.iconContainer}
+            >
+              {
+                item.icon ? (
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={classes.icon}
+                    data-prevent-details-panel-collapse="true"
+                  />
+                ) : (
+                  <img
+                    className={classes.image}
+                    src={item.image}
+                    alt={item.id}
+                    data-prevent-details-panel-collapse="true"
+                  />
+                )
+              }
             </div>
             <Typography
               className={classes.displayText}
@@ -61,6 +79,7 @@ ContextMenu.propTypes = {
       id: PropTypes.string,
       displayText: PropTypes.string,
       icon: PropTypes.element,
+      image: PropTypes.string,
     }),
   ).isRequired,
   onClickAway: PropTypes.func.isRequired,

@@ -17,10 +17,14 @@ import DetailsPanel, {
   ObjectDetails,
 } from '@shared/components/DetailsPanel';
 
+import { VIEW_MODES } from '@shared/components/DetailsPanel/constants';
+
 import { OBJECT_TYPES } from './constants';
 import useStyles from './styles';
 
 const StorageDetailsPanel = () => {
+  const viewMode = VIEW_MODES.LIGHT;
+
   const classes = useStyles();
   const { t } = useTranslation();
   const location = useLocation();
@@ -66,23 +70,27 @@ const StorageDetailsPanel = () => {
     <div className={classnames(classes.root, {
       [classes.expanded]: !!selectedObjects.length,
     })}>
-      <DetailsPanel id="storage-detail-panel">
+      <DetailsPanel
+        id="storage-detail-panel"
+        viewMode={viewMode}
+      >
         {
-          objectsType === OBJECT_TYPES.files ? <Header objects={selectedObjects} /> : (
-            <AvatarHeader objects={selectedObjects} />
+          objectsType === OBJECT_TYPES.files ? <Header viewMode={viewMode} objects={selectedObjects} /> : (
+            <AvatarHeader viewMode={viewMode} objects={selectedObjects} />
           )
         }
-        <Divider />
+        <Divider viewMode={viewMode} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <ObjectDetails {...selectedObjects[0]} />
+        <ObjectDetails viewMode={viewMode} {...selectedObjects[0]} />
         {
           selectedObjects.length === 1
           && selectedObjects[0].type === 'file'
           && selectedObjects[0].isAvailableInSpace
           && (
             <>
-              <Divider />
+              <Divider viewMode={viewMode} />
               <SharePanel
+                viewMode={viewMode}
                 onShare={handleShare}
                 members={(
                   [

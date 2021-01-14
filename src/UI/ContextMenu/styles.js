@@ -5,7 +5,7 @@ const getInnerBorder = (theme) => (`1px solid ${theme.palette.palette.gray4}`);
 
 export default makeStyles((theme) => ({
   paper: {
-    width: 165,
+    width: 166,
     boxShadow: '0px 3px 6px #00000029',
     borderRadius: 6,
   },
@@ -39,5 +39,8 @@ export default makeStyles((theme) => ({
   },
   displayText: {
     fontSize: 14,
+  },
+  image: {
+    width: 14,
   },
 }));

@@ -33,6 +33,16 @@ storiesOf(categoryName, module).add('default', () => {
         displayText: 'Move to Trash',
         icon: faTrash,
       },
+      {
+        id: CONTEXT_OPTION_IDS.copyIPFSHash,
+        displayText: 'Copy IPFS Hash',
+        image: `${process.env.PUBLIC_URL}/assets/images/ipfs-logo.svg`,
+      },
+      {
+        id: CONTEXT_OPTION_IDS.copyDealId,
+        displayText: 'Copy Deal ID',
+        image: `${process.env.PUBLIC_URL}/assets/images/filecoin-logo.svg`,
+      },
     ]
   };
 

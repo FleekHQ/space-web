@@ -15,13 +15,15 @@ const COLLABORATOR_ITEM_HEIGHT = 27;
 const SharePanel = ({
   t,
   collaborators,
+  viewMode,
 }) => {
   const [state, setState] = React.useState({
     listMaxHeight: 0,
     maxCollaborators: 0,
     currentDocBodyHeight: window.innerHeight,
   });
-  const classes = useStyles({ listMaxHeight: state.listMaxHeight });
+
+  const classes = useStyles({ viewMode, listMaxHeight: state.listMaxHeight });
   const collaboratorList = React.useRef(null);
 
   /* eslint-disable react/prop-types */
@@ -142,9 +144,18 @@ const SharePanel = ({
                   isLast: index === arr.length - 1,
                 })
               }
-              <Typography noWrap variant="body1">
-                {`${collaborator.username}${index === 0 ? t('detailsPanel.share.you') : ''}`}
+              <Typography
+                noWrap
+                variant="body1"
+                className={classes.username}
+              >
+                {collaborator.username}
               </Typography>
+              {index === 0 && (
+                <Typography className={classes.ownerLabel}>
+                  {t('detailsPanel.share.owner')}
+                </Typography>
+              )}
             </div>
           ))
       }
@@ -163,6 +174,7 @@ SharePanel.propTypes = {
     username: PropTypes.string.isRequired,
     publicKey: PropTypes.string.isRequired,
   }).isRequired),
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default SharePanel;

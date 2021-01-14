@@ -1,40 +1,50 @@
-import React from 'react';
-import get from 'lodash/get';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
-import { openObject } from '@events';
 import Typography from '@ui/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Popper from '@material-ui/core/Popper';
 import { useTranslation } from 'react-i18next';
-import Button from '@terminal-packages/space-ui/core/Button';
-import { useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
+import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
+import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
+import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
+import ContextMenu from '@ui/ContextMenu';
+import getContextMenuItems from '@shared/components/ObjectsTable/utils/get-context-menu';
 
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 
-const DetailsPanelHeader = ({ objects }) => {
-  const classes = useStyles();
+const DetailsPanelHeader = ({ objects, viewMode }) => {
+  const classes = useStyles({ viewMode });
   const { t } = useTranslation();
-  const history = useHistory();
+
+  const initialContextState = {
+    mouseX: null,
+    mouseY: null,
+  };
+
+  const [contextState, setContextState] = useState(initialContextState);
   const allFolders = objects.filter((obj) => obj.type === 'folder');
 
-  const onClickOpen = () => {
-    const file = get(objects, '[0]', {}) || {};
-    const fileBucket = file.sourceBucket || file.bucket;
-    if (file.type === 'folder') {
-      const baseRedirectUrl = fileBucket === 'shared-with-me' ? '/shared' : '/home';
-      const redirectUrl = `${baseRedirectUrl}/${file.key}`;
-      history.push(redirectUrl);
-    } else {
-      openObject({
-        path: file.key,
-        dbId: file.dbId,
-        bucket: fileBucket,
-        name: file.name,
-        ipfsHash: file.ipfsHash,
-        isPublicLink: file.isPublicLink,
-        fullKey: file.fullKey,
-      });
-    }
+  const handleContextClose = () => {
+    setContextState(initialContextState);
+  };
+
+  const menuItemOnClick = () => {
+    handleContextClose();
+  };
+
+  const contextMenuItems = getContextMenuItems(objects[0], t);
+
+  const handleContextMenuOpen = (event) => {
+    event.preventDefault();
+
+    setContextState({
+      mouseX: event.clientX - 170,
+      mouseY: event.clientY - 34,
+    });
   };
 
   return (
@@ -64,17 +74,48 @@ const DetailsPanelHeader = ({ objects }) => {
             { count: objects.length - allFolders.length },
           )}`}
       </Typography>
-      <div className={classes.buttonsGroup}>
-        {objects.length === 1 && (
-          <Button
-            variant="secondary"
-            className={classes.openBtn}
-            onClick={onClickOpen}
-            disabled={(objects[0].isUploading && objects[0].error)}
-          >
-            {t('detailsPanel.open')}
-          </Button>
-        )}
+      <div className={classes.actionButtons}>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faEye}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faLink}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <ButtonBase>
+          <FontAwesomeIcon
+            icon={faShare}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <ButtonBase
+          onClick={handleContextMenuOpen}
+        >
+          <FontAwesomeIcon
+            icon={faEllipsisV}
+            className={classes.actionIcon}
+          />
+        </ButtonBase>
+        <Popper
+          open={contextState.mouseY !== null}
+          onClose={handleContextClose}
+          onClickAway={handleContextClose}
+          style={{
+            top: contextState.mouseY,
+            left: contextState.mouseX,
+          }}
+        >
+          <ContextMenu
+            onClickAway={handleContextClose}
+            menuItemOnClick={menuItemOnClick}
+            items={contextMenuItems}
+          />
+        </Popper>
       </div>
     </div>
   );
@@ -91,6 +132,7 @@ DetailsPanelHeader.propTypes = {
       error: PropTypes.bool,
     }),
   ).isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default DetailsPanelHeader;

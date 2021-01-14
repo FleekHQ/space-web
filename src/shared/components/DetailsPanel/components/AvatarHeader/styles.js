@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { VIEW_MODES } from '@shared/components/DetailsPanel/constants';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   root: {
-    padding: '26px 22px 18px',
+    padding: '26px 0px 18px',
   },
   avatarList: {
     display: 'flex',
@@ -25,4 +26,9 @@ export default makeStyles({
       },
     },
   },
-});
+  text: {
+    color: ({ viewMode }) => (
+      viewMode !== VIEW_MODES.LIGHT ? theme.palete.palette.white : undefined
+    ),
+  },
+}));

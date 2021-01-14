@@ -24,9 +24,9 @@ const getAvatarSize = (objectsLength) => {
   return size;
 };
 
-const AvatarHeader = ({ objects }) => {
+const AvatarHeader = ({ objects, viewMode }) => {
   const size = getAvatarSize(objects.length);
-  const classes = useStyles({ objectsLength: objects.length });
+  const classes = useStyles({ viewMode, objectsLength: objects.length });
 
   return (
     <div className={classes.root}>
@@ -44,7 +44,7 @@ const AvatarHeader = ({ objects }) => {
         }
       </div>
       <br />
-      <Typography variant="h6">
+      <Typography variant="h6" className={classes.text}>
         <Box fontWeight={500}>
           {
             objects.length > 1 ? `${objects.length} Users` : objects[0].username
@@ -63,6 +63,7 @@ AvatarHeader.propTypes = {
   objects: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string.isRequired,
   })).isRequired,
+  viewMode: PropTypes.string.isRequired,
 };
 
 export default AvatarHeader;

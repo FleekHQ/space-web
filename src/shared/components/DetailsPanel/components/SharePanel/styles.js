@@ -1,10 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { VIEW_MODES } from '../../constants';
 
-export default makeStyles({
+const getColor = (viewMode, theme) => {
+  if (viewMode === VIEW_MODES.LIGHT) {
+    return theme.palette.palette.black;
+  }
+  return theme.palette.palette.white;
+};
+
+export default makeStyles((theme) => ({
   root: {
+    marginTop: 20,
     display: 'flex',
     flexDirection: 'column',
-    padding: '15px 22px 0 22px',
     '& > button': {
       margin: '5px 0',
     },
@@ -16,7 +24,7 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: '5px 0 10px 0',
+    margin: '14px 0 10px 0',
     '& > .manageLink': {
       cursor: 'pointer',
     },
@@ -24,4 +32,26 @@ export default makeStyles({
   collaboratorList: {
     flex: 1,
   },
-});
+  copyButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 32,
+    '&&': {
+      borderColor: ({ viewMode }) => getColor(viewMode, theme),
+    },
+    '& span': {
+      color: ({ viewMode }) => getColor(viewMode, theme),
+    },
+  },
+  downAngle: {
+    fontSize: 18,
+    color: ({ viewMode }) => getColor(viewMode, theme),
+    position: 'relative',
+    top: 1,
+    marginLeft: 5,
+  },
+  subtitle: {
+    color: ({ viewMode }) => getColor(viewMode, theme),
+  },
+}));

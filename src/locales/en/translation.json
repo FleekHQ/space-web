@@ -48,11 +48,13 @@
     "star": "Star",
     "share": "Share...",
     "copyLink": "Copy Link",
+    "copyIPFSHash": "Copy IPFS Hash",
+    "copyDealId": "Copy Deal ID",
     "duplicate": "Duplicate",
     "rename": "Rename",
     "copy": "Copy",
     "delete": "Delete",
-    "viewInFolder": "View in Finder"
+    "viewInFolder": "View in Finder"    
   },
   "notifications": {
     "accept": "Accept",
@@ -86,7 +88,13 @@
       "with": "Shared with",
       "manage": "Manage",
       "group": "+{{number}} others",
-      "you": " (you)"
+      "owner": "Owner"
+    },
+    "copy": {
+      "copy": "Copy",
+      "link": "Copy Link",
+      "hash": "Copy IPFS Hash",
+      "deal": "Copy Deal ID"
     }
   },
   "account": {
