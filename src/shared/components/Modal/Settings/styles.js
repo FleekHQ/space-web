@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    maxWidth: 730,
+    maxWidth: 1000,
     maxHeight: 550,
     height: '100%',
   },
@@ -22,7 +22,6 @@ export default makeStyles((theme) => ({
   },
   content: {
     flex: 1,
-    padding: '0 27px',
     height: '100%',
     overflow: 'auto',
     backgroundColor: theme.palette.palette.gray5,
@@ -78,7 +77,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: '10px 0',
+    padding: '10px 27px 10px 55px',
     '& > :first-child': {
       fontSize: 18,
       fontWeight: 600,
@@ -90,6 +89,7 @@ export default makeStyles((theme) => ({
   },
   contentBody: {
     height: 'calc(100% - 54px)',
+    padding: '0 90px 0 55px',
     overflow: 'auto',
     paddingBottom: 27,
   },
