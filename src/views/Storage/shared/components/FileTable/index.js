@@ -44,9 +44,11 @@ const FileTable = ({
     // avoid unselecting if user interact with detail panel
     const detailsPanel = document.getElementById('storage-detail-panel');
     const clickedInDetailsPanel = detailsPanel && detailsPanel.contains(event.target);
+    const clickedDetailsPanelThreeDots = event.target.dataset.preventDetailsPanelCollapse
+      || event.target.parentNode.dataset.preventDetailsPanelCollapse;
     const hasRowSelected = rows.find((row) => row.selected);
-
-    if (isSharingModalVisible || clickedInDetailsPanel || !hasRowSelected) {
+    if (isSharingModalVisible || clickedInDetailsPanel
+      || !hasRowSelected || clickedDetailsPanelThreeDots) {
       return;
     }
 

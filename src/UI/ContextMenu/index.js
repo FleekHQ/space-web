@@ -30,21 +30,26 @@ const ContextMenu = ({
       <Paper className={classes.paper}>
         {items.map((item) => (
           <MenuItem
+            data-prevent-details-panel-collapse="true"
             className={classes.menuItem}
             onClick={() => menuItemOnClick(item.id)}
           >
-            <div className={classes.iconContainer}>
+            <div
+              className={classes.iconContainer}
+            >
               {
                 item.icon ? (
                   <FontAwesomeIcon
                     icon={item.icon}
                     className={classes.icon}
+                    data-prevent-details-panel-collapse="true"
                   />
                 ) : (
                   <img
                     className={classes.image}
                     src={item.image}
                     alt={item.id}
+                    data-prevent-details-panel-collapse="true"
                   />
                 )
               }
