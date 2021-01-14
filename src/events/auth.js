@@ -8,7 +8,7 @@ const registerAuthEvents = () => {
 
 export const signout = (user) => async (dispatch) => {
   try {
-    const { users } = await sdk.get();
+    const users = await sdk.getUsers();
     if (!users) {
       return;
     }
@@ -43,7 +43,7 @@ export const signin = (payload) => async (dispatch) => {
   });
 
   try {
-    const { users } = await sdk.get();
+    const users = await sdk.getUsers();
     const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;
 
     const { data } = await apiClient.identities.getByAddress({
@@ -56,8 +56,6 @@ export const signin = (payload) => async (dispatch) => {
       payload.torusRes.privateKey,
       backupType,
     );
-
-    sdk.updateStorage();
 
     dispatch({
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
@@ -96,7 +94,7 @@ export const signup = (payload) => async (dispatch) => {
   });
 
   try {
-    const { users } = await sdk.get();
+    const users = await sdk.getUsers();
     const identity = await users.createIdentity();
     const spaceUser = await users.authenticate(identity);
     const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;

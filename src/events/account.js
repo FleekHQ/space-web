@@ -20,7 +20,7 @@ export const uploadProfilePic = async (payload) => {
     type: USER_ACTION_TYPES.ON_UPDATE_AVATAR,
   });
 
-  const { users } = await sdk.get();
+  const users = await sdk.getUsers();
 
   try {
     const { token } = users.list()[0];
@@ -47,7 +47,7 @@ export const updateIdentity = async (payload) => {
     type: USER_ACTION_TYPES.ON_UPDATING_USER,
   });
 
-  const { users } = await sdk.get();
+  const users = await sdk.getUsers();
 
   try {
     const { token } = users.list()[0];
@@ -80,7 +80,7 @@ export const createUsernameAndPassword = () => {
 
 export const getLinkedAddresses = () => async (dispatch) => {
   try {
-    const { users } = await sdk.get();
+    const users = await sdk.getUsers();
 
     const { token } = users.list()[0];
     const { data } = await apiClient.identity.getLinkedAddresses({
@@ -110,7 +110,7 @@ export const getLinkedAddresses = () => async (dispatch) => {
  */
 export const addLinkedAddress = (payload) => async (dispatch) => {
   try {
-    const { users } = await sdk.get();
+    const users = await sdk.getUsers();
     const backupType = payload.torusRes.userInfo.typeOfLogin === 'passwordless' ? 'email' : payload.torusRes.userInfo.typeOfLogin;
 
     const spaceUser = users.list()[0];

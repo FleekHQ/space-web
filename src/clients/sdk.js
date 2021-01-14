@@ -1,32 +1,22 @@
-/* eslint-disable */
 import { Users, BrowserStorage, UserStorage } from '@spacehq/sdk';
+import config from '@config';
 
 /** @type {Users} */
 let users;
 
-/** @type {UserStorage} */
-let storage;
-
 /**
- * @typedef {Object} Sdk
- * @property {Users} users
- * @property {UserStorage} storage
- * @returns {Sdk}
+ * @returns {Users}
  */
-const init = async () => {
-  if (typeof users !== 'undefined' && typeof storage !== 'undefined') {
-    return {
-      users,
-      storage,
-    };
+const getUsers = async () => {
+  if (users) {
+    return users;
   }
 
   users = await Users.withStorage(new BrowserStorage(), {
-    // TODO: get it from config or env variable
-    endpoint: 'wss://auth-dev.space.storage',
+    endpoint: config.ws.url,
     vaultServiceConfig: {
-      serviceUrl: 'https://vault-dev.space.storage',
-      saltSecret: 'WXpKd2JrMUlUbXhhYW10M1RWUkNlV0Z0YkhCYU1tUn',
+      serviceUrl: config.vault.serviceUrl,
+      saltSecret: config.vault.saltSecret,
     },
   }, (error, identity) => {
     // eslint-disable-next-line no-console
@@ -35,21 +25,28 @@ const init = async () => {
     console.log('identity', identity);
   });
 
-  const usersList = users.list();
-  storage = new UserStorage(usersList[0], {
-    textileHubAddress: 'https://hub-dev-web.space.storage:3007', // TODO: get it from config or env variable
-  });
+  return users;
+};
 
-  return {
-    users,
-    storage,
-  };
+/**
+ * @returns {?UserStorage}
+ */
+const getStorage = async () => {
+  if (!users) {
+    users = await getUsers();
+  }
+
+  const usersList = users.list();
+  if (usersList.length > 0) {
+    return new UserStorage(usersList[0], {
+      textileHubAddress: config.textileHubAddress,
+    });
+  }
+
+  return null;
 };
 
 export default {
-  get: () => init(),
-  updateStorage: () => {
-    const usersList = users.list();
-    storage = new UserStorage(usersList[0]);
-  },
+  getUsers,
+  getStorage,
 };

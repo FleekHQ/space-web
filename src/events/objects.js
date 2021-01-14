@@ -28,7 +28,7 @@ const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
 ], []);
 
 const listDirectory = async (path, bucket, fetchSubFolders = true) => {
-  const { storage } = await sdk.get();
+  const storage = await sdk.getStorage();
 
   try {
     const { items } = await storage.listDirectory({
@@ -176,7 +176,7 @@ export const deleteObject = (payload) => {
  */
 export const getFileUrlFromIterable = async (payload) => {
   const chunks = [];
-  const { storage } = await sdk.get();
+  const storage = await sdk.getStorage();
 
   const response = await storage.openFile(payload);
 
@@ -203,7 +203,7 @@ export const getFileUrlFromIterable = async (payload) => {
  * @param {string} payload.path
  */
 export const getFileUrl = async (payload) => {
-  const { storage } = await sdk.get();
+  const storage = await sdk.getStorage();
 
   const response = await storage.openFile(payload);
   const fileBytes = await response.consumeStream();
