@@ -31,7 +31,7 @@ export const addItems = ({
   sourcePaths,
   bucket = 'personal',
 }) => async (dispatch) => {
-  const { storage } = await sdk.get();
+  const storage = await sdk.getStorage();
   const modalId = dispatch(openModal(UPLOAD_PROGRESS_TOAST));
 
   dispatch({
