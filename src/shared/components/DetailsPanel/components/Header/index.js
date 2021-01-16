@@ -12,6 +12,7 @@ import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
 import ContextMenu from '@ui/ContextMenu';
 import getContextMenuItems from '@shared/components/ObjectsTable/utils/get-context-menu';
+import useMenuItemOnClick from '@shared/components/ObjectsTable/utils/use-menu-item-on-click';
 
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
@@ -32,9 +33,11 @@ const DetailsPanelHeader = ({ objects, viewMode }) => {
     setContextState(initialContextState);
   };
 
-  const menuItemOnClick = () => {
-    handleContextClose();
-  };
+  const menuItemOnClick = useMenuItemOnClick({
+    clickedItem: objects[0],
+    handleContextClose,
+    getRedirectUrl: () => {},
+  });
 
   const contextMenuItems = getContextMenuItems(objects[0], t);
 
