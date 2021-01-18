@@ -27,10 +27,12 @@ const ContextMenu = ({
 
   return (
     <ClickAwayListener onClickAway={onClickAway}>
-      <Paper className={classes.paper}>
+      <Paper
+        className={classes.paper}
+        data-prevent-details-panel-collapse="true"
+      >
         {items.map((item) => (
           <MenuItem
-            data-prevent-details-panel-collapse="true"
             className={classes.menuItem}
             onClick={() => menuItemOnClick(item.id)}
           >
@@ -42,14 +44,12 @@ const ContextMenu = ({
                   <FontAwesomeIcon
                     icon={item.icon}
                     className={classes.icon}
-                    data-prevent-details-panel-collapse="true"
                   />
                 ) : (
                   <img
                     className={classes.image}
                     src={item.image}
                     alt={item.id}
-                    data-prevent-details-panel-collapse="true"
                   />
                 )
               }

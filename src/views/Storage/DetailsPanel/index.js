@@ -62,16 +62,14 @@ const StorageDetailsPanel = () => {
     };
   });
 
-  const handleShare = () => {
-    dispatch(openModal(SHARING_MODAL, { selectedObjects }));
-  };
-
   return (
-    <div className={classnames(classes.root, {
-      [classes.expanded]: !!selectedObjects.length,
-    })}>
+    <div
+      className={classnames(classes.root, {
+        [classes.expanded]: !!selectedObjects.length,
+      })}
+      data-prevent-details-panel-collapse="true"
+    >
       <DetailsPanel
-        id="storage-detail-panel"
         viewMode={viewMode}
       >
         {
@@ -90,8 +88,8 @@ const StorageDetailsPanel = () => {
             <>
               <Divider viewMode={viewMode} />
               <SharePanel
+                selectedObject={selectedObjects[0]}
                 viewMode={viewMode}
-                onShare={handleShare}
                 members={(
                   [
                     user,

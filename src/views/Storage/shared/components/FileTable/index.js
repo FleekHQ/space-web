@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// import path from 'path';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
@@ -40,15 +39,30 @@ const FileTable = ({
     state.storage,
   ]);
 
+  const doesPreventCollapse = (element) => {
+    let currentElement = element;
+    /* eslint-disable-next-line no-constant-condition */
+    while (true) {
+      // if there is no parentNode we have found the root element
+      if (!currentElement.parentNode) {
+        return false;
+      }
+
+      if (currentElement.dataset.preventDetailsPanelCollapse) {
+        return true;
+      }
+
+      currentElement = currentElement.parentNode;
+    }
+  };
+
   const handleTableOutsideClick = (event) => {
     // avoid unselecting if user interact with detail panel
-    const detailsPanel = document.getElementById('storage-detail-panel');
-    const clickedInDetailsPanel = detailsPanel && detailsPanel.contains(event.target);
-    const clickedDetailsPanelThreeDots = event?.target?.dataset?.preventDetailsPanelCollapse
-      || event?.target?.parentNode?.dataset?.preventDetailsPanelCollapse;
+    const clickedElementPreventsCollapse = doesPreventCollapse(event.target);
+
     const hasRowSelected = rows.find((row) => row.selected);
-    if (isSharingModalVisible || clickedInDetailsPanel
-      || !hasRowSelected || clickedDetailsPanelThreeDots) {
+    if (isSharingModalVisible || clickedElementPreventsCollapse
+      || !hasRowSelected) {
       return;
     }
 

@@ -7,16 +7,15 @@ import { faLongArrowUp } from '@fortawesome/pro-regular-svg-icons/faLongArrowUp'
 import { faLongArrowDown } from '@fortawesome/pro-regular-svg-icons/faLongArrowDown';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import { openObject } from '@events';
 import { UPDATE_OBJECTS } from '@reducers/storage';
 import Dropzone from '@shared/components/Dropzone';
 import Popper from '@material-ui/core/Popper';
 import Table, { TableCell, TableRow } from '@ui/Table';
-import ContextMenu, { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
-import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
+import ContextMenu from '@ui/ContextMenu';
 import { useTranslation } from 'react-i18next';
-import { getTabulations } from '@utils';
-import getContextMenuItems from './utils/get-context-menu';
+import { getTabulations, getContextMenuItems } from '@utils';
+
+import useMenuItemOnClick, { openAction } from '@utils/use-menu-item-on-click';
 
 import useStyles from './styles';
 
@@ -25,7 +24,6 @@ const ObjectsTable = ({
   heads,
   renderRow: RenderRow,
   withRowOptions,
-  getRedirectUrl,
   onOutsideClick,
   onDropzoneDrop,
   loading,
@@ -44,6 +42,10 @@ const ObjectsTable = ({
     mouseY: null,
   };
   const [contextState, setContextState] = React.useState(initialContextState);
+
+  const handleContextClose = () => {
+    setContextState(initialContextState);
+  };
 
   const [filtersDirection, setFiltersDirection] = useState({
     name: 'desc',
@@ -99,6 +101,11 @@ const ObjectsTable = ({
 
   const clickedItem = sortedRows.find((row) => row.selected);
 
+  const menuItemOnClick = useMenuItemOnClick({
+    clickedItem,
+    handleContextClose,
+  });
+
   const handleRowClick = ({ rowIndex }) => (event, keypresses) => {
     event.preventDefault();
 
@@ -146,32 +153,15 @@ const ObjectsTable = ({
     if (event) {
       event.preventDefault();
     }
-    if (row.isUploading && row.error) {
-      return;
-    }
     let newRows = [];
 
     if (row.type === 'folder') {
-      const redirectUrl = getRedirectUrl(row);
-      history.push(redirectUrl);
-
       newRows = sortedRows.map((_row) => ({
         ..._row,
         pivote: false,
         selected: false,
       }));
     } else if (row.type === 'file') {
-      const rowBucket = row.sourceBucket || row.bucket;
-      openObject({
-        path: row.key,
-        dbId: row.dbId,
-        bucket: rowBucket,
-        name: row.name,
-        ipfsHash: row.ipfsHash,
-        isPublicLink: row.isPublicLink,
-        fullKey: row.fullKey,
-      });
-
       newRows = sortedRows.map((_row) => ({
         ..._row,
         pivote: row.id === _row.id,
@@ -182,6 +172,11 @@ const ObjectsTable = ({
     dispatch({
       type: UPDATE_OBJECTS,
       payload: newRows,
+    });
+
+    openAction({
+      clickedItem: row,
+      history,
     });
   };
 
@@ -203,10 +198,6 @@ const ObjectsTable = ({
       type: UPDATE_OBJECTS,
       payload: newRows,
     });
-  };
-
-  const handleContextClose = () => {
-    setContextState(initialContextState);
   };
 
   const sortButtonOnClick = (id) => {
@@ -239,22 +230,6 @@ const ObjectsTable = ({
       payload: newRows,
       type: UPDATE_OBJECTS,
     });
-  };
-
-  const menuItemOnClick = (optionId) => {
-    switch (optionId) {
-      case CONTEXT_OPTION_IDS.open:
-        handleDoubleRowClick({ row: clickedItem })();
-        break;
-      case CONTEXT_OPTION_IDS.trash:
-        dispatch(openModal(DELETE_OBJECT, { item: clickedItem }));
-        break;
-      case CONTEXT_OPTION_IDS.share:
-      default:
-        dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
-        break;
-    }
-    handleContextClose();
   };
 
   const contextMenuItems = getContextMenuItems(clickedItem, t);
@@ -382,7 +357,6 @@ ObjectsTable.propTypes = {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   })).isRequired,
   renderRow: PropTypes.elementType.isRequired,
-  getRedirectUrl: PropTypes.func.isRequired,
   withRowOptions: PropTypes.bool,
   renderLoadingRows: PropTypes.func,
   loading: PropTypes.bool,
