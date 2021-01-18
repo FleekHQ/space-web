@@ -2627,13 +2627,14 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@terminal-packages/space-ui@^0.3.14":
-  version "0.3.14"
-  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.14.tgz#d551a19306f1d91d873cfd03f2cca6153d9bcfaf"
-  integrity sha512-PNvHNT4k3b5j+o+9RKgJ1tUVvn8OMlap5wsx9uqo3VHsCqy3bPKutKUs/z2LgkH4IV90AGZ0cgenLKCNseV0Uw==
+"@terminal-packages/space-ui@^0.3.15":
+  version "0.3.15"
+  resolved "https://registry.yarnpkg.com/@terminal-packages/space-ui/-/space-ui-0.3.15.tgz#bf6eade99c980f9f59575af2c008c7572389184d"
+  integrity sha512-yCrOk8FUOFW7baKFHM6ZKg6sD6UZ8oKMb03Zovq2fykUCaAdQxCqOao2K3Yxdz91hVkhZAiMz0rO7q6bFSR0tA==
   dependencies:
     "@stripe/react-stripe-js" "^1.1.2"
     clsx "^1.1.1"
+    lodash.chunk "^4.2.0"
     lodash.merge "^4.6.2"
     recharts "^1.8.5"
     use-debounce "^5.0.1"
@@ -10538,6 +10539,11 @@ lodash._reinterpolate@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
   integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+
+lodash.chunk@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.chunk/-/lodash.chunk-4.2.0.tgz#66e5ce1f76ed27b4303d8c6512e8d1216e8106bc"
+  integrity sha1-ZuXOH3btJ7QwPYxlEujRIW6BBrw=
 
 lodash.debounce@^4.0.8:
   version "4.0.8"
