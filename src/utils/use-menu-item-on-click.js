@@ -43,7 +43,7 @@ export const copyLinkAction = ({
   clickedItem,
   dispatch,
 }) => {
-  // If we do not have a link to copy, copy link open the share modal
+  // If we do not have a link to copy, we open the share modal
   shareAction({
     clickedItem,
     dispatch,

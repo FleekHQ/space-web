@@ -60,6 +60,7 @@ const FileTable = ({
   const handleTableOutsideClick = (event) => {
     // avoid unselecting if user interact with detail panel
     const clickedElementPreventsCollapse = doesPreventCollapse(event.target);
+    
     const hasRowSelected = rows.find((row) => row.selected);
     if (isSharingModalVisible || clickedElementPreventsCollapse
       || !hasRowSelected) {
