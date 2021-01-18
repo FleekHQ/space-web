@@ -1,25 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-
+import SigninOptions from '@terminal-packages/space-ui/core/SigninOptions';
 import Box from '@material-ui/core/Box';
-
 import config from '@config';
 import { useTorusSdk, useWsChallenge } from '@utils';
 
-import Option from './Option';
-
-import * as constants from './constants';
+import useStyles from './styles';
 
 const SocialNetworksAuth = ({
-  type,
   onError,
   onCancel,
   onSuccess,
   isLoading,
   onStartLoading,
 }) => {
-  const { t } = useTranslation();
+  const classes = useStyles();
   const { checkIdentityByEthKey } = useWsChallenge();
   const { isInitializing, torusTriggerLogin } = useTorusSdk({
     ...config.torus.sdkConfig,
@@ -31,9 +26,7 @@ const SocialNetworksAuth = ({
     torusRes: null,
   });
 
-  const handleTorusTriggerLogin = (provider) => async (event) => {
-    event.preventDefault();
-
+  const handleTorusTriggerLogin = async (provider) => {
     setState({
       loading: true,
       torusRes: null,
@@ -106,45 +99,20 @@ const SocialNetworksAuth = ({
   return (
     <Box
       flex={1}
-      maxWidth={247}
+      maxWidth={270}
       mt={{
         xs: 0,
         md: '59px',
       }}
+      height={163}
+      className={classes.root}
     >
-      <Option
-        type={type}
+      <SigninOptions
+        onClickOption={async (option) => {
+          await handleTorusTriggerLogin(option.id);
+        }}
         disabled={disabledOptions}
-        text={`${type} with Google`}
-        icon={<img alt="google" src={`${process.env.PUBLIC_URL}/assets/images/google.png`} />}
-        onClick={handleTorusTriggerLogin('google')}
       />
-      <Option
-        disabled={disabledOptions}
-        text={`${type} with Twitter`}
-        icon={<img alt="twitter" src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`} />}
-        onClick={handleTorusTriggerLogin('twitter')}
-      />
-      <Option
-        disabled
-        text={`${type} with Ethereum`}
-        icon={<img alt="wallet-connect" src={`${process.env.PUBLIC_URL}/assets/images/walletconnect.png`} />}
-        onClick={() => null}
-      />
-      <Box mt="-15px" pl="17px" display="flex" alignItems="flex-end">
-        <img height={37} src={`${process.env.PUBLIC_URL}/assets/images/curved-arrow.png`} alt="curved-arrow" />
-        <Box
-          ml="5px"
-          top={10}
-          fontSize={14}
-          component="span"
-          color="common.white"
-          fontFamily="Kalam"
-          position="relative"
-        >
-          {t('common.comingSoon')}
-        </Box>
-      </Box>
     </Box>
   );
 };
@@ -161,7 +129,6 @@ SocialNetworksAuth.propTypes = {
   onStartLoading: PropTypes.func,
   onError: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
-  type: PropTypes.oneOf([constants.SIGNIN, constants.SIGNUP]).isRequired,
 };
 
 export default SocialNetworksAuth;
