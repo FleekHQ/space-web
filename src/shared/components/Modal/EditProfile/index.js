@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 import { faPencil } from '@fortawesome/pro-regular-svg-icons/faPencil';
 import { faUpload } from '@fortawesome/pro-regular-svg-icons/faUpload';
-import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 
 import Box from '@material-ui/core/Box';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Radio from '@material-ui/core/Radio';
 import List from '@material-ui/core/List';
+import Radio from '@material-ui/core/Radio';
+import Popover from '@material-ui/core/Popover';
 import ListItem from '@material-ui/core/ListItem';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
-import Popover from '@material-ui/core/Popover';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@terminal-packages/space-ui/core/Button';
 import Avatar from '@terminal-packages/space-ui/core/Avatar';
@@ -22,6 +23,8 @@ import Avatar from '@terminal-packages/space-ui/core/Avatar';
 import BaseModal from '@ui/BaseModal';
 import TextField from '@ui/TextField';
 import Typography from '@ui/Typography';
+import { updateIdentity } from '@events';
+import { USER_ACTION_TYPES } from '@reducers/user';
 
 import useStyles from './styles';
 
@@ -44,13 +47,13 @@ const PROFILE_RADIO_OPTIONS = [
   },
 ];
 
-const EditProfile = ({
-  user,
-  closeModal,
-}) => {
+const FORM_ID = 'display-name-form';
+
+const EditProfile = ({ closeModal }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [error] = React.useState();
-  const [loading] = React.useState(false);
+  const user = useSelector((s) => s.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [radioValue, setRadioValue] = React.useState('');
   const [value, setValue] = React.useState(user.displayName);
@@ -70,7 +73,20 @@ const EditProfile = ({
 
   const onSubmitForm = (e) => {
     e.preventDefault();
+
+    updateIdentity({
+      displayName: value,
+    });
   };
+
+  React.useEffect(() => {
+    if (user.updatingUserSuccess) {
+      closeModal();
+      dispatch({
+        type: USER_ACTION_TYPES.ON_UPDATING_USER_RESET,
+      });
+    }
+  }, [user.updatingUserSuccess]);
 
   return (
     <BaseModal
@@ -166,6 +182,7 @@ const EditProfile = ({
       </Box>
       <Box
         component="form"
+        id={FORM_ID}
         onSubmit={onSubmitForm}
       >
         <TextField
@@ -218,15 +235,16 @@ const EditProfile = ({
           onClick={closeModal}
           color="secondary"
           variant="outlined"
-          disabled={loading}
+          disabled={user.updatingUser}
         >
           {t('common.cancel')}
         </Button>
         <Button
           type="submit"
           variant="primary"
-          loading={loading}
-          disabled={loading}
+          form={FORM_ID}
+          loading={user.updatingUser}
+          disabled={user.updatingUser}
           classes={{
             root: classes.btnRoot,
           }}
@@ -244,10 +262,6 @@ EditProfile.defaultProps = {
 
 EditProfile.propTypes = {
   closeModal: PropTypes.func,
-  user: PropTypes.shape({
-    avatarUrl: PropTypes.string,
-    displayName: PropTypes.string,
-  }).isRequired,
 };
 
 export default EditProfile;
