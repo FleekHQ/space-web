@@ -55,4 +55,7 @@ export default makeStyles((theme) => ({
   picOption: {
     padding: '3px 14px',
   },
+  input: {
+    display: 'none',
+  },
 }));

@@ -23,8 +23,9 @@ import Avatar from '@terminal-packages/space-ui/core/Avatar';
 import BaseModal from '@ui/BaseModal';
 import TextField from '@ui/TextField';
 import Typography from '@ui/Typography';
-import { updateIdentity } from '@events';
+import { fileToBase64 } from '@utils';
 import { USER_ACTION_TYPES } from '@reducers/user';
+import { updateIdentity, uploadProfilePic } from '@events';
 
 import useStyles from './styles';
 
@@ -52,7 +53,7 @@ const FORM_ID = 'display-name-form';
 const EditProfile = ({ closeModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [error] = React.useState();
+  const picInputRef = React.useRef(null);
   const user = useSelector((s) => s.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [radioValue, setRadioValue] = React.useState('');
@@ -71,7 +72,26 @@ const EditProfile = ({ closeModal }) => {
     setValue(event.target.value);
   };
 
-  const onSubmitForm = (e) => {
+  const handlePicChange = async (event) => {
+    const file = await fileToBase64(event.target.files[0]);
+    if (file) {
+      setAnchorEl(null);
+      uploadProfilePic({ file });
+    }
+  };
+
+  const handlePicOptionClick = (key) => (event) => {
+    event.preventDefault();
+
+    if (key === 'upload') {
+      picInputRef.current.click();
+      return;
+    }
+    // eslint-disable-next-line no-console
+    console.log('TODO: remove pic!');
+  };
+
+  const handleOnSubmitForm = (e) => {
     e.preventDefault();
 
     updateIdentity({
@@ -120,7 +140,19 @@ const EditProfile = ({ closeModal }) => {
         justifyContent="center"
       >
         <Box position="relative">
-          <Avatar size={86} imgUrl={user.avatarUrl} />
+          <input
+            type="file"
+            name="image"
+            ref={picInputRef}
+            onChange={handlePicChange}
+            className={classes.input}
+            accept="image/x-png,image/jpeg"
+          />
+          <Avatar
+            size={86}
+            imgUrl={user.avatarUrl}
+            isLoading={user.uploadingAvatar}
+          />
           <Box
             bottom="10px"
             right="-25px"
@@ -133,6 +165,7 @@ const EditProfile = ({ closeModal }) => {
                 color="inherit"
                 aria-describedby={id}
                 className={classes.editBtn}
+                disabled={user.uploadingAvatar}
                 onClick={(event) => setAnchorEl(event.currentTarget)}
               >
                 <span>
@@ -163,7 +196,13 @@ const EditProfile = ({ closeModal }) => {
                   <List disablePadding>
                     {
                       PROFILE_PIC_OPTIONS.map((o) => (
-                        <ListItem key={o.key} button disableGutters className={classes.picOption}>
+                        <ListItem
+                          button
+                          disableGutters
+                          key={o.key}
+                          className={classes.picOption}
+                          onClick={handlePicOptionClick(o.key)}
+                        >
                           <Box minWidth={14}>
                             <FontAwesomeIcon icon={o.icon} />
                           </Box>
@@ -183,19 +222,19 @@ const EditProfile = ({ closeModal }) => {
       <Box
         component="form"
         id={FORM_ID}
-        onSubmit={onSubmitForm}
+        onSubmit={handleOnSubmitForm}
       >
         <TextField
           fullWidth
           label={t('modals.editProfile.displayName')}
           value={value}
           onChange={onChange}
-          error={!!error}
+          error={!!user.updatingUserError}
           className={classes.textField}
         />
-        {error && (
+        {user.updatingUserError && (
           <Typography variant="body2" className={classes.errorMessage}>
-            {error}
+            {user.updatingUserError}
           </Typography>
         )}
       </Box>
