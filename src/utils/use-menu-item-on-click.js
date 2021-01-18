@@ -56,11 +56,7 @@ export const copyIPFSHashAction = ({
   copy(clickedItem.ipfsHash);
 };
 
-export const previewAction = ({
-  clickedItem,
-}) => {
-  console.log('preview action', clickedItem);
-};
+export const previewAction = () => {};
 
 const useMenuItemOnClick = ({
   handleContextClose = () => {},
