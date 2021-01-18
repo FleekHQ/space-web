@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
@@ -8,24 +8,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
 import ContextMenu from '@ui/ContextMenu';
 import Popper from '@material-ui/core/Popper';
+import useMenuItemOnClick, {
+  shareAction,
+} from '@utils/use-menu-item-on-click';
 
 import { getIdentitiesByAddress } from '@events';
 
 import CollaboratorList from '../CollaboratorList';
-import getContextMenuItems from '../../utils/get-copy-menu';
+import getCopyMenuItems from '../../utils/get-copy-menu';
 
 import useStyles from './styles';
 
 const SharePanel = (props) => {
   const {
     members,
-    onShare,
     viewMode,
+    selectedObject,
   } = props;
 
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
   const state = useSelector((s) => s.identities);
+  const dispatch = useDispatch();
 
   const initialContextState = {
     mouseX: null,
@@ -34,15 +38,16 @@ const SharePanel = (props) => {
 
   const [contextState, setContextState] = React.useState(initialContextState);
 
-  const contextMenuItems = getContextMenuItems(t);
+  const copyMenuItems = getCopyMenuItems(t);
 
   const handleContextClose = () => {
     setContextState(initialContextState);
   };
 
-  const menuItemOnClick = () => {
-    handleContextClose();
-  };
+  const menuItemOnClick = useMenuItemOnClick({
+    handleContextClose,
+    clickedItem: selectedObject,
+  });
 
   const handleContextMenuOpen = (event) => {
     event.preventDefault();
@@ -75,7 +80,12 @@ const SharePanel = (props) => {
       <Button
         fullWidth
         variant="primary"
-        onClick={onShare}
+        onClick={() => {
+          shareAction({
+            clickedItem: selectedObject,
+            dispatch,
+          });
+        }}
       >
         {t('detailsPanel.share.share')}
       </Button>
@@ -104,7 +114,7 @@ const SharePanel = (props) => {
         <ContextMenu
           onClickAway={handleContextClose}
           menuItemOnClick={menuItemOnClick}
-          items={contextMenuItems}
+          items={copyMenuItems}
         />
       </Popper>
       <div className={classes.shareWidth}>
@@ -142,8 +152,10 @@ SharePanel.propTypes = {
     username: PropTypes.string.isRequired,
     publicKey: PropTypes.string.isRequired,
   }).isRequired),
-  onShare: PropTypes.func.isRequired,
   viewMode: PropTypes.string.isRequired,
+  selectedObject: PropTypes.shape({
+    key: PropTypes.string,
+  }).isRequired,
 };
 
 export default SharePanel;

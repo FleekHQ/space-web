@@ -38,6 +38,29 @@ export const shareAction = ({
   dispatch,
 }) => dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
 
+export const copyLinkAction = ({
+  clickedItem,
+  dispatch,
+}) => {
+  // If we do not have a link to copy, copy link open the share modal
+  shareAction({
+    clickedItem,
+    dispatch,
+  });
+};
+
+export const copyIPFSHashAction = ({
+  clickedItem,
+}) => {
+  console.log('copy ipfs hash action', clickedItem.ipfsHash);
+};
+
+export const previewAction = ({
+  clickedItem,
+}) => {
+  console.log('preview action', clickedItem);
+};
+
 const useMenuItemOnClick = ({
   handleContextClose = () => {},
   clickedItem,
@@ -62,10 +85,21 @@ const useMenuItemOnClick = ({
         });
         break;
       case CONTEXT_OPTION_IDS.share:
-      default:
         shareAction({
           clickedItem,
           dispatch,
+        });
+        break;
+      case CONTEXT_OPTION_IDS.copyLink:
+        copyLinkAction({
+          clickedItem,
+          dispatch,
+        });
+        break;
+      case CONTEXT_OPTION_IDS.copyIPFSHash:
+      default:
+        copyIPFSHashAction({
+          clickedItem,
         });
         break;
     }
