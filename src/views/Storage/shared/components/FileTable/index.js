@@ -41,6 +41,7 @@ const FileTable = ({
 
   const doesPreventCollapse = (element) => {
     let currentElement = element;
+    /* eslint-disable-next-line no-constant-condition */
     while (true) {
       // if there is no parentNode we have found the root element
       if (!currentElement.parentNode) {
@@ -58,7 +59,7 @@ const FileTable = ({
   const handleTableOutsideClick = (event) => {
     // avoid unselecting if user interact with detail panel
     const clickedElementPreventsCollapse = doesPreventCollapse(event.target);
-    
+
     const hasRowSelected = rows.find((row) => row.selected);
     if (isSharingModalVisible || clickedElementPreventsCollapse
       || !hasRowSelected) {
