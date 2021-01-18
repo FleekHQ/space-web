@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-solid-svg-icons/faTimes';
 import { useTranslation } from 'react-i18next';
+import classnames from 'classnames';
+import { useSelector } from 'react-redux';
+import Avatar from '@terminal-packages/space-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons/faTimesCircle';
 
 import useStyles from './styles';
 import getContent from './get-content';
@@ -22,10 +26,10 @@ const Settings = ({
     closeModal,
     defaultItem,
   });
+
+  const user = useSelector((state) => state.user);
   const dItem = contentItems.find((item) => item.default);
-
   const [contentId, setContentId] = useState(dItem.id);
-
   const selectedContentItem = contentItems.find((item) => item.id === contentId);
 
   return (
@@ -35,21 +39,28 @@ const Settings = ({
         className: classes.root,
       }}
     >
-      <div className={classes.titleContainer}>
-        <Typography variant="h6" weight="medium">
-          {t('modals.settings.title')}
-        </Typography>
-        <ButtonBase onClick={closeModal}>
-          <FontAwesomeIcon
-            icon={faTimes}
-            className={classes.closeIcon}
-          />
-        </ButtonBase>
-      </div>
       <div className={classes.bodyContainer}>
         <ul className={classes.sidebar}>
+          <div className={classes.userContainer}>
+            <Avatar imgUrl={user.avatarUrl} className={classes.userAvatar} />
+            <div className={classes.usernameContainer}>
+              <Typography variant="body1" component="div" noWrap>
+                {user.displayName}
+              </Typography>
+              <Typography variant="body2" color="secondary">
+                {t('common.edit')}
+              </Typography>
+            </div>
+          </div>
+          <Divider className={classes.divider} />
           {contentItems.map((item) => (
-            <li key={item.id}>
+            <li
+              key={item.id}
+              className={classnames(
+                classes.sidebarItem,
+                item.id === selectedContentItem.id && classes.selectedItem,
+              )}
+            >
               <ButtonBase onClick={() => setContentId(item.id)}>
                 <Typography
                   variant="body1"
@@ -62,7 +73,17 @@ const Settings = ({
           ))}
         </ul>
         <div className={classes.content}>
-          {selectedContentItem.content}
+          <div className={classes.contentHeader}>
+            <Typography>
+              {selectedContentItem.title}
+            </Typography>
+            <ButtonBase onClick={closeModal}>
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </ButtonBase>
+          </div>
+          <div className={classes.contentBody}>
+            {selectedContentItem.content}
+          </div>
         </div>
       </div>
     </BaseModal>
