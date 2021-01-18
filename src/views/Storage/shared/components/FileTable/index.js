@@ -1,6 +1,4 @@
-/* eslint-disable */
 import React, { useEffect } from 'react';
-// import path from 'path';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';

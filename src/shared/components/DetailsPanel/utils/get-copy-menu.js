@@ -12,11 +12,6 @@ const mapCopyMenuItems = (t) => ([
     displayText: t('contextMenu.copyIPFSHash'),
     image: `${process.env.PUBLIC_URL}/assets/images/ipfs-logo.svg`,
   },
-  // {
-  //   id: CONTEXT_OPTION_IDS.copyDealId,
-  //   displayText: t('contextMenu.copyDealId'),
-  //   image: `${process.env.PUBLIC_URL}/assets/images/filecoin-logo.svg`,
-  // },
 ]);
 
 export default mapCopyMenuItems;
