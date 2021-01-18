@@ -2,6 +2,7 @@
   "test": "Translate me!",
   "createNew": "Create New",
   "common": {
+    "edit": "Edit",
     "search": "Search",
     "add": "Add",
     "at": "at",
@@ -501,6 +502,19 @@
       "description": "File is locked",
       "openText": "Enter password to open file",
       "error": "Incorrect password, please try again."
+    },
+    "editProfile": {
+      "title": "Edit your profile",
+      "displayName": "Display Name",
+      "picOptions": {
+        "upload": "Upload a photo",
+        "trash": "Remove photo"
+      },
+      "radio": {
+        "title": "Share my display name & profile picture with...",
+        "public": "People I share or accept files from",
+        "private": "Nobody (Keep it Private)"
+      }
     }
   },
   "welcome": {
