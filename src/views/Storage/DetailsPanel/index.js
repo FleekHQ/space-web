@@ -63,11 +63,13 @@ const StorageDetailsPanel = () => {
   });
 
   return (
-    <div className={classnames(classes.root, {
-      [classes.expanded]: !!selectedObjects.length,
-    })}>
+    <div
+      className={classnames(classes.root, {
+        [classes.expanded]: !!selectedObjects.length,
+      })}
+      data-prevent-details-panel-collapse="true"
+    >
       <DetailsPanel
-        id="storage-detail-panel"
         viewMode={viewMode}
       >
         {
