@@ -28,10 +28,14 @@ const BaseModal = ({
       open
       onClose={onClose}
       disableAutoFocus
-      BackdropProps={{ style: backdropStyles }}
+      BackdropProps={{
+        style: backdropStyles,
+        'data-prevent-details-panel-collapse': true,
+      }}
       {...modalProps}
     >
       <Paper
+        data-prevent-details-panel-collapse="true"
         className={classnames(
           classes.paper,
           paperClassName,
