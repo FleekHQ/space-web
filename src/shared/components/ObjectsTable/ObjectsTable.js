@@ -13,9 +13,9 @@ import Popper from '@material-ui/core/Popper';
 import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu from '@ui/ContextMenu';
 import { useTranslation } from 'react-i18next';
-import { getTabulations } from '@utils';
-import getContextMenuItems from './utils/get-context-menu';
-import useMenuItemOnClick, { openAction } from './utils/use-menu-item-on-click';
+import { getTabulations, getContextMenuItems } from '@utils';
+
+import useMenuItemOnClick, { openAction } from '@utils/use-menu-item-on-click';
 
 import useStyles from './styles';
 

@@ -18,3 +18,4 @@ export { default as fileToBase64 } from './file-to-base64';
 export { default as useBrowserStatus } from './use-browser-status';
 export { default as typedArrayToUrl } from './typed-array-to-url';
 export { default as normalizePath } from './normalize-path';
+export { default as getContextMenuItems } from './get-context-menu';

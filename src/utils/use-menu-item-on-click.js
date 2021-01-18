@@ -28,6 +28,16 @@ export const openAction = ({
   }
 };
 
+export const deleteAction = ({
+  clickedItem,
+  dispatch,
+}) => dispatch(openModal(DELETE_OBJECT, { item: clickedItem }));
+
+export const shareAction = ({
+  clickedItem,
+  dispatch,
+}) => dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
+
 const useMenuItemOnClick = ({
   handleContextClose = () => {},
   clickedItem,
@@ -46,11 +56,17 @@ const useMenuItemOnClick = ({
         });
         break;
       case CONTEXT_OPTION_IDS.trash:
-        dispatch(openModal(DELETE_OBJECT, { item: clickedItem }));
+        deleteAction({
+          clickedItem,
+          dispatch,
+        });
         break;
       case CONTEXT_OPTION_IDS.share:
       default:
-        dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
+        shareAction({
+          clickedItem,
+          dispatch,
+        });
         break;
     }
     handleContextClose();
