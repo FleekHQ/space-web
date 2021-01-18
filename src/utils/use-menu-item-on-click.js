@@ -3,6 +3,7 @@ import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Moda
 import { useDispatch } from 'react-redux';
 import { openObject } from '@events';
 import { useHistory } from 'react-router-dom';
+import copy from 'copy-to-clipboard';
 
 export const openAction = ({
   clickedItem,
@@ -52,7 +53,7 @@ export const copyLinkAction = ({
 export const copyIPFSHashAction = ({
   clickedItem,
 }) => {
-  console.log('copy ipfs hash action', clickedItem.ipfsHash);
+  copy(clickedItem.ipfsHash);
 };
 
 export const previewAction = ({
