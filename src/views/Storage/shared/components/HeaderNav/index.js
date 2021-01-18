@@ -16,7 +16,7 @@ import Account from '@terminal-packages/space-ui/core/Account';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/pro-regular-svg-icons/faCog';
 import { faQuestionCircle } from '@fortawesome/pro-regular-svg-icons/faQuestionCircle';
-import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
+import { openModal, EDIT_PROFILE, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 
 import useStyles from './styles';
 
@@ -165,6 +165,7 @@ const HeaderNav = () => {
         </Box>
         <Account
           items={getAccountItems(t)}
+          onEdit={() => dispatch(openModal(EDIT_PROFILE, { user }))}
           onMenuItemClick={getAccountItemClick({ user, dispatch, linkedAddresses })}
           account={{
             isOnline,
