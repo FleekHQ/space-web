@@ -16,6 +16,7 @@ import AddBackUpSignIn from './AddBackupSignIn';
 import CreateUsernamePassword from './CreateUsernamePassword';
 import DeleteObject from './DeleteObject';
 import DeleteObjectSuccess from './DeleteObjectSuccess';
+import EditProfile from './EditProfile';
 import useStyles from './styles';
 
 import {
@@ -35,6 +36,7 @@ import {
   CREATE_USERNAME_PASSWORD,
   DELETE_OBJECT,
   DELETE_OBJECT_SUCCESS,
+  EDIT_PROFILE,
 } from './actions';
 
 const MODALS = {
@@ -53,6 +55,7 @@ const MODALS = {
   [CREATE_USERNAME_PASSWORD]: CreateUsernamePassword,
   [DELETE_OBJECT]: DeleteObject,
   [DELETE_OBJECT_SUCCESS]: DeleteObjectSuccess,
+  [EDIT_PROFILE]: EditProfile,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {
