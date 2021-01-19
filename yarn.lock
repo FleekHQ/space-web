@@ -2113,20 +2113,21 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@spacehq/sdk@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.5.tgz#ae427a95d7310b9917f86ac9b43bba7a5ff18a7e"
-  integrity sha512-Q1lV4yAJctwcS8f24D8tpAEpJ5FlYuz/k91Kc899W0BgcSBKupoXcmG6Fq3/kmN/cHm7jbYkjTcGZgO6Sie7RA==
+"@spacehq/sdk@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.6.tgz#b3c445bb771d9127385db2da24af945b72189cdb"
+  integrity sha512-7CyfiVjPX7TYrq+fX2sljjsA5DHVZ4z9anMXVMFuwAh6hp5nXr2506XVZwcqwueQJf8/TomPeItR2wsx4RYn8g==
   dependencies:
-    "@spacehq/storage" "^0.0.5"
-    "@spacehq/users" "^0.0.5"
+    "@spacehq/storage" "^0.0.6"
+    "@spacehq/users" "^0.0.6"
 
-"@spacehq/storage@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.5.tgz#722d37823bc9df43549c324c9ad324c955d7e948"
-  integrity sha512-QhqhfEMEJG1ONT/q4igR0kKu6REMvjVySmZzOtn/wS7W55ooFubjrt38O3ltAStiSUIpCeMog5wntlMVWYBDmw==
+"@spacehq/storage@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.6.tgz#f43803746b14cc8eb82cd4b2541018dc7d5b4498"
+  integrity sha512-WJR6TmFajrxQza+DlDz2lHfJj9e+Ncj8BXcjpGsWul37g3yImOiLwdDEBFTXsJUfZt6cObNAwPzYwB7gQjuE4A==
   dependencies:
-    "@spacehq/users" "^0.0.5"
+    "@improbable-eng/grpc-web" "^0.13.0"
+    "@spacehq/users" "^0.0.6"
     "@textile/crypto" "^2.0.0"
     "@textile/hub" "^4.1.0"
     "@textile/threads-id" "^0.4.0"
@@ -2136,13 +2137,15 @@
     dayjs "^1.10.3"
     event-emitter "^0.3.5"
     gun "^0.2020.520"
+    lodash "^4.17.20"
     multihashes "^3.1.0"
+    uuid "^8.3.2"
     varint "^6.0.0"
 
-"@spacehq/users@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.5.tgz#23b218d527efb86a1a37f96fabff28c94946f278"
-  integrity sha512-PR00fJ/1mGUVGJwpAvjZm3MjS+AatoMgyREXj5d16JdrafjQn71kbjblaaUYbA9uesfd33Gm9tM/RJkaLoNNVg==
+"@spacehq/users@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.6.tgz#28121a8fd5a339ae6d3af267bcd6da52230478d5"
+  integrity sha512-txgd82OdBw91zZpm01hAzUz0WcCqH0RB8uaa3S18qFVte8ORhEaFiGlsF0MuQtHDR1No6nKqAhcUWX7G+vBrxA==
   dependencies:
     "@textile/crypto" "^2.0.0"
     "@types/lodash" "^4.14.165"
@@ -15778,7 +15781,7 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.1.0:
+uuid@^8.1.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
