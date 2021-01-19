@@ -24,6 +24,9 @@ storiesOf(categoryName, module).add('default', () => {
         icon: faShare,
       },
       {
+        type: 'divider',
+      },
+      {
         id: CONTEXT_OPTION_IDS.rename,
         displayText: 'Rename',
         icon: faPencil,

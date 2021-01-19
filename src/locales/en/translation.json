@@ -547,9 +547,11 @@
     "torusError": "Something went wrong, please try again later."
   },
   "tableMenu": {
+    "preview": "Preview",
     "open": "Open",
     "share": "Share",
-    "delete": "Delete"
+    "delete": "Delete",
+    "getLink": "Get link"
   },
   "hoverMenu": {
     "retry": "Retry",
