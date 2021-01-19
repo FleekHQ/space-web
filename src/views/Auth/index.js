@@ -1,25 +1,27 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-
-import Box from '@material-ui/core/Box';
-
 import config from '@config';
+import Box from '@material-ui/core/Box';
 import { signin, signup } from '@events';
+import { useTranslation } from 'react-i18next';
 import { AUTH_ACTION_TYPES } from '@reducers/auth';
+import { useTheme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { useDispatch, useSelector } from 'react-redux';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
 
+import Splash from '../Splash';
+import useStyles from './styles';
 import Layout from './components/Layout';
 import Separator from './components/Separator';
 import EmailAuth from './components/EmailAuth';
 import ErrorMessage from './components/ErrorMessage';
 import SocialNetworksAuth from './components/SocialNetworksAuth';
-import Splash from '../Splash';
-
-import useStyles from './styles';
 
 const Auth = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
   const match = useRouteMatch();
@@ -28,6 +30,7 @@ const Auth = () => {
   const { t } = useTranslation();
   const state = useSelector((s) => s.auth);
   const { checkIdentityByEthKey } = useWsChallenge();
+  const matchSmScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const { isInitializing, torusTriggerLogin } = useTorusSdk(config.torus.sdkConfig);
   const {
     getLoginPayload,
@@ -143,6 +146,33 @@ const Auth = () => {
     }
   }, [state.error]);
 
+  const privacyAndPolicy = (
+    <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
+      <Typography color="inherit">
+        <Box component="span" fontSize="12px" fontFamily="Inter">
+          {`${t('modules.signup.agreenment.part1')} `}
+          <ButtonBase
+            component="a"
+            color="inherit"
+            className={classes.linkButton}
+            onClick={() => null}
+          >
+            {`${t('modules.signup.agreenment.privacy')}`}
+          </ButtonBase>
+          &nbsp;&&nbsp;
+          <ButtonBase
+            component="a"
+            color="inherit"
+            className={classes.linkButton}
+            onClick={() => null}
+          >
+            {t('modules.signup.agreenment.terms')}
+          </ButtonBase>
+        </Box>
+      </Typography>
+    </Box>
+  );
+
   return (
     <>
       {
@@ -165,34 +195,46 @@ const Auth = () => {
             display="flex"
             position="relative"
             justifyContent="center"
+            className={classes.authContainer}
             width={{
-              xs: 247,
-              md: 580,
+              xs: 320,
+              md: 740,
             }}
             flexDirection={{
               xs: 'column',
               md: 'row',
             }}
           >
-            <EmailAuth
-              currentView={currentView}
-              isLoading={state.isAuthenticating || passwordlessLoading}
-              submitBtnText={t(`modules.${currentView}.title`)}
-              defaultEmail={
-                location.state
-                && location.state.email ? location.state.email : undefined
-              }
-              onSubmit={handlePasswordLessFormSubmit}
-            />
+            <Box flex={1} display="inherit" flexDirection="column">
+              <EmailAuth
+                currentView={currentView}
+                isLoading={state.isAuthenticating || passwordlessLoading}
+                submitBtnText={t(`modules.${currentView}.title`)}
+                defaultEmail={
+                  location.state
+                  && location.state.email ? location.state.email : undefined
+                }
+                onSubmit={handlePasswordLessFormSubmit}
+              />
+              {!matchSmScreen && (currentView === 'signup') && privacyAndPolicy}
+            </Box>
             <Separator />
             <SocialNetworksAuth
               isLoading={state.isAuthenticating}
-              type={t(`modules.${currentView}.title`)}
               onError={handleThirdPartyAuthError}
               onCancel={() => setShowSplash(false)}
               onSuccess={handleThirdPartyAuthSuccess}
               onStartLoading={() => setShowSplash(true)}
             />
+            {matchSmScreen && (currentView === 'signup') && (
+              <Box
+                display="flex"
+                justifyContent="center"
+                mt={{ xs: '30px', md: 0 }}
+              >
+                {privacyAndPolicy}
+              </Box>
+            )}
             {
               state.authenticatingError && (
                 <ErrorMessage

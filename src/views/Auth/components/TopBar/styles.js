@@ -4,6 +4,7 @@ export default makeStyles((theme) => ({
   appBar: {
     height: 96,
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'transparent',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -12,7 +13,6 @@ export default makeStyles((theme) => ({
   toolbarRoot: {
     height: 96,
     padding: '0 16px',
-    backgroundColor: '#151515',
   },
   authBtnRoot: {
     width: 87,

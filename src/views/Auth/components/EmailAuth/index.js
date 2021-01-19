@@ -6,7 +6,6 @@ import { useLocation, Link as ReactRouterLink } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
 import RainbowField from '@ui/RainbowField';
@@ -58,7 +57,7 @@ const EmailAuth = ({
   }, []);
 
   return (
-    <Box flex={1} maxWidth={247} display="inherit" flexDirection="column">
+    <>
       <Box
         mb="31px"
         display="inherit"
@@ -111,35 +110,7 @@ const EmailAuth = ({
           </Button>
         </form>
       </Box>
-      {
-        currentView === 'signup' && (
-          <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
-            <Typography color="inherit">
-              <Box component="span" fontSize="12px" fontFamily="Inter">
-                {`${t('modules.signup.agreenment.part1')} `}
-                <ButtonBase
-                  component="a"
-                  color="inherit"
-                  className={classes.linkButton}
-                  onClick={() => null}
-                >
-                  {`${t('modules.signup.agreenment.privacy')}`}
-                </ButtonBase>
-                &nbsp;&&nbsp;
-                <ButtonBase
-                  component="a"
-                  color="inherit"
-                  className={classes.linkButton}
-                  onClick={() => null}
-                >
-                  {t('modules.signup.agreenment.terms')}
-                </ButtonBase>
-              </Box>
-            </Typography>
-          </Box>
-        )
-      }
-    </Box>
+    </>
   );
 };
 
