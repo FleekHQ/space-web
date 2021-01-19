@@ -41,6 +41,7 @@ const listDirectory = async (path, bucket, fetchSubFolders = true) => {
 
     const objects = entries.map((entry) => objectPresenter({
       bucket,
+      uuid: entry.uuid,
       path: entry.path,
       name: entry.name,
       isDir: entry.isDir,

@@ -26,11 +26,13 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
   const isPublicLink = get(obj, 'isPublicLink', false);
   const sharedBy = get(obj, 'sharedBy');
   const sourcePath = get(obj, 'sourcePath', '');
+  const uuid = get(obj, 'uuid');
 
   return {
     key,
     ext,
     dbId,
+    uuid,
     type,
     name,
     size,
