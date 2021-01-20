@@ -2,7 +2,12 @@ import get from 'lodash/get';
 
 import formatBytes from './format-bytes';
 
-const objectPresenter = (obj = {}, isRootDir = false) => {
+const defaultEntryMapper = (entry) => entry;
+
+// TODO: remove entryMapper func after SDK release with bucket info on file item
+const objectPresenter = (entry = {}, isRootDir = false, entryMapper = defaultEntryMapper) => {
+  const obj = entryMapper(entry);
+
   const bucket = get(obj, 'bucket', '') || '';
   const key = (get(obj, 'path', '') || '').replace(/^\//, '');
 

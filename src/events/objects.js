@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import get from 'lodash/get';
 import { sdk } from '@clients';
-import { objectPresenter, typedArrayToUrl } from '@utils';
+import { objectPresenter, typedArrayToUrl, getEntryMapper } from '@utils';
 import {
   STORE_DIR,
   STORE_OBJECTS,
@@ -38,24 +38,7 @@ const listDirectory = async (path, bucket, fetchSubFolders = true) => {
     });
 
     const entries = flatEntries(items);
-
-    const objects = entries.map((entry) => objectPresenter({
-      bucket,
-      path: entry.path,
-      name: entry.name,
-      isDir: entry.isDir,
-      created: entry.created,
-      updated: entry.updated,
-      ipfsHash: entry.ipfsHash,
-      sizeInBytes: entry.sizeInBytes,
-      backupCount: entry.backupCount,
-      fileExtension: entry.fileExtension,
-      isLocallyAvailable: entry.isLocallyAvailable,
-      members: entry.members.map((member) => ({
-        address: member.address,
-        publicKey: member.publicKey,
-      })),
-    }));
+    const objects = entries.map((entry) => objectPresenter(entry, false, getEntryMapper(bucket)));
 
     store.dispatch({
       payload: {
@@ -209,6 +192,24 @@ export const getFileUrl = async (payload) => {
   const fileBytes = await response.consumeStream();
 
   return typedArrayToUrl([fileBytes.buffer], response.mimeType);
+};
+
+/**
+ * @param {string} uuid
+ */
+export const openFileByUuid = async (uuid) => {
+  const storage = await sdk.getStorage();
+
+  const res = await storage.openFileByUuid(uuid);
+
+  return {
+    entry: objectPresenter(res.entry, false, getEntryMapper('personal')),
+    mimeType: res.mimeType,
+    getFileUrl: async () => {
+      const fileBytes = await res.consumeStream();
+      return typedArrayToUrl([fileBytes.buffer], res.mimeType);
+    },
+  };
 };
 
 export default registerObjectsEvents;
