@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import TopBar from '@ui/Preview/components/TopBar';
 import { useTranslation } from 'react-i18next';
-import PreviewDetailsPanel from './components/DetailsPanel';
+import FilePreviewer from '@ui/FilePreviewer';
 
+import PreviewDetailsPanel from './components/DetailsPanel';
 import useStyles from './styles';
 import mockFile from './mock';
 
@@ -34,24 +35,31 @@ const FilePreview = () => {
     <div className={classes.container}>
       {file && (
         <>
-          <TopBar
-            filename={file.name}
-            ext={file.ext}
-            onPrint={() => {}}
-            onDownload={() => {}}
-            onInfo={onInfo}
-            onSignIn={() => {}}
-            onOptionClick={() => {}}
-            showSignin
-            i18n={i18n}
-          />
-          <div className={classes.mainViewContainer}>
-            <div className={classes.filePreviewContainer}>MAIN VIEW</div>
-            <PreviewDetailsPanel
-              object={file}
-              expanded={detailsPanelExpanded}
+          <div className={classes.mainContentContainer}>
+            <TopBar
+              filename={file.name}
+              ext={file.ext}
+              onPrint={() => {}}
+              onDownload={() => {}}
+              onInfo={onInfo}
+              onSignIn={() => {}}
+              onOptionClick={() => {}}
+              showSignin
+              i18n={i18n}
             />
+            <div className={classes.mainContent}>
+              <FilePreviewer
+                url="https://bitcoin.org/bitcoin.pdf"
+                isImage={false}
+                // url="https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/08/kitten-440379.jpg?h=c8d00152&itok=1fdekAh2"
+                // isImage
+              />
+            </div>
           </div>
+          <PreviewDetailsPanel
+            object={file}
+            expanded={detailsPanelExpanded}
+          />
         </>
       )}
     </div>

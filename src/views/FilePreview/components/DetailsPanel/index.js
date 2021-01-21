@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import DetailsPanel, {
   Header,
-  // Divider,
-  // SharePanel,
-  // ObjectDetails,
+  Divider,
+  SharePanel,
+  ObjectDetails,
 } from '@shared/components/DetailsPanel';
 import { VIEW_MODES } from '@shared/components/DetailsPanel/constants';
 
@@ -17,7 +17,7 @@ const PreviewDetailsPanel = ({
 }) => {
   const classes = useStyles();
   const viewMode = VIEW_MODES.PREVIEW;
-  console.log(object);
+
   return (
     <div
       className={classnames(classes.root, {
@@ -31,6 +31,14 @@ const PreviewDetailsPanel = ({
         <Header
           viewMode={viewMode}
           objects={[object]}
+        />
+        <Divider viewMode={viewMode} />
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <ObjectDetails viewMode={viewMode} {...object} />
+        <SharePanel
+          viewMode={viewMode}
+          selectedObject={object}
+          members={[]}
         />
       </DetailsPanel>
     </div>

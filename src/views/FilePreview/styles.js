@@ -5,15 +5,17 @@ export default makeStyles(() => ({
     backgroundColor: '#151515',
     height: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
-  mainViewContainer: {
+  mainContentContainer: {
+    width: '100%',
+  },
+  mainContent: {
+    marginTop: '20px',
+    overflow: 'hidden',
     display: 'flex',
-    width: '100%',
-    height: '100%',
-  },
-  filePreviewContainer: {
-    width: '100%',
-    backgroundColor: 'green',
+    // 100% - topBar - margin below topbar
+    height: 'calc(100% - 66px - 20px)',
+    padding: '0px 300px',
   },
 }));
