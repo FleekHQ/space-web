@@ -27,7 +27,7 @@ const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
   entry,
 ], []);
 
-const listDirectory = async (path, bucket, fetchSubFolders = true) => {
+export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
   const storage = await sdk.getStorage();
 
   try {

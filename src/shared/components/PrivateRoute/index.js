@@ -6,22 +6,54 @@ import { Route, Redirect } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 
 import { sdk } from '@clients';
+import registerTxlSubscribeEvents from '@events/txl-subscribe';
 
 import Splash from '../../../views/Splash';
 
 // disable react/jsx-props-no-spreading since it is a wrapper
 /* eslint-disable react/jsx-props-no-spreading */
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ children, txlSubscribe, ...rest }) => {
   const user = useSelector((state) => state.user);
   const [loadingSdk, setLoadingSdk] = React.useState(true);
 
   React.useEffect(() => {
-    const initSdk = async () => {
-      await sdk.getUsers();
-      setLoadingSdk(false);
+    let sdkUnsubscribe;
+    let txlUnsubscribe;
+
+    const initTxlSubscribe = async () => {
+      const users = await sdk.getUsers();
+      if (users.list().length > 0) {
+        txlUnsubscribe = await registerTxlSubscribeEvents();
+      }
     };
 
-    initSdk();
+    if (sdk.isStarting) {
+      sdkUnsubscribe = sdk.onList('ready', (error) => {
+        if (!error) {
+          setLoadingSdk(false);
+          sdkUnsubscribe();
+
+          if (txlSubscribe) {
+            initTxlSubscribe();
+          }
+        }
+      });
+    } else {
+      // SDK is already started
+      setLoadingSdk(false);
+      if (txlSubscribe) {
+        initTxlSubscribe();
+      }
+    }
+
+    return () => {
+      if (sdkUnsubscribe) {
+        sdkUnsubscribe();
+      }
+      if (txlUnsubscribe) {
+        txlUnsubscribe();
+      }
+    };
   }, []);
 
   return (
@@ -55,7 +87,12 @@ const PrivateRoute = ({ children, ...rest }) => {
   );
 };
 
+PrivateRoute.defaultProps = {
+  txlSubscribe: false,
+};
+
 PrivateRoute.propTypes = {
+  txlSubscribe: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
 

@@ -52,10 +52,10 @@ const App = () => (
             <Route path="/file/:hash">
               <FilePreview />
             </Route>
-            <PrivateRoute path="/home">
+            <PrivateRoute txlSubscribe path="/home">
               <Storage />
             </PrivateRoute>
-            <PrivateRoute path="/shared">
+            <PrivateRoute txlSubscribe path="/shared">
               <Shared />
             </PrivateRoute>
             <Redirect to="/home" />
