@@ -17,6 +17,7 @@ import CreateUsernamePassword from './CreateUsernamePassword';
 import DeleteObject from './DeleteObject';
 import DeleteObjectSuccess from './DeleteObjectSuccess';
 import EditProfile from './EditProfile';
+import FilePreview from './FilePreview';
 import useStyles from './styles';
 
 import {
@@ -37,6 +38,7 @@ import {
   DELETE_OBJECT,
   DELETE_OBJECT_SUCCESS,
   EDIT_PROFILE,
+  FILE_PREVIEW,
 } from './actions';
 
 const MODALS = {
@@ -56,6 +58,7 @@ const MODALS = {
   [DELETE_OBJECT]: DeleteObject,
   [DELETE_OBJECT_SUCCESS]: DeleteObjectSuccess,
   [EDIT_PROFILE]: EditProfile,
+  [FILE_PREVIEW]: FilePreview,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {
