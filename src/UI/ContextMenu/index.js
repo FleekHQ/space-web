@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
+import Divider from '@material-ui/core/Divider';
 import useStyles from './styles';
 
 export const CONTEXT_OPTION_IDS = {
@@ -25,6 +25,44 @@ const ContextMenu = ({
 }) => {
   const classes = useStyles();
 
+  const getMenuItem = (item) => {
+    if (item.type === 'divider') {
+      return (
+        <Divider className={classes.divider} />
+      );
+    }
+    return (
+      <MenuItem
+        className={classes.menuItem}
+        onClick={() => menuItemOnClick(item.id)}
+      >
+        <div
+          className={classes.iconContainer}
+        >
+          {
+            item.icon ? (
+              <FontAwesomeIcon
+                icon={item.icon}
+                className={classes.icon}
+              />
+            ) : (
+              <img
+                className={classes.image}
+                src={item.image}
+                alt={item.id}
+              />
+            )
+          }
+        </div>
+        <Typography
+          className={classes.displayText}
+        >
+          {item.displayText}
+        </Typography>
+      </MenuItem>
+    );
+  };
+
   return (
     <ClickAwayListener onClickAway={onClickAway}>
       <Paper
@@ -32,34 +70,7 @@ const ContextMenu = ({
         data-prevent-details-panel-collapse="true"
       >
         {items.map((item) => (
-          <MenuItem
-            className={classes.menuItem}
-            onClick={() => menuItemOnClick(item.id)}
-          >
-            <div
-              className={classes.iconContainer}
-            >
-              {
-                item.icon ? (
-                  <FontAwesomeIcon
-                    icon={item.icon}
-                    className={classes.icon}
-                  />
-                ) : (
-                  <img
-                    className={classes.image}
-                    src={item.image}
-                    alt={item.id}
-                  />
-                )
-              }
-            </div>
-            <Typography
-              className={classes.displayText}
-            >
-              {item.displayText}
-            </Typography>
-          </MenuItem>
+          getMenuItem(item)
         ))}
       </Paper>
     </ClickAwayListener>
@@ -80,6 +91,7 @@ ContextMenu.propTypes = {
       displayText: PropTypes.string,
       icon: PropTypes.element,
       image: PropTypes.string,
+      type: PropTypes.string,
     }),
   ).isRequired,
   onClickAway: PropTypes.func.isRequired,

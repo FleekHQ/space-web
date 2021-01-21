@@ -83,67 +83,79 @@ const DetailsPanelHeader = ({ objects, viewMode }) => {
             { count: objects.length - allFolders.length },
           )}`}
       </Typography>
-      <div className={classes.actionButtons}>
-        <ButtonBase>
-          <FontAwesomeIcon
-            onClick={() => {
-              previewAction({
-                clickedItem: objects[0],
-                dispatch,
-              });
-            }}
-            icon={faEye}
-            className={classes.actionIcon}
-          />
-        </ButtonBase>
-        <ButtonBase>
-          <FontAwesomeIcon
-            icon={faLink}
-            className={classes.actionIcon}
-            onClick={() => {
-              copyLinkAction({
-                clickedItem: objects[0],
-                dispatch,
-              });
-            }}
-          />
-        </ButtonBase>
-        <ButtonBase>
-          <FontAwesomeIcon
-            onClick={() => {
-              shareAction({
-                clickedItem: objects[0],
-                dispatch,
-              });
-            }}
-            icon={faShare}
-            className={classes.actionIcon}
-          />
-        </ButtonBase>
-        <ButtonBase
-          onClick={handleContextMenuOpen}
-        >
-          <FontAwesomeIcon
-            icon={faEllipsisV}
-            className={classes.actionIcon}
-          />
-        </ButtonBase>
-        <Popper
-          open={contextState.mouseY !== null}
-          onClose={handleContextClose}
-          onClickAway={handleContextClose}
-          style={{
-            top: contextState.mouseY,
-            left: contextState.mouseX,
-          }}
-        >
-          <ContextMenu
-            onClickAway={handleContextClose}
-            menuItemOnClick={menuItemOnClick}
-            items={contextMenuItems}
-          />
-        </Popper>
-      </div>
+      {
+        objects.length === 1 && (
+          <div className={classes.actionButtons}>
+            {
+              objects[0].type === 'file'
+              && objects[0].isAvailableInSpace
+              && (
+                <>
+                  <ButtonBase>
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        previewAction({
+                          clickedItem: objects[0],
+                          dispatch,
+                        });
+                      }}
+                      icon={faEye}
+                      className={classes.actionIcon}
+                    />
+                  </ButtonBase>
+                  <ButtonBase>
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      className={classes.actionIcon}
+                      onClick={() => {
+                        copyLinkAction({
+                          clickedItem: objects[0],
+                          dispatch,
+                        });
+                      }}
+                    />
+                  </ButtonBase>
+                  <ButtonBase>
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        shareAction({
+                          clickedItem: objects[0],
+                          dispatch,
+                        });
+                      }}
+                      icon={faShare}
+                      className={classes.actionIcon}
+                    />
+                  </ButtonBase>
+                </>
+              )
+            }
+            <ButtonBase
+              onClick={handleContextMenuOpen}
+            >
+              <FontAwesomeIcon
+                icon={faEllipsisV}
+                className={classes.actionIcon}
+              />
+            </ButtonBase>
+            <Popper
+              open={contextState.mouseY !== null}
+              onClose={handleContextClose}
+              onClickAway={handleContextClose}
+              style={{
+                top: contextState.mouseY,
+                left: contextState.mouseX,
+              }}
+            >
+              <ContextMenu
+                onClickAway={handleContextClose}
+                menuItemOnClick={menuItemOnClick}
+                items={contextMenuItems}
+              />
+            </Popper>
+          </div>
+        )
+      }
     </div>
   );
 };
@@ -157,6 +169,8 @@ DetailsPanelHeader.propTypes = {
       src: PropTypes.string,
       isUploading: PropTypes.bool,
       error: PropTypes.bool,
+      type: PropTypes.string,
+      isAvailableInSpace: PropTypes.bool,
     }),
   ).isRequired,
   viewMode: PropTypes.string.isRequired,

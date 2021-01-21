@@ -1,31 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const getOuterBorder = () => ('1px solid #D8D8d8');
-const getInnerBorder = (theme) => (`1px solid ${theme.palette.palette.gray4}`);
-
 export default makeStyles((theme) => ({
   paper: {
     width: 166,
     boxShadow: '0px 3px 6px #00000029',
     borderRadius: 6,
+    padding: '9px 0px',
+    border: '1px solid #D8D8d8',
   },
   menuItem: {
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'flex-start',
-    padding: '11px 0px 11px 15px',
-    borderRight: getOuterBorder(theme),
-    borderLeft: getOuterBorder(theme),
-    borderBottom: getInnerBorder(theme),
-    '&:first-child': {
-      borderTop: getOuterBorder(theme),
-      borderTopRightRadius: 6,
-      borderTopLeftRadius: 6,
-    },
-    '&:last-child': {
-      borderBottom: getOuterBorder(theme),
-      borderBottomRightRadius: 6,
-      borderBottomLeftRadius: 6,
+    padding: '3px 0px 3px 15px',
+    '&:hover': {
+      backgroundColor: theme.palette.palette.gray4,
     },
   },
   iconContainer: {
@@ -42,5 +31,9 @@ export default makeStyles((theme) => ({
   },
   image: {
     width: 14,
+  },
+  divider: {
+    backgroundColor: theme.palette.palette.gray4,
+    margin: '6px 0px',
   },
 }));
