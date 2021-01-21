@@ -165,7 +165,7 @@ const HeaderNav = () => {
         </Box>
         <Account
           items={getAccountItems(t)}
-          onEdit={() => dispatch(openModal(EDIT_PROFILE, { user }))}
+          onEdit={() => dispatch(openModal(EDIT_PROFILE, {}))}
           onMenuItemClick={getAccountItemClick({ user, dispatch, linkedAddresses })}
           account={{
             isOnline,

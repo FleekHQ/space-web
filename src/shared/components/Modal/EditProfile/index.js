@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
+import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 import { faPencil } from '@fortawesome/pro-regular-svg-icons/faPencil';
 import { faUpload } from '@fortawesome/pro-regular-svg-icons/faUpload';
-import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 
 import Box from '@material-ui/core/Box';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Radio from '@material-ui/core/Radio';
 import List from '@material-ui/core/List';
+import Radio from '@material-ui/core/Radio';
+import Popover from '@material-ui/core/Popover';
 import ListItem from '@material-ui/core/ListItem';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
-import Popover from '@material-ui/core/Popover';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@terminal-packages/space-ui/core/Button';
 import Avatar from '@terminal-packages/space-ui/core/Avatar';
@@ -22,6 +23,9 @@ import Avatar from '@terminal-packages/space-ui/core/Avatar';
 import BaseModal from '@ui/BaseModal';
 import TextField from '@ui/TextField';
 import Typography from '@ui/Typography';
+import { fileToBase64 } from '@utils';
+import { USER_ACTION_TYPES } from '@reducers/user';
+import { updateIdentity, uploadProfilePic } from '@events';
 
 import useStyles from './styles';
 
@@ -44,13 +48,13 @@ const PROFILE_RADIO_OPTIONS = [
   },
 ];
 
-const EditProfile = ({
-  user,
-  closeModal,
-}) => {
+const FORM_ID = 'display-name-form';
+
+const EditProfile = ({ closeModal }) => {
   const { t } = useTranslation();
-  const [error] = React.useState();
-  const [loading] = React.useState(false);
+  const dispatch = useDispatch();
+  const picInputRef = React.useRef(null);
+  const user = useSelector((s) => s.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [radioValue, setRadioValue] = React.useState('');
   const [value, setValue] = React.useState(user.displayName);
@@ -68,9 +72,41 @@ const EditProfile = ({
     setValue(event.target.value);
   };
 
-  const onSubmitForm = (e) => {
-    e.preventDefault();
+  const handlePicChange = async (event) => {
+    const file = await fileToBase64(event.target.files[0]);
+    if (file) {
+      setAnchorEl(null);
+      uploadProfilePic({ file });
+    }
   };
+
+  const handlePicOptionClick = (key) => (event) => {
+    event.preventDefault();
+
+    if (key === 'upload') {
+      picInputRef.current.click();
+      return;
+    }
+    // eslint-disable-next-line no-console
+    console.log('TODO: remove pic!');
+  };
+
+  const handleOnSubmitForm = (e) => {
+    e.preventDefault();
+
+    updateIdentity({
+      displayName: value,
+    });
+  };
+
+  React.useEffect(() => {
+    if (user.updatingUserSuccess) {
+      closeModal();
+      dispatch({
+        type: USER_ACTION_TYPES.ON_UPDATING_USER_RESET,
+      });
+    }
+  }, [user.updatingUserSuccess]);
 
   return (
     <BaseModal
@@ -104,7 +140,19 @@ const EditProfile = ({
         justifyContent="center"
       >
         <Box position="relative">
-          <Avatar size={86} imgUrl={user.avatarUrl} />
+          <input
+            type="file"
+            name="image"
+            ref={picInputRef}
+            onChange={handlePicChange}
+            className={classes.input}
+            accept="image/x-png,image/jpeg"
+          />
+          <Avatar
+            size={86}
+            imgUrl={user.avatarUrl}
+            isLoading={user.uploadingAvatar}
+          />
           <Box
             bottom="10px"
             right="-25px"
@@ -117,6 +165,7 @@ const EditProfile = ({
                 color="inherit"
                 aria-describedby={id}
                 className={classes.editBtn}
+                disabled={user.uploadingAvatar}
                 onClick={(event) => setAnchorEl(event.currentTarget)}
               >
                 <span>
@@ -147,7 +196,13 @@ const EditProfile = ({
                   <List disablePadding>
                     {
                       PROFILE_PIC_OPTIONS.map((o) => (
-                        <ListItem key={o.key} button disableGutters className={classes.picOption}>
+                        <ListItem
+                          button
+                          disableGutters
+                          key={o.key}
+                          className={classes.picOption}
+                          onClick={handlePicOptionClick(o.key)}
+                        >
                           <Box minWidth={14}>
                             <FontAwesomeIcon icon={o.icon} />
                           </Box>
@@ -166,19 +221,20 @@ const EditProfile = ({
       </Box>
       <Box
         component="form"
-        onSubmit={onSubmitForm}
+        id={FORM_ID}
+        onSubmit={handleOnSubmitForm}
       >
         <TextField
           fullWidth
           label={t('modals.editProfile.displayName')}
           value={value}
           onChange={onChange}
-          error={!!error}
+          error={!!user.updatingUserError}
           className={classes.textField}
         />
-        {error && (
+        {user.updatingUserError && (
           <Typography variant="body2" className={classes.errorMessage}>
-            {error}
+            {user.updatingUserError}
           </Typography>
         )}
       </Box>
@@ -218,15 +274,16 @@ const EditProfile = ({
           onClick={closeModal}
           color="secondary"
           variant="outlined"
-          disabled={loading}
+          disabled={user.updatingUser}
         >
           {t('common.cancel')}
         </Button>
         <Button
           type="submit"
           variant="primary"
-          loading={loading}
-          disabled={loading}
+          form={FORM_ID}
+          loading={user.updatingUser}
+          disabled={user.updatingUser}
           classes={{
             root: classes.btnRoot,
           }}
@@ -244,10 +301,6 @@ EditProfile.defaultProps = {
 
 EditProfile.propTypes = {
   closeModal: PropTypes.func,
-  user: PropTypes.shape({
-    avatarUrl: PropTypes.string,
-    displayName: PropTypes.string,
-  }).isRequired,
 };
 
 export default EditProfile;
