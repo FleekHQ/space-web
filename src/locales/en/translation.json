@@ -556,5 +556,8 @@
   "hoverMenu": {
     "retry": "Retry",
     "cancel": "Cancel"
+  },
+  "preview": {
+    "signIn": "Sign In"
   }
 }
