@@ -321,23 +321,6 @@
     "settings": {
       "title": "Settings",
       "account": {
-        "title": "Account",
-        "profilePicture": "Profile Picture",
-        "edit": "Edit",
-        "displayName": "Display Name",
-        "setDisplayName": "Set Display Name",
-        "username": "Username",
-        "setUsername": "Pick a Username",
-        "changeUsername": "Change Username",
-        "profileId": "Profile ID",
-        "dangerZone": "Danger Zone",
-        "deleteAccount": "Delete Account",
-        "editDisplayName": "Edit Display Name",
-        "displayNameLable": "Display Name",
-        "editUsername": "Edit Username",
-        "usernameLabel": "Username"
-      },
-      "security": {
         "title": "Security",
         "password": "Password",
         "paperKey": "Account Recovery Phrase",
