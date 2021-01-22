@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@material-ui/core/Modal';
 import TopBar from '@ui/Preview/components/TopBar';
 import FilePreviewer from '@ui/FilePreviewer';
+import { openFileByUuid } from '@events/objects';
+import { imgExtensions } from '../../../../views/FilePreview/constants';
 
 import PreviewDetailsPanel from '../../../../views/FilePreview/components/DetailsPanel';
 import useStyles from './styles';
@@ -14,10 +16,27 @@ const FilePreview = ({
 }) => {
   const classes = useStyles();
   const [detailsPanelExpanded, setDetailsPanelExpanded] = useState(false);
+  const [fileUrl, setFileUrl] = useState(null);
+
+  const getFileInfo = async () => {
+    try {
+      const fileInfo = await openFileByUuid(object.uuid);
+      const url = await fileInfo.getFileUrl();
+      setFileUrl(url);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    getFileInfo();
+  }, []);
 
   const onInfo = () => {
     setDetailsPanelExpanded(!detailsPanelExpanded);
   };
+
+  const getIsImage = () => imgExtensions.includes(object.ext);
 
   return (
     <Modal
@@ -49,10 +68,8 @@ const FilePreview = ({
           />
           <div className={classes.mainContent}>
             <FilePreviewer
-              url="https://bitcoin.org/bitcoin.pdf"
-              isImage={false}
-              // url="https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/08/kitten-440379.jpg?h=c8d00152&itok=1fdekAh2"
-              // isImage
+              url={fileUrl}
+              isImage={getIsImage()}
             />
           </div>
         </div>
@@ -70,6 +87,7 @@ FilePreview.propTypes = {
   object: PropTypes.shape({
     name: PropTypes.string,
     ext: PropTypes.string,
+    uuid: PropTypes.string,
   }).isRequired,
 };
 
