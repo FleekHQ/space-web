@@ -3,26 +3,19 @@ import React from 'react';
 import {
   // Usage,
   Account,
-  Security,
   // ProductKey,
 } from './views';
 
 export default ({
   t,
-  closeModal,
   defaultItem,
+  // closeModal,
 }) => [
   {
     id: 'account',
     default: defaultItem === 'account',
     title: t('modals.settings.account.title'),
-    content: <Account closeMainModal={closeModal} />,
-  },
-  {
-    id: 'security',
-    default: defaultItem === 'security',
-    title: t('modals.settings.security.title'),
-    content: <Security t={t} />,
+    content: <Account t={t} />,
   },
   /*  {
     id: 'notifications',

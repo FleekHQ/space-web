@@ -1,19 +1,102 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
 
-export default makeStyles({
-  root: {
-    '& > *:not(:last-child)': {
-      marginBottom: 10,
-    },
+export default makeStyles((theme) => ({
+  title: {
+    fontSize: 12,
   },
-  profileContainer: {
+  divider: {
+    backgroundColor: theme.palette.palette.gray4,
+  },
+  methodContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    borderTop: '1px solid #dbdbdb',
-    borderTopStyle: 'dashed',
-    paddingTop: 18,
+    alignItems: 'center',
+    height: 46,
   },
-  input: {
-    display: 'none',
+  image: {
+    width: 24,
   },
-});
+  optionTitle: {
+    fontSize: 12,
+    marginLeft: 10,
+    fontWeight: 500,
+  },
+  titleLogoContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: 200,
+  },
+  [`${OPTION_IDS.EMAIL}`]: {
+    fontSize: 20,
+    color: theme.palette.palette.black,
+  },
+  [`${OPTION_IDS.SEED_PHRASE}`]: {
+    fontSize: 20,
+    color: '#ECBE3E',
+  },
+  [`${OPTION_IDS.TWITTER}`]: {
+    width: 35,
+  },
+  optionText2: {
+    width: 200,
+    fontSize: 12,
+  },
+  optionText3: {
+    color: theme.palette.palette.blue1,
+    fontSize: 12,
+  },
+  optionText3Wrapper: {
+    width: 150,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  redText: {
+    color: theme.palette.palette.red,
+  },
+  optionIconContainer: {
+    width: 24,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  messageBox: {
+    margin: '0 20px 32px 20px',
+  },
+  warningDescription: {
+    fontSize: 12,
+    marginBottom: 10,
+  },
+  errorContainer: {
+    border: `1px solid ${theme.palette.palette.red}`,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#F8DEDF',
+    marginTop: 10,
+  },
+  errorText: {
+    fontSize: 12,
+    marginLeft: 7,
+    display: 'inline-block',
+  },
+  errorIcon: {
+    color: theme.palette.palette.red,
+  },
+  addItemBtn: {
+    height: 56,
+    color: '#006EFF',
+    border: '1px dashed #006EFF40',
+    backgroundColor: 'transparent',
+    '& svg': {
+      fontSize: 16,
+    },
+    '&:hover': {
+      backgroundColor: '#006EFF0D',
+    },
+  },
+}));

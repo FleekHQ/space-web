@@ -321,24 +321,9 @@
     "settings": {
       "title": "Settings",
       "account": {
-        "title": "Account",
-        "profilePicture": "Profile Picture",
-        "edit": "Edit",
-        "displayName": "Display Name",
-        "setDisplayName": "Set Display Name",
-        "username": "Username",
-        "setUsername": "Pick a Username",
-        "changeUsername": "Change Username",
-        "profileId": "Profile ID",
-        "dangerZone": "Danger Zone",
-        "deleteAccount": "Delete Account",
-        "editDisplayName": "Edit Display Name",
-        "displayNameLable": "Display Name",
-        "editUsername": "Edit Username",
-        "usernameLabel": "Username"
-      },
-      "security": {
-        "title": "Security",
+        "title": "Accounts",
+        "subtitle": "Linked accounts",
+        "description": "Your linked accounts help ensure you never lose access to your account.",
         "password": "Password",
         "paperKey": "Account Recovery Phrase",
         "paperKeyTitle": "What is the Account Recovery Phrase?",
@@ -350,7 +335,7 @@
           "description": "Please write down your seed phrase and keep it somewhere safe, this will help you gain access to your account if you forget your password and have no other account recovery method."
         },
         "addNew": "Add New",
-        "signIn": "Sign In Methods",
+        "signIn": "Linked accounts",
         "space": "Space",
         "twitter": "Twitter",
         "google": "Google",
@@ -358,8 +343,8 @@
         "disconnect": "Disconnect",
         "showSeed": "Show Seed Phrase",
         "warning": {
-          "title": "Add Another Sign In Method",
-          "description": "We highly recommend adding another sign in method so you are still able to access your account in case you forget your password or lose access to your default sign in method.",
+          "title": "Add New Account",
+          "description": "We highly recommend adding another account so you are still able to access your Space account in case you lose access to your primary sign in method.",
           "button": "Add New"
         },
         "addNewError": "Failed to connect sign in method, please try again."
