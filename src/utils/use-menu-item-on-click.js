@@ -1,5 +1,10 @@
 import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
-import { openModal, SHARING_MODAL, DELETE_OBJECT } from '@shared/components/Modal/actions';
+import {
+  openModal,
+  SHARING_MODAL,
+  DELETE_OBJECT,
+  FILE_PREVIEW,
+} from '@shared/components/Modal/actions';
 import { useDispatch } from 'react-redux';
 import { openObject } from '@events';
 import { useHistory } from 'react-router-dom';
@@ -56,7 +61,10 @@ export const copyIPFSHashAction = ({
   copy(clickedItem.ipfsHash);
 };
 
-export const previewAction = () => {};
+export const previewAction = ({
+  dispatch,
+  clickedItem,
+}) => dispatch(openModal(FILE_PREVIEW, { object: clickedItem }));
 
 const useMenuItemOnClick = ({
   handleContextClose = () => {},
@@ -69,6 +77,12 @@ const useMenuItemOnClick = ({
     optionId,
   ) => {
     switch (optionId) {
+      case CONTEXT_OPTION_IDS.preview:
+        previewAction({
+          clickedItem,
+          dispatch,
+        });
+        break;
       case CONTEXT_OPTION_IDS.open:
         openAction({
           clickedItem,

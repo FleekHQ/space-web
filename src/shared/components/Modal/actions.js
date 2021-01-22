@@ -21,6 +21,7 @@ export const CREATE_USERNAME_PASSWORD = 'CREATE_USERNAME_PASSWORD';
 export const DELETE_OBJECT = 'DELETE_OBJECT';
 export const DELETE_OBJECT_SUCCESS = 'DELETE_OBJECT_SUCCESS';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const FILE_PREVIEW = 'FILE_PREVIEW';
 
 /* Action creators */
 export const openModal = (modalType, props = {}) => (dispatch) => {
