@@ -66,9 +66,15 @@ const EditProfile = ({ closeModal }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    picInputRef.current.value = '';
   };
 
   const onChange = (event) => {
+    if (event.target.value && event.target.value.length > 50) {
+      setValue(event.target.value.slice(0, 50));
+      return;
+    }
+
     setValue(event.target.value);
   };
 
@@ -76,6 +82,7 @@ const EditProfile = ({ closeModal }) => {
     const file = await fileToBase64(event.target.files[0]);
     if (file) {
       setAnchorEl(null);
+      picInputRef.current.value = '';
       uploadProfilePic({ file });
     }
   };

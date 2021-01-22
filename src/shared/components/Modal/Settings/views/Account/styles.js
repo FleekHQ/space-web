@@ -87,4 +87,16 @@ export default makeStyles((theme) => ({
   errorIcon: {
     color: theme.palette.palette.red,
   },
+  addItemBtn: {
+    height: 56,
+    color: '#006EFF',
+    border: '1px dashed #006EFF40',
+    backgroundColor: 'transparent',
+    '& svg': {
+      fontSize: 16,
+    },
+    '&:hover': {
+      backgroundColor: '#006EFF0D',
+    },
+  },
 }));

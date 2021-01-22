@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { OPTION_IDS } from '@shared/components/Modal/AddBackupSignIn/constants';
 import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope';
 import { faExclamationTriangle } from '@fortawesome/pro-solid-svg-icons/faExclamationTriangle';
+import { faPlus } from '@fortawesome/pro-regular-svg-icons/faPlus';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@terminal-packages/space-ui/core/Button';
 import AddBackUpSignIn from '@shared/components/Modal/AddBackupSignIn';
@@ -13,6 +14,7 @@ import classnames from 'classnames';
 import config from '@config';
 import MessageBox from '@ui/MessageBox';
 import { faShieldAlt } from '@fortawesome/pro-regular-svg-icons/faShieldAlt';
+import Box from '@material-ui/core/Box';
 import { useTheme } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { addLinkedAddress } from '@events';
@@ -27,7 +29,7 @@ import CreateUsernamePassword from '../../../CreateUsernamePassword';
 import {
   Body,
   Header,
-  Section,
+  // Section,
   BaseCard,
 } from '../../components';
 
@@ -181,20 +183,20 @@ const Account = ({ t }) => {
     <>
       <BaseCard>
         <Header>
-          <Section>
-            <Typography className={classes.title}>
-              {t('modals.settings.account.signIn')}
+          <Box mt="30px" mb={2} display="flex" flexDirection="column">
+            <Typography>
+              <Box component="span" fontSize={16} fontWeight={500}>
+                {t('modals.settings.account.subtitle')}
+              </Box>
             </Typography>
-          </Section>
-          <Section>
-            <Button
-              id="addBackUpSignIn"
-              variant="primary"
-              onClick={handleOpenModal}
-            >
-              {t('modals.settings.account.addNew')}
-            </Button>
-          </Section>
+            <Box mt="9px">
+              <Typography>
+                <Box compoonent="span" fontSize={12} color="#7E7E7E">
+                  {t('modals.settings.account.description')}
+                </Box>
+              </Typography>
+            </Box>
+          </Box>
         </Header>
         <Body>
           {Object.keys(options).map((optionId) => {
@@ -247,6 +249,17 @@ const Account = ({ t }) => {
           })}
           <Divider className={classes.divider} />
         </Body>
+        <Box m="0 20px 25px 20px">
+          <Button
+            fullWidth
+            id={ADD_BACKUP_SIGN_IN}
+            className={classes.addItemBtn}
+            startIcon={<FontAwesomeIcon icon={faPlus} />}
+            onClick={handleOpenModal}
+          >
+            {t('modals.settings.account.warning.button')}
+          </Button>
+        </Box>
         {
           (Object.keys(options).length < 2) && (
             <div className={classes.messageBox}>
