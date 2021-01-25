@@ -54,4 +54,7 @@ export default makeStyles((theme) => ({
   subtitle: {
     color: ({ viewMode }) => getColor(viewMode, theme),
   },
+  copyMenuPopper: {
+    zIndex: 1301,
+  },
 }));

@@ -164,6 +164,7 @@ const DetailsPanelHeader = ({
               />
             </ButtonBase>
             <Popper
+              className={classes.contextMenuPopper}
               open={contextState.mouseY !== null}
               onClose={handleContextClose}
               onClickAway={handleContextClose}

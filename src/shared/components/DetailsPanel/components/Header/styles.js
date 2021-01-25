@@ -72,4 +72,7 @@ export default makeStyles((theme) => ({
     fontSize: 18,
     color: theme.palette.palette.white,
   },
+  contextMenuPopper: {
+    zIndex: 1301,
+  },
 }));
