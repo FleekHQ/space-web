@@ -31,6 +31,9 @@ export default makeStyles((theme) => ({
     '& button > svg': {
       fontSize: 22,
     },
+    '& > button:disabled': {
+      color: theme.palette.palette.gray1,
+    },
   },
   signinButton: {
     fontSize: 14,

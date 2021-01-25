@@ -20,3 +20,4 @@ export { default as typedArrayToUrl } from './typed-array-to-url';
 export { default as normalizePath } from './normalize-path';
 export { default as getContextMenuItems } from './get-context-menu';
 export { default as getEntryMapper } from './entry-mapper';
+export { default as downloadFromUrl } from './download-from-url';

@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import TopBar from '@ui/Preview/components/TopBar';
 import FilePreviewer from '@ui/FilePreviewer';
 import { openFileByUuid } from '@events/objects';
-import { getContextMenuItems } from '@utils';
+import { getContextMenuItems, downloadFromUrl } from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { useTranslation } from 'react-i18next';
 
@@ -50,6 +50,8 @@ const FilePreview = ({
     setDetailsPanelExpanded(!detailsPanelExpanded);
   };
 
+  const onDownload = () => downloadFromUrl(fileUrl, object.name);
+
   const getIsImage = () => imgExtensions.includes(object.ext);
 
   return (
@@ -73,13 +75,14 @@ const FilePreview = ({
             filename={object.name}
             ext={object.ext}
             onPrint={() => {}}
-            onDownload={() => {}}
+            onDownload={onDownload}
             onInfo={onInfo}
             onSignIn={() => {}}
             onOptionClick={menuItemOnClick}
             menuOptions={getMenuItems()}
             onBack={closeModal}
             showSignin={false}
+            disableDownload={!fileUrl}
           />
           <div className={classes.mainContent}>
             <FilePreviewer

@@ -30,6 +30,7 @@ const Topbar = (props) => {
     onDownload,
     menuOptions,
     onOptionClick,
+    disableDownload,
   } = props;
 
   const classes = useStyles();
@@ -72,7 +73,7 @@ const Topbar = (props) => {
         <ButtonBase onClick={onPrint}>
           <FontAwesomeIcon icon={faPrint} />
         </ButtonBase>
-        <ButtonBase onClick={onDownload}>
+        <ButtonBase onClick={onDownload} disabled={disableDownload}>
           <FontAwesomeIcon icon={faDownload} />
         </ButtonBase>
         <ButtonBase onClick={onInfo}>
@@ -135,6 +136,7 @@ Topbar.defaultProps = {
   onOptionClick: () => {},
   menuOptions: [],
   i18n: {},
+  disableDownload: false,
 };
 
 Topbar.propTypes = {
@@ -161,6 +163,7 @@ Topbar.propTypes = {
   i18n: PropTypes.shape({
     signin: PropTypes.string,
   }),
+  disableDownload: PropTypes.bool,
 };
 
 export default Topbar;
