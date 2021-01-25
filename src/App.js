@@ -49,7 +49,7 @@ const App = () => (
             <Route path="/splash">
               <Splash />
             </Route>
-            <Route path="/file/:hash">
+            <Route path="/file/:uuid">
               <FilePreview />
             </Route>
             <PrivateRoute txlSubscribe path="/home">
