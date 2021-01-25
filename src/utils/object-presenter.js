@@ -32,6 +32,7 @@ const objectPresenter = (entry = {}, isRootDir = false, entryMapper = defaultEnt
   const sharedBy = get(obj, 'sharedBy');
   const sourcePath = get(obj, 'sourcePath', '');
   const uuid = get(obj, 'uuid');
+  const isUploading = get(obj, 'isUploading', false);
 
   return {
     key,
@@ -57,7 +58,7 @@ const objectPresenter = (entry = {}, isRootDir = false, entryMapper = defaultEnt
     isAvailableInSpace: backupCount > 0,
     sourceBucket: sourceBucket || bucket,
     shareAmount: Math.max(1, members.length),
-    isUploading: false,
+    isUploading,
     sourcePath,
   };
 };

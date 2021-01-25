@@ -17,6 +17,7 @@ export const CONTEXT_OPTION_IDS = {
   copyIPFSHash: 'copyIPFSHash',
   copyDealId: 'copyDealId',
   preview: 'preview',
+  download: 'download',
 };
 
 const ContextMenu = ({
