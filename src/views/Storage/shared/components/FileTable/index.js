@@ -78,10 +78,22 @@ const FileTable = ({
   };
 
   const onDropzoneDrop = (files, target) => {
-    addItems({
-      targetPath: target || prefix,
-      sourcePaths: files.map((file) => file.path),
-    });
+    const targetPath = target || prefix;
+
+    const sourcePaths = files.map((file) => ({
+      name: file.name,
+      size: file.size,
+      data: file.stream(),
+      mimeType: file.type,
+      path: `${targetPath}/${file.path}`
+        .replace(/\/\//, '/')
+        .replace(/^\//, ''),
+    }));
+
+    dispatch(addItems({
+      targetPath,
+      sourcePaths,
+    }));
   };
 
   const getRedirectUrl = (row) => {
