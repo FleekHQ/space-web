@@ -24,6 +24,7 @@ const FilePreview = ({
       const url = await fileInfo.getFileUrl();
       setFileUrl(url);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };

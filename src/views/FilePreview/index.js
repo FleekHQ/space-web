@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import config from '@config';
-import { Users } from '@spacehq/sdk';
 import { useParams, useHistory } from 'react-router-dom';
 import TopBar from '@ui/Preview/components/TopBar';
 import { useTranslation } from 'react-i18next';
@@ -37,23 +35,26 @@ const FilePreview = () => {
       // if there is no user, we redirect to sign in
       if (!user) {
         // redirect user to sign in page
-        history.push(`/signin?redirect_to=${window.location.origin}/#/file/${uuid}`);
+        const redirectRoute = `/file/${uuid}`;
+        history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+        return;
       }
       // if there is a user, we show an error
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };
 
   const initSdk = async () => {
+    let sdkUnsubscribe;
+
     // If there is no user, we generate a temporary user in order to
     // to interact with the SDK, but we don't
     if (!user) {
-      const users = new Users({ endpoint: config.ws.url });
-
+      const users = await sdk.getUsers();
       const identity = await users.createIdentity();
       await users.authenticate(identity);
     }
-    let sdkUnsubscribe;
 
     if (sdk.isStarting) {
       sdkUnsubscribe = sdk.onList('ready', (error) => {
