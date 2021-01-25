@@ -4,8 +4,11 @@ import Modal from '@material-ui/core/Modal';
 import TopBar from '@ui/Preview/components/TopBar';
 import FilePreviewer from '@ui/FilePreviewer';
 import { openFileByUuid } from '@events/objects';
-import { imgExtensions } from '../../../../views/FilePreview/constants';
+import { getContextMenuItems } from '@utils';
+import useMenuItemOnClick from '@utils/use-menu-item-on-click';
+import { useTranslation } from 'react-i18next';
 
+import { imgExtensions } from '../../../../views/FilePreview/constants';
 import PreviewDetailsPanel from '../../../../views/FilePreview/components/DetailsPanel';
 import useStyles from './styles';
 
@@ -17,6 +20,16 @@ const FilePreview = ({
   const classes = useStyles();
   const [detailsPanelExpanded, setDetailsPanelExpanded] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
+  const { t } = useTranslation();
+
+  const menuItemOnClick = useMenuItemOnClick({
+    clickedItem: object,
+  });
+
+  const getMenuItems = () => getContextMenuItems({
+    object,
+    t,
+  });
 
   const getFileInfo = async () => {
     try {
@@ -63,7 +76,8 @@ const FilePreview = ({
             onDownload={() => {}}
             onInfo={onInfo}
             onSignIn={() => {}}
-            onOptionClick={() => {}}
+            onOptionClick={menuItemOnClick}
+            menuOptions={getMenuItems()}
             onBack={closeModal}
             showSignin={false}
           />

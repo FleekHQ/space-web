@@ -26,14 +26,14 @@ storiesOf(categoryName, module).add('Topbar', () => {
     menuOptions: object('menuOptions', [
       {
         id: 'share',
-        title: 'Share',
+        displayText: 'Share',
         icon: faShare,
         iconSize: 10,
         type: 'option'
       },
       {
         id: 'get-link',
-        title: 'Get link',
+        displayText: 'Get link',
         icon: faLink,
         iconSize: 10,
         type: 'option'
@@ -43,7 +43,7 @@ storiesOf(categoryName, module).add('Topbar', () => {
       },
       {
         id: 'delete',
-        title: 'Delete',
+        displayText: 'Delete',
         icon: faTrash,
         iconSize: 11,
         type: 'option'

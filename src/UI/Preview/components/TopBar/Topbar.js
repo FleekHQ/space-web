@@ -38,7 +38,7 @@ const Topbar = (props) => {
   const handleClose = () => setAnchorEl(null);
   const handleItemClick = (item) => {
     handleClose();
-    onOptionClick(item);
+    onOptionClick(item.id);
   };
 
   return (
@@ -115,7 +115,7 @@ const Topbar = (props) => {
                       )}
                     </Box>
                     <Typography variant="body2" className={classes.optionTitle}>
-                      {option.title}
+                      {option.displayText}
                     </Typography>
                   </MenuItem>
                 );
@@ -149,7 +149,7 @@ Topbar.propTypes = {
   onOptionClick: PropTypes.func,
   menuOptions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
-    title: PropTypes.string,
+    displayText: PropTypes.string,
     icon: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array,

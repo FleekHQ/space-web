@@ -48,10 +48,12 @@ const DetailsPanelHeader = ({
   const menuItemOnClick = useMenuItemOnClick({
     clickedItem: objects[0],
     handleContextClose,
-    getRedirectUrl: () => {},
   });
 
-  const contextMenuItems = getContextMenuItems(objects[0], t);
+  const contextMenuItems = getContextMenuItems({
+    object: objects[0],
+    t,
+  });
 
   const handleContextMenuOpen = (event) => {
     event.preventDefault();

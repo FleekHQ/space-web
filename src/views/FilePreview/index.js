@@ -7,6 +7,8 @@ import { openFileByUuid } from '@events/objects';
 import { useSelector } from 'react-redux';
 import { sdk } from '@clients';
 import Box from '@material-ui/core/Box';
+import { getContextMenuItems } from '@utils';
+import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 
 import { imgExtensions } from './constants';
 import Splash from '../Splash';
@@ -23,6 +25,9 @@ const FilePreview = () => {
   const { t } = useTranslation();
   const [loadingSdk, setLoadingSdk] = React.useState(true);
   const history = useHistory();
+  const menuItemOnClick = useMenuItemOnClick({
+    clickedItem: file,
+  });
 
   const redirectToSignin = () => {
     const redirectRoute = `/file/${uuid}`;
@@ -97,6 +102,11 @@ const FilePreview = () => {
     setDetailsPanelExpanded(!detailsPanelExpanded);
   };
 
+  const getMenuItems = () => getContextMenuItems({
+    object: file,
+    t,
+  });
+
   if (!file) {
     return (
       <Box
@@ -126,9 +136,10 @@ const FilePreview = () => {
               onDownload={() => {}}
               onInfo={onInfo}
               onSignIn={redirectToSignin}
-              onOptionClick={() => {}}
+              onOptionClick={menuItemOnClick}
               showSignin={!user}
               i18n={i18n}
+              menuOptions={getMenuItems()}
             />
             <div className={classes.mainContent}>
               {fileUrl && (

@@ -42,7 +42,7 @@ const PreviewDetailsPanel = ({
         <SharePanel
           viewMode={viewMode}
           selectedObject={object}
-          members={[]}
+          members={object.members}
         />
       </DetailsPanel>
     </div>
@@ -64,6 +64,7 @@ PreviewDetailsPanel.propTypes = {
     error: PropTypes.bool,
     type: PropTypes.string,
     isAvailableInSpace: PropTypes.bool,
+    members: PropTypes.array,
   }).isRequired,
   expanded: PropTypes.bool.isRequired,
   showTitle: PropTypes.bool,
