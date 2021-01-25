@@ -3,7 +3,7 @@ import path from 'path';
 import PropTypes from 'prop-types';
 import { addItems } from '@events';
 import { objectsSelector } from '@utils';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ObjectsTable from '@shared/components/ObjectsTable';
 import renderLoadingRows from '../../../shared/render-loading-rows';
@@ -13,6 +13,7 @@ import getTableHeads from '../../../shared/getTableHeads';
 
 const FileTable = ({ bucket, prefix }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const [rows, loading] = useSelector((state) => [
     objectsSelector(
@@ -24,11 +25,22 @@ const FileTable = ({ bucket, prefix }) => {
     state.storage.loading,
   ]);
 
-  const onDropzoneDrop = (files, target) => {
-    addItems({
-      targetPath: target || prefix,
-      sourcePaths: files.map((file) => file.path),
-    });
+  // NOTE: this function receives as first argument the "files", and as a second the "target"
+  const onDropzoneDrop = (files) => {
+    const targetPath = ''; // NOTE: on shared with me view, we default target to root directory
+
+    const sourcePaths = files.map((file) => ({
+      name: file.name,
+      size: file.size,
+      data: file.stream(),
+      mimeType: file.type,
+      path: file.path.replace(/^\//, ''),
+    }));
+
+    dispatch(addItems({
+      targetPath,
+      sourcePaths,
+    }));
   };
 
   return (
