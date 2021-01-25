@@ -138,6 +138,8 @@ const FilePreview = () => {
           <PreviewDetailsPanel
             object={file}
             expanded={detailsPanelExpanded}
+            showTitle
+            onClose={() => setDetailsPanelExpanded(false)}
           />
         </>
       )}

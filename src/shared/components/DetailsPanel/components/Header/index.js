@@ -11,6 +11,7 @@ import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
 import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
 import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
+import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import ContextMenu from '@ui/ContextMenu';
 import { getContextMenuItems } from '@utils';
 import useMenuItemOnClick, {
@@ -22,7 +23,12 @@ import useMenuItemOnClick, {
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 
-const DetailsPanelHeader = ({ objects, viewMode }) => {
+const DetailsPanelHeader = ({
+  objects,
+  viewMode,
+  showTitle,
+  onClose,
+}) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -58,6 +64,25 @@ const DetailsPanelHeader = ({ objects, viewMode }) => {
 
   return (
     <div className={classes.root}>
+      {showTitle && (
+        <div
+          className={classes.titleExitContainer}
+        >
+          <Typography
+            className={classes.title}
+          >
+            {t('detailsPanel.title')}
+          </Typography>
+          <ButtonBase
+            onClick={onClose}
+          >
+            <FontAwesomeIcon
+              icon={faTimes}
+              className={classes.exitIcon}
+            />
+          </ButtonBase>
+        </div>
+      )}
       <div className={classes.fileIconWrapper}>
         {objects.slice(0, MAX_NUMBER_OF_ICONS_PREVIEW).map((obj, index) => (
           <div
@@ -72,7 +97,7 @@ const DetailsPanelHeader = ({ objects, viewMode }) => {
           </div>
         ))}
       </div>
-      <Typography noWrap className={classes.title} variant="h6" weight="medium">
+      <Typography noWrap className={classes.fileName} variant="h6" weight="medium">
         {objects.length === 1
           ? objects[0].name
           : `${t(
@@ -160,6 +185,11 @@ const DetailsPanelHeader = ({ objects, viewMode }) => {
   );
 };
 
+DetailsPanelHeader.defaultProps = {
+  showTitle: true,
+  onClose: () => {},
+};
+
 DetailsPanelHeader.propTypes = {
   objects: PropTypes.arrayOf(
     PropTypes.shape({
@@ -174,6 +204,8 @@ DetailsPanelHeader.propTypes = {
     }),
   ).isRequired,
   viewMode: PropTypes.string.isRequired,
+  showTitle: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 export default DetailsPanelHeader;

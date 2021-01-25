@@ -53,7 +53,7 @@ const Topbar = (props) => {
         </div>
       )}
       <div className={classes.titleContainer}>
-        {!showSignin && (
+        {!showSignin && onBack && (
           <ButtonBase onClick={onBack}>
             <FontAwesomeIcon
               icon={faArrowLeft}
