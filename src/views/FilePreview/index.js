@@ -24,6 +24,11 @@ const FilePreview = () => {
   const [loadingSdk, setLoadingSdk] = React.useState(true);
   const history = useHistory();
 
+  const redirectToSignin = () => {
+    const redirectRoute = `/file/${uuid}`;
+    history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+  };
+
   const getFileInfo = async () => {
     try {
       const fileInfo = await openFileByUuid(uuid);
@@ -35,8 +40,7 @@ const FilePreview = () => {
       // if there is no user, we redirect to sign in
       if (!user) {
         // redirect user to sign in page
-        const redirectRoute = `/file/${uuid}`;
-        history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+        redirectToSignin();
         return;
       }
       // if there is a user, we show an error
@@ -121,7 +125,7 @@ const FilePreview = () => {
               onPrint={() => {}}
               onDownload={() => {}}
               onInfo={onInfo}
-              onSignIn={() => {}}
+              onSignIn={redirectToSignin}
               onOptionClick={() => {}}
               showSignin={!user}
               i18n={i18n}
