@@ -1,5 +1,6 @@
 import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import { faExpandArrowsAlt } from '@fortawesome/pro-regular-svg-icons/faExpandArrowsAlt';
+import { faDownload } from '@fortawesome/pro-regular-svg-icons/faDownload';
 import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faTrash } from '@fortawesome/pro-regular-svg-icons/faTrash';
 import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
@@ -30,13 +31,22 @@ const mapContextMenuItems = (clickedItem = {}, t) => {
     icon: faEye,
   };
 
+  const downloadOption = {
+    id: CONTEXT_OPTION_IDS.download,
+    displayText: t('tableMenu.download'),
+    icon: faDownload,
+  };
+
+  const openOption = {
+    id: CONTEXT_OPTION_IDS.open,
+    displayText: t('tableMenu.open'),
+    icon: faExpandArrowsAlt,
+  };
+
   return ([
     ...(isFile ? [previewOption] : []),
-    {
-      id: CONTEXT_OPTION_IDS.open,
-      displayText: t('tableMenu.open'),
-      icon: faExpandArrowsAlt,
-    },
+    ...(!isFile ? [openOption] : []),
+    ...(isFile ? [downloadOption] : []),
     ...(isFile ? [{ type: 'divider' }] : []),
     ...(isFile ? [shareOption] : []),
     ...(isFile ? [getLinkOption] : []),

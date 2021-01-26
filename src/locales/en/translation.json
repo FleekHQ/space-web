@@ -32,7 +32,6 @@
     "comingSoon": "Coming Soon!",
     "goBack": "Go Back",
     "delete": "Delete",
-    "edit": "Edit",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -56,7 +55,7 @@
     "rename": "Rename",
     "copy": "Copy",
     "delete": "Delete",
-    "viewInFolder": "View in Finder"    
+    "viewInFolder": "View in Finder"
   },
   "notifications": {
     "accept": "Accept",
@@ -536,7 +535,8 @@
     "open": "Open",
     "share": "Share",
     "delete": "Delete",
-    "getLink": "Get link"
+    "getLink": "Get link",
+    "download": "Download"
   },
   "hoverMenu": {
     "retry": "Retry",
