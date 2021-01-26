@@ -8,4 +8,5 @@ export const imgExtensions = [
   'gif',
   'tif',
   'tiff',
+  'svg',
 ];

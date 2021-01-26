@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { imgExtensions } from './constants';
+
 import useStyles from './styles';
 
 const FilePreviewer = ({
   url,
-  isImage,
+  extension,
 }) => {
   const classes = useStyles();
+
+  const isImage = imgExtensions.includes(extension);
+
   if (isImage) {
     return (
       <div className={classes.imgContainer}>
@@ -26,7 +31,7 @@ const FilePreviewer = ({
 
 FilePreviewer.propTypes = {
   url: PropTypes.string.isRequired,
-  isImage: PropTypes.bool.isRequired,
+  extension: PropTypes.string.isRequired,
 };
 
 export default FilePreviewer;

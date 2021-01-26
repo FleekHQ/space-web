@@ -8,7 +8,6 @@ import { getContextMenuItems, downloadFromUrl } from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { useTranslation } from 'react-i18next';
 
-import { imgExtensions } from '../../../../views/FilePreview/constants';
 import PreviewDetailsPanel from '../../../../views/FilePreview/components/DetailsPanel';
 import useStyles from './styles';
 
@@ -52,8 +51,6 @@ const FilePreview = ({
 
   const onDownload = () => downloadFromUrl(fileUrl, object.name);
 
-  const getIsImage = () => imgExtensions.includes(object.ext);
-
   return (
     <Modal
       disableBackdropClick
@@ -87,7 +84,7 @@ const FilePreview = ({
           <div className={classes.mainContent}>
             <FilePreviewer
               url={fileUrl}
-              isImage={getIsImage()}
+              extension={object.ext}
             />
           </div>
         </div>

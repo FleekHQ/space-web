@@ -10,7 +10,6 @@ import Box from '@material-ui/core/Box';
 import { getContextMenuItems, downloadFromUrl } from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 
-import { imgExtensions } from './constants';
 import Splash from '../Splash';
 import PreviewDetailsPanel from './components/DetailsPanel';
 import useStyles from './styles';
@@ -122,8 +121,6 @@ const FilePreview = () => {
     );
   }
 
-  const getIsImage = () => imgExtensions.includes(file.ext);
-
   const onDownload = () => downloadFromUrl(fileUrl, file.name);
 
   return (
@@ -148,7 +145,7 @@ const FilePreview = () => {
               {fileUrl && (
                 <FilePreviewer
                   url={fileUrl}
-                  isImage={getIsImage()}
+                  extension={file.ext}
                 />
               )}
             </div>
