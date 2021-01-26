@@ -2113,21 +2113,21 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@spacehq/sdk@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.6.tgz#b3c445bb771d9127385db2da24af945b72189cdb"
-  integrity sha512-7CyfiVjPX7TYrq+fX2sljjsA5DHVZ4z9anMXVMFuwAh6hp5nXr2506XVZwcqwueQJf8/TomPeItR2wsx4RYn8g==
+"@spacehq/sdk@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.7.tgz#8442ad7206b59e89a76118ad55d3207375bdfae4"
+  integrity sha512-9GUPZPV02nYIDRRnkXjhcElhLZDsNVCt/3AgA+mQ+hk8j2hhdNXLVSflSjTqtsf4jDQdkNplAFPKflv4ucN0qQ==
   dependencies:
-    "@spacehq/storage" "^0.0.6"
-    "@spacehq/users" "^0.0.6"
+    "@spacehq/storage" "^0.0.7"
+    "@spacehq/users" "^0.0.7"
 
-"@spacehq/storage@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.6.tgz#f43803746b14cc8eb82cd4b2541018dc7d5b4498"
-  integrity sha512-WJR6TmFajrxQza+DlDz2lHfJj9e+Ncj8BXcjpGsWul37g3yImOiLwdDEBFTXsJUfZt6cObNAwPzYwB7gQjuE4A==
+"@spacehq/storage@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.7.tgz#c843a21a26098670de54fb2f5628da1347ede9d8"
+  integrity sha512-Cou3KmD78fviJtW2fgxmXL96oU9+sF4AqmFBdOUxXgE1VPGJMpvhzS3lxvEm5GHQpJTLCr9SSwHz60CqATCrWw==
   dependencies:
     "@improbable-eng/grpc-web" "^0.13.0"
-    "@spacehq/users" "^0.0.6"
+    "@spacehq/users" "^0.0.7"
     "@textile/crypto" "^2.0.0"
     "@textile/hub" "^4.1.0"
     "@textile/threads-id" "^0.4.0"
@@ -2142,10 +2142,10 @@
     uuid "^8.3.2"
     varint "^6.0.0"
 
-"@spacehq/users@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.6.tgz#28121a8fd5a339ae6d3af267bcd6da52230478d5"
-  integrity sha512-txgd82OdBw91zZpm01hAzUz0WcCqH0RB8uaa3S18qFVte8ORhEaFiGlsF0MuQtHDR1No6nKqAhcUWX7G+vBrxA==
+"@spacehq/users@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.7.tgz#d200b9bed02a7437c796bb4302b7e2fd5e83bd9b"
+  integrity sha512-bXR2LvvnLPp13WgTpzsCdZtFPWJMAyFy7hkX+27WzzqYISPRGbYBpqT9mVwS2Jy3D9VsgeG8Gv7ePhag0DzXQA==
   dependencies:
     "@textile/crypto" "^2.0.0"
     "@types/lodash" "^4.14.165"
