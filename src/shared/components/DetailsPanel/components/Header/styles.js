@@ -28,6 +28,7 @@ export default makeStyles((theme) => ({
   },
   fileName: {
     margin: '15px 0',
+    textAlign: 'center',
     color: ({ viewMode }) => viewMode !== VIEW_MODES.LIGHT && theme.palette.palette.white,
   },
   arrowIcon: {

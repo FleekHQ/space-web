@@ -99,6 +99,8 @@ const StorageDetailsPanel = () => {
                   ].map((member) => {
                     const m = { ...member };
 
+                    m.username = m.displayName;
+
                     if (!m.username || (m.username && m.username.length === 0)) {
                       m.username = getShortAddress(m.address);
                     }

@@ -1,5 +1,4 @@
 import { signout } from '@events';
-import { faSignOut } from '@fortawesome/pro-regular-svg-icons/faSignOut';
 import { openModal, SETTINGS_MODAL } from '@shared/components/Modal/actions';
 
 export const MENU_DROPDOWN_ITEMS = {
@@ -8,14 +7,7 @@ export const MENU_DROPDOWN_ITEMS = {
   settings: 'settings',
 };
 
-export const getMenuDropdownItems = (t) => [
-  {
-    id: MENU_DROPDOWN_ITEMS.signout,
-    divider: false,
-    icon: faSignOut,
-    name: t('account.menu.signout'),
-  },
-];
+export const getMenuDropdownItems = () => [];
 
 export const getOnMenuItemClick = ({ user, dispatch }) => (item) => {
   if (item.id === MENU_DROPDOWN_ITEMS.settings) {

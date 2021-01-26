@@ -103,8 +103,10 @@ const HeaderNav = () => {
 
   return (
     <div className={classes.root}>
-      <img width={73} src={`${process.env.PUBLIC_URL}/assets/images/space-logo-black.svg`} alt="space-logo" />
-      <Box display="flex" alignItems="center">
+      <Box width={219} display="flex" alignItems="center">
+        <img width={73} src={`${process.env.PUBLIC_URL}/assets/images/space-logo-black.svg`} alt="space-logo" />
+      </Box>
+      <Box flex={1} display="flex" alignItems="center">
         <FolderNavButton
           direction="back"
           disabled={isBackButtonDisabled(location.pathname)}
@@ -122,35 +124,38 @@ const HeaderNav = () => {
             history.goForward();
           }}
         />
-        <SearchBar
-          debounce={200}
-          results={results}
-          value={searchTerm}
-          noResults={noResults}
-          placeholder={t('common.search')}
-          onChange={(val) => searchFiles(val)}
-          mapItemToFileItemProps={(item) => ({
-            ext: item.ext,
-            key: item.id,
-            fileName: item.key,
-          })}
-          onClickResult={(item, hideResults) => {
-            navigateToFolder(item, history);
-            openItem(item);
-            hideResults();
-          }}
-          classes={{
-            root: classes.rootSearchBar,
-            resultContainer: classes.resultContainer,
-          }}
-        />
+        <Box width="100%" maxWidth={547}>
+          <SearchBar
+            debounce={200}
+            results={results}
+            value={searchTerm}
+            noResults={noResults}
+            placeholder={t('common.search')}
+            onChange={(val) => searchFiles(val)}
+            mapItemToFileItemProps={(item) => ({
+              ext: item.ext,
+              key: item.id,
+              fileName: item.key,
+            })}
+            onClickResult={(item, hideResults) => {
+              navigateToFolder(item, history);
+              openItem(item);
+              hideResults();
+            }}
+            classes={{
+              root: classes.rootSearchBar,
+              resultContainer: classes.resultContainer,
+            }}
+          />
+        </Box>
       </Box>
       <Box display="flex" alignItems="center">
         <div className={classes.iconBtnsContainer}>
           <ButtonBase
             onClick={(event) => {
               event.preventDefault();
-              window.location.href = 'mailto:hi@space.storage?subject=I have a question about Space!';
+
+              window.open('https://docs.space.storage', '_blank', 'noopener,noreferrer');
             }}
           >
             <FontAwesomeIcon icon={faQuestionCircle} />
