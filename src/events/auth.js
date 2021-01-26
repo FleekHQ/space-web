@@ -140,7 +140,7 @@ export const signup = (payload) => async (dispatch) => {
       }
 
       if (error.response.status === 409) {
-        message = 'modules.signup.errors.username';
+        message = 'modules.signup.errors.email';
       }
     }
 

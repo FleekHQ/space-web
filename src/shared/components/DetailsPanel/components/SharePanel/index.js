@@ -75,6 +75,8 @@ const SharePanel = (props) => {
     }
   }, [members]);
 
+  console.log('members', members);
+
   return (
     <div className={classes.root}>
       <Button

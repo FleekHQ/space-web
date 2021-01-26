@@ -27,6 +27,7 @@ export default makeStyles((theme) => ({
     flexGrow: 1,
   },
   title: {
+    textAlign: 'center',
     margin: '15px 0',
     color: ({ viewMode }) => viewMode !== VIEW_MODES.LIGHT && theme.palette.palette.white,
   },

@@ -20,7 +20,6 @@ export default makeStyles((theme) => ({
   rootSearchBar: {
     flex: 1,
     zIndex: 1,
-    minWidth: 547,
     display: 'flex',
     padding: '5px 0',
   },

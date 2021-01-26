@@ -34,6 +34,8 @@ export default makeStyles((theme) => ({
     padding: '0 0 16px',
     width: 216,
     margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
   },
   selectedItem: {
     backgroundColor: 'rgba(0, 110, 255, 0.1)',

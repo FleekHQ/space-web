@@ -5,11 +5,14 @@ import Typography from '@ui/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@terminal-packages/space-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
+import Box from '@material-ui/core/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons/faTimesCircle';
+
+import { signout } from '@events';
 
 import useStyles from './styles';
 import getContent from './get-content';
@@ -19,6 +22,7 @@ const Settings = ({
   defaultItem,
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const contentItems = getContent({
@@ -40,7 +44,7 @@ const Settings = ({
       }}
     >
       <div className={classes.bodyContainer}>
-        <ul className={classes.sidebar}>
+        <Box className={classes.sidebar}>
           <div className={classes.userContainer}>
             <Avatar imgUrl={user.avatarUrl} className={classes.userAvatar} />
             <div className={classes.usernameContainer}>
@@ -53,25 +57,42 @@ const Settings = ({
             </div>
           </div>
           <Divider className={classes.divider} />
-          {contentItems.map((item) => (
-            <li
-              key={item.id}
-              className={classnames(
-                classes.sidebarItem,
-                item.id === selectedContentItem.id && classes.selectedItem,
-              )}
+          <Box component="ul" m={0} p={0} flex={1}>
+            {contentItems.map((item) => (
+              <li
+                key={item.id}
+                className={classnames(
+                  classes.sidebarItem,
+                  item.id === selectedContentItem.id && classes.selectedItem,
+                )}
+              >
+                <ButtonBase onClick={() => setContentId(item.id)}>
+                  <Typography
+                    variant="body1"
+                    color={item.id === selectedContentItem.id ? 'textSecondary' : 'secondary'}
+                  >
+                    {item.title}
+                  </Typography>
+                </ButtonBase>
+              </li>
+            ))}
+          </Box>
+          <Box pl="25px">
+            <ButtonBase
+              fullWidth
+              onClick={() => dispatch(signout(user))}
             >
-              <ButtonBase onClick={() => setContentId(item.id)}>
-                <Typography
-                  variant="body1"
-                  color={item.id === selectedContentItem.id ? 'textSecondary' : 'secondary'}
-                >
-                  {item.title}
-                </Typography>
-              </ButtonBase>
-            </li>
-          ))}
-        </ul>
+              <Box
+                fontSize={14}
+                color="#EF6A6E"
+                component="span"
+                fontFamily="Work Sans"
+              >
+                {t('account.menu.signout')}
+              </Box>
+            </ButtonBase>
+          </Box>
+        </Box>
         <div className={classes.content}>
           <div className={classes.contentHeader}>
             <Typography>
