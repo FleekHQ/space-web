@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import get from 'lodash/get';
 import { sdk } from '@clients';
-import { objectPresenter, typedArrayToUrl, getEntryMapper } from '@utils';
+import { objectPresenter, typedArrayToUrl } from '@utils';
 import {
   STORE_DIR,
   STORE_OBJECTS,
@@ -38,7 +38,7 @@ export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
     });
 
     const entries = flatEntries(items);
-    const objects = entries.map((entry) => objectPresenter(entry, false, getEntryMapper(bucket)));
+    const objects = entries.map((entry) => objectPresenter(entry, false));
 
     store.dispatch({
       payload: {
@@ -203,7 +203,7 @@ export const openFileByUuid = async (uuid) => {
   const res = await storage.openFileByUuid(uuid);
 
   return {
-    entry: objectPresenter(res.entry, false, getEntryMapper('personal')),
+    entry: objectPresenter(res.entry, false),
     mimeType: res.mimeType,
     getFileUrl: async () => {
       const fileBytes = await res.consumeStream();
