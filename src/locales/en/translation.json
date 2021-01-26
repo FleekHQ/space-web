@@ -69,7 +69,7 @@
     "files": "{{amount}} files"
   },
   "detailsPanel": {
-    "title": "Details Panel",
+    "title": "Details",
     "message": "Select a file or folder to see a detailed breakdown.",
     "open": "Open",
     "filesNumber": "{{count}} file",

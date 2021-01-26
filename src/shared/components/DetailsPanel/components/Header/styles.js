@@ -26,7 +26,7 @@ export default makeStyles((theme) => ({
     padding: 6,
     flexGrow: 1,
   },
-  title: {
+  fileName: {
     margin: '15px 0',
     color: ({ viewMode }) => viewMode !== VIEW_MODES.LIGHT && theme.palette.palette.white,
   },
@@ -57,5 +57,22 @@ export default makeStyles((theme) => ({
   actionIcon: {
     fontSize: 14,
     color: ({ viewMode }) => (viewMode !== VIEW_MODES.PREVIEW ? theme.palette.palette.gray1 : '#7F8185'),
+  },
+  exitIcon: {
+    fontSize: 21,
+    color: theme.palette.palette.white,
+  },
+  titleExitContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 35,
+  },
+  title: {
+    fontSize: 18,
+    color: theme.palette.palette.white,
+  },
+  contextMenuPopper: {
+    zIndex: 1301,
   },
 }));

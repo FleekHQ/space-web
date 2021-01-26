@@ -30,6 +30,7 @@ const Topbar = (props) => {
     onDownload,
     menuOptions,
     onOptionClick,
+    disableDownload,
   } = props;
 
   const classes = useStyles();
@@ -38,7 +39,7 @@ const Topbar = (props) => {
   const handleClose = () => setAnchorEl(null);
   const handleItemClick = (item) => {
     handleClose();
-    onOptionClick(item);
+    onOptionClick(item.id);
   };
 
   return (
@@ -53,7 +54,7 @@ const Topbar = (props) => {
         </div>
       )}
       <div className={classes.titleContainer}>
-        {!showSignin && (
+        {!showSignin && onBack && (
           <ButtonBase onClick={onBack}>
             <FontAwesomeIcon
               icon={faArrowLeft}
@@ -72,7 +73,7 @@ const Topbar = (props) => {
         <ButtonBase onClick={onPrint}>
           <FontAwesomeIcon icon={faPrint} />
         </ButtonBase>
-        <ButtonBase onClick={onDownload}>
+        <ButtonBase onClick={onDownload} disabled={disableDownload}>
           <FontAwesomeIcon icon={faDownload} />
         </ButtonBase>
         <ButtonBase onClick={onInfo}>
@@ -115,7 +116,7 @@ const Topbar = (props) => {
                       )}
                     </Box>
                     <Typography variant="body2" className={classes.optionTitle}>
-                      {option.title}
+                      {option.displayText}
                     </Typography>
                   </MenuItem>
                 );
@@ -135,6 +136,7 @@ Topbar.defaultProps = {
   onOptionClick: () => {},
   menuOptions: [],
   i18n: {},
+  disableDownload: false,
 };
 
 Topbar.propTypes = {
@@ -149,7 +151,7 @@ Topbar.propTypes = {
   onOptionClick: PropTypes.func,
   menuOptions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
-    title: PropTypes.string,
+    displayText: PropTypes.string,
     icon: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array,
@@ -161,6 +163,7 @@ Topbar.propTypes = {
   i18n: PropTypes.shape({
     signin: PropTypes.string,
   }),
+  disableDownload: PropTypes.bool,
 };
 
 export default Topbar;

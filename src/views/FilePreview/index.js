@@ -7,6 +7,8 @@ import { openFileByUuid } from '@events/objects';
 import { useSelector } from 'react-redux';
 import { sdk } from '@clients';
 import Box from '@material-ui/core/Box';
+import { getContextMenuItems, downloadFromUrl } from '@utils';
+import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 
 import { imgExtensions } from './constants';
 import Splash from '../Splash';
@@ -23,6 +25,14 @@ const FilePreview = () => {
   const { t } = useTranslation();
   const [loadingSdk, setLoadingSdk] = React.useState(true);
   const history = useHistory();
+  const menuItemOnClick = useMenuItemOnClick({
+    clickedItem: file,
+  });
+
+  const redirectToSignin = () => {
+    const redirectRoute = `/file/${uuid}`;
+    history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+  };
 
   const getFileInfo = async () => {
     try {
@@ -35,8 +45,7 @@ const FilePreview = () => {
       // if there is no user, we redirect to sign in
       if (!user) {
         // redirect user to sign in page
-        const redirectRoute = `/file/${uuid}`;
-        history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+        redirectToSignin();
         return;
       }
       // if there is a user, we show an error
@@ -93,6 +102,11 @@ const FilePreview = () => {
     setDetailsPanelExpanded(!detailsPanelExpanded);
   };
 
+  const getMenuItems = () => getContextMenuItems({
+    object: file,
+    t,
+  });
+
   if (!file) {
     return (
       <Box
@@ -110,6 +124,8 @@ const FilePreview = () => {
 
   const getIsImage = () => imgExtensions.includes(file.ext);
 
+  const onDownload = () => downloadFromUrl(fileUrl, file.name);
+
   return (
     <div className={classes.container}>
       {file && (
@@ -119,12 +135,14 @@ const FilePreview = () => {
               filename={file.name}
               ext={file.ext}
               onPrint={() => {}}
-              onDownload={() => {}}
+              onDownload={onDownload}
               onInfo={onInfo}
-              onSignIn={() => {}}
-              onOptionClick={() => {}}
+              onSignIn={redirectToSignin}
+              onOptionClick={menuItemOnClick}
               showSignin={!user}
               i18n={i18n}
+              menuOptions={getMenuItems()}
+              disableDownload={!fileUrl}
             />
             <div className={classes.mainContent}>
               {fileUrl && (
@@ -138,6 +156,8 @@ const FilePreview = () => {
           <PreviewDetailsPanel
             object={file}
             expanded={detailsPanelExpanded}
+            showTitle
+            onClose={() => setDetailsPanelExpanded(false)}
           />
         </>
       )}

@@ -232,7 +232,10 @@ const ObjectsTable = ({
     });
   };
 
-  const contextMenuItems = getContextMenuItems(clickedItem, t);
+  const contextMenuItems = getContextMenuItems({
+    object: clickedItem,
+    t,
+  });
 
   const getDropzoneObjsList = () => {
     let indexOfLastVisitedRootObj = 0;
