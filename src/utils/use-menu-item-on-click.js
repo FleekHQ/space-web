@@ -6,7 +6,7 @@ import {
   FILE_PREVIEW,
 } from '@shared/components/Modal/actions';
 import { useDispatch } from 'react-redux';
-import { openObject } from '@events';
+import { getFileUrl } from '@events/objects';
 import { useHistory } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 
@@ -21,16 +21,9 @@ export const openAction = ({
     const redirectUrl = `/home/${clickedItem.key}`;
     history.push(redirectUrl);
   } else if (clickedItem.type === 'file') {
-    const rowBucket = clickedItem.sourceBucket || clickedItem.bucket;
-    openObject({
-      path: clickedItem.key,
-      dbId: clickedItem.dbId,
-      bucket: rowBucket,
-      name: clickedItem.name,
-      ipfsHash: clickedItem.ipfsHash,
-      isPublicLink: clickedItem.isPublicLink,
-      fullKey: clickedItem.fullKey,
-    });
+    if (clickedItem.uuid && clickedItem.uuid !== '') {
+      history.push(`/file/${clickedItem.uuid}`);
+    }
   }
 };
 
@@ -65,6 +58,21 @@ export const previewAction = ({
   dispatch,
   clickedItem,
 }) => dispatch(openModal(FILE_PREVIEW, { object: clickedItem }));
+
+export const downloadAction = (item) => {
+  getFileUrl({
+    path: item.key,
+    bucket: item.sourceBucket,
+  }).then((url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = item.name;
+    link.click();
+  }).catch((err) => {
+    /* eslint-disable-next-line no-console */
+    console.error(`error downloading file ${item.name}:`, err);
+  });
+};
 
 const useMenuItemOnClick = ({
   handleContextClose = () => {},
@@ -106,6 +114,9 @@ const useMenuItemOnClick = ({
           clickedItem,
           dispatch,
         });
+        break;
+      case CONTEXT_OPTION_IDS.download:
+        downloadAction(clickedItem);
         break;
       case CONTEXT_OPTION_IDS.copyIPFSHash:
       default:

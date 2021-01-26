@@ -70,8 +70,8 @@ export default (state = DEFAULT_STATE, action) => {
 
     case STORE_DIR: {
       const objects = uniqBy([
-        ...state.objects,
         ...action.payload,
+        ...state.objects,
       ], 'fullKey');
 
       return {
