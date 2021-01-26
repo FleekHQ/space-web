@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   imgContainer: {
     width: '100%',
     height: '100%',
@@ -15,5 +15,8 @@ export default makeStyles(() => ({
     width: '100%',
     height: '100%',
     border: 'none',
+  },
+  txt: {
+    backgroundColor: theme.palette.palette.white,
   },
 }));

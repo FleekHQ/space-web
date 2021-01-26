@@ -9,8 +9,9 @@ import { sdk } from '@clients';
 import Box from '@material-ui/core/Box';
 import { getContextMenuItems, downloadFromUrl } from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
+import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { imgExtensions } from './constants';
 import Splash from '../Splash';
 import PreviewDetailsPanel from './components/DetailsPanel';
 import useStyles from './styles';
@@ -122,8 +123,6 @@ const FilePreview = () => {
     );
   }
 
-  const getIsImage = () => imgExtensions.includes(file.ext);
-
   const onDownload = () => downloadFromUrl(fileUrl, file.name);
 
   return (
@@ -145,10 +144,16 @@ const FilePreview = () => {
               disableDownload={!fileUrl}
             />
             <div className={classes.mainContent}>
-              {fileUrl && (
+              {!fileUrl ? (
+                <FontAwesomeIcon
+                  spin
+                  icon={faSpinnerThird}
+                  className={classes.spinner}
+                />
+              ) : (
                 <FilePreviewer
                   url={fileUrl}
-                  isImage={getIsImage()}
+                  extension={file.ext}
                 />
               )}
             </div>

@@ -1,13 +1,13 @@
 import React from 'react';
 import FilePreviewer from './index';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select, text } from '@storybook/addon-knobs';
 
 const categoryName = 'FilePreviewer';
 
 storiesOf(categoryName, module).add('default', () => {
   const defaultProps = {
-    isImage: boolean('isImage', true),
+    extension: text('extension', 'pdf'),
     url: select('url', [
       'https://fleek-team-bucket.storage.fleek.co/Blog%20Inline/Sprouting.gif',
       'https://bitcoin.org/bitcoin.pdf',
