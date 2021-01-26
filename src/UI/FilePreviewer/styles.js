@@ -19,4 +19,8 @@ export default makeStyles((theme) => ({
   txt: {
     backgroundColor: theme.palette.palette.white,
   },
+  fileIconContainer: {
+    height: 188,
+    width: 188,
+  },
 }));

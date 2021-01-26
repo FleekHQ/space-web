@@ -84,7 +84,7 @@ const FilePreview = ({
             disableDownload={!fileUrl}
           />
           <div className={classes.mainContent}>
-            {(!fileUrl || true) ? (
+            {!fileUrl ? (
               <FontAwesomeIcon
                 spin
                 icon={faSpinnerThird}
