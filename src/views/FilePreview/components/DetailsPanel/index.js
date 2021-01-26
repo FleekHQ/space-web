@@ -14,6 +14,8 @@ import useStyles from './styles';
 const PreviewDetailsPanel = ({
   object,
   expanded,
+  showTitle,
+  onClose,
 }) => {
   const classes = useStyles();
   const viewMode = VIEW_MODES.PREVIEW;
@@ -31,6 +33,8 @@ const PreviewDetailsPanel = ({
         <Header
           viewMode={viewMode}
           objects={[object]}
+          showTitle={showTitle}
+          onClose={onClose}
         />
         <Divider viewMode={viewMode} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
@@ -38,11 +42,16 @@ const PreviewDetailsPanel = ({
         <SharePanel
           viewMode={viewMode}
           selectedObject={object}
-          members={[]}
+          members={object.members}
         />
       </DetailsPanel>
     </div>
   );
+};
+
+PreviewDetailsPanel.defaultProps = {
+  showTitle: false,
+  onClose: () => {},
 };
 
 PreviewDetailsPanel.propTypes = {
@@ -55,8 +64,11 @@ PreviewDetailsPanel.propTypes = {
     error: PropTypes.bool,
     type: PropTypes.string,
     isAvailableInSpace: PropTypes.bool,
+    members: PropTypes.array,
   }).isRequired,
   expanded: PropTypes.bool.isRequired,
+  showTitle: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 export default PreviewDetailsPanel;

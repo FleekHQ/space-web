@@ -110,6 +110,7 @@ const SharePanel = (props) => {
           top: contextState.mouseY,
           left: contextState.mouseX,
         }}
+        className={classes.copyMenuPopper}
       >
         <ContextMenu
           onClickAway={handleContextClose}
