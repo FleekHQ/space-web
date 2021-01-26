@@ -58,7 +58,7 @@ const mapContextMenuItems = ({
     icon: faExpandArrowsAlt,
     iconSize: 10,
     type: 'option',
-  },;
+  };
 
   return ([
     ...(isFile ? [previewOption] : []),
