@@ -20,7 +20,8 @@ const StorageMainView = () => {
   const prefix = get(match, 'params.0', '') || '';
 
   useEffect(() => {
-    fetchDir(prefix);
+    const showLoading = prefix !== '';
+    fetchDir(prefix, 'personal', true, showLoading);
   }, [history.location.pathname]);
 
   const breadcrumbsItems = mapBreadcrumbs(t('navigation.files'), location.pathname, history);

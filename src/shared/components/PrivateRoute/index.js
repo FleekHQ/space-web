@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 
 import { sdk } from '@clients';
 import registerTxlSubscribeEvents from '@events/txl-subscribe';
+import { listDirectory } from '@events/objects';
 
 import Splash from '../../../views/Splash';
 
@@ -27,11 +28,16 @@ const PrivateRoute = ({ children, txlSubscribe, ...rest }) => {
       }
     };
 
+    const preloadData = async (cb) => {
+      await listDirectory('', 'personal', false);
+      cb();
+    };
+
     if (sdk.isStarting) {
       sdkUnsubscribe = sdk.onList('ready', (error) => {
         if (!error) {
-          setLoadingSdk(false);
           sdkUnsubscribe();
+          preloadData(() => setLoadingSdk(false));
 
           if (txlSubscribe) {
             initTxlSubscribe();
@@ -40,7 +46,7 @@ const PrivateRoute = ({ children, txlSubscribe, ...rest }) => {
       });
     } else {
       // SDK is already started
-      setLoadingSdk(false);
+      preloadData(() => setLoadingSdk(false));
       if (txlSubscribe) {
         initTxlSubscribe();
       }
