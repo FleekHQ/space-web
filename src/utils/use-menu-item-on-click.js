@@ -84,7 +84,6 @@ const useMenuItemOnClick = ({
   return ((
     optionId,
   ) => {
-    console.log('option id...', optionId);
     switch (optionId) {
       case CONTEXT_OPTION_IDS.preview:
         previewAction({
