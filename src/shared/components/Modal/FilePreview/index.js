@@ -7,8 +7,9 @@ import { openFileByUuid } from '@events/objects';
 import { getContextMenuItems, downloadFromUrl } from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { useTranslation } from 'react-i18next';
+import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { imgExtensions } from '../../../../views/FilePreview/constants';
 import PreviewDetailsPanel from '../../../../views/FilePreview/components/DetailsPanel';
 import useStyles from './styles';
 
@@ -52,8 +53,6 @@ const FilePreview = ({
 
   const onDownload = () => downloadFromUrl(fileUrl, object.name);
 
-  const getIsImage = () => imgExtensions.includes(object.ext);
-
   return (
     <Modal
       disableBackdropClick
@@ -85,10 +84,18 @@ const FilePreview = ({
             disableDownload={!fileUrl}
           />
           <div className={classes.mainContent}>
-            <FilePreviewer
-              url={fileUrl}
-              isImage={getIsImage()}
-            />
+            {!fileUrl ? (
+              <FontAwesomeIcon
+                spin
+                icon={faSpinnerThird}
+                className={classes.spinner}
+              />
+            ) : (
+              <FilePreviewer
+                url={fileUrl}
+                extension={object.ext}
+              />
+            )}
           </div>
         </div>
         <PreviewDetailsPanel

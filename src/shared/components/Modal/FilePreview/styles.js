@@ -20,5 +20,11 @@ export default makeStyles((theme) => ({
     // 100% - topBar - margin below topbar
     height: 'calc(100% - 66px - 20px)',
     padding: '0px 300px',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  spinner: {
+    fontSize: 40,
+    color: theme.palette.palette.spaceBlue,
   },
 }));
