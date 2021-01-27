@@ -35,8 +35,8 @@ const FilePreview = () => {
     history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
   };
 
-  const getFileInfo = async () => {
-    // We check to see if the object is already in redux
+  useEffect(() => {
+    // We verify if the object is already in redux
     // so we can display the topbar sooner
     let foundObject = false;
     Object.keys(buckets).forEach((bucket) => {
@@ -48,7 +48,9 @@ const FilePreview = () => {
         }
       });
     });
+  }, []);
 
+  const getFileInfo = async () => {
     try {
       const fileInfo = await openFileByUuid(uuid);
       setFile(fileInfo.entry);
