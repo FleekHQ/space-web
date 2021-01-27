@@ -18,9 +18,13 @@ const CopyLink = ({ url, onClick, buttonText }) => {
   return (
     <div className={classes.root}>
       <OutlinedInput
+        disabled
         value={url}
         variant="outlined"
         className={classes.input}
+        classes={{
+          disabled: classes.inputDisabled,
+        }}
       />
       <Button
         color="primary"

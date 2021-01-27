@@ -292,7 +292,7 @@
     },
     "sharingModal": {
       "to": "To",
-      "inputPlaceholder": "Username",
+      "inputPlaceholder": "Enter Name or Email",
       "shareVia": "Share via Username (Recommended)",
       "linkTitle": "Share a link instead",
       "noLinkDescription": "No link created yet.",
@@ -308,7 +308,7 @@
         "failedShare": "Failed to share file, please try again."
       },
       "shareLink": {
-        "title": "get Link",
+        "title": "Get Link",
         "copyLink": "Copy Link",
         "public": "Public",
         "publicDescription": "Anyone with this link can view",

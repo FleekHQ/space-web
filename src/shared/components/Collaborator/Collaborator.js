@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
 import Typography from '@ui/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
@@ -35,15 +36,21 @@ const Collaborator = (props) => {
           title={mainText}
           variant="body2"
         >
-          {mainText}
+          <Box
+            component="span"
+            fontSize={14}
+            fontWeight={500}
+          >
+            {mainText}
+          </Box>
         </Typography>
         {secondaryText && (
         <Typography
           variant="body2"
-          color="secondary"
-          title={secondaryText}
         >
-          {secondaryText}
+          <Box color="#808080" component="span">
+            {secondaryText}
+          </Box>
         </Typography>
         )}
       </div>
