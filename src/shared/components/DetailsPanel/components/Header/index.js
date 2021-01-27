@@ -20,6 +20,7 @@ import useMenuItemOnClick, {
   shareAction,
 } from '@utils/use-menu-item-on-click';
 
+import { VIEW_MODES } from '../../constants';
 import useStyles from './styles';
 import { MAX_NUMBER_OF_ICONS_PREVIEW, getIconStyles } from './utils';
 
@@ -179,6 +180,7 @@ const DetailsPanelHeader = ({
                 onClickAway={handleContextClose}
                 menuItemOnClick={menuItemOnClick}
                 items={contextMenuItems}
+                isDark={(viewMode === VIEW_MODES.PREVIEW) || (viewMode === VIEW_MODES.DARK)}
               />
             </Popper>
           </div>

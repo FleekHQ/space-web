@@ -48,24 +48,7 @@ export default makeStyles((theme) => ({
     fontSize: 19,
     marginRight: 18,
   },
-  paper: {
-    backgroundColor: '#101010',
-    borderRadius: 6,
-    minWidth: 165,
-    border: `1px solid ${theme.palette.palette.gray1}`,
-    '& svg': {
-      color: theme.palette.palette.gray1,
-    },
-    '& hr': {
-      backgroundColor: theme.palette.palette.gray1,
-    },
-  },
-  optionTitle: {
-    color: theme.palette.palette.white,
-  },
-  menuList: {
-    '& .MuiListItem-button:hover': {
-      backgroundColor: '#212121',
-    },
+  topBarPopper: {
+    zIndex: 2000,
   },
 }));

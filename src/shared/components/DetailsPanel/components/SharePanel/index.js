@@ -11,9 +11,9 @@ import Popper from '@material-ui/core/Popper';
 import useMenuItemOnClick, {
   shareAction,
 } from '@utils/use-menu-item-on-click';
-
 import { getIdentitiesByAddress } from '@events';
 
+import { VIEW_MODES } from '../../constants';
 import CollaboratorList from '../CollaboratorList';
 import getCopyMenuItems from '../../utils/get-copy-menu';
 
@@ -116,6 +116,7 @@ const SharePanel = (props) => {
           onClickAway={handleContextClose}
           menuItemOnClick={menuItemOnClick}
           items={copyMenuItems}
+          isDark={(viewMode === VIEW_MODES.PREVIEW) || (viewMode === VIEW_MODES.DARK)}
         />
       </Popper>
       <div className={classes.shareWidth}>

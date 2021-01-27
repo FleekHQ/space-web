@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
+import Popper from '@material-ui/core/Popper';
 import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/pro-light-svg-icons/faPrint';
@@ -8,11 +8,9 @@ import { faDownload } from '@fortawesome/pro-light-svg-icons/faDownload';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons/faInfoCircle';
 import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
 import { faArrowLeft } from '@fortawesome/pro-regular-svg-icons/faArrowLeft';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Box from '@material-ui/core/Box';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Divider from '@material-ui/core/Divider';
+import ContextMenu from '@ui/ContextMenu';
 
 import useStyles from './styles';
 import RainbowButton from '../../../RainbowButton';
@@ -33,13 +31,23 @@ const Topbar = (props) => {
     disableDownload,
   } = props;
 
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const initialContextState = {
+    mouseX: null,
+    mouseY: null,
+  };
 
-  const handleClose = () => setAnchorEl(null);
-  const handleItemClick = (item) => {
-    handleClose();
-    onOptionClick(item.id);
+  const classes = useStyles();
+  const [contextState, setContextState] = useState(initialContextState);
+
+  const handleClose = () => setContextState(initialContextState);
+
+  const handleMenuOpen = (event) => {
+    event.preventDefault();
+
+    setContextState({
+      mouseX: event.clientX - 160,
+      mouseY: 42,
+    });
   };
 
   return (
@@ -88,40 +96,26 @@ const Topbar = (props) => {
           </RainbowButton>
         ) : (
           <>
-            <ButtonBase onClick={(e) => setAnchorEl(e.currentTarget)}>
+            <ButtonBase onClick={handleMenuOpen}>
               <FontAwesomeIcon icon={faEllipsisV} />
             </ButtonBase>
-            <Menu
-              keepMounted
-              anchorEl={anchorEl}
+            <Popper
+              open={contextState.mouseY !== null}
               onClose={handleClose}
-              open={Boolean(anchorEl)}
-              getContentAnchorEl={null}
-              classes={{ paper: classes.paper, list: classes.menuList }}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+              onClickAway={handleClose}
+              style={{
+                top: contextState.mouseY,
+                left: contextState.mouseX,
+              }}
+              className={classes.topBarPopper}
             >
-              {menuOptions.map((option, index) => {
-                /* eslint-disable-next-line react/no-array-index-key */
-                if (option.type === 'divider') return <Divider key={index} />;
-
-                return (
-                  <MenuItem
-                    key={option.id}
-                    onClick={() => handleItemClick(option)}
-                  >
-                    <Box fontSize={option.iconSize} height={12} width={12} marginRight={2}>
-                      {option.icon && (
-                        <FontAwesomeIcon icon={option.icon} />
-                      )}
-                    </Box>
-                    <Typography variant="body2" className={classes.optionTitle}>
-                      {option.displayText}
-                    </Typography>
-                  </MenuItem>
-                );
-              })}
-            </Menu>
+              <ContextMenu
+                onClickAway={handleClose}
+                menuItemOnClick={onOptionClick}
+                items={menuOptions}
+                isDark
+              />
+            </Popper>
           </>
         )}
       </div>

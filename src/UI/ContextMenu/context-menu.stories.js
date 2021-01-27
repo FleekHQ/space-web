@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { boolean } from '@storybook/addon-knobs';
 
 import ContextMenu, { CONTEXT_OPTION_IDS } from './index';
 import { faExpandArrowsAlt } from '@fortawesome/pro-regular-svg-icons/faExpandArrowsAlt';
@@ -11,6 +12,7 @@ const categoryName = 'ContextMenu';
 
 storiesOf(categoryName, module).add('default', () => {
   const defaultProps = {
+    isDark: boolean('isDark', true),
     menuItemOnClick: (id) => { console.log(id) },
     items: [
       {
