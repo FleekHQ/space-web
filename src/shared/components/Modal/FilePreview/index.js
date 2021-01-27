@@ -4,7 +4,11 @@ import Modal from '@material-ui/core/Modal';
 import TopBar from '@ui/Preview/components/TopBar';
 import FilePreviewer from '@ui/FilePreviewer';
 import { openFileByUuid } from '@events/objects';
-import { getContextMenuItems, downloadFromUrl } from '@utils';
+import {
+  getContextMenuItems,
+  downloadFromUrl,
+  printFromId,
+} from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { useTranslation } from 'react-i18next';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
@@ -73,7 +77,7 @@ const FilePreview = ({
           <TopBar
             filename={object.name}
             ext={object.ext}
-            onPrint={() => {}}
+            onPrint={() => printFromId('print-area')}
             onDownload={onDownload}
             onInfo={onInfo}
             onSignIn={() => {}}
@@ -82,6 +86,7 @@ const FilePreview = ({
             onBack={closeModal}
             showSignin={false}
             disableDownload={!fileUrl}
+            disablePrint={!fileUrl}
           />
           <div className={classes.mainContent}>
             {!fileUrl ? (
