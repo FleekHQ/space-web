@@ -129,7 +129,7 @@ export const addItems = ({
         });
         dispatch({
           type: ADD_OBJECT,
-          payload: objectPresenter({
+          payload: objectPresenter(data.entry || {
             bucket,
             fileExtension: ext,
             backupCount: 1,
