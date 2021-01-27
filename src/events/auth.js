@@ -61,6 +61,7 @@ export const signin = (payload) => async (dispatch) => {
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
       user: {
         ...data.data,
+        email: payload.torusRes.userInfo.email,
       },
     });
   } catch (error) {
@@ -112,9 +113,9 @@ export const signup = (payload) => async (dispatch) => {
     );
 
     await apiClient.identity.addEthAddress({
+      provider: backupType,
       token: spaceUser.token,
       address: payload.torusRes.publicAddress,
-      provider: payload.torusRes.userInfo.typeOfLogin,
       metadata: {
         name: payload.torusRes.userInfo.name,
         email: payload.torusRes.userInfo.email,
@@ -126,6 +127,7 @@ export const signup = (payload) => async (dispatch) => {
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
       user: {
         ...data.data,
+        email: payload.torusRes.userInfo.email,
       },
     });
   } catch (error) {

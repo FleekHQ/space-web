@@ -7,7 +7,6 @@ export default makeStyles((theme) => ({
     minHeight: 60,
   },
   autocomplete: {
-    margin: '0 18px',
     '&&&  div': {
       paddingRight: 0,
     },

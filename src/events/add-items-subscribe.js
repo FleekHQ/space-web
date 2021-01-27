@@ -34,6 +34,8 @@ export const addItems = ({
   const storage = await sdk.getStorage();
   const modalId = dispatch(openModal(UPLOAD_PROGRESS_TOAST));
 
+  window.onbeforeunload = () => false;
+
   dispatch({
     type: INIT_UPLOAD_STATE,
     payload: {
@@ -56,6 +58,8 @@ export const addItems = ({
   uploadResponse.on('error', (data) => {
     // eslint-disable-next-line no-console
     console.error('SUBSCRIBE_ERROR_EVENT', data);
+
+    window.onbeforeunload = null;
 
     dispatch({
       type: SET_UPLOAD_ERROR_STATE,
@@ -129,7 +133,7 @@ export const addItems = ({
         });
         dispatch({
           type: ADD_OBJECT,
-          payload: objectPresenter({
+          payload: objectPresenter(data.entry || {
             bucket,
             fileExtension: ext,
             backupCount: 1,
@@ -213,6 +217,10 @@ export const addItems = ({
         });
       }
     }
+  });
+
+  uploadResponse.once('done', () => {
+    window.onbeforeunload = null;
   });
 };
 

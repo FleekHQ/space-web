@@ -76,4 +76,9 @@ export default makeStyles((theme) => ({
   contextMenuPopper: {
     zIndex: 1301,
   },
+  disabledIcon: {
+    '&&&': {
+      color: 'rgba(102, 102, 102, 0.3)',
+    },
+  },
 }));

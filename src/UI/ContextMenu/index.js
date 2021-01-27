@@ -36,6 +36,7 @@ const ContextMenu = ({
     }
     return (
       <MenuItem
+        disabled={item.disabled}
         className={classes.menuItem}
         onClick={() => menuItemOnClick(item.id)}
       >

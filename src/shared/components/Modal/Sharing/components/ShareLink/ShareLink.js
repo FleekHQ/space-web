@@ -9,11 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/pro-regular-svg-icons/faLink';
 import { faGlobe } from '@fortawesome/pro-light-svg-icons/faGlobe';
 import { faCheck } from '@fortawesome/pro-regular-svg-icons/faCheck';
-import { faUserFriends } from '@fortawesome/pro-regular-svg-icons/faUserFriends';
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons/faChevronDown';
 
 import useStyles from './styles';
-import { CopyLink } from './components';
+import { CopyLink, GroupIcon } from './components';
 
 const ShareLink = (props) => {
   const {
@@ -30,8 +29,6 @@ const ShareLink = (props) => {
 
   const handleClose = () => setAnchorEl(null);
   const selectedOption = options.find((option) => option.selected) || options[0];
-
-  const iconComponent = icon === 'public' ? faGlobe : faUserFriends;
 
   const handleItemClick = (item) => {
     handleClose();
@@ -58,7 +55,9 @@ const ShareLink = (props) => {
       </div>
       <div className={classes.optionsContainer}>
         <div className={classes.iconContainer}>
-          <FontAwesomeIcon icon={iconComponent} />
+          {
+            icon === 'public' ? <FontAwesomeIcon icon={faGlobe} /> : <GroupIcon />
+          }
         </div>
         <ButtonBase
           className={classes.optionsButton}

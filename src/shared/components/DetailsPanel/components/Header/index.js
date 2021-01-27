@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import Typography from '@ui/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -29,6 +30,7 @@ const DetailsPanelHeader = ({
   viewMode,
   showTitle,
   onClose,
+  mapContextMenuItems,
 }) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
@@ -51,10 +53,8 @@ const DetailsPanelHeader = ({
     handleContextClose,
   });
 
-  const contextMenuItems = getContextMenuItems({
-    object: objects[0],
-    t,
-  });
+  const menuItems = getContextMenuItems({ object: objects[0], t });
+  const contextMenuItems = mapContextMenuItems(menuItems);
 
   const handleContextMenuOpen = (event) => {
     event.preventDefault();
@@ -131,10 +131,13 @@ const DetailsPanelHeader = ({
                       className={classes.actionIcon}
                     />
                   </ButtonBase>
-                  <ButtonBase>
+                  <ButtonBase disabled>
                     <FontAwesomeIcon
                       icon={faLink}
-                      className={classes.actionIcon}
+                      className={classnames(
+                        classes.actionIcon,
+                        classes.disabledIcon,
+                      )}
                       onClick={() => {
                         copyLinkAction({
                           clickedItem: objects[0],
@@ -143,7 +146,7 @@ const DetailsPanelHeader = ({
                       }}
                     />
                   </ButtonBase>
-                  <ButtonBase>
+                  <ButtonBase disabled>
                     <FontAwesomeIcon
                       onClick={() => {
                         shareAction({
@@ -152,7 +155,10 @@ const DetailsPanelHeader = ({
                         });
                       }}
                       icon={faShare}
-                      className={classes.actionIcon}
+                      className={classnames(
+                        classes.actionIcon,
+                        classes.disabledIcon,
+                      )}
                     />
                   </ButtonBase>
                 </>
@@ -193,6 +199,7 @@ const DetailsPanelHeader = ({
 DetailsPanelHeader.defaultProps = {
   showTitle: true,
   onClose: () => {},
+  mapContextMenuItems: (items) => items,
 };
 
 DetailsPanelHeader.propTypes = {
@@ -211,6 +218,7 @@ DetailsPanelHeader.propTypes = {
   viewMode: PropTypes.string.isRequired,
   showTitle: PropTypes.bool,
   onClose: PropTypes.func,
+  mapContextMenuItems: PropTypes.func,
 };
 
 export default DetailsPanelHeader;

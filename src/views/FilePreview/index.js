@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { sdk } from '@clients';
 import Box from '@material-ui/core/Box';
 import { getContextMenuItems, downloadFromUrl, printFromId } from '@utils';
+import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,9 +19,16 @@ import useStyles from './styles';
 
 const FilePreview = () => {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
   const { uuid } = useParams();
-  const [file, setFile] = useState(null);
+  const [user, fileEntry] = useSelector((state) => {
+    const fileObject = state.storage?.buckets?.personal?.objects?.find(
+      (entry) => entry.uuid === uuid,
+    );
+
+    return [state.user, fileObject];
+  });
+
+  const [file, setFile] = useState(fileEntry);
   const [fileUrl, setFileUrl] = useState(null);
   const [detailsPanelExpanded, setDetailsPanelExpanded] = useState(false);
   const { t } = useTranslation();
@@ -103,10 +111,10 @@ const FilePreview = () => {
     setDetailsPanelExpanded(!detailsPanelExpanded);
   };
 
-  const getMenuItems = () => getContextMenuItems({
-    object: file,
-    t,
-  });
+  const getMenuItems = () => {
+    const menuOptions = getContextMenuItems({ object: file, t });
+    return menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview);
+  };
 
   if (!file) {
     return (

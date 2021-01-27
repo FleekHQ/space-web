@@ -14,10 +14,10 @@ export default makeStyles((theme) => ({
     backgroundColor: 'transparent',
   },
   header: {
-    padding: '10px 25px',
+    padding: '15px 25px',
   },
   memberInput: {
-    padding: '10px 25px 12px 25px',
+    padding: '10px 25px',
   },
   collaboratorList: {
     flex: 1,
