@@ -26,6 +26,7 @@ const mapContextMenuItems = ({
     icon: faShare,
     iconSize: 10,
     type: 'option',
+    disabled: true,
   };
 
   const getLinkOption = {
@@ -34,6 +35,7 @@ const mapContextMenuItems = ({
     icon: faLink,
     iconSize: 10,
     type: 'option',
+    disabled: true,
   };
 
   const previewOption = {
@@ -76,6 +78,7 @@ const mapContextMenuItems = ({
       icon: faTrash,
       iconSize: 10,
       type: 'option',
+      disabled: true,
     },
   ]);
 };

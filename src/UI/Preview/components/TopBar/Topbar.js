@@ -108,6 +108,7 @@ const Topbar = (props) => {
                 return (
                   <MenuItem
                     key={option.id}
+                    disabled={option.disabled}
                     onClick={() => handleItemClick(option)}
                   >
                     <Box fontSize={option.iconSize} height={12} width={12} marginRight={2}>
