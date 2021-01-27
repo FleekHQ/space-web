@@ -10,7 +10,6 @@ export default makeStyles(() => ({
     maxWidth: ({ maxWidth }) => maxWidth,
     borderRadius: 6,
     overflow: 'auto',
-    filter: 'drop-shadow(0 2px 6px #DBE1EDB2)',
     boxShadow: 'none',
     '&:focus': {
       outline: 'none',
@@ -19,5 +18,5 @@ export default makeStyles(() => ({
 }));
 
 export const backdropStyles = {
-  backgroundColor: 'rgba(255, 255, 255, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
 };

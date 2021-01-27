@@ -14,4 +14,7 @@ export default makeStyles({
     paddingLeft: 0,
     paddingRight: 0,
   },
+  inputDisabled: {
+    color: '#000000',
+  },
 });

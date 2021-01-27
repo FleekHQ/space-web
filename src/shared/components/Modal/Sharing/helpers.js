@@ -7,7 +7,8 @@ export const getCollaboratorsInfo = (collaborators, owner, members) => {
     return {
       id: collaborator.publicKey,
       permissionsId: 'edit',
-      mainText: collaboratorInfo ? collaboratorInfo.username : collaborator.address,
+      secondaryText: collaboratorInfo ? collaboratorInfo.email : '',
+      mainText: collaboratorInfo ? collaboratorInfo.displayName : collaborator.address,
       ...(collaboratorInfo && { imageSrc: collaboratorInfo.avatarUrl }),
     };
   });
@@ -20,7 +21,8 @@ export const getCollaboratorsInfo = (collaborators, owner, members) => {
       id: ownerId,
       permissionsId: 'edit',
       isOwner: true,
-      mainText: get(owner, 'username', 'You'),
+      secondaryText: get(owner, 'email'),
+      mainText: get(owner, 'displayName', 'You'),
       ...(ownerAvatar && { imageSrc: ownerAvatar }),
     },
     ...items.filter((item) => item.id !== ownerId),
@@ -29,8 +31,9 @@ export const getCollaboratorsInfo = (collaborators, owner, members) => {
 
 export const mapIdentitiesToCollaborators = (identities = []) => identities.map((identity) => ({
   id: identity.publicKey,
-  mainText: identity.username,
-  username: identity.username,
+  mainText: identity.displayName,
+  secondaryText: identity.email,
+  username: identity.displayName,
   publicKey: identity.publicKey,
   ...(identity.avatarUrl && { imageSrc: identity.avatarUrl }),
 }));
