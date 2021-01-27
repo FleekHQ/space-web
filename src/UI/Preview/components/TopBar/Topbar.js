@@ -29,6 +29,7 @@ const Topbar = (props) => {
     menuOptions,
     onOptionClick,
     disableDownload,
+    disablePrint,
   } = props;
 
   const initialContextState = {
@@ -78,7 +79,7 @@ const Topbar = (props) => {
         </Box>
       </div>
       <div className={classes.ctaContainer}>
-        <ButtonBase onClick={onPrint}>
+        <ButtonBase onClick={onPrint} disabled={disablePrint}>
           <FontAwesomeIcon icon={faPrint} />
         </ButtonBase>
         <ButtonBase onClick={onDownload} disabled={disableDownload}>
@@ -131,6 +132,7 @@ Topbar.defaultProps = {
   menuOptions: [],
   i18n: {},
   disableDownload: false,
+  disablePrint: false,
 };
 
 Topbar.propTypes = {
@@ -158,6 +160,7 @@ Topbar.propTypes = {
     signin: PropTypes.string,
   }),
   disableDownload: PropTypes.bool,
+  disablePrint: PropTypes.bool,
 };
 
 export default Topbar;
