@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import DetailsPanel, {
   Header,
   Divider,
@@ -20,6 +21,10 @@ const PreviewDetailsPanel = ({
   const classes = useStyles();
   const viewMode = VIEW_MODES.PREVIEW;
 
+  const mapContextMenuItems = (menuOptions) => (
+    menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview)
+  );
+
   return (
     <div
       className={classnames(classes.root, {
@@ -35,6 +40,7 @@ const PreviewDetailsPanel = ({
           objects={[object]}
           showTitle={showTitle}
           onClose={onClose}
+          mapContextMenuItems={mapContextMenuItems}
         />
         <Divider viewMode={viewMode} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
