@@ -18,7 +18,7 @@ import useStyles from './styles';
 
 const FilePreview = () => {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
+  const [user, buckets] = useSelector((state) => [state.user, state.storage.buckets]);
   const { uuid } = useParams();
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
@@ -36,6 +36,19 @@ const FilePreview = () => {
   };
 
   const getFileInfo = async () => {
+    // We check to see if the object is already in redux
+    // so we can display the topbar sooner
+    let foundObject = false;
+    Object.keys(buckets).forEach((bucket) => {
+      if (foundObject) return;
+      buckets[bucket].objects.forEach((object) => {
+        if (object.uuid === uuid) {
+          foundObject = true;
+          setFile(object);
+        }
+      });
+    });
+
     try {
       const fileInfo = await openFileByUuid(uuid);
       setFile(fileInfo.entry);
