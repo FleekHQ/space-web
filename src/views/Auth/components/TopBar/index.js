@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars';
 
@@ -19,6 +19,7 @@ import useStyles from './styles';
 const Topbar = () => {
   const classes = useStyles();
   const [sidebarState, setSidebar] = React.useContext(SidebarContext);
+  const location = useLocation();
 
   // eslint-disable-next-line no-unused-vars
   const handleMenuClick = (event) => {
@@ -67,7 +68,10 @@ const Topbar = () => {
             <Box color="white" display="flex">
               <Button
                 color="inherit"
-                to="/signin"
+                to={{
+                  pathname: '/signin',
+                  search: location.search,
+                }}
                 component={ReactRouterLink}
                 className={classes.authBtnRoot}
               >
@@ -76,7 +80,10 @@ const Topbar = () => {
               <Box ml={1}>
                 <Button
                   color="inherit"
-                  to="/signup"
+                  to={{
+                    pathname: '/signup',
+                    search: location.search,
+                  }}
                   component={ReactRouterLink}
                   className={clsx(classes.authBtnRoot, classes.rainbowBg)}
                 >
