@@ -14,6 +14,7 @@ const DEFAULT_PATH = '/identity';
 /**
  * @typedef {Object} UpdatePayload
  * @property {string} token - Auth token.
+ * @property {string} email - Identity email.
  * @property {string=} username - Identity username.
  * @property {string=} displayName - Identity displayname.
  *
@@ -23,6 +24,7 @@ const DEFAULT_PATH = '/identity';
  */
 function update(payload) {
   const { token, ...data } = payload;
+
   return this.instance({
     data,
     method: 'put',

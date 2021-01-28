@@ -13,6 +13,7 @@ const EmailLinkAuth = () => {
   const classes = useStyles();
   const location = useLocation();
   const { t } = useTranslation();
+  const [email, setEmail] = React.useState('');
   const { sendPasswordlessEmail } = useAuth0Passwordless();
 
   const from = (location.state && location.state.from) || 'signin';
@@ -24,6 +25,33 @@ const EmailLinkAuth = () => {
       email: location.state && location.state.email ? location.state.email : '',
     });
   };
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const resendEmail = urlParams.get('resend');
+
+    if (location.state && location.state.email) {
+      setEmail(location.state.email);
+      return;
+    }
+
+    if (resendEmail) {
+      setEmail(resendEmail);
+      const resendMagicLink = async () => {
+        try {
+          await sendPasswordlessEmail({
+            from,
+            email: resendEmail,
+          });
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(`Error when trying to resend the magic link email: ${error.message}`);
+        }
+      };
+
+      resendMagicLink();
+    }
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -37,7 +65,7 @@ const EmailLinkAuth = () => {
           components={[<Box fontWeight={600} component="span" />]}
           values={{
             action,
-            email: location.state && location.state.email ? location.state.email : '',
+            email,
           }}
         />
       </Typography>
