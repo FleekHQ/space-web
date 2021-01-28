@@ -271,6 +271,12 @@
     "defaultMessage": "Upload in progress...",
     "retry": "Try again"
   },
+  "downloadProgress": {
+    "message": "Downloading <0>{{filename}}</0>: <0>{{progress}}</0>%",
+    "defaultMessage": "Initializing <0>{{filename}}</0> download...",
+    "dismiss": "Dismiss",
+    "cancel": "Cancel"
+  },
   "errorModal": {
     "usersNotFound": "Some usernames that you are trying to share with doesn't exists: <0>{{usernames}}</0>",
     "handleInvitationFailed": "Failed to accept or reject file sharing invitation"

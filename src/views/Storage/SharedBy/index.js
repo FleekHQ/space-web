@@ -8,6 +8,7 @@ import { useHistory, matchPath, useLocation } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Breadcrumbs from '@ui/Breadcrumbs';
 import Sidebar from '@shared/components/Sidebar';
+import Downloads from '@shared/components/Downloads';
 import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
 import Layout from '@terminal-packages/space-ui/core/Layout';
 import { openModal, FILE_LINK_PASSWORD } from '@shared/components/Modal/actions';
@@ -77,6 +78,7 @@ const SharedWithMeView = () => {
               renderRow={SharedRenderRow}
               type="shared"
             />
+            <Downloads />
           </div>
         </div>
         <DetailsPanel />
