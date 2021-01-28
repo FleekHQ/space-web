@@ -44,9 +44,11 @@ const Auth = () => {
   const currentView = match.params[0];
 
   const handlePasswordLessFormSubmit = async ({ email }) => {
+    const { redirect_to: redirectTo } = queryString.parse(location.search);
     const isSent = await sendPasswordlessEmail({
       email,
       from: currentView,
+      redirectTo,
     });
 
     if (isSent) {
