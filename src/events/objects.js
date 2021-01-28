@@ -200,7 +200,7 @@ export const getFileUrl = async (payload) => {
 export const openFileByUuid = async (uuid) => {
   const storage = await sdk.getStorage();
 
-  const res = await storage.openFileByUuid(uuid);
+  const res = await storage.openFileByUuid({ uuid });
 
   return {
     entry: objectPresenter(res.entry, false),
