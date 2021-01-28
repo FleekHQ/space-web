@@ -24,8 +24,9 @@ const ContextMenu = ({
   menuItemOnClick,
   items,
   onClickAway,
+  isDark,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ isDark });
 
   const getMenuItem = (item) => {
     if (item.type === 'divider') {
@@ -80,6 +81,10 @@ const ContextMenu = ({
   );
 };
 
+ContextMenu.defaultProps = {
+  isDark: false,
+};
+
 ContextMenu.propTypes = {
   menuItemOnClick: PropTypes.func.isRequired,
   i18n: PropTypes.shape({
@@ -98,6 +103,7 @@ ContextMenu.propTypes = {
     }),
   ).isRequired,
   onClickAway: PropTypes.func.isRequired,
+  isDark: PropTypes.bool,
 };
 
 export default ContextMenu;

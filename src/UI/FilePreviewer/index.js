@@ -21,7 +21,10 @@ const FilePreviewer = ({
 
   if (!isSupported) {
     return (
-      <div className={classes.fileIconContainer}>
+      <div
+        className={classes.fileIconContainer}
+        id="print-area"
+      >
         <FileIcon
           ext={extension}
           src={url}
@@ -32,7 +35,10 @@ const FilePreviewer = ({
 
   if (isImage) {
     return (
-      <div className={classes.imgContainer}>
+      <div
+        className={classes.imgContainer}
+        id="print-area"
+      >
         <img alt="file-preview" src={url} className={classes.image} />
       </div>
     );
@@ -40,6 +46,7 @@ const FilePreviewer = ({
 
   return (
     <iframe
+      id="print-area"
       className={classnames(classes.iframe, {
         [classes.txt]: isTxt,
       })}

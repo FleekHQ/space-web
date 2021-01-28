@@ -7,8 +7,8 @@ import { openFileByUuid } from '@events/objects';
 import { useSelector } from 'react-redux';
 import { sdk } from '@clients';
 import Box from '@material-ui/core/Box';
+import { getContextMenuItems, downloadFromUrl, printFromId } from '@utils';
 import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
-import { getContextMenuItems, downloadFromUrl } from '@utils';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -141,7 +141,7 @@ const FilePreview = () => {
             <TopBar
               filename={file.name}
               ext={file.ext}
-              onPrint={() => {}}
+              onPrint={() => printFromId('print-area')}
               onDownload={onDownload}
               onInfo={onInfo}
               onSignIn={redirectToSignin}
@@ -150,6 +150,7 @@ const FilePreview = () => {
               i18n={i18n}
               menuOptions={getMenuItems()}
               disableDownload={!fileUrl}
+              disablePrint={!fileUrl}
             />
             <div className={classes.mainContent}>
               {!fileUrl ? (
