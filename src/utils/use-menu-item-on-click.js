@@ -12,6 +12,7 @@ import copy from 'copy-to-clipboard';
 
 export const openAction = ({
   clickedItem,
+  dispatch,
   history,
 }) => {
   if (clickedItem.isUploading && clickedItem.error) {
@@ -22,7 +23,7 @@ export const openAction = ({
     history.push(redirectUrl);
   } else if (clickedItem.type === 'file') {
     if (clickedItem.uuid && clickedItem.uuid !== '') {
-      history.push(`/file/${clickedItem.uuid}`);
+      dispatch(openModal(FILE_PREVIEW, { object: clickedItem }));
     }
   }
 };
@@ -95,6 +96,7 @@ const useMenuItemOnClick = ({
         openAction({
           clickedItem,
           history,
+          dispatch,
         });
         break;
       case CONTEXT_OPTION_IDS.trash:

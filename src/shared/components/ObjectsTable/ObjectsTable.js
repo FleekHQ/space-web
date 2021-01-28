@@ -176,6 +176,7 @@ const ObjectsTable = ({
 
     openAction({
       clickedItem: row,
+      dispatch,
       history,
     });
   };
