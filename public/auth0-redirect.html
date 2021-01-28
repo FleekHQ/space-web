@@ -14,7 +14,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const from = urlParams.get('from') || 'signin';
       const redirectTo = urlParams.get('redirect_to');
-      const redirectToParam = redirectTo ? `?redirect_to=${redirectTo}`: '';
+      const redirectToParam = redirectTo ? `?redirect_to=${encodeURIComponent(redirectTo)}`: '';
 
       const origin = window.location.origin.includes('localhost:8080')
         ? 'http://localhost:3000': window.location.origin;
