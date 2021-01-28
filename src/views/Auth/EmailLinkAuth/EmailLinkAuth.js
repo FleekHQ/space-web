@@ -62,7 +62,10 @@ const EmailLinkAuth = () => {
       </Typography>
       <Typography
         color="inherit"
-        to={`/${from}`}
+        to={{
+          pathname: `/${from}`,
+          search: location.search,
+        }}
         component={Link}
         variant="body2"
         className={classes.resetLinkStyle}
