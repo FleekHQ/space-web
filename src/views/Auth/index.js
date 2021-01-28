@@ -58,6 +58,7 @@ const Auth = () => {
           email,
           from: currentView,
         },
+        search: location.search,
       });
     }
   };
