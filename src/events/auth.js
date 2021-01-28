@@ -102,6 +102,7 @@ export const signup = (payload) => async (dispatch) => {
 
     const { data } = await apiClient.identity.update({
       token: spaceUser.token,
+      email: payload.torusRes.userInfo.email,
       displayName: payload.torusRes.userInfo.name,
     });
 
