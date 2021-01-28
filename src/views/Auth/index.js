@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
+import queryString from 'query-string';
 
 import Splash from '../Splash';
 import useStyles from './styles';
@@ -89,6 +90,11 @@ const Auth = () => {
 
   React.useEffect(() => {
     if (state.isAuthenticated) {
+      const { redirect_to: redirectTo } = queryString.parse(location.search);
+      if (redirectTo) {
+        history.replace(decodeURIComponent(redirectTo));
+        return;
+      }
       history.replace('/home');
     }
   }, [state.isAuthenticated]);
