@@ -7,6 +7,7 @@ export const DOWNLOAD_ACTION_TYPES = {
   REMOVE_DOWNLOAD: 'DELETE_OBJECT_ON_ERROR',
   ERROR_DOWNLOAD: 'ERROR_DOWNLOAD',
   HIDE_DOWNLOAD: 'HIDE_DOWNLOAD',
+  ADD_COMPLETED_DOWNLOAD: 'ADD_COMPLETED_DOWNLOAD',
 };
 
 export const DOWNLOAD_STATES = {
@@ -25,6 +26,19 @@ export default (state = DEFAULT_STATE, action) => {
           status: DOWNLOAD_STATES.initializing,
           progress: 0,
           link: null,
+          filename: action.payload.filename,
+          hide: false,
+        },
+      };
+    }
+
+    case DOWNLOAD_ACTION_TYPES.ADD_COMPLETED_DOWNLOAD: {
+      return {
+        ...state,
+        [action.payload.uuid]: {
+          status: DOWNLOAD_STATES.finished,
+          progress: 100,
+          link: action.payload.link,
           filename: action.payload.filename,
           hide: false,
         },
