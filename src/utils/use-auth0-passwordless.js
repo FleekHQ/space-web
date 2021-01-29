@@ -31,8 +31,6 @@ export default function useAuth0Passwordless() {
     });
 
     try {
-      const redirectToParam = redirectTo ? `?redirect_to=${redirectTo}` : '';
-
       await axios.post(`${config.torus.providers.passwordless.jwtParams.domain}/passwordless/start`, {
         email,
         send: 'link',
@@ -41,7 +39,7 @@ export default function useAuth0Passwordless() {
         authParams: {
           scope: 'openid profile email',
           response_type: 'token id_token',
-          redirect_uri: `${process.env.REACT_APP_AUTH0_PASSWORDLESS_REDIRECT_URI}/${from}${redirectToParam}`,
+          redirect_uri: `${process.env.REACT_APP_AUTH0_PASSWORDLESS_REDIRECT_URI}/${from}`,
           nonce: new Date().getMilliseconds().toString(),
           prompt: 'login',
           state: encodeURIComponent(
@@ -50,6 +48,7 @@ export default function useAuth0Passwordless() {
                 email,
                 redirectToOpener: false,
                 verifier: config.torus.providers.passwordless.verifier,
+                redirectTo,
               }),
             ),
           ),

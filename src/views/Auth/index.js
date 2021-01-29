@@ -93,10 +93,12 @@ const Auth = () => {
 
   React.useEffect(() => {
     if (state.isAuthenticated) {
-      const { redirect_to: redirectTo } = queryString.parse(location.search);
-      if (redirectTo) {
-        history.replace(decodeURIComponent(redirectTo));
-        return;
+      if (location.hash) {
+        const { stateFields } = getLoginPayload();
+        if (stateFields.redirectTo) {
+          history.replace(decodeURIComponent(stateFields.redirectTo));
+          return;
+        }
       }
       history.replace('/home');
     }
