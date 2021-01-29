@@ -42,10 +42,7 @@ const EmailLinkAuth = () => {
       setEmail(resendEmail);
       const resendMagicLink = async () => {
         try {
-          let redirectTo = '';
-          if (location.state && location.state.redirectTo) {
-            redirectTo = location.state.redirectTo;
-          }
+          const { redirect_to: redirectTo } = queryString.parse(location.search);
 
           await sendPasswordlessEmail({
             from,
