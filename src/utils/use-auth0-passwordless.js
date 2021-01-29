@@ -16,7 +16,11 @@ export default function useAuth0Passwordless() {
    * @param {string} opts.from
    * @param {string} opts.email
    */
-  const sendPasswordlessEmail = async ({ email, from }) => {
+  const sendPasswordlessEmail = async ({
+    email,
+    from,
+    redirectTo,
+  }) => {
     if (email.length === 0) {
       return false;
     }
@@ -44,6 +48,7 @@ export default function useAuth0Passwordless() {
                 email,
                 redirectToOpener: false,
                 verifier: config.torus.providers.passwordless.verifier,
+                redirectTo,
               }),
             ),
           ),

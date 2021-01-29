@@ -75,6 +75,7 @@ const EmailAuth = ({
           component={ReactRouterLink}
           to={{
             pathname: currentView === 'signin' ? '/signup' : '/signin',
+            search: location.search,
             state: formData,
           }}
         >

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { useTorusSdk, useAuth0Passwordless, useWsChallenge } from '@utils';
+import queryString from 'query-string';
 
 import Splash from '../Splash';
 import useStyles from './styles';
@@ -43,9 +44,11 @@ const Auth = () => {
   const currentView = match.params[0];
 
   const handlePasswordLessFormSubmit = async ({ email }) => {
+    const { redirect_to: redirectTo } = queryString.parse(location.search);
     const isSent = await sendPasswordlessEmail({
       email,
       from: currentView,
+      redirectTo,
     });
 
     if (isSent) {
@@ -55,6 +58,7 @@ const Auth = () => {
           email,
           from: currentView,
         },
+        search: location.search,
       });
     }
   };
@@ -89,6 +93,13 @@ const Auth = () => {
 
   React.useEffect(() => {
     if (state.isAuthenticated) {
+      if (location.hash) {
+        const { stateFields } = getLoginPayload();
+        if (stateFields.redirectTo) {
+          history.replace(decodeURIComponent(stateFields.redirectTo));
+          return;
+        }
+      }
       history.replace('/home');
     }
   }, [state.isAuthenticated]);

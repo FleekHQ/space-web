@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-
+import queryString from 'query-string';
 import { useAuth0Passwordless } from '@utils';
 
 import useStyles from './styles';
@@ -20,9 +20,12 @@ const EmailLinkAuth = () => {
   const action = t(`modules.emailLinkAuth.${from}`);
 
   const handleOnResendEmail = async () => {
+    const { redirect_to: redirectTo } = queryString.parse(location.search);
+
     await sendPasswordlessEmail({
       from,
       email: location.state && location.state.email ? location.state.email : '',
+      redirectTo,
     });
   };
 
@@ -39,9 +42,12 @@ const EmailLinkAuth = () => {
       setEmail(resendEmail);
       const resendMagicLink = async () => {
         try {
+          const { redirect_to: redirectTo } = queryString.parse(location.search);
+
           await sendPasswordlessEmail({
             from,
             email: resendEmail,
+            redirectTo,
           });
         } catch (error) {
           // eslint-disable-next-line no-console
@@ -87,7 +93,10 @@ const EmailLinkAuth = () => {
       </Typography>
       <Typography
         color="inherit"
-        to={`/${from}`}
+        to={{
+          pathname: `/${from}`,
+          search: location.search,
+        }}
         component={Link}
         variant="body2"
         className={classes.resetLinkStyle}
