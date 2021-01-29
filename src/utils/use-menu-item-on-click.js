@@ -6,12 +6,13 @@ import {
   FILE_PREVIEW,
 } from '@shared/components/Modal/actions';
 import { useDispatch } from 'react-redux';
-import { getFileUrl } from '@events/objects';
+import { downloadFile } from '@events/objects';
 import { useHistory } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 
 export const openAction = ({
   clickedItem,
+  dispatch,
   history,
 }) => {
   if (clickedItem.isUploading && clickedItem.error) {
@@ -22,7 +23,7 @@ export const openAction = ({
     history.push(redirectUrl);
   } else if (clickedItem.type === 'file') {
     if (clickedItem.uuid && clickedItem.uuid !== '') {
-      history.push(`/file/${clickedItem.uuid}`);
+      dispatch(openModal(FILE_PREVIEW, { object: clickedItem }));
     }
   }
 };
@@ -60,17 +61,12 @@ export const previewAction = ({
 }) => dispatch(openModal(FILE_PREVIEW, { object: clickedItem }));
 
 export const downloadAction = (item) => {
-  getFileUrl({
+  downloadFile({
     path: item.key,
+    fileSize: item.size,
     bucket: item.sourceBucket,
-  }).then((url) => {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = item.name;
-    link.click();
-  }).catch((err) => {
-    /* eslint-disable-next-line no-console */
-    console.error(`error downloading file ${item.name}:`, err);
+    uuid: item.uuid,
+    filename: item.name,
   });
 };
 
@@ -95,6 +91,7 @@ const useMenuItemOnClick = ({
         openAction({
           clickedItem,
           history,
+          dispatch,
         });
         break;
       case CONTEXT_OPTION_IDS.trash:

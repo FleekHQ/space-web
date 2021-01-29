@@ -5,6 +5,7 @@ import { useHistory, matchPath } from 'react-router-dom';
 import { fetchDir } from '@events/objects';
 import mapBreadcrumbs from '@shared/utils/map-breadcrumbs';
 import Breadcrumbs from '@ui/Breadcrumbs';
+import Downloads from '@shared/components/Downloads';
 
 import { FileTable, FilesErrors } from '../shared/components';
 import EmptyState from './components/EmptyState';
@@ -41,6 +42,7 @@ const StorageMainView = () => {
         bucket="personal"
         fetchObjects={() => fetchDir(prefix)}
       />
+      <Downloads />
     </div>
   );
 };

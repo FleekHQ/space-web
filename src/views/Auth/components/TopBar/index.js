@@ -44,8 +44,7 @@ const Topbar = () => {
         >
           <Box ml={2}>
             <Link
-              to="/"
-              component={ReactRouterLink}
+              href="/"
               classes={{ root: classes.logoLink }}
             >
               <img height={35} src={`${process.env.PUBLIC_URL}/assets/images/space_text.svg`} alt="logo" />
@@ -56,7 +55,7 @@ const Topbar = () => {
               {
                 sidebarState.links.map((link) => (
                   <Box key={link.id} component="span" color="white" fontSize={15} px={2} fontWeight={600}>
-                    <Link color="inherit" underline="hover" href={link.to}>
+                    <Link target={link.target} color="inherit" underline="hover" href={link.to}>
                       {link.name}
                     </Link>
                   </Box>
