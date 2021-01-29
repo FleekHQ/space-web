@@ -48,7 +48,7 @@ const openDialog = async ({ dispatch, prefix, type }) => {
       const sourcePaths = Array.from(event.target.files).map((file) => ({
         name: file.name,
         size: file.size,
-        data: file.stream(),
+        data: file,
         mimeType: file.type,
         path: prefix.length === 0 ? file.webkitRelativePath || file.name : `${prefix}/${file.webkitRelativePath || file.name}`,
       }));

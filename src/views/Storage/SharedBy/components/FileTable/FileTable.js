@@ -32,7 +32,7 @@ const FileTable = ({ bucket, prefix }) => {
     const sourcePaths = files.map((file) => ({
       name: file.name,
       size: file.size,
-      data: file.stream(),
+      data: new File([file], file.name, { type: file.type, lastModified: file.lastModified }),
       mimeType: file.type,
       path: file.path.replace(/^\//, ''),
     }));
