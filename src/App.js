@@ -14,7 +14,7 @@ import {
   Route,
   Switch,
   Redirect,
-  HashRouter as Router,
+  BrowserRouter as Router,
 } from 'react-router-dom';
 import Modal from '@shared/components/Modal';
 import store from './store';
