@@ -24,12 +24,13 @@ const SidebarContextProvider = ({ children }) => {
       },
       {
         id: 'blog',
-        to: '/blog',
         name: 'Blog',
+        target: '_blank',
+        to: 'https://blog.space.storage/',
       },
       {
         id: 'faq',
-        to: '/faqs',
+        to: '/faq',
         name: 'FAQ',
       },
     ],

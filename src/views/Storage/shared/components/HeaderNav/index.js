@@ -155,7 +155,7 @@ const HeaderNav = () => {
             onClick={(event) => {
               event.preventDefault();
 
-              window.open('https://docs.space.storage', '_blank', 'noopener,noreferrer');
+              window.open('https://help.space.storage', '_blank', 'noopener,noreferrer');
             }}
           >
             <FontAwesomeIcon icon={faQuestionCircle} />

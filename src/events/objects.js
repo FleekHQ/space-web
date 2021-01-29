@@ -2,7 +2,9 @@
 /* eslint-disable no-unused-vars */
 import get from 'lodash/get';
 import { sdk } from '@clients';
-import { objectPresenter, typedArrayToUrl } from '@utils';
+import {
+  objectPresenter, typedArrayToUrl, getFileProgress, downloadFromUrl,
+} from '@utils';
 import {
   STORE_DIR,
   STORE_OBJECTS,
@@ -12,6 +14,7 @@ import {
   SET_OPEN_ERROR_BUCKET,
   UPDATE_OBJECT,
 } from '@reducers/storage';
+import { DOWNLOAD_ACTION_TYPES } from '@reducers/downloads';
 import { SEARCH_ACTION_TYPES } from '@reducers/search';
 import { OPEN_PUBLIC_FILE_ACTION_TYPES } from '@reducers/open-public-file';
 import { DELETE_OBJECT_ACTION_TYPES } from '@reducers/delete-object';
@@ -210,6 +213,62 @@ export const openFileByUuid = async (uuid) => {
       return typedArrayToUrl([fileBytes.buffer], res.mimeType);
     },
   };
+};
+
+/**
+ * @param {Object} payload
+ * @param {string} payload.bucket
+ * @param {string} payload.path
+ * @param {number} payload.fileSize
+ * @param {string} payload.uuid
+ * @param {string} payload.filename
+ */
+export const downloadFile = async (payload) => {
+  try {
+    const storage = await sdk.getStorage();
+
+    store.dispatch({
+      type: DOWNLOAD_ACTION_TYPES.ADD_DOWNLOAD,
+      payload: {
+        uuid: payload.uuid,
+        filename: payload.filename,
+      },
+    });
+
+    const response = await storage.openFile({
+      ...payload,
+      progress: (bytes) => {
+        store.dispatch({
+          type: DOWNLOAD_ACTION_TYPES.UPDATE_DOWNLOAD_PROGRESS,
+          payload: {
+            uuid: payload.uuid,
+            progress: getFileProgress(payload.fileSize, bytes),
+          },
+        });
+      },
+    });
+
+    const fileBytes = await response.consumeStream();
+    const url = typedArrayToUrl([fileBytes.buffer], response.mimeType);
+
+    downloadFromUrl(url, payload.filename);
+
+    store.dispatch({
+      type: DOWNLOAD_ACTION_TYPES.UPDATE_DOWNLOAD_LINK,
+      payload: {
+        uuid: payload.uuid,
+        link: url,
+      },
+    });
+  } catch (error) {
+    store.dispatch({
+      type: DOWNLOAD_ACTION_TYPES.ERROR_DOWNLOAD,
+      payload: {
+        uuid: payload.uuid,
+        error: error.message,
+      },
+    });
+  }
 };
 
 export default registerObjectsEvents;
