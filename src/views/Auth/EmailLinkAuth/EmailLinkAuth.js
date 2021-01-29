@@ -42,9 +42,11 @@ const EmailLinkAuth = () => {
       setEmail(resendEmail);
       const resendMagicLink = async () => {
         try {
+          const { redirect_to: redirectTo } = queryString.parse(location.search);
           await sendPasswordlessEmail({
             from,
             email: resendEmail,
+            redirectTo,
           });
         } catch (error) {
           // eslint-disable-next-line no-console
