@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "author": "Fleek Labs Inc.",
-  "homepage": "./",
   "repository": {
     "type": "git",
     "url": "https://github.com/FleekHQ/space-web.git"
