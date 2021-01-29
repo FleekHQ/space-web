@@ -159,7 +159,7 @@ const Account = ({ t }) => {
           redText3: true,
         };
         break;
-      case 'passwordless':
+      case 'email':
         options[OPTION_IDS.EMAIL] = {
           id: OPTION_IDS.EMAIL,
           text: t('addBackupSignIn.email'),

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +38,7 @@ const PROFILE_PIC_OPTIONS = [
   {
     key: 'trash',
     icon: faTrash,
+    disabled: true,
   },
 ];
 const PROFILE_RADIO_OPTIONS = [
@@ -209,6 +211,7 @@ const EditProfile = ({ closeModal }) => {
                           key={o.key}
                           className={classes.picOption}
                           onClick={handlePicOptionClick(o.key)}
+                          disabled={o.disabled}
                         >
                           <Box minWidth={14}>
                             <FontAwesomeIcon icon={o.icon} />
@@ -245,7 +248,7 @@ const EditProfile = ({ closeModal }) => {
           </Typography>
         )}
       </Box>
-      <Box mt="20px">
+      {/* <Box mt="20px">
         <Typography>
           <Box component="span" fontWeight={500}>
             {t('modals.editProfile.radio.title')}
@@ -275,7 +278,7 @@ const EditProfile = ({ closeModal }) => {
             </RadioGroup>
           </FormControl>
         </Box>
-      </Box>
+      </Box> */}
       <div className={classes.buttonContainer}>
         <Button
           onClick={closeModal}
