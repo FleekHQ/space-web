@@ -5,10 +5,11 @@ import {
   DELETE_OBJECT,
   FILE_PREVIEW,
 } from '@shared/components/Modal/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { downloadFile } from '@events/objects';
 import { useHistory } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
+import { downloadFromUrl } from '@utils';
 
 export const openAction = ({
   clickedItem,
@@ -60,13 +61,25 @@ export const previewAction = ({
   clickedItem,
 }) => dispatch(openModal(FILE_PREVIEW, { object: clickedItem }));
 
-export const downloadAction = (item) => {
+export const downloadAction = ({
+  clickedItem,
+  downloads,
+}) => {
+  const fileUrl = downloads[clickedItem.uuid] && downloads[clickedItem.uuid].link;
+  if (fileUrl) {
+    downloadFromUrl(
+      fileUrl,
+      clickedItem.name,
+    );
+    return;
+  }
+
   downloadFile({
-    path: item.key,
-    fileSize: item.size,
-    bucket: item.sourceBucket,
-    uuid: item.uuid,
-    filename: item.name,
+    path: clickedItem.key,
+    fileSize: clickedItem.size,
+    bucket: clickedItem.sourceBucket,
+    uuid: clickedItem.uuid,
+    filename: clickedItem.name,
   });
 };
 
@@ -76,6 +89,7 @@ const useMenuItemOnClick = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const downloads = useSelector((state) => state.downloads);
 
   return ((
     optionId,
@@ -113,7 +127,10 @@ const useMenuItemOnClick = ({
         });
         break;
       case CONTEXT_OPTION_IDS.download:
-        downloadAction(clickedItem);
+        downloadAction({
+          clickedItem,
+          downloads,
+        });
         break;
       case CONTEXT_OPTION_IDS.copyIPFSHash:
       default:

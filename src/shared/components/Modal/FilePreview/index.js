@@ -13,6 +13,7 @@ import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { useTranslation } from 'react-i18next';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
 
 import PreviewDetailsPanel from '../../../../views/FilePreview/components/DetailsPanel';
 import useStyles from './styles';
@@ -26,6 +27,7 @@ const FilePreview = ({
   const [detailsPanelExpanded, setDetailsPanelExpanded] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
   const { t } = useTranslation();
+  const downloads = useSelector((state) => state.downloads);
 
   const menuItemOnClick = useMenuItemOnClick({
     clickedItem: object,
@@ -38,6 +40,10 @@ const FilePreview = ({
 
   const getFileInfo = async () => {
     try {
+      if (downloads[object.uuid] && downloads[object.uuid].link) {
+        setFileUrl(downloads[object.uuid].link);
+        return;
+      }
       const fileInfo = await openFileByUuid(object.uuid);
       const url = await fileInfo.getFileUrl();
       setFileUrl(url);

@@ -204,13 +204,23 @@ export const openFileByUuid = async (uuid) => {
   const storage = await sdk.getStorage();
 
   const res = await storage.openFileByUuid({ uuid });
+  const entry = objectPresenter(res.entry, false);
 
   return {
-    entry: objectPresenter(res.entry, false),
+    entry,
     mimeType: res.mimeType,
     getFileUrl: async () => {
       const fileBytes = await res.consumeStream();
-      return typedArrayToUrl([fileBytes.buffer], res.mimeType);
+      const url = typedArrayToUrl([fileBytes.buffer], res.mimeType);
+      store.dispatch({
+        type: DOWNLOAD_ACTION_TYPES.ADD_COMPLETED_DOWNLOAD,
+        payload: {
+          uuid: entry.uuid,
+          link: url,
+          filename: entry.name,
+        },
+      });
+      return url;
     },
   };
 };
