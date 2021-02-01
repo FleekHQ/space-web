@@ -152,10 +152,10 @@ const Auth = () => {
   }, [isInitializing]);
 
   React.useEffect(() => {
-    if (state.error) {
+    if (state.authenticatingError) {
       setShowSplash(false);
     }
-  }, [state.error]);
+  }, [state.authenticatingError]);
 
   const privacyAndPolicy = (
     <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
