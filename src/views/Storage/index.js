@@ -13,7 +13,7 @@ import Layout from '@terminal-packages/space-ui/core/Layout';
 
 import Files from './Files';
 import DetailsPanel from './DetailsPanel';
-import { HeaderNav, WelcomeMessages } from './shared/components';
+import { HeaderNav } from './shared/components';
 
 import useStyles from './styles';
 
@@ -42,7 +42,6 @@ const Storage = () => {
             </Route>
             <Redirect to={`${match.path}/`} />
           </Switch>
-          <WelcomeMessages />
         </div>
         <DetailsPanel />
       </div>

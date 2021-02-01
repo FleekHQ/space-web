@@ -6,6 +6,7 @@ const mapCopyMenuItems = (t) => ([
     id: CONTEXT_OPTION_IDS.copyLink,
     displayText: t('contextMenu.copyLink'),
     icon: faLink,
+    disabled: true,
   },
   {
     id: CONTEXT_OPTION_IDS.copyIPFSHash,
