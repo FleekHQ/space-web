@@ -166,7 +166,8 @@ const Auth = () => {
             component="a"
             color="inherit"
             className={classes.linkButton}
-            onClick={() => null}
+            target="_blank"
+            href="/privacy-policy"
           >
             {`${t('modules.signup.agreenment.privacy')}`}
           </ButtonBase>
@@ -175,7 +176,8 @@ const Auth = () => {
             component="a"
             color="inherit"
             className={classes.linkButton}
-            onClick={() => null}
+            target="_blank"
+            href="/terms-of-service"
           >
             {t('modules.signup.agreenment.terms')}
           </ButtonBase>
