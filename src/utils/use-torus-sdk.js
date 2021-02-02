@@ -50,6 +50,7 @@ export default function useTorusSdk(sdkConfig) {
    * @typedef {Object} State
    * @property {TorusSdk} torusSdk
    * @property {Boolean} isInitializing
+   *
    * @type {[State, Function]} State
   */
   const [state, setState] = React.useState({
@@ -86,18 +87,39 @@ export default function useTorusSdk(sdkConfig) {
       } = config.torus.providers[provider];
 
       /** @type {TorusRes} */
-      const tRes = await state.torusSdk.triggerLogin(pickBy({
-        name,
-        hash,
-        verifier,
-        clientId,
-        typeOfLogin,
-        queryParameters,
-        jwtParams: {
-          ...jwtParams,
-          ...extraJwtParams,
-        },
-      }, identity));
+      let tRes;
+
+      if (process.env.REACT_APP_FE_NODE_ENV === 'production' && typeOfLogin === 'google') {
+        tRes = await state.torusSdk.triggerAggregateLogin({
+          verifierIdentifier: verifier,
+          aggregateVerifierType: 'single_id_verifier',
+          subVerifierDetailsArray: [
+            {
+              clientId,
+              typeOfLogin,
+              verifier: 'fleek',
+            },
+          ],
+        });
+
+        tRes = {
+          ...tRes,
+          userInfo: tRes.userInfo[0],
+        };
+      } else {
+        tRes = await state.torusSdk.triggerLogin(pickBy({
+          name,
+          hash,
+          verifier,
+          clientId,
+          typeOfLogin,
+          queryParameters,
+          jwtParams: {
+            ...jwtParams,
+            ...extraJwtParams,
+          },
+        }, identity));
+      }
 
       if (tRes) {
         tRes.privateKey = `0x${tRes.privateKey}`;
