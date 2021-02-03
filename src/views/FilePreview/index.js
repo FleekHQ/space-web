@@ -172,6 +172,7 @@ const FilePreview = () => {
             expanded={detailsPanelExpanded}
             showTitle
             onClose={() => setDetailsPanelExpanded(false)}
+            disablePreview
           />
         </>
       )}

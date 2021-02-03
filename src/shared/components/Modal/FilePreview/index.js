@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import TopBar from '@ui/Preview/components/TopBar';
 import FilePreviewer from '@ui/FilePreviewer';
 import { openFileByUuid } from '@events/objects';
+import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import {
   getContextMenuItems,
   downloadFromUrl,
@@ -33,10 +34,10 @@ const FilePreview = ({
     clickedItem: object,
   });
 
-  const getMenuItems = () => getContextMenuItems({
-    object,
-    t,
-  });
+  const getMenuItems = () => {
+    const menuOptions = getContextMenuItems({ object, t });
+    return menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview);
+  };
 
   const getFileInfo = async () => {
     try {
@@ -112,6 +113,7 @@ const FilePreview = ({
         <PreviewDetailsPanel
           object={object}
           expanded={detailsPanelExpanded}
+          disablePreview
         />
       </div>
     </Modal>
