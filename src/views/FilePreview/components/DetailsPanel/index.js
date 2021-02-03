@@ -17,6 +17,7 @@ const PreviewDetailsPanel = ({
   expanded,
   showTitle,
   onClose,
+  disablePreview,
 }) => {
   const classes = useStyles();
   const viewMode = VIEW_MODES.PREVIEW;
@@ -41,6 +42,7 @@ const PreviewDetailsPanel = ({
           showTitle={showTitle}
           onClose={onClose}
           mapContextMenuItems={mapContextMenuItems}
+          disablePreview={disablePreview}
         />
         <Divider viewMode={viewMode} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
@@ -58,6 +60,7 @@ const PreviewDetailsPanel = ({
 PreviewDetailsPanel.defaultProps = {
   showTitle: false,
   onClose: () => {},
+  disablePreview: false,
 };
 
 PreviewDetailsPanel.propTypes = {
@@ -75,6 +78,7 @@ PreviewDetailsPanel.propTypes = {
   expanded: PropTypes.bool.isRequired,
   showTitle: PropTypes.bool,
   onClose: PropTypes.func,
+  disablePreview: PropTypes.bool,
 };
 
 export default PreviewDetailsPanel;
