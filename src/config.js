@@ -20,7 +20,7 @@ const {
 } = process.env;
 
 export default {
-  textileHubAddres: REACT_APP_TEXTILE_HUB_ADDRESS,
+  textileHubAddress: REACT_APP_TEXTILE_HUB_ADDRESS,
   vault: {
     serviceUrl: REACT_APP_VAULT_SERVICE_URL,
     saltSecret: REACT_APP_VAULT_SERVICE_SALT_SECRET,
