@@ -58,6 +58,7 @@ function Sdk() {
     if (usersList.length > 0) {
       return new UserStorage(usersList[0], {
         textileHubAddress: config.textileHubAddress,
+        debugMode: process.env.REACT_APP_FE_NODE_ENV !== 'production',
       });
     }
 
