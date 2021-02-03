@@ -64,7 +64,7 @@ function Sdk() {
     return null;
   };
 
-  this.onList = function onList(event, cb) {
+  this.onListen = function onListen(event, cb) {
     if (typeof cbs[event] === 'undefined') {
       cbs[event] = [];
     }
