@@ -194,7 +194,7 @@ export const getFileUrl = async (payload) => {
   const response = await storage.openFile(payload);
   const fileBytes = await response.consumeStream();
 
-  return typedArrayToUrl([fileBytes.buffer], response.mimeType);
+  return typedArrayToUrl([fileBytes], response.mimeType);
 };
 
 /**
@@ -211,7 +211,7 @@ export const openFileByUuid = async (uuid) => {
     mimeType: res.mimeType,
     getFileUrl: async () => {
       const fileBytes = await res.consumeStream();
-      const url = typedArrayToUrl([fileBytes.buffer], res.mimeType);
+      const url = typedArrayToUrl([fileBytes], res.mimeType);
       store.dispatch({
         type: DOWNLOAD_ACTION_TYPES.ADD_COMPLETED_DOWNLOAD,
         payload: {
@@ -259,7 +259,7 @@ export const downloadFile = async (payload) => {
     });
 
     const fileBytes = await response.consumeStream();
-    const url = typedArrayToUrl([fileBytes.buffer], response.mimeType);
+    const url = typedArrayToUrl([fileBytes], response.mimeType);
 
     downloadFromUrl(url, payload.filename);
 
