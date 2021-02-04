@@ -58,13 +58,14 @@ function Sdk() {
     if (usersList.length > 0) {
       return new UserStorage(usersList[0], {
         textileHubAddress: config.textileHubAddress,
+        debugMode: process.env.REACT_APP_FE_NODE_ENV !== 'production',
       });
     }
 
     return null;
   };
 
-  this.onList = function onList(event, cb) {
+  this.onListen = function onListen(event, cb) {
     if (typeof cbs[event] === 'undefined') {
       cbs[event] = [];
     }

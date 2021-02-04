@@ -75,7 +75,7 @@ const FilePreview = () => {
     }
 
     if (sdk.isStarting) {
-      sdkUnsubscribe = sdk.onList('ready', (error) => {
+      sdkUnsubscribe = sdk.onListen('ready', (error) => {
         if (!error) {
           setLoadingSdk(false);
           sdkUnsubscribe();
@@ -172,6 +172,7 @@ const FilePreview = () => {
             expanded={detailsPanelExpanded}
             showTitle
             onClose={() => setDetailsPanelExpanded(false)}
+            disablePreview
           />
         </>
       )}

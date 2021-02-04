@@ -28,7 +28,7 @@ const PrivateRoute = ({ children, txlSubscribe, ...rest }) => {
     };
 
     if (sdk.isStarting) {
-      sdkUnsubscribe = sdk.onList('ready', (error) => {
+      sdkUnsubscribe = sdk.onListen('ready', (error) => {
         if (!error) {
           setLoadingSdk(false);
           sdkUnsubscribe();

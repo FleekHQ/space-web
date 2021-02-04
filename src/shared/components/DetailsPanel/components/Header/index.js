@@ -31,6 +31,7 @@ const DetailsPanelHeader = ({
   showTitle,
   onClose,
   mapContextMenuItems,
+  disablePreview,
 }) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
@@ -119,7 +120,7 @@ const DetailsPanelHeader = ({
               && objects[0].isAvailableInSpace
               && (
                 <>
-                  <ButtonBase>
+                  <ButtonBase disabled={disablePreview}>
                     <FontAwesomeIcon
                       onClick={() => {
                         previewAction({
@@ -128,7 +129,10 @@ const DetailsPanelHeader = ({
                         });
                       }}
                       icon={faEye}
-                      className={classes.actionIcon}
+                      className={classnames(
+                        classes.actionIcon,
+                        disablePreview && classes.disabledIcon,
+                      )}
                     />
                   </ButtonBase>
                   <ButtonBase disabled>
@@ -200,6 +204,7 @@ DetailsPanelHeader.defaultProps = {
   showTitle: true,
   onClose: () => {},
   mapContextMenuItems: (items) => items,
+  disablePreview: false,
 };
 
 DetailsPanelHeader.propTypes = {
@@ -219,6 +224,7 @@ DetailsPanelHeader.propTypes = {
   showTitle: PropTypes.bool,
   onClose: PropTypes.func,
   mapContextMenuItems: PropTypes.func,
+  disablePreview: PropTypes.bool,
 };
 
 export default DetailsPanelHeader;
