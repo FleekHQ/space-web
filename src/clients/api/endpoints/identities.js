@@ -44,8 +44,30 @@ function getByUsername(payload) {
     },
   });
 }
+/**
+ * @typedef {Object} GetByEmailPayload
+ * @property {string=} token - Services token.
+ * @property {Array.<string>} emails - Emails to get identity.
+ *
+ * @this {import('../client.js')}
+ * @param {GetByEmailPayload} payload - Payload to get an identity by email.
+ * @returns {import('axios').AxiosResponse<{ data: Array<import('./identity').Identity> | import('./identity').Identity }>}
+ */
+function getByEmail(payload) {
+  return this.instance({
+    method: 'get',
+    url: DEFAULT_PATH,
+    headers: {
+      Authorization: payload.token || '',
+    },
+    params: {
+      email: payload.emails.join(','),
+    },
+  });
+}
 
 export {
+  getByEmail,
   getByAddress,
   getByUsername,
 };
