@@ -44,12 +44,24 @@ const Auth = () => {
   const currentView = match.params[0];
 
   const handlePasswordLessFormSubmit = async ({ email }) => {
+    dispatch({
+      type: AUTH_ACTION_TYPES.ON_RESET,
+    });
+
     const { redirect_to: redirectTo } = queryString.parse(location.search);
-    const isSent = await sendPasswordlessEmail({
+    const { error, isSent } = await sendPasswordlessEmail({
       email,
       from: currentView,
       redirectTo,
     });
+
+    if (error) {
+      dispatch({
+        error: `modules.${match.params[0]}.errors.magicLink`,
+        type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_ERROR,
+      });
+      return;
+    }
 
     if (isSent) {
       history.push({
@@ -156,6 +168,12 @@ const Auth = () => {
       setShowSplash(false);
     }
   }, [state.authenticatingError]);
+
+  React.useEffect(() => {
+    dispatch({
+      type: AUTH_ACTION_TYPES.ON_RESET,
+    });
+  }, [match.params[0]]);
 
   const privacyAndPolicy = (
     <Box maxWidth={192} color="#888888" textAlign="center" alignSelf="center">
