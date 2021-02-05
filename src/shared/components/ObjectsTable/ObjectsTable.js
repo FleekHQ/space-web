@@ -186,7 +186,8 @@ const ObjectsTable = ({
 
     setContextState({
       mouseX: event.clientX - 2,
-      mouseY: event.clientY - 4,
+      mouseY: window.innerHeight - event.clientY < 150
+        ? window.innerHeight - 160 : event.clientY - 4,
     });
 
     const newRows = sortedRows.map((_row) => ({

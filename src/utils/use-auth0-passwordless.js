@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 import config from '@config';
+import { apiClient } from '@clients';
 
 export default function useAuth0Passwordless() {
   const location = useLocation();
@@ -22,7 +23,9 @@ export default function useAuth0Passwordless() {
     redirectTo,
   }) => {
     if (email.length === 0) {
-      return false;
+      return {
+        isSent: false,
+      };
     }
 
     setState({
@@ -31,6 +34,33 @@ export default function useAuth0Passwordless() {
     });
 
     try {
+      const { data } = await apiClient.identities.getByEmail({
+        emails: [email],
+      }).catch((error) => {
+        if (error.response && error.response.status === 404) {
+          return {
+            data: null,
+          };
+        }
+
+        throw error;
+      });
+
+      if (
+        (from === 'signup' && data)
+        || (from === 'signin' && !data)
+      ) {
+        setState({
+          ...state,
+          loading: false,
+        });
+
+        return {
+          error: true,
+          isSent: false,
+        };
+      }
+
       await axios.post(`${config.torus.providers.passwordless.jwtParams.domain}/passwordless/start`, {
         email,
         send: 'link',
@@ -60,7 +90,9 @@ export default function useAuth0Passwordless() {
         loading: false,
       });
 
-      return true;
+      return {
+        isSent: true,
+      };
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(`Error when trying to start passwordless flow: ${error.message}`);
@@ -70,7 +102,9 @@ export default function useAuth0Passwordless() {
         loading: false,
       });
 
-      return false;
+      return {
+        isSent: false,
+      };
     }
   };
 

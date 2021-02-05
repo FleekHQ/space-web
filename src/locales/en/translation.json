@@ -178,6 +178,7 @@
       "recover": "Recover Account",
       "link": "Don't have an account?",
       "errors": {
+        "magicLink": "The email entered is not available. Already have an account? Sign in.",
         "torus": "There was an error with torus integration",
         "noData": "There is no data from torus",
         "timeout": "Websocket Timeout",
@@ -209,6 +210,7 @@
       "errors": {
         "generic": "Sorry, there was a problem.",
         "email": "Email already in use.",
+        "magicLink": "The email address you use already match with other space account.",
         "identity": "Sorry, there was a problem getting your identity.",
         "address": "Sorry, the current address is already registered.",
         "torus": "There was an error with torus integration",
