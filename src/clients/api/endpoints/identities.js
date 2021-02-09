@@ -44,6 +44,7 @@ function getByUsername(payload) {
     },
   });
 }
+
 /**
  * @typedef {Object} GetByEmailPayload
  * @property {string=} token - Services token.
@@ -66,8 +67,29 @@ function getByEmail(payload) {
   });
 }
 
+/**
+ * @typedef {Object} GetIdentitiesQueryPayload
+ * @property {string=} token - Services token.
+ * @property {Array.<{ type: string; value: string }>} identities
+ *
+ * @this {import('../client.js')}
+ * @param {GetIdentitiesQueryPayload} payload - Payload to get identities by email/displayName.
+ * @returns {import('axios').AxiosResponse<{ data: Array<import('./identity').Identity> | import('./identity').Identity }>}
+ */
+function getIdentitiesQuery(payload) {
+  return this.instance({
+    method: 'post',
+    url: '/identities_query',
+    headers: {
+      Authorization: payload.token || '',
+    },
+    data: payload.identities,
+  });
+}
+
 export {
   getByEmail,
   getByAddress,
   getByUsername,
+  getIdentitiesQuery,
 };

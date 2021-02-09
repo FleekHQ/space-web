@@ -9,12 +9,11 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Button from '@terminal-packages/space-ui/core/Button';
 import RainbowField from '@ui/RainbowField';
+import { checkIsEmail } from '@utils';
 
 import { AUTH_ACTION_TYPES } from '@reducers/auth';
 
 import useStyles from './styles';
-
-const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const EmailAuth = ({
   onSubmit,
@@ -105,7 +104,7 @@ const EmailAuth = ({
               root: classes.btnRoot,
               disabled: classes.btnDisabled,
             }}
-            disabled={isLoading || email.length === 0 || !EMAIL_REGEX.test(email)}
+            disabled={isLoading || email.length === 0 || !checkIsEmail(email)}
           >
             {submitBtnText}
           </Button>

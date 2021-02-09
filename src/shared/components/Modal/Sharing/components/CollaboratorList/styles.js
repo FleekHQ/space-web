@@ -22,4 +22,9 @@ export default makeStyles({
     margin: '20px 25px 20px 0',
     minWidth: 86,
   },
+  removeBtn: {
+    padding: '5px 10px',
+    fontSize: 18,
+    color: '#000000',
+  },
 });

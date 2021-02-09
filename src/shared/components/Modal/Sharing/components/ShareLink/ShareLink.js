@@ -64,7 +64,7 @@ const ShareLink = (props) => {
           onClick={(e) => setAnchorEl(e.currentTarget)}
         >
           <Typography variant="body1">
-            <Box fontWeight={500}>
+            <Box component="span" fontWeight={500}>
               {selectedOption.title}
               <FontAwesomeIcon
                 icon={faChevronDown}

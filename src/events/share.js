@@ -29,6 +29,7 @@ export const generatePublicFileLink = (payload) => {
  * @param {string} payload.notificationId
  */
 export const shareFiles = (payload) => {
+  console.log('payload', payload);
 };
 
 export default registerObjectsEvents;

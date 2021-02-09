@@ -1,70 +1,43 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { checkIsEmail } from '@utils';
 
-import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
-import CollaboratorInput from '../CollaboratorInput';
 import useStyles from './styles';
 import Collaborator from '../../../../Collaborator';
-// import PermissionsDropdown from '../../../../PermissionsDropdown';
-import getFilteredOptions from './utils/get-filtered-options';
+
+const filter = createFilterOptions();
 
 const MemberInput = (props) => {
   const {
     i18n,
-    // onChange,
     className,
     loading,
-    // options: defaultOptions,
-    setUsernames,
-    usernames,
-    collaborators,
+    identities,
+    onSelectIdentity,
+    onChangeSearchIdentityTerm,
   } = props;
 
   const classes = useStyles();
-  // const [open, setOpen] = useState(false);
-  // const [options, setOptions] = useState(defaultOptions);
-  const [usernameInput, setUsernameInput] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  /* const handleClose = () => setOpen(false);
-  const handleToggle = () => setOpen(!open);
+  React.useEffect(() => {
+    let debounce;
 
-  const handleOnChange = (e, option) => {
-    setOpen(false);
+    if (searchTerm.length) {
+      debounce = setTimeout(() => {
+        onChangeSearchIdentityTerm(searchTerm);
+      }, 600);
+    }
 
-    setOptions(options.map((opt) => {
-      if (opt.id === option.id) {
-        return {
-          ...opt,
-          selected: true,
-        };
+    return () => {
+      if (debounce) {
+        clearTimeout(debounce);
       }
-
-      return {
-        ...opt,
-        selected: false,
-      };
-    }));
-
-    onChange(option);
-  }; */
-
-  const filteredOptions = getFilteredOptions(usernames, [
-    ...(usernameInput && usernameInput !== '' && [{
-      id: usernameInput,
-      mainText: usernameInput,
-      username: usernameInput,
-    }]),
-    ...collaborators,
-  ]);
-
-  const filterOptions = createFilterOptions({
-    stringify: (option) => `${option.mainText} ${option.secondaryText}`,
-  });
+    };
+  }, [searchTerm]);
 
   return (
     <div
@@ -74,54 +47,49 @@ const MemberInput = (props) => {
       )}
     >
       <Autocomplete
-        disabled={loading}
-        filterOptions={filterOptions}
-        multiple
-        value={usernames}
-        inputValue={usernameInput}
-        options={filteredOptions}
-        getOptionLabel={(option) => (
-          <CollaboratorInput
-            imageSrc={option.imageSrc}
-            mainText={option.mainText}
-          />
-        )}
         fullWidth
-        ChipProps={{
-          classes: {
-            root: classes.chip,
-            label: classes.chipLabel,
-          },
-          deleteIcon: (
-            <FontAwesomeIcon
-              className={classes.chipIcon}
-              icon={faTimes}
-            />
-          ),
+        clearOnBlur
+        selectOnFocus
+        loading={loading}
+        inputValue={searchTerm}
+        loadingText="Searching..."
+        noOptionsText="We couldnt find any space account."
+        options={identities}
+        getOptionLabel={(option) => option.mainText}
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
+
+          if (
+            !loading
+            && identities.length === 0
+            && params.inputValue.length > 0
+          ) {
+            filtered.push({
+              id: 123123,
+              add: true,
+              email: params.inputValue,
+              secondaryText: params.inputValue,
+              mainText: `Add "${params.inputValue}"`,
+            });
+          }
+
+          return filtered;
         }}
-        classes={{
-          root: classes.autocomplete,
-          option: classes.option,
-        }}
-        onInputChange={(e) => {
-          // There is a bug with <Autocomplete /> where sometimes the event is null
-          // so we must verify that the event exist before getting the target
-          const newUsername = (e && e.target.value) || '';
-          setUsernameInput(newUsername);
-        }}
-        onChange={(e, newValue) => setUsernames(newValue)}
         renderInput={(params) => (
           <TextField
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             fullWidth
             size="small"
             variant="outlined"
+            label={i18n.placeholder}
             InputProps={{
               ...params.InputProps,
               endAdornment: () => null,
               disableUnderline: true,
             }}
-            placeholder={usernames.length > 0 ? '' : i18n.placeholder}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder={i18n.placeholder}
           />
         )}
         renderOption={(option) => (
@@ -129,25 +97,35 @@ const MemberInput = (props) => {
             imageSrc={option.imageSrc}
             mainText={option.mainText}
             secondaryText={option.secondaryText}
+            onSelect={() => {
+              if (
+                (option.add && checkIsEmail(searchTerm))
+                || checkIsEmail(option.mainText)
+                || checkIsEmail(option.secondaryText)
+              ) {
+                if (option.add) {
+                  onSelectIdentity({
+                    publicKey: '',
+                    secondaryText: '',
+                    mainText: option.email,
+                    id: (new Date()).getMilliseconds(),
+                  });
+                } else {
+                  onSelectIdentity(option);
+                }
+                setSearchTerm('');
+              }
+            }}
           />
         )}
       />
-      {/* <PermissionsDropdown
-        open={open}
-        options={options}
-        onChange={handleOnChange}
-        handleClose={handleClose}
-        handleToggle={handleToggle}
-        className={classes.permissionDropdown}
-      /> */}
     </div>
   );
 };
 
 MemberInput.defaultProps = {
   className: null,
-  collaborators: [],
-  usernames: [],
+  identities: [],
   loading: false,
 };
 
@@ -159,16 +137,7 @@ MemberInput.propTypes = {
     placeholder: PropTypes.string.isRequired,
     shareVia: PropTypes.string.isRequired,
   }).isRequired,
-  onChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    danger: PropTypes.bool,
-    selected: PropTypes.bool,
-    description: PropTypes.string,
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  })).isRequired,
-  setUsernames: PropTypes.func.isRequired,
-  usernames: PropTypes.arrayOf(PropTypes.shape({
+  identities: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     isOwner: PropTypes.bool,
     avatar: PropTypes.string,
@@ -176,14 +145,8 @@ MemberInput.propTypes = {
     secondaryText: PropTypes.string,
     permissionsId: PropTypes.string,
   })),
-  collaborators: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    isOwner: PropTypes.bool,
-    avatar: PropTypes.string,
-    mainText: PropTypes.string,
-    secondaryText: PropTypes.string,
-    permissionsId: PropTypes.string,
-  })),
+  onSelectIdentity: PropTypes.func.isRequired,
+  onChangeSearchIdentityTerm: PropTypes.func.isRequired,
 };
 
 export default MemberInput;

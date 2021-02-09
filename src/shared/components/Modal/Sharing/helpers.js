@@ -1,18 +1,6 @@
 import get from 'lodash/get';
 
-export const getCollaboratorsInfo = (collaborators, owner, members) => {
-  const items = collaborators.map((collaborator) => {
-    const collaboratorInfo = members.find((member) => member.publicKey === collaborator.publicKey);
-
-    return {
-      id: collaborator.publicKey,
-      permissionsId: 'edit',
-      secondaryText: collaboratorInfo ? collaboratorInfo.email : '',
-      mainText: collaboratorInfo ? collaboratorInfo.displayName : collaborator.address,
-      ...(collaboratorInfo && { imageSrc: collaboratorInfo.avatarUrl }),
-    };
-  });
-
+export const getCollaboratorsInfo = (owner, selectedIdentities) => {
   const ownerAvatar = get(owner, 'avatarUrl');
   const ownerId = get(owner, 'publicKey', 'owner');
 
@@ -25,7 +13,7 @@ export const getCollaboratorsInfo = (collaborators, owner, members) => {
       mainText: get(owner, 'displayName', 'You'),
       ...(ownerAvatar && { imageSrc: ownerAvatar }),
     },
-    ...items.filter((item) => item.id !== ownerId),
+    ...selectedIdentities,
   ];
 };
 
