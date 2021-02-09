@@ -178,7 +178,7 @@
       "recover": "Recover Account",
       "link": "Don't have an account?",
       "errors": {
-        "magicLink": "The email entered does not match our records. Sign up to create one.",
+        "magicLink": "The email entered is invalid or not registered. Sign up, or try again.",
         "torus": "There was an error with torus integration",
         "noData": "There is no data from torus",
         "timeout": "Websocket Timeout",
