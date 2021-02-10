@@ -284,6 +284,9 @@ const EditProfile = ({ closeModal }) => {
           onClick={closeModal}
           color="secondary"
           variant="outlined"
+          classes={{
+            root: classes.btnCancel,
+          }}
           disabled={user.updatingUser}
         >
           {t('common.cancel')}
