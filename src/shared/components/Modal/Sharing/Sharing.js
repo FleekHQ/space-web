@@ -70,7 +70,6 @@ const SharingModal = (props) => {
     (option) => option.selected,
   ) || shareLinkOptions[0];
 
-  // TODO: call SDK event to change type of sharing link
   const onShareLinkOptionClick = (option) => {
     setFileAccess({
       path: `/${selectedObjects[0].key}`,
