@@ -18,7 +18,6 @@ import useStyles from './styles';
 import getOptions, { getShareLinkOptions } from './options';
 import {
   getCollaboratorsInfo,
-  mapIdentitiesToCollaborators,
 } from './helpers';
 import {
   Header,
@@ -26,6 +25,8 @@ import {
   MemberInput,
   CollaboratorList,
 } from './components';
+
+import useIdentitiesByNameOrEmail from './use-identities-by-name-email';
 
 /* eslint-disable react/jsx-props-no-spreading */
 const SharingModal = (props) => {
@@ -38,24 +39,30 @@ const SharingModal = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const {
+    loading,
+    identities,
+    selectedIdentities,
+    onSelectIdentity,
+    onRemoveSelectedIdentity,
+    onChangeSearchIdentityTerm,
+  } = useIdentitiesByNameOrEmail();
 
   const {
     user,
-    identities,
     publicFileLink,
   } = useSelector((s) => ({
     user: s.user,
-    identities: Object.values(s.identities.identities),
     publicFileLink: s.publicFileLink,
   }));
 
   const collaborators = getCollaboratorsInfo(
-    get(selectedObjects, '[0].members', []) || [],
+    // get(selectedObjects, '[0].members', []) || [],
     user,
-    identities,
+    selectedIdentities,
   );
 
-  const [usernames, setUsernames] = useState([]);
+  const [usernames] = useState([]);
   const [shareLinkOptions, setShareLinkOptions] = useState(getShareLinkOptions(t));
 
   const selectedShareLinkOption = shareLinkOptions.find(
@@ -75,6 +82,8 @@ const SharingModal = (props) => {
       shareVia: t('modals.sharingModal.shareVia'),
       to: t('modals.sharingModal.to'),
       placeholder: t('modals.sharingModal.inputPlaceholder'),
+      search: t('modals.sharingModal.search'),
+      notFound: t('modals.sharingModal.notFound'),
     },
     collaboratorList: {
       owner: t('common.owner'),
@@ -85,10 +94,6 @@ const SharingModal = (props) => {
   /* eslint-disable no-console */
   const onChangeUserPermissions = (...args) => {
     console.log('onChangeUserPermissions', ...args);
-  };
-
-  const onChangeInputPermissions = (...args) => {
-    console.log('onChangeInputPermissions', ...args);
   };
 
   /* eslint-disable no-unused-vars */
@@ -173,13 +178,12 @@ const SharingModal = (props) => {
           {get(selectedObjects, '[0].name', '')}
         </Header>
         <MemberInput
-          options={getOptions(t)}
+          loading={loading}
           i18n={i18n.memberInput}
           className={classes.memberInput}
-          onChange={onChangeInputPermissions}
-          setUsernames={setUsernames}
-          usernames={usernames}
-          collaborators={mapIdentitiesToCollaborators(identities)}
+          identities={identities}
+          onSelectIdentity={onSelectIdentity}
+          onChangeSearchIdentityTerm={onChangeSearchIdentityTerm}
         />
         <CollaboratorList
           i18n={i18n.collaboratorList}
@@ -188,7 +192,8 @@ const SharingModal = (props) => {
           className={classes.collaboratorList}
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
-          hasUsers={usernames.length > 0}
+          hasUsers={selectedIdentities.length > 0}
+          onRemoveSelectedIdentity={onRemoveSelectedIdentity}
         />
       </Paper>
       <Paper
@@ -206,7 +211,7 @@ const SharingModal = (props) => {
           }}
           icon={selectedShareLinkOption.id}
           onOptionClick={onShareLinkOptionClick}
-          url={get(publicFileLink, 'linkInfo.link', 'space.app-documents/techdocsv2.docx')}
+          url={`${window.location.origin}/file/${selectedObjects[0].uuid}`}
         />
       </Paper>
       {error && (
@@ -231,6 +236,7 @@ SharingModal.propTypes = {
     key: PropTypes.string,
     ext: PropTypes.string,
     dbId: PropTypes.string,
+    uuid: PropTypes.string,
     name: PropTypes.string,
     bucket: PropTypes.string,
     sourceBucket: PropTypes.string,

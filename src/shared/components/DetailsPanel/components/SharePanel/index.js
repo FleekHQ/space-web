@@ -80,7 +80,6 @@ const SharePanel = (props) => {
       <Button
         fullWidth
         variant="primary"
-        disabled
         onClick={() => {
           shareAction({
             clickedItem: selectedObject,

@@ -12,11 +12,12 @@ const Collaborator = (props) => {
     mainText,
     imageSrc,
     secondaryText,
+    onSelect,
   } = props;
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onClick={onSelect} aria-hidden="true">
       <div className={classes.imageContainer}>
         {imageSrc ? (
           <img
@@ -62,12 +63,14 @@ Collaborator.defaultProps = {
   imageSrc: null,
   mainText: null,
   secondaryText: null,
+  onSelect: () => null,
 };
 
 Collaborator.propTypes = {
   imageSrc: PropTypes.string,
   mainText: PropTypes.string,
   secondaryText: PropTypes.string,
+  onSelect: PropTypes.func,
 };
 
 export default Collaborator;

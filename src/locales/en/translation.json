@@ -300,6 +300,8 @@
     },
     "sharingModal": {
       "to": "To",
+      "search": "Searching...",
+      "notFound": "We couldn't find any space account.",
       "inputPlaceholder": "Enter Name or Email",
       "shareVia": "Share via Username (Recommended)",
       "linkTitle": "Share a link instead",
