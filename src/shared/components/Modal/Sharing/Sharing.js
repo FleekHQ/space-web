@@ -82,6 +82,8 @@ const SharingModal = (props) => {
       shareVia: t('modals.sharingModal.shareVia'),
       to: t('modals.sharingModal.to'),
       placeholder: t('modals.sharingModal.inputPlaceholder'),
+      search: t('modals.sharingModal.search'),
+      notFound: t('modals.sharingModal.notFound'),
     },
     collaboratorList: {
       owner: t('common.owner'),

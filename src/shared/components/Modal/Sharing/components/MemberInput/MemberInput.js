@@ -52,8 +52,8 @@ const MemberInput = (props) => {
         selectOnFocus
         loading={loading}
         inputValue={searchTerm}
-        loadingText="Searching..."
-        noOptionsText="We couldnt find any space account."
+        loadingText={i18n.search}
+        noOptionsText={i18n.notFound}
         options={identities}
         getOptionLabel={(option) => option.mainText}
         filterOptions={(options, params) => {
@@ -134,6 +134,8 @@ MemberInput.propTypes = {
   loading: PropTypes.bool,
   i18n: PropTypes.shape({
     to: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
+    notFound: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     shareVia: PropTypes.string.isRequired,
   }).isRequired,
