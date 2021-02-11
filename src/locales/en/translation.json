@@ -161,7 +161,13 @@
       "sharedBy": {
         "mostRecentShared": "Most Recently Shared",
         "viewAll": "View All",
-        "emptyList": "No shared files"
+        "emptyList": "No shared files",
+        "fileTable": {
+          "empty": {
+            "title": "Hmm, you don't have any files shared with you yet",
+            "message": "When someone shares a file with you it will appear here"
+          }
+        }
       },
       "detailsPanel": {
         "title": "Details Panel",
