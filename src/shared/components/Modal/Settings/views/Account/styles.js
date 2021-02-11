@@ -38,6 +38,10 @@ export default makeStyles((theme) => ({
   },
   [`${OPTION_IDS.TWITTER}`]: {
     width: 35,
+    height: 49,
+  },
+  [`${OPTION_IDS.GOOGLE}`]: {
+    width: 21,
   },
   optionText2: {
     width: 200,
