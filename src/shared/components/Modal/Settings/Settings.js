@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import BaseModal from '@ui/BaseModal';
 import Typography from '@ui/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons/faTimesCircle';
+import { openModal, EDIT_PROFILE } from '@shared/components/Modal/actions';
 
 import { signout } from '@events';
 
@@ -36,6 +38,10 @@ const Settings = ({
   const [contentId, setContentId] = useState(dItem.id);
   const selectedContentItem = contentItems.find((item) => item.id === contentId);
 
+  const handleEditProfile = () => {
+    dispatch(openModal(EDIT_PROFILE, {}));
+  };
+
   return (
     <BaseModal
       onClose={closeModal}
@@ -51,9 +57,11 @@ const Settings = ({
               <Typography variant="body1" component="div" noWrap>
                 {user.displayName}
               </Typography>
-              <Typography variant="body2" color="secondary">
-                {t('common.edit')}
-              </Typography>
+              <Button classes={{ root: classes.editProfileBtn }} onClick={handleEditProfile}>
+                <Typography variant="body2" color="secondary">
+                  {t('common.edit')}
+                </Typography>
+              </Button>
             </div>
           </div>
           <Divider className={classes.divider} />
