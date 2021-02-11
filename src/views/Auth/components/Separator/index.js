@@ -17,7 +17,7 @@ const Separator = () => {
     <Box
       mx={{
         xs: 0,
-        md: '35px',
+        md: '50px',
       }}
       mt={{
         xs: '20px',
@@ -25,7 +25,7 @@ const Separator = () => {
       }}
       mb={{
         xs: '20px',
-        md: '75px',
+        md: 0,
       }}
       display="flex"
       alignItems="center"
