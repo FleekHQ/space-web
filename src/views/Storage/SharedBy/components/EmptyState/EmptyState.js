@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import useStyles from './styles';
 
-const StorageMainView = () => {
+const EmptyState = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -25,4 +25,4 @@ const StorageMainView = () => {
   );
 };
 
-export default StorageMainView;
+export default EmptyState;
