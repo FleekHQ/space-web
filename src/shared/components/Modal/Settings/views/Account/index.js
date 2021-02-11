@@ -179,6 +179,8 @@ const Account = ({ t }) => {
     return (isOptionNotAdded && !isEmail);
   });
 
+  const addNewAccountAvailable = modalOptions.length > 0;
+
   return (
     <>
       <BaseCard>
@@ -249,17 +251,21 @@ const Account = ({ t }) => {
           })}
           <Divider className={classes.divider} />
         </Body>
-        <Box m="0 20px 25px 20px">
-          <Button
-            fullWidth
-            id={ADD_BACKUP_SIGN_IN}
-            className={classes.addItemBtn}
-            startIcon={<FontAwesomeIcon icon={faPlus} />}
-            onClick={handleOpenModal}
-          >
-            {t('modals.settings.account.warning.button')}
-          </Button>
-        </Box>
+        {
+          addNewAccountAvailable && (
+            <Box m="0 20px 25px 20px">
+              <Button
+                fullWidth
+                id={ADD_BACKUP_SIGN_IN}
+                className={classes.addItemBtn}
+                startIcon={<FontAwesomeIcon icon={faPlus} />}
+                onClick={handleOpenModal}
+              >
+                {t('modals.settings.account.warning.button')}
+              </Button>
+            </Box>
+          )
+        }
         {
           (Object.keys(options).length < 2) && (
             <div className={classes.messageBox}>
