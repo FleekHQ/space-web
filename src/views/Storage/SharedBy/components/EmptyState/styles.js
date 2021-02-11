@@ -8,7 +8,7 @@ export default makeStyles(() => ({
   },
   emoji: {
     width: '100%',
-    fontSize: 45,
+    fontSize: 40,
     margin: 0,
   },
   title: {
