@@ -10,11 +10,7 @@ const EmptyState = () => {
 
   return (
     <div className={classes.root}>
-      <img
-        className={classes.emoji}
-        src={`${process.env.PUBLIC_URL}/assets/images/yawning-face.png`}
-        alt="yawning face"
-      />
+      <p className={classes.emoji}>&#129393;</p>
       <Typography weight="medium" className={classes.title}>
         {t('modules.storage.sharedBy.fileTable.empty.title')}
       </Typography>

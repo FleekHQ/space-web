@@ -7,7 +7,9 @@ export default makeStyles(() => ({
     textAlign: 'center',
   },
   emoji: {
-    width: 40,
+    width: '100%',
+    fontSize: 45,
+    margin: 0,
   },
   title: {
     fontSize: 20,
