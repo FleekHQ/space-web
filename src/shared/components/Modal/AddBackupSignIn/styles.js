@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
   },
   buttonsContainer: {
     marginRight: 18,
-    marginTop: 25,
+    marginTop: 15,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -99,7 +99,12 @@ export default makeStyles((theme) => ({
     color: '#ECBE3E',
   },
   [`${OPTION_IDS.TWITTER}`]: {
-    width: 35,
+    height: 34,
+    width: 60,
+  },
+  [`${OPTION_IDS.GOOGLE}`]: {
+    width: 19,
+    marginLeft: -1,
   },
   optionSecondaryText: {
     color: theme.palette.palette.blue1,
