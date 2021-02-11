@@ -58,4 +58,7 @@ export default makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  btnCancel: {
+    border: '1px solid',
+  },
 }));
