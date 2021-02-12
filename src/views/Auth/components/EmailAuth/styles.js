@@ -30,4 +30,9 @@ export default makeStyles((theme) => ({
     fontFamily: 'Inter',
     textDecoration: 'underline',
   },
+  emailField: {
+    '& input': {
+      backgroundColor: theme.palette.palette.black,
+    },
+  },
 }));

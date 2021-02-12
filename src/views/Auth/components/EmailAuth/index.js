@@ -95,6 +95,7 @@ const EmailAuth = ({
             component={RainbowField}
             label={t('common.email')}
             onChange={handleInputChange}
+            className={classes.emailField}
           />
           <Button
             fullWidth
