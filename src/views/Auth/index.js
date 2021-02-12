@@ -39,6 +39,9 @@ const Auth = () => {
     loading: passwordlessLoading,
   } = useAuth0Passwordless();
 
+  const PRIVACY_POLICY_URL = 'https://space.storage/privacy-policy/';
+  const TERMS_OF_SERVICE_URL = 'https://space.storage/terms-of-service/';
+
   const [showSplash, setShowSplash] = React.useState(false);
 
   const currentView = match.params[0];
@@ -185,7 +188,7 @@ const Auth = () => {
             color="inherit"
             className={classes.linkButton}
             target="_blank"
-            href="/privacy-policy"
+            href={PRIVACY_POLICY_URL}
           >
             {`${t('modules.signup.agreenment.privacy')}`}
           </ButtonBase>
@@ -195,7 +198,7 @@ const Auth = () => {
             color="inherit"
             className={classes.linkButton}
             target="_blank"
-            href="/terms-of-service"
+            href={TERMS_OF_SERVICE_URL}
           >
             {t('modules.signup.agreenment.terms')}
           </ButtonBase>
