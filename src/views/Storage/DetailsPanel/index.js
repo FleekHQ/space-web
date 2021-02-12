@@ -94,7 +94,7 @@ const StorageDetailsPanel = () => {
                   [
                     user,
                     ...selectedObjects[0].members.filter((member) => (
-                      member.address !== user.address
+                      member.address !== user.address && member.address.length
                     )),
                   ].map((member) => {
                     const m = { ...member };

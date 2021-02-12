@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { openToast } from '@shared/components/Toast/actions';
-import { setFileAccess } from '@events/objects';
-import { shareFiles, generatePublicFileLink } from '@events/share';
+import { shareFiles, setFileAccess } from '@events';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 import { openModal, SHARE_PROGRESS_TOAST } from '@shared/components/Modal/actions';
 
@@ -63,8 +62,9 @@ const SharingModal = (props) => {
     selectedIdentities,
   );
 
-  const [usernames] = useState([]);
-  const [shareLinkOptions, setShareLinkOptions] = useState(getShareLinkOptions(t));
+  const [shareLinkOptions, setShareLinkOptions] = useState(
+    getShareLinkOptions({ t, selectedObject: selectedObjects[0] }),
+  );
 
   const selectedShareLinkOption = shareLinkOptions.find(
     (option) => option.selected,
@@ -103,32 +103,22 @@ const SharingModal = (props) => {
     console.log('onChangeUserPermissions', ...args);
   };
 
-  /* eslint-disable no-unused-vars */
-  /* eslint-disable no-underscore-dangle */
   const onShare = (event) => {
     event.preventDefault();
     const notificationId = `${new Date().getTime()}`;
 
-    const { _usernames, _publicKeys } = usernames.reduce((acc, _user) => {
-      if (_user.publicKey) {
-        acc._publicKeys.push(_user.publicKey);
-      } else {
-        acc._usernames.push(_user.username);
-      }
-
-      return acc;
-    }, { _usernames: [], _publicKeys: [] });
-
-    shareFiles({
+    dispatch(shareFiles({
       notificationId,
-      usernames: _usernames,
-      publicKeys: _publicKeys,
-      paths: selectedObjects.map((obj) => ({
-        path: obj.key,
-        dbId: obj.dbId,
-        bucket: obj.sourceBucket || obj.bucket,
+      paths: [{
+        dbId: selectedObjects[0].dbId,
+        bucket: selectedObjects[0].bucket,
+        path: `/${selectedObjects[0].key}`,
+      }],
+      publicKeys: selectedIdentities.map((identity) => ({
+        id: identity.uuid,
+        pk: identity.publicKey || '',
       })),
-    });
+    }));
 
     dispatch({
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY,
@@ -139,17 +129,6 @@ const SharingModal = (props) => {
     });
     dispatch(openModal(SHARE_PROGRESS_TOAST, { notificationId }));
     closeModal();
-  };
-
-  const onSave = (password) => {
-    const payload = {
-      password,
-      dbId: get(selectedObjects, '[0].dbId', ''),
-      bucket: get(selectedObjects, '[0].sourceBucket', ''),
-      itemPaths: selectedObjects.map((obj) => obj.key),
-    };
-
-    generatePublicFileLink(payload);
   };
 
   React.useEffect(() => {
