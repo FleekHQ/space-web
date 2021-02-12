@@ -281,4 +281,25 @@ export const downloadFile = async (payload) => {
   }
 };
 
+/**
+ * Make a file public or non public
+ * @param {Object} payload
+ * @param {string} payload.path
+ * @param {string} payload.bucket
+ * @param {boolean} payload.allowAccess
+ */
+export const setFileAccess = async (payload) => {
+  try {
+    const storage = await sdk.getStorage();
+    await storage.setFilePublicAccess({
+      path: payload.path,
+      bucket: payload.bucket,
+      allowAccess: payload.allowAccess,
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error when trying to change file access type: ${error.message}`);
+  }
+};
+
 export default registerObjectsEvents;

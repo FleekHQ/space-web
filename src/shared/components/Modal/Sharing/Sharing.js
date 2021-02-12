@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { openToast } from '@shared/components/Toast/actions';
+import { setFileAccess } from '@events/objects';
 import { shareFiles, generatePublicFileLink } from '@events/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 import { openModal, SHARE_PROGRESS_TOAST } from '@shared/components/Modal/actions';
@@ -69,11 +70,17 @@ const SharingModal = (props) => {
     (option) => option.selected,
   ) || shareLinkOptions[0];
 
-  // TODO: call SDK event to change type of sharing link
-  const onShareLinkOptionClick = (option) => setShareLinkOptions(shareLinkOptions.map((opt) => ({
-    ...opt,
-    selected: opt.id === option.id,
-  })));
+  const onShareLinkOptionClick = (option) => {
+    setFileAccess({
+      path: `/${selectedObjects[0].key}`,
+      bucket: selectedObjects[0].bucket,
+      allowAccess: option.id === 'public',
+    });
+    setShareLinkOptions(shareLinkOptions.map((opt) => ({
+      ...opt,
+      selected: opt.id === option.id,
+    })));
+  };
 
   const { error } = publicFileLink;
 
