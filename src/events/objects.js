@@ -103,11 +103,11 @@ export const fetchSharedObjects = (seek = '', limit = 100) => {
   }, 1000);
 };
 
-export const fetchDir = async (path = '', bucket = 'personal', fetchSubFolders = true) => {
+export const fetchDir = async (path = '', bucket = 'personal', fetchSubFolders = true, loading = true) => {
   store.dispatch({
     payload: {
       bucket,
-      loading: true,
+      loading,
     },
     type: SET_LOADING_STATE_BUCKET,
   });
