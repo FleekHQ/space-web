@@ -11,6 +11,7 @@ const DEFAULT_PATH = '/identities';
  * @returns {import('axios').AxiosResponse<{ data: Array<import('./identity').Identity> | import('./identity').Identity }>}
  */
 function getByAddress(payload) {
+  console.log('payload...', payload);
   return this.instance({
     method: 'get',
     url: DEFAULT_PATH,

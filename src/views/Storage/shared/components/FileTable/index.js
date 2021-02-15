@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +27,11 @@ const FileTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const [rows, isSharingModalVisible, loading] = useSelector((state) => [
+  const [
+    rows,
+    isSharingModalVisible,
+    loading,
+  ] = useSelector((state) => [
     objectsSelector(
       state,
       bucket,
@@ -36,7 +41,8 @@ const FileTable = ({
     ),
     state.modals.some((modal) => modal.type === SHARING_MODAL),
     state.storage.buckets[bucket].loading,
-    state.storage,
+    state.identities.identities,
+    state.user,
   ]);
 
   const doesPreventCollapse = (element) => {
