@@ -69,8 +69,14 @@ export default (state = DEFAULT_STATE, action) => {
     }
 
     case STORE_DIR: {
+      let newObjects = [];
+      if (Array.isArray(action.payload)) {
+        newObjects = action.payload;
+      } else {
+        newObjects = action.payload.objects;
+      }
       const objects = uniqBy([
-        ...action.payload,
+        ...newObjects,
         ...state.objects,
       ], 'fullKey');
 
