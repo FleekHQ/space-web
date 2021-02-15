@@ -1,64 +1,78 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 import { checkIsEmail } from '@utils';
 import { apiClient } from '@clients';
 
-/* const MOCK = [
-  {
-    id: 1,
-    mainText: 'Giancarlo',
-    secondaryText: '',
-    email: 'giancarlo@fleek.co',
-    username: 'giancarlo',
-    publicKey: '12312313123123123',
-  },
-  {
-    id: 2,
-    mainText: 'Giancarlo 1',
-    secondaryText: '',
-    email: 'giancarlo+1@fleek.co',
-    username: 'giancarlo+1',
-    publicKey: '34534534534534345',
-  },
-  {
-    id: '63251efe-2d70-4a0c-bb53-af6630cf363d',
-    mainText: 'giancarlo+20@fleek.co',
-    email: 'giancarlo+20@fleek.co',
-    secondaryText: '',
-    username: '',
-    publicKey: '9a6aa4cc9c8853269c78360d11baeec09d640b9e60c71932e9450fa079089066',
-  },
-]; */
+/**
+ * @typedef {Object} Identity
+ * @property {string=} publicKey
+ * @property {string} id
+ * @property {string} imageSrc
+ * @property {string} username
+ * @property {string} mainText
+ * @property {string} secondaryText
+ */
+/**
+ * @typedef {Object} UseIdentitiesByNameOrEmailState
+ * @property {string=} error
+ * @property {boolean=} loading
+ * @property {Array.<Identity>} selectedIdentities
+ */
+/**
+ * @typedef {Function} SetIdentitiesByNameOrEmailState
+ */
 
 /**
  * Use identities by name or email hook
  */
 export default function useIdentitiesByNameOrEmail() {
-  const [state, setState] = React.useState({
-    error: null,
-    loading: true,
-    identities: [],
-    selectedIdentities: [],
-  });
+  /**
+   * @type {[UseIdentitiesByNameOrEmailState, SetIdentitiesByNameOrEmailState]} useIdentitiesByNameOrEmail
+   */
+  const [state, setState] = React.useState(
+    /** @type {UseIdentitiesByNameOrEmailState} */
+    ({
+      error: null,
+      loading: true,
+      identities: [],
+      selectedIdentities: [],
+    }),
+  );
 
   return {
     loading: state.loading,
     identities: state.identities,
     selectedIdentities: state.selectedIdentities,
     searchIdentityTerm: state.searchIdentityTerm,
+    /**
+     * Remove specific identity from `selectedIdentity` list
+     * @param {Identity} identity
+     * @returns {void}
+     */
     onRemoveSelectedIdentity: (identity) => {
       setState((prevState) => ({
         ...prevState,
         selectedIdentities: prevState.selectedIdentities.filter((i) => i.id !== identity.id),
       }));
     },
-    onSelectIdentity: (selectedIdentity) => {
+    /**
+     * Select specific identity to be added to `selectedIdentity` list
+     * @param {Identity} identity
+     * @returns {void}
+     */
+    onSelectIdentity: (identity) => {
       setState((prevState) => ({
         ...prevState,
         identities: [],
-        selectedIdentities: [...prevState.selectedIdentities, selectedIdentity],
+        selectedIdentities: [...prevState.selectedIdentities, identity],
       }));
     },
+    /**
+     * Search identity by term, could be displayName or email
+     * @param {string} searchTerm
+     * @returns {void}
+     */
     onChangeSearchIdentityTerm: async (searchTerm) => {
       setState({
         ...state,
@@ -66,8 +80,9 @@ export default function useIdentitiesByNameOrEmail() {
       });
       try {
         let type = 'displayName';
+        const isEmail = checkIsEmail(searchTerm);
 
-        if (checkIsEmail(searchTerm)) {
+        if (isEmail) {
           type = 'email';
         }
 
@@ -80,11 +95,11 @@ export default function useIdentitiesByNameOrEmail() {
         const identities = data.data
           .map((identity) => ({
             id: identity.uuid,
-            mainText: type === 'email' ? identity.email || searchTerm : identity.displayName,
-            secondaryText: type === 'email' ? identity.displayName : identity.email || searchTerm,
-            username: identity.username || '',
-            publicKey: identity.publicKey,
             imageSrc: identity.avatarUrl,
+            publicKey: identity.publicKey,
+            username: identity.username || '',
+            mainText: isEmail ? identity.email || searchTerm : identity.displayName,
+            secondaryText: isEmail ? identity.displayName : identity.email || searchTerm,
           }))
           .filter((identity) => {
             const selectedIdentityIndex = state
