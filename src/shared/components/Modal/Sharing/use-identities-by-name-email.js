@@ -1,8 +1,11 @@
 /* eslint-disable max-len */
-import React from 'react';
-
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { checkIsEmail } from '@utils';
 import { apiClient } from '@clients';
+import {
+  mapKeyedIdentitiesToMembers,
+} from './helpers';
 
 /**
  * @typedef {Object} Identity
@@ -26,47 +29,34 @@ import { apiClient } from '@clients';
 /**
  * Use identities by name or email hook
  */
+
 export default function useIdentitiesByNameOrEmail() {
-  /**
-   * @type {[UseIdentitiesByNameOrEmailState, SetIdentitiesByNameOrEmailState]} useIdentitiesByNameOrEmail
-   */
-  const [state, setState] = React.useState(
-    /** @type {UseIdentitiesByNameOrEmailState} */
-    ({
-      error: null,
-      loading: true,
-      identities: [],
-      selectedIdentities: [],
-    }),
-  );
+  const storedIdentities = useSelector((s) => s.identities);
+  const mappedIdentities = mapKeyedIdentitiesToMembers(storedIdentities);
+
+  const [loading, setLoading] = useState(true);
+  const [identities, setIdentities] = useState([]);
+  const [selectedIdentities, setSelectedIdentities] = useState([]);
+
+  useEffect(() => {
+    setIdentities(mappedIdentities);
+  }, [storedIdentities]);
 
   return {
-    loading: state.loading,
-    identities: state.identities,
-    selectedIdentities: state.selectedIdentities,
-    searchIdentityTerm: state.searchIdentityTerm,
+    loading,
+    identities,
+    selectedIdentities,
     /**
      * Remove specific identity from `selectedIdentity` list
      * @param {Identity} identity
      * @returns {void}
      */
     onRemoveSelectedIdentity: (identity) => {
-      setState((prevState) => ({
-        ...prevState,
-        selectedIdentities: prevState.selectedIdentities.filter((i) => i.id !== identity.id),
-      }));
+      setSelectedIdentities(selectedIdentities.filter((i) => i.id !== identity.id));
     },
-    /**
-     * Select specific identity to be added to `selectedIdentity` list
-     * @param {Identity} identity
-     * @returns {void}
-     */
-    onSelectIdentity: (identity) => {
-      setState((prevState) => ({
-        ...prevState,
-        identities: [],
-        selectedIdentities: [...prevState.selectedIdentities, identity],
-      }));
+    onSelectIdentity: (selectedIdentity) => {
+      setIdentities([]);
+      setSelectedIdentities([...selectedIdentities, selectedIdentity]);
     },
     /**
      * Search identity by term, could be displayName or email
@@ -74,10 +64,7 @@ export default function useIdentitiesByNameOrEmail() {
      * @returns {void}
      */
     onChangeSearchIdentityTerm: async (searchTerm) => {
-      setState({
-        ...state,
-        loading: true,
-      });
+      setLoading(true);
       try {
         let type = 'displayName';
         const isEmail = checkIsEmail(searchTerm);
@@ -92,7 +79,7 @@ export default function useIdentitiesByNameOrEmail() {
             identities: [{ type, value: searchTerm }],
           });
 
-        const identities = data.data
+        const queriedIdentities = data.data
           .map((identity) => ({
             id: identity.uuid,
             imageSrc: identity.avatarUrl,
@@ -102,28 +89,27 @@ export default function useIdentitiesByNameOrEmail() {
             secondaryText: isEmail ? identity.displayName : identity.email || searchTerm,
           }))
           .filter((identity) => {
-            const selectedIdentityIndex = state
-              .selectedIdentities
+            const selectedIdentityIndex = selectedIdentities
               .findIndex((i) => i.id === identity.id);
 
             return selectedIdentityIndex === -1;
           });
 
-        setState({
-          ...state,
-          identities,
-          loading: false,
-        });
+        setIdentities(queriedIdentities);
+        setLoading(false);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(`Error when trying to search an indentity by name/email: ${error.message}`);
 
-        setState({
-          ...state,
-          loading: false,
-          identities: [],
-        });
+        setLoading(false);
+        setIdentities([]);
       }
+    },
+    reloadStoredIdentities: (selectedIdentity = {}) => {
+      const filterIds = [...selectedIdentities.map((identity) => identity.id), selectedIdentity.id];
+      const filteredStoredIdentities = mappedIdentities.filter((i) => !filterIds.includes(i.id));
+
+      setIdentities(filteredStoredIdentities);
     },
   };
 }
