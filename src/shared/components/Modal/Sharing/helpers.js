@@ -25,3 +25,22 @@ export const mapIdentitiesToCollaborators = (identities = []) => identities.map(
   publicKey: identity.publicKey,
   ...(identity.avatarUrl && { imageSrc: identity.avatarUrl }),
 }));
+
+export const mapKeyedIdentitiesToMembers = (data = {}) => {
+  const { identities } = data;
+
+  if (!Object.entries(identities).length || identities === null) {
+    return [];
+  }
+  const identityValues = Object.values(identities);
+
+  return identityValues.map((identity) => ({
+    id: identity.publicKey,
+    mainText: identity.displayName,
+    email: identity.email,
+    username: identity.displayName,
+    secondaryText: '',
+    publicKey: identity.publicKey,
+    imageSrc: identity.avatarUrl,
+  }));
+};
