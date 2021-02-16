@@ -28,7 +28,7 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@material-ui/core": "^4.9.14",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@spacehq/sdk": "^0.0.17",
+    "@spacehq/sdk": "^0.0.18",
     "@terminal-packages/space-ui": "^0.3.16",
     "@toruslabs/torus-direct-web-sdk": "^3.5.7",
     "axios": "^0.20.0",

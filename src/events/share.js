@@ -1,6 +1,5 @@
-// import { sdk } from '@clients';
+import { sdk, apiClient } from '@clients';
 
-// import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 // import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
@@ -25,33 +24,67 @@ export const generatePublicFileLink = () => {
  * @property {string} dbId
  * @property {string} path
  * @property {string} bucket
+ * @property {string} fileName
+ * @property {string} uuid
  *
  * @typedef {Object} PublicKeys
  * @property {string} id
  * @property {string} pk
- * @property {string} bucket
+ * @property {string} email
  *
  * Share files by public key
  * @param {Object} payload
  * @param {string} payload.notificationId
  * @param {Array.<Path>} payload.paths
  * @param {Array.<PublicKeys>} payload.publicKeys
+ * @param {string} payload.senderName
+ * @param {string} payload.origin
  */
 export const shareFiles = (payload) => async (dispatch) => {
-  setTimeout(() => {
-    dispatch({
-      notificationId: payload.notificationId,
-      type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,
-    });
-  }, 3000);
-
-  // Uncomment when shareFilesViaPublicKey is released
-  /* try {
+  try {
     const storage = await sdk.getStorage();
-    await storage.shareFilesViaPublicKey({
+    const users = await sdk.getUsers();
+    const spaceUser = users.list()[0];
+
+    const { publicKeys } = await storage.shareViaPublicKey({
       paths: payload.paths,
       publicKeys: payload.publicKeys,
     });
+
+    const emailPromises = [];
+    payload.publicKeys.forEach((publicKey, index) => {
+      const fileLink = `${origin}/file/${payload.paths[0].uuid}`;
+      const invitationLink = publicKeys[index].type === 'temp' ? `${fileLink}?temp_key=${publicKeys[index].tempKey}` : fileLink;
+      const emailPromise = apiClient.share.shareByEmail({
+        token: spaceUser.token,
+        data: {
+          invitationLink,
+          senderName: payload.senderName,
+          fileName: payload.paths[0].fileName,
+        },
+        type: 'shareInvitation',
+        toAddresses: [publicKey.email],
+      });
+      emailPromises.push(emailPromise);
+    });
+
+    Promise.all(emailPromises)
+      .then(() => {
+        dispatch({
+          notificationId: payload.notificationId,
+          type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,
+        });
+      })
+      .catch((e) => {
+        // eslint-disable-next-line no-console
+        console.error('Failed to send share emails', e);
+
+        dispatch({
+          error: 'failedToShare',
+          notificationId: payload.notificationId,
+          type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_ERROR,
+        });
+      });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Error when trying to share a file by public key: ${error.message}`);
@@ -61,7 +94,7 @@ export const shareFiles = (payload) => async (dispatch) => {
       notificationId: payload.notificationId,
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_ERROR,
     });
-  } */
+  }
 };
 
 export default registerObjectsEvents;

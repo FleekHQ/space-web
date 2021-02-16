@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { openToast } from '@shared/components/Toast/actions';
-import { shareFiles, setFileAccess } from '@events';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
+import { shareFiles, setFileAccess } from '@events';
 import { openModal, SHARE_PROGRESS_TOAST } from '@shared/components/Modal/actions';
 
 import useStyles from './styles';
@@ -109,14 +109,19 @@ const SharingModal = (props) => {
 
     dispatch(shareFiles({
       notificationId,
+      senderName: user.displayName,
+      origin: window.location.origin,
       paths: [{
         dbId: selectedObjects[0].dbId,
         bucket: selectedObjects[0].bucket,
         path: `/${selectedObjects[0].key}`,
+        fileName: selectedObjects[0].name,
+        uuid: selectedObjects[0].uuid,
       }],
       publicKeys: selectedIdentities.map((identity) => ({
         id: identity.uuid,
         pk: identity.publicKey || '',
+        email: identity.mainText,
       })),
     }));
 
