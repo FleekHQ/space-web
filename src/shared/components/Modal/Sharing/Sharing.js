@@ -7,8 +7,8 @@ import ErrorCard from '@ui/ErrorCard';
 import Paper from '@material-ui/core/Paper';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
+import { fetchRecentlyMembers } from '@events/identities';
 import { openToast } from '@shared/components/Toast/actions';
 import { shareFiles, setFileAccess } from '@events';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
@@ -46,6 +46,7 @@ const SharingModal = (props) => {
     onSelectIdentity,
     onRemoveSelectedIdentity,
     onChangeSearchIdentityTerm,
+    reloadStoredIdentities,
   } = useIdentitiesByNameOrEmail();
 
   const {
@@ -170,6 +171,7 @@ const SharingModal = (props) => {
           identities={identities}
           onSelectIdentity={onSelectIdentity}
           onChangeSearchIdentityTerm={onChangeSearchIdentityTerm}
+          reloadStoredIdentities={reloadStoredIdentities}
         />
         <CollaboratorList
           i18n={i18n.collaboratorList}

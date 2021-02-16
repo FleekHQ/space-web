@@ -8,13 +8,13 @@ import { getTabulations, useDoubleClick } from '@utils';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import { getIdentitiesByAddress } from '@events/identities';
 import {
   TableCell,
   FileNameCell,
   MemberCell,
   TableRow,
 } from '@ui/Table';
-import { getIdentitiesByAddress } from '@events/identities';
 
 const ShareRenderRow = ({
   row,

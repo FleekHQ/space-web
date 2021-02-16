@@ -18,6 +18,7 @@ const MemberInput = (props) => {
     identities,
     onSelectIdentity,
     onChangeSearchIdentityTerm,
+    reloadStoredIdentities,
   } = props;
 
   const classes = useStyles();
@@ -110,11 +111,12 @@ const MemberInput = (props) => {
                     mainText: option.email,
                     id: (new Date()).getMilliseconds(),
                   });
-                } else {
-                  onSelectIdentity(option);
                 }
-                setSearchTerm('');
+              } else {
+                onSelectIdentity(option);
               }
+              reloadStoredIdentities(option);
+              setSearchTerm('');
             }}
           />
         )}
@@ -149,6 +151,7 @@ MemberInput.propTypes = {
   })),
   onSelectIdentity: PropTypes.func.isRequired,
   onChangeSearchIdentityTerm: PropTypes.func.isRequired,
+  reloadStoredIdentities: PropTypes.func.isRequired,
 };
 
 export default MemberInput;
