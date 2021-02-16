@@ -77,7 +77,7 @@ const ShareRenderRow = ({
         isShared={row.members.length > 0}
       />
       <MemberCell
-        username={sharedByIdentity.username}
+        username={sharedByIdentity.displayName}
         avatarUrl={sharedByIdentity.avatarUrl}
       />
       <TableCell>

@@ -77,7 +77,7 @@ export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
 const registerObjectsEvents = () => {
 };
 
-export const fetchSharedObjects = (seek = '', limit = 100) => {
+export const fetchSharedObjects = async (seek = '', limit = 100) => {
   store.dispatch({
     payload: {
       loading: true,
@@ -86,21 +86,42 @@ export const fetchSharedObjects = (seek = '', limit = 100) => {
     type: SET_LOADING_STATE_BUCKET,
   });
 
-  // TODO: remove mock
-  setTimeout(() => {
-    store.dispatch({
-      payload: {
-        loading: false,
-        bucket: 'shared-with-me',
-      },
-      type: SET_LOADING_STATE_BUCKET,
-    });
+  const storage = await sdk.getStorage();
 
-    store.dispatch({
-      type: STORE_DIR,
-      payload: [],
+  Promise.all([storage.getFilesSharedWithMe(), storage.getFilesSharedByMe()])
+    .then((values, currentVal = []) => {
+      const sharedFiles = values.reduce((response) => {
+        const { files = [] } = response;
+        const mappedEntries = files.map((file) => ({
+          ...file.entry,
+          sharedBy: file.sharedBy,
+        }));
+        const entries = flatEntries(mappedEntries);
+        const objects = entries.map((entry) => objectPresenter(entry, true));
+        return ([...objects, ...currentVal]);
+      });
+      store.dispatch({
+        type: STORE_DIR,
+        payload: {
+          bucket: 'shared-with-me',
+          objects: sharedFiles,
+        },
+      });
+      store.dispatch({
+        payload: {
+          loading: false,
+          bucket: 'shared-with-me',
+        },
+        type: SET_LOADING_STATE_BUCKET,
+      });
+    }).catch((error) => {
+      /* eslint-disable-next-line no-console */
+      console.error('Failed to get shared files', error);
+      store.dispatch({
+        payload: { bucket: 'shared-with-me', error },
+        type: SET_ERROR_BUCKET,
+      });
     });
-  }, 1000);
 };
 
 export const fetchDir = async (path = '', bucket = 'personal', fetchSubFolders = true) => {
