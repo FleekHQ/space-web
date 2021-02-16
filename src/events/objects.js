@@ -115,6 +115,7 @@ export const fetchSharedObjects = async (seek = '', limit = 100) => {
         type: SET_LOADING_STATE_BUCKET,
       });
     }).catch((error) => {
+      /* eslint-disable-next-line no-console */
       console.error('Failed to get shared files', error);
       store.dispatch({
         payload: { bucket: 'shared-with-me', error },

@@ -23,6 +23,7 @@ export const getIdentitiesByAddress = async (payload) => {
       type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES_SUCCESS,
     });
   } catch (e) {
+    /* eslint-disable-next-line no-console */
     console.error('Error when trying to get the identities by address:', e);
   }
 };
