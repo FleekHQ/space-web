@@ -1,10 +1,6 @@
-import { apiClient } from '@clients';
 import { IDENTITIES_ACTION_TYPES } from '@reducers/identities';
-
+import { sdk, apiClient } from '@clients';
 import store from '../store';
-
-const registerIdentitiesEvents = () => {
-};
 
 /**
  * Get identities by address event
@@ -17,6 +13,7 @@ export const getIdentitiesByAddress = async (payload) => {
       token: '',
       addresses: payload.addresses,
     });
+
     const identities = Array.isArray(data.data) ? data.data : [data.data];
     store.dispatch({
       identities,
@@ -28,7 +25,21 @@ export const getIdentitiesByAddress = async (payload) => {
   }
 };
 
-export const fetchRecentlyMembers = () => {
-};
+export const fetchRecentlyMembers = async () => {
+  store.dispatch({
+    type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES,
+  });
 
-export default registerIdentitiesEvents;
+  try {
+    const storage = await sdk.getStorage();
+    const res = await storage.getFilesRecentlySharedWith();
+    const memberAddresses = res.members.map((member) => member.address);
+
+    getIdentitiesByAddress(memberAddresses);
+  } catch (error) {
+    store.dispatch({
+      type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES_ERROR,
+      error,
+    });
+  }
+};
