@@ -1,7 +1,7 @@
 // Uncomment once payload parameter is ussed
 /* eslint-disable no-unused-vars */
-import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
 
+import { sdk } from '@clients';
 import store from '../store';
 import { NOTIFICATIONS_ACTION_TYPES } from '../reducers/notifications';
 
@@ -12,7 +12,12 @@ const registerNotificationEvents = (history) => {
 export const readNotification = (payload) => {
 };
 
-export const fetchNotifications = (payload) => {
+export const fetchNotifications = async (payload) => {
+  const storage = await sdk.getStorage();
+
+  const res = await storage.getNotifications(payload);
+
+  console.log('response!', res);
   store.dispatch({
     type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS,
   });
