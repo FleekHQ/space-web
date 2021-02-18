@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import * as identityEndpoints from './endpoints/identity';
 import * as identitiesEndpoints from './endpoints/identities';
+import * as shareEndpoints from './endpoints/share';
 
 /**
  * @class
@@ -52,6 +53,16 @@ function Client({
   this.identities = Object.keys(identitiesEndpoints).reduce((identitiesMethods, key) => ({
     ...identitiesMethods,
     [key]: identitiesEndpoints[key].bind(this),
+  }), {});
+
+  /**
+   * Share endpoints.
+   * @name Client#share
+   * @type {import('./endpoints/share.js')}
+   */
+  this.share = Object.keys(shareEndpoints).reduce((shareMethods, key) => ({
+    ...shareMethods,
+    [key]: shareEndpoints[key].bind(this),
   }), {});
 }
 
