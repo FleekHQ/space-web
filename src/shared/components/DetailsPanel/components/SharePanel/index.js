@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import ContextMenu from '@ui/ContextMenu';
+import Popper from '@material-ui/core/Popper';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@terminal-packages/space-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
-import ContextMenu from '@ui/ContextMenu';
-import Popper from '@material-ui/core/Popper';
 import useMenuItemOnClick, {
   shareAction,
 } from '@utils/use-menu-item-on-click';
@@ -23,6 +23,7 @@ const SharePanel = (props) => {
   const {
     members,
     viewMode,
+    disableShare,
     selectedObject,
   } = props;
 
@@ -80,6 +81,7 @@ const SharePanel = (props) => {
       <Button
         fullWidth
         variant="primary"
+        disabled={disableShare}
         onClick={() => {
           shareAction({
             clickedItem: selectedObject,
@@ -146,6 +148,7 @@ const SharePanel = (props) => {
 
 SharePanel.defaultProps = {
   members: [],
+  disableShare: false,
 };
 
 SharePanel.propTypes = {
@@ -158,6 +161,7 @@ SharePanel.propTypes = {
   selectedObject: PropTypes.shape({
     key: PropTypes.string,
   }).isRequired,
+  disableShare: PropTypes.bool,
 };
 
 export default SharePanel;
