@@ -18,13 +18,20 @@ const PreviewDetailsPanel = ({
   showTitle,
   onClose,
   disablePreview,
+  disableShare,
 }) => {
   const classes = useStyles();
   const viewMode = VIEW_MODES.PREVIEW;
 
-  const mapContextMenuItems = (menuOptions) => (
-    menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview)
-  );
+  const mapContextMenuItems = (menuOptions) => {
+    const options = menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview);
+
+    if (disableShare) {
+      return options.filter((item) => item.id !== CONTEXT_OPTION_IDS.share);
+    }
+
+    return options;
+  };
 
   return (
     <div
@@ -43,6 +50,7 @@ const PreviewDetailsPanel = ({
           onClose={onClose}
           mapContextMenuItems={mapContextMenuItems}
           disablePreview={disablePreview}
+          disableShare={disableShare}
         />
         <Divider viewMode={viewMode} />
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
@@ -51,6 +59,7 @@ const PreviewDetailsPanel = ({
           viewMode={viewMode}
           selectedObject={object}
           members={object.members}
+          disableShare={disableShare}
         />
       </DetailsPanel>
     </div>
@@ -61,6 +70,7 @@ PreviewDetailsPanel.defaultProps = {
   showTitle: false,
   onClose: () => {},
   disablePreview: false,
+  disableShare: false,
 };
 
 PreviewDetailsPanel.propTypes = {
@@ -79,6 +89,7 @@ PreviewDetailsPanel.propTypes = {
   showTitle: PropTypes.bool,
   onClose: PropTypes.func,
   disablePreview: PropTypes.bool,
+  disableShare: PropTypes.bool,
 };
 
 export default PreviewDetailsPanel;

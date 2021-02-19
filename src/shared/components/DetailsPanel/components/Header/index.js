@@ -32,6 +32,7 @@ const DetailsPanelHeader = ({
   onClose,
   mapContextMenuItems,
   disablePreview,
+  disableShare,
 }) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
@@ -135,22 +136,20 @@ const DetailsPanelHeader = ({
                       )}
                     />
                   </ButtonBase>
-                  <ButtonBase disabled>
+                  <ButtonBase>
                     <FontAwesomeIcon
                       icon={faLink}
-                      className={classnames(
-                        classes.actionIcon,
-                        classes.disabledIcon,
-                      )}
+                      className={classes.actionIcon}
                       onClick={() => {
                         copyLinkAction({
                           clickedItem: objects[0],
                           dispatch,
+                          t,
                         });
                       }}
                     />
                   </ButtonBase>
-                  <ButtonBase disabled>
+                  <ButtonBase disabled={disableShare}>
                     <FontAwesomeIcon
                       onClick={() => {
                         shareAction({
@@ -161,7 +160,7 @@ const DetailsPanelHeader = ({
                       icon={faShare}
                       className={classnames(
                         classes.actionIcon,
-                        classes.disabledIcon,
+                        disableShare && classes.disabledIcon,
                       )}
                     />
                   </ButtonBase>
@@ -205,6 +204,7 @@ DetailsPanelHeader.defaultProps = {
   onClose: () => {},
   mapContextMenuItems: (items) => items,
   disablePreview: false,
+  disableShare: false,
 };
 
 DetailsPanelHeader.propTypes = {
@@ -225,6 +225,7 @@ DetailsPanelHeader.propTypes = {
   onClose: PropTypes.func,
   mapContextMenuItems: PropTypes.func,
   disablePreview: PropTypes.bool,
+  disableShare: PropTypes.bool,
 };
 
 export default DetailsPanelHeader;

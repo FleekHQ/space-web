@@ -5,11 +5,13 @@ import {
   DELETE_OBJECT,
   FILE_PREVIEW,
 } from '@shared/components/Modal/actions';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { downloadFile } from '@events/objects';
 import { useHistory } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 import { downloadFromUrl } from '@utils';
+import { openToast } from '@shared/components/Toast/actions';
 
 export const openAction = ({
   clickedItem,
@@ -39,15 +41,18 @@ export const shareAction = ({
   dispatch,
 }) => dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
 
+/* eslint-disable */
 export const copyLinkAction = ({
   clickedItem,
   dispatch,
+  t,
 }) => {
-  // If we do not have a link to copy, we open the share modal
-  shareAction({
-    clickedItem,
-    dispatch,
-  });
+  const fileUrl = `${window.location.origin}/file/${clickedItem.uuid}`;
+
+  copy(fileUrl);
+  dispatch(openToast({
+    message: t('modals.sharingModal.shareLink.linkCopied'),
+  }));
 };
 
 export const copyIPFSHashAction = ({
@@ -88,6 +93,7 @@ const useMenuItemOnClick = ({
   clickedItem,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const history = useHistory();
   const downloads = useSelector((state) => state.downloads);
 
@@ -124,6 +130,7 @@ const useMenuItemOnClick = ({
         copyLinkAction({
           clickedItem,
           dispatch,
+          t,
         });
         break;
       case CONTEXT_OPTION_IDS.download:
