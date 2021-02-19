@@ -41,7 +41,6 @@ export const shareAction = ({
   dispatch,
 }) => dispatch(openModal(SHARING_MODAL, { selectedObjects: [clickedItem] }));
 
-/* eslint-disable */
 export const copyLinkAction = ({
   clickedItem,
   dispatch,
@@ -56,9 +55,25 @@ export const copyLinkAction = ({
 };
 
 export const copyIPFSHashAction = ({
+  t,
+  dispatch,
   clickedItem,
 }) => {
   copy(clickedItem.ipfsHash);
+  dispatch(openToast({
+    message: t('common.ipfsCopied'),
+  }));
+};
+
+export const copyDealIdAction = ({
+  t,
+  dispatch,
+  clickedItem,
+}) => {
+  copy(clickedItem.dealId);
+  dispatch(openToast({
+    message: t('common.dealIdCopied'),
+  }));
 };
 
 export const previewAction = ({
@@ -139,9 +154,18 @@ const useMenuItemOnClick = ({
           downloads,
         });
         break;
+      case CONTEXT_OPTION_IDS.copyDealId:
+        copyDealIdAction({
+          t,
+          dispatch,
+          clickedItem,
+        });
+        break;
       case CONTEXT_OPTION_IDS.copyIPFSHash:
       default:
         copyIPFSHashAction({
+          t,
+          dispatch,
           clickedItem,
         });
         break;

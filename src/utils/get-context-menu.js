@@ -60,6 +60,23 @@ const mapContextMenuItems = ({
     type: 'option',
   };
 
+  const copyIpfsHashOption = {
+    id: CONTEXT_OPTION_IDS.copyIPFSHash,
+    displayText: t('tableMenu.copyIpfsHash'),
+    image: `${process.env.PUBLIC_URL}/assets/images/ipfs.png`,
+    iconSize: 10,
+    type: 'option',
+  };
+
+  const copyDealIdOption = {
+    id: CONTEXT_OPTION_IDS.copyDealId,
+    displayText: object.dealId ? t('tableMenu.copyDealId') : t('tableMenu.dealIdPending'),
+    image: `${process.env.PUBLIC_URL}/assets/images/filecoin.png`,
+    iconSize: 10,
+    type: 'option',
+    disabled: !object.dealId,
+  };
+
   return ([
     ...(isFile ? [previewOption] : []),
     ...(!isFile ? [openOption] : []),
@@ -70,6 +87,8 @@ const mapContextMenuItems = ({
     {
       type: 'divider',
     },
+    ...(isFile ? [copyIpfsHashOption, { type: 'divider' }] : []),
+    ...(isFile ? [copyDealIdOption, { type: 'divider' }] : []),
     {
       id: CONTEXT_OPTION_IDS.trash,
       displayText: t('tableMenu.delete'),

@@ -14,6 +14,7 @@ import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import ContextMenu from '@ui/ContextMenu';
+import { getDealId } from '@events/filecoin';
 import { getContextMenuItems } from '@utils';
 import useMenuItemOnClick, {
   previewAction,
@@ -60,6 +61,10 @@ const DetailsPanelHeader = ({
 
   const handleContextMenuOpen = (event) => {
     event.preventDefault();
+
+    if (objects.length === 1 && objects[0].type === 'file') {
+      getDealId(objects[0]);
+    }
 
     setContextState({
       mouseX: event.clientX - 170,

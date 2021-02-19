@@ -12,6 +12,7 @@ import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fetchDealId } from '@events/filecoin';
 
 import Splash from '../Splash';
 import PreviewDetailsPanel from './components/DetailsPanel';
@@ -102,6 +103,12 @@ const FilePreview = () => {
       getFileInfo();
     }
   }, [loadingSdk]);
+
+  useEffect(() => {
+    if (file?.bucket && file?.fullKey) {
+      fetchDealId(file).then((dealId) => setFile({ ...file, ...dealId }));
+    }
+  }, [file]);
 
   const i18n = {
     signin: t('preview.signIn'),

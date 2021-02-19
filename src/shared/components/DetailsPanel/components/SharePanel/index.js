@@ -11,6 +11,7 @@ import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
 import useMenuItemOnClick, {
   shareAction,
 } from '@utils/use-menu-item-on-click';
+import { getDealId } from '@events/filecoin';
 import { getIdentitiesByAddress } from '@events';
 
 import { VIEW_MODES } from '../../constants';
@@ -39,7 +40,7 @@ const SharePanel = (props) => {
 
   const [contextState, setContextState] = React.useState(initialContextState);
 
-  const copyMenuItems = getCopyMenuItems(t);
+  const copyMenuItems = getCopyMenuItems(t, selectedObject);
 
   const handleContextClose = () => {
     setContextState(initialContextState);
@@ -52,6 +53,8 @@ const SharePanel = (props) => {
 
   const handleContextMenuOpen = (event) => {
     event.preventDefault();
+
+    getDealId(selectedObject);
 
     const copyButton = document.getElementById('copy-button');
     const boundaries = copyButton.getBoundingClientRect();
