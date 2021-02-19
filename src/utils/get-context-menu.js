@@ -26,16 +26,14 @@ const mapContextMenuItems = ({
     icon: faShare,
     iconSize: 10,
     type: 'option',
-    disabled: true,
   };
 
   const getLinkOption = {
     id: CONTEXT_OPTION_IDS.copyLink,
-    displayText: t('tableMenu.getLink'),
+    displayText: t('tableMenu.copyLink'),
     icon: faLink,
     iconSize: 10,
     type: 'option',
-    disabled: true,
   };
 
   const previewOption = {

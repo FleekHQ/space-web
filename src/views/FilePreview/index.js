@@ -113,7 +113,9 @@ const FilePreview = () => {
 
   const getMenuItems = () => {
     const menuOptions = getContextMenuItems({ object: file, t });
-    return menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview);
+    return menuOptions
+      .filter((item) => item.id !== CONTEXT_OPTION_IDS.preview)
+      .filter((item) => item.id !== CONTEXT_OPTION_IDS.share);
   };
 
   if (!file) {
@@ -173,6 +175,7 @@ const FilePreview = () => {
             showTitle
             onClose={() => setDetailsPanelExpanded(false)}
             disablePreview
+            disableShare
           />
         </>
       )}
