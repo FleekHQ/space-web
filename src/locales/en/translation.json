@@ -32,6 +32,8 @@
     "comingSoon": "Coming Soon!",
     "goBack": "Go Back",
     "delete": "Delete",
+    "ipfsCopied": "IPFS Hash Copied",
+    "dealIdCopied": "Deal ID Copied",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -553,7 +555,10 @@
     "delete": "Delete",
     "getLink": "Get link",
     "copyLink": "Copy link",
-    "download": "Download"
+    "download": "Download",
+    "copyIpfsHash": "Copy IPFS Hash",
+    "copyDealId": "Copy Deal ID",
+    "dealIdPending": "Deal ID Pending"
   },
   "hoverMenu": {
     "retry": "Retry",
