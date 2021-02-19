@@ -109,7 +109,7 @@ const Notifications = () => {
     if (foundNotification) {
       handleFilesInvitation({
         id: item.id,
-        invitationID: foundNotification.invitationValue.invitationID,
+        invitationID: foundNotification.id,
         accept,
         history,
       });

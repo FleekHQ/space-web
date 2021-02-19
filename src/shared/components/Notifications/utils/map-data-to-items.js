@@ -1,7 +1,5 @@
 import React from 'react';
-
-export const INVITATION = 'INVITATION';
-export const SHARE_INVITE = 'share-invite';
+import { NOTIFICATION_TYPES } from '@utils/notification-presenter';
 
 const getHighlighted = (item, lastSeenAt) => (item.createdAt * 1000 > lastSeenAt);
 
@@ -9,7 +7,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes, identities) => {
   const {
     id,
     createdAt,
-    invitationValue:
+    relatedObject:
     {
       itemPaths,
       status,
@@ -46,7 +44,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes, identities) => {
 
   return ({
     id,
-    type: SHARE_INVITE,
+    type: NOTIFICATION_TYPES.fileShareInvitation,
     username: identities[inviterPublicKey] && identities[inviterPublicKey].username,
     imgUrl: identities[inviterPublicKey] && identities[inviterPublicKey].avatarUrl,
     timestamp: createdAt,
@@ -76,7 +74,7 @@ const mapDataToItems = (data, Trans, t, classes, identities) => {
       return arr;
     }
 
-    if (type === INVITATION) {
+    if (type === NOTIFICATION_TYPES.fileShareInvitation) {
       return arr.concat(mapInvitationItem(item, lastSeenAt, Trans, t, classes, identities));
     }
 

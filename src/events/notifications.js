@@ -3,6 +3,7 @@
 
 import { sdk } from '@clients';
 import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
+import { notificationPresenter } from '@utils';
 import { fetchSharedObjects } from './objects';
 
 import store from '../store';
@@ -16,14 +17,33 @@ export const readNotification = (payload) => {
 };
 
 export const fetchNotifications = async (payload) => {
-  const storage = await sdk.getStorage();
-
-  const res = await storage.getNotifications(payload);
-
-  console.log('response!', res);
   store.dispatch({
     type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS,
   });
+
+  try {
+    const storage = await sdk.getStorage();
+
+    const {
+      notifications,
+      ...restData
+    } = await storage.getNotifications(payload);
+    const mappedNotifications = notifications.map(
+      (notification) => notificationPresenter(notification),
+    );
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS_SUCCESS,
+      data: {
+        ...restData,
+        notifications: mappedNotifications,
+      },
+    });
+  } catch (e) {
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS_ERROR,
+      error: e,
+    });
+  }
 };
 
 export const handleFilesInvitation = async (payload) => {
@@ -35,14 +55,10 @@ export const handleFilesInvitation = async (payload) => {
 
   try {
     const storage = await sdk.getStorage();
-    await storage.acceptFileInvitation({
+    await storage.handleFileInvitation({
       invitation: {
         invitationID: payload.invitationID,
-        status: payload.accept ? 1 : 2,
-        // inviteePublicKey: '',
-        // inviterPublicKey: '',
-        // itemPaths: [],
-        // keys: [],
+        accept: payload.accept,
       },
     });
     fetchSharedObjects();

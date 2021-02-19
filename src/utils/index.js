@@ -23,3 +23,4 @@ export { default as downloadFromUrl } from './download-from-url';
 export { default as printFromId } from './print-from-id';
 export { default as getFileProgress } from './get-file-progress';
 export { default as checkIsEmail } from './check-is-email';
+export { default as notificationPresenter } from './notification-presenter';
