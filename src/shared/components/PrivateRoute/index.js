@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 
 import { sdk } from '@clients';
 import registerTxlSubscribeEvents from '@events/txl-subscribe';
-// import registerNotificationEvents from '@events/notifications-subscribe';
+import registerNotificationEvents from '@events/notifications-subscribe';
 
 import Splash from '../../../views/Splash';
 
@@ -20,13 +20,13 @@ const PrivateRoute = ({ children, txlSubscribe, ...rest }) => {
   React.useEffect(() => {
     let sdkUnsubscribe;
     let txlUnsubscribe;
-    // let notificationUnsubscribe;
+    let notificationUnsubscribe;
 
     const initTxlSubscribe = async () => {
       const users = await sdk.getUsers();
       if (users.list().length > 0) {
         txlUnsubscribe = await registerTxlSubscribeEvents();
-        // notificationUnsubscribe = await registerNotificationEvents();
+        notificationUnsubscribe = await registerNotificationEvents();
       }
     };
 
@@ -56,9 +56,9 @@ const PrivateRoute = ({ children, txlSubscribe, ...rest }) => {
       if (txlUnsubscribe) {
         txlUnsubscribe();
       }
-      // if (notificationUnsubscribe) {
-      //   notificationUnsubscribe();
-      // }
+      if (notificationUnsubscribe) {
+        notificationUnsubscribe();
+      }
     };
   }, []);
 
