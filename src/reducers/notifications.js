@@ -52,7 +52,7 @@ export default (state = DEFAULT_STATE, action) => {
         return state;
       }
       const newNotifications = cloneDeep(notifications);
-      newNotifications[updatedNotificationIndex].status = status;
+      newNotifications[updatedNotificationIndex].relatedObject.status = status;
 
       return {
         ...state,

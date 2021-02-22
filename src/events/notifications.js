@@ -55,13 +55,7 @@ export const handleFilesInvitation = async (payload) => {
 
   try {
     const storage = await sdk.getStorage();
-    await storage.handleFileInvitation({
-      invitation: {
-        invitationID: payload.invitationID,
-        accept: payload.accept,
-      },
-    });
-    fetchSharedObjects();
+    await storage.handleFileInvitation(payload.invitationID, payload.accept);
 
     store.dispatch({
       type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
@@ -70,6 +64,7 @@ export const handleFilesInvitation = async (payload) => {
     });
 
     if (payload.accept) {
+      fetchSharedObjects();
       payload.history.push('/shared');
     }
   } catch (e) {
