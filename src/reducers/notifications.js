@@ -52,7 +52,7 @@ export default (state = DEFAULT_STATE, action) => {
         return state;
       }
       const newNotifications = cloneDeep(notifications);
-      newNotifications[updatedNotificationIndex].invitationValue.status = status;
+      newNotifications[updatedNotificationIndex].status = status;
 
       return {
         ...state,

@@ -124,6 +124,9 @@ export const signup = (payload) => async (dispatch) => {
       },
     });
 
+    const storage = await sdk.getStorage();
+    await storage.initMailbox();
+
     dispatch({
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
       user: {

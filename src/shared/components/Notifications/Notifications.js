@@ -11,6 +11,7 @@ import {
   NotificationMenu,
   NotificationButton,
 } from '@ui/Notification';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { openModal, LICENSE_REGISTRATION } from '@shared/components/Modal/actions';
 import mapDataToItems from './utils/map-data-to-items';
@@ -21,6 +22,7 @@ const Notifications = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
 
   const [highlighted, setHighlighted] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -107,8 +109,9 @@ const Notifications = () => {
     if (foundNotification) {
       handleFilesInvitation({
         id: item.id,
-        invitationID: foundNotification.invitationValue.invitationID,
+        invitationID: foundNotification.id,
         accept,
+        history,
       });
     }
   };
