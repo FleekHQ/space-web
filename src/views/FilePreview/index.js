@@ -44,6 +44,10 @@ const FilePreview = () => {
     history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
   };
 
+  const redirectHome = () => {
+    history.push('/home');
+  };
+
   const getFileInfo = async () => {
     try {
       const fileInfo = await openFileByUuid(uuid);
@@ -58,9 +62,7 @@ const FilePreview = () => {
         redirectToSignin();
         return;
       }
-      // if there is a user, we show an error
-      // eslint-disable-next-line no-console
-      console.error(e);
+      redirectHome();
     }
   };
 
