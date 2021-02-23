@@ -45,12 +45,11 @@ export const shareFiles = (payload) => async (dispatch) => {
     const storage = await sdk.getStorage();
     const users = await sdk.getUsers();
     const spaceUser = users.list()[0];
-
-    const { publicKeys } = await storage.shareViaPublicKey({
-      paths: payload.paths,
-      publicKeys: payload.publicKeys,
-    });
-
+    const shareViaPublicKeyPayload = {
+      paths: payload.paths.map((path) => ({ bucket: path.bucket, path: path.path })),
+      publicKeys: payload.publicKeys.map((key) => ({ id: key.id, pk: key.pk })),
+    };
+    const { publicKeys } = await storage.shareViaPublicKey(shareViaPublicKeyPayload);
     const emailPromises = [];
     payload.publicKeys.forEach((publicKey, index) => {
       const fileLink = `${origin}/file/${payload.paths[0].uuid}`;
