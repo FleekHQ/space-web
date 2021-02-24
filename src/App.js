@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import createSpaceTheme from '@terminal-packages/space-ui/core/theme';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import DragableBar from '@shared/components/DragableBar';
 import RegisterEvents from '@events';
@@ -33,36 +35,38 @@ const theme = createSpaceTheme();
 const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box height="100vh">
-        <DragableBar />
-        <Modal />
-        <Router>
-          <RegisterEvents />
-          <Switch>
-            <Route path="/(signin|signup)">
-              <Auth />
-            </Route>
-            <Route path="/magic-link">
-              <EmailLinkAuth />
-            </Route>
-            <Route path="/splash">
-              <Splash />
-            </Route>
-            <Route path="/file/:uuid">
-              <FilePreview />
-            </Route>
-            <PrivateRoute txlSubscribe path="/home">
-              <Storage />
-            </PrivateRoute>
-            <PrivateRoute txlSubscribe path="/shared">
-              <Shared />
-            </PrivateRoute>
-            <Redirect to="/home" />
-          </Switch>
-        </Router>
-        <Toast />
-      </Box>
+      <DndProvider backend={HTML5Backend}>
+        <CssBaseline />
+        <Box height="100vh">
+          <DragableBar />
+          <Modal />
+          <Router>
+            <RegisterEvents />
+            <Switch>
+              <Route path="/(signin|signup)">
+                <Auth />
+              </Route>
+              <Route path="/magic-link">
+                <EmailLinkAuth />
+              </Route>
+              <Route path="/splash">
+                <Splash />
+              </Route>
+              <Route path="/file/:uuid">
+                <FilePreview />
+              </Route>
+              <PrivateRoute txlSubscribe path="/home">
+                <Storage />
+              </PrivateRoute>
+              <PrivateRoute txlSubscribe path="/shared">
+                <Shared />
+              </PrivateRoute>
+              <Redirect to="/home" />
+            </Switch>
+          </Router>
+          <Toast />
+        </Box>
+      </DndProvider>
     </ThemeProvider>
   </Provider>
 );
