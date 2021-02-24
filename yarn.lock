@@ -2099,14 +2099,14 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@spacehq/mailbox@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@spacehq/mailbox/-/mailbox-0.0.20.tgz#6b94a1df14ba77186330f0f78b08c5e6956567fb"
-  integrity sha512-+yCSo5zhP4y1IoRlrzHf43eWLAfbTkMK1rV+/MBFeMBKRe5+K6ymVQV5Tx77SbG0lcDZXuXcnFA+Zuwl3w9Zyg==
+"@spacehq/mailbox@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@spacehq/mailbox/-/mailbox-0.0.22.tgz#efc06587bca756e2f363502ac1d00d3ecadc35f1"
+  integrity sha512-q9FtyhJhP9ZERNUv9VVaSknyhuVYFDen87j4YtdBIM7Q1Wm5UcFF6+jV61azvSXPqEz3AayICZghyeXJawT+og==
   dependencies:
     "@improbable-eng/grpc-web" "^0.14.0"
     "@spacehq/users" "^0.0.13"
-    "@spacehq/utils" "^0.0.20"
+    "@spacehq/utils" "^0.0.22"
     "@textile/crypto" "^2.0.0"
     "@types/lodash" "^4.14.165"
     axios "^0.21.1"
@@ -2117,25 +2117,25 @@
     sha3 "^2.1.3"
     websocket-polyfill "^0.0.3"
 
-"@spacehq/sdk@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.20.tgz#c5cf98d1e7377f05da482b054203d681a18b0237"
-  integrity sha512-1OApTyFIqw7Ftywo12HOetnkUX5TBET0S2ldNWAxpxqxl8z/QvczXJBjTOpn4nlpe1Nf51GhZ9K6RxD60kDLSQ==
+"@spacehq/sdk@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@spacehq/sdk/-/sdk-0.0.22.tgz#a3e427a8780a0cdf5d0bfdc9fa969b2f8fff29d9"
+  integrity sha512-LWsvCm3Hz+Xt8sBPXqSk1VyRCsyBVaDFdFklge76f5SgZTinxSh3uWrbK8ilXWlPWuEPrRILE0LoCg0CrL4AHw==
   dependencies:
-    "@spacehq/mailbox" "^0.0.20"
-    "@spacehq/storage" "^0.0.20"
-    "@spacehq/users" "^0.0.20"
-    "@spacehq/utils" "^0.0.20"
+    "@spacehq/mailbox" "^0.0.22"
+    "@spacehq/storage" "^0.0.22"
+    "@spacehq/users" "^0.0.22"
+    "@spacehq/utils" "^0.0.22"
 
-"@spacehq/storage@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.20.tgz#3bb33ac22291d2134d6007ae5a162dafb01ada26"
-  integrity sha512-oH7pfHkzCW5dISUPXdTSWG/mifNIF5JMYV83kSEzDxQRdBs/9VF752gLYaW56eWuOxsmg01QNW8NHtBxXYLQvQ==
+"@spacehq/storage@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@spacehq/storage/-/storage-0.0.22.tgz#c7d096613fe19c54821d371e76e57449945854bd"
+  integrity sha512-gwNf6orBp7fB5QS9p2V/sEHxku5KFKOxOAOdWH5po2GdvTi89XZJbGjMEhvTJnSvjwJmYanJtAXJnenT4kRR8Q==
   dependencies:
     "@improbable-eng/grpc-web" "^0.13.0"
-    "@spacehq/mailbox" "^0.0.20"
-    "@spacehq/users" "^0.0.20"
-    "@spacehq/utils" "^0.0.20"
+    "@spacehq/mailbox" "^0.0.22"
+    "@spacehq/users" "^0.0.22"
+    "@spacehq/utils" "^0.0.22"
     "@textile/crypto" "^2.0.0"
     "@textile/hub" "^4.1.0"
     "@textile/threads-id" "^0.4.0"
@@ -2166,10 +2166,10 @@
     sha3 "^2.1.3"
     websocket-polyfill "^0.0.3"
 
-"@spacehq/users@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.20.tgz#6561eeaf46b101704cec76f8a0058dada256cf6c"
-  integrity sha512-Lf6LOBl1HxoGy20a+4b9rv/sS5rb4XTYMu1SSZxno2OCKZYF14RzIWoDjlGGICo6lNzvSb2UXRoUBlQyhNYFFg==
+"@spacehq/users@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@spacehq/users/-/users-0.0.22.tgz#e7b188eb65f4c35bc3db4fd566484093fc80772a"
+  integrity sha512-DCfVmT4OipuxyipDq53hKh99ftjOmz3iisL9gK0QIpfKF7xaFmyQXNbgRt46oxF8lh6JHvVE+YV78b7GcaG/ww==
   dependencies:
     "@textile/crypto" "^2.0.0"
     "@types/lodash" "^4.14.165"
@@ -2181,13 +2181,13 @@
     sha3 "^2.1.3"
     websocket-polyfill "^0.0.3"
 
-"@spacehq/utils@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/@spacehq/utils/-/utils-0.0.20.tgz#9af1dd98da2f6e64e6bba23bf456ff147681df14"
-  integrity sha512-XFzpA/4PBV06KlzwN//kr8vopUptphobdwrSRPeqnZTX8X3W3ZCU/eDcZYpErzZHmzuCN+NMyyTtmLG4VCGEnQ==
+"@spacehq/utils@^0.0.22":
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/@spacehq/utils/-/utils-0.0.22.tgz#995d66ca3dd39907ebf99da9f5a8572ae9b1a4f9"
+  integrity sha512-J6VkqPHDbJsRVGsvL6MCaMVGQcD49QC6vlIvuLZtvLph5/6uAE5QtCpN04Luyi9GwrAv7I7h/GVJvHTd7/utsw==
   dependencies:
     "@improbable-eng/grpc-web" "^0.14.0"
-    "@spacehq/users" "^0.0.20"
+    "@spacehq/users" "^0.0.22"
     "@textile/crypto" "^2.0.0"
     "@types/lodash" "^4.14.165"
     axios "^0.21.1"
