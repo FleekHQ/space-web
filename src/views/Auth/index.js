@@ -51,8 +51,10 @@ const Auth = () => {
       type: AUTH_ACTION_TYPES.ON_RESET,
     });
 
-    const { redirect_to: redirectTo } = queryString.parse(location.search);
-    const { tempKey } = location.store ? location.store : {};
+    const {
+      redirect_to: redirectTo,
+      temp_key: tempKey,
+    } = queryString.parse(location.search);
 
     const { error, isSent } = await sendPasswordlessEmail({
       email,

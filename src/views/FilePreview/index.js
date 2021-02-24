@@ -43,13 +43,18 @@ const FilePreview = () => {
 
   const redirectToSignin = () => {
     const redirectRoute = `/file/${uuid}`;
-
     const { temp_key: tempKey } = queryString.parse(location.search);
+
+    const queryParams = {
+      redirect_route: redirectRoute,
+      temp_key: tempKey,
+    };
+
+    const search = queryString.stringify(queryParams);
 
     history.push({
       pathname: '/signin',
-      search: `?redirect_to=${encodeURIComponent(redirectRoute)}`,
-      store: { tempKey },
+      search: `?${search}`,
     });
   };
 
