@@ -52,10 +52,13 @@ const Auth = () => {
     });
 
     const { redirect_to: redirectTo } = queryString.parse(location.search);
+    const { tempKey } = location.store ? location.store : {};
+
     const { error, isSent } = await sendPasswordlessEmail({
       email,
       from: currentView,
       redirectTo,
+      tempKey,
     });
 
     if (error) {
@@ -72,6 +75,7 @@ const Auth = () => {
         state: {
           email,
           from: currentView,
+          tempKey,
         },
         search: location.search,
       });

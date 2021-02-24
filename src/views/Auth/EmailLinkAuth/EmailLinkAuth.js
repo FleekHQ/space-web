@@ -21,11 +21,13 @@ const EmailLinkAuth = () => {
 
   const handleOnResendEmail = async () => {
     const { redirect_to: redirectTo } = queryString.parse(location.search);
+    const { tempKey } = location.store ? location.store : {};
 
     await sendPasswordlessEmail({
       from,
       email: location.state && location.state.email ? location.state.email : '',
       redirectTo,
+      tempKey,
     });
   };
 

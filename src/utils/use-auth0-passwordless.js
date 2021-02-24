@@ -21,6 +21,7 @@ export default function useAuth0Passwordless() {
     email,
     from,
     redirectTo,
+    tempKey,
   }) => {
     if (email.length === 0) {
       return {
@@ -79,6 +80,7 @@ export default function useAuth0Passwordless() {
                 redirectToOpener: false,
                 verifier: config.torus.providers.passwordless.verifier,
                 redirectTo,
+                tempKey,
               }),
             ),
           ),
