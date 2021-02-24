@@ -146,7 +146,9 @@ const Auth = () => {
               return;
             }
 
-            dispatch(signup({ torusRes }));
+            const { inviteToken } = stateFields;
+
+            dispatch(signup({ torusRes, inviteToken }));
           } catch (error) {
             setShowSplash(false);
 
