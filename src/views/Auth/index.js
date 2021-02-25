@@ -90,10 +90,13 @@ const Auth = () => {
    * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
    */
   const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    const { temp_key: tempKey } = queryString.parse(location.search);
+
     setShowSplash(true);
     if (keyNotExists) {
       dispatch(signup({
         torusRes,
+        tempKey,
       }));
       return;
     }
@@ -132,6 +135,7 @@ const Auth = () => {
       if (!isInitializing) {
         const getTorusRes = async () => {
           const { hash, stateFields } = getLoginPayload();
+          const { tempKey } = stateFields;
 
           try {
             const torusRes = await torusTriggerLogin({
@@ -152,9 +156,7 @@ const Auth = () => {
               return;
             }
 
-            const { inviteToken } = stateFields;
-
-            dispatch(signup({ torusRes, inviteToken }));
+            dispatch(signup({ torusRes, tempKey }));
           } catch (error) {
             setShowSplash(false);
 
