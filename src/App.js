@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import createSpaceTheme from '@terminal-packages/space-ui/core/theme';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import DragableBar from '@shared/components/DragableBar';
 import RegisterEvents from '@events';
