@@ -126,8 +126,8 @@ export const signup = (payload) => async (dispatch) => {
 
     const storage = await sdk.getStorage();
 
-    if (payload.inviteToken) {
-      storage.syncFromTempKey(payload.inviteToken);
+    if (payload.tempKey) {
+      storage.syncFromTempKey(payload.tempyKey);
     }
 
     await storage.initMailbox();
