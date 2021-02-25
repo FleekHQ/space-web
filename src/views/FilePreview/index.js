@@ -66,9 +66,7 @@ const FilePreview = () => {
     }
   };
 
-  const initSdk = async () => {
-    let sdkUnsubscribe;
-
+  const initUser = async () => {
     // If there is no user, we generate a temporary user in order to
     // to interact with the SDK, but we don't
     if (!user) {
@@ -76,16 +74,22 @@ const FilePreview = () => {
       const identity = await users.createIdentity();
       await users.authenticate(identity);
     }
+  };
+
+  const initSdk = async () => {
+    let sdkUnsubscribe;
 
     if (sdk.isStarting) {
-      sdkUnsubscribe = sdk.onListen('ready', (error) => {
+      sdkUnsubscribe = sdk.onListen('ready', async (error) => {
         if (!error) {
+          await initUser();
           setLoadingSdk(false);
           sdkUnsubscribe();
         }
       });
     } else {
       // SDK is already started
+      initUser();
       setLoadingSdk(false);
     }
 
