@@ -47,7 +47,7 @@ const mapInvitationItem = (item, lastSeenAt, Trans, t, classes, identities) => {
     type: NOTIFICATION_TYPES.fileShareInvitation,
     username: identities[inviterPublicKey] && identities[inviterPublicKey].displayName,
     imgUrl: identities[inviterPublicKey] && identities[inviterPublicKey].avatarUrl,
-    timestamp: createdAt / 1000 ** 3,
+    timestamp: createdAt,
     description: getDescription(),
     files: itemPaths.map((itemPath) => {
       const currentFile = itemPath.path.split('/').pop();

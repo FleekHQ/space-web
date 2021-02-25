@@ -26,6 +26,7 @@ const notificationPresenter = (notification) => {
     return ({
       ...notification,
       type: mappedType,
+      createdAt: notification.createdAt / 1000 ** 3,
       relatedObject: {
         ...notification.relatedObject,
         status: notificationStatusMapper[notification.relatedObject.status],

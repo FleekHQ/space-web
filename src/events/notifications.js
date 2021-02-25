@@ -90,11 +90,18 @@ export const handleFilesInvitation = async (payload) => {
   }
 };
 
-export const setNotificationsLastSeenAt = (payload) => {
-  store.dispatch({
-    type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
-    lastSeenAt: payload.timestamp,
-  });
+export const setNotificationsLastSeenAt = async (payload) => {
+  try {
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
+      lastSeenAt: payload.timestamp,
+    });
+
+    const storage = await sdk.getStorage();
+    await storage.setNotificationsLastSeenAt(payload.timestamp);
+  } catch (e) {
+    console.error('Failed to setNotificationsLastSeenAt', e);
+  }
 };
 
 export default registerNotificationEvents;
