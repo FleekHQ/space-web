@@ -15,16 +15,18 @@ import { useTranslation } from 'react-i18next';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
+import { fetchDealId } from '@events/filecoin';
 
 import PreviewDetailsPanel from '../../../../views/FilePreview/components/DetailsPanel';
 import useStyles from './styles';
 
 const FilePreview = ({
   closeModal,
-  object,
+  object: baseObject,
   ...props
 }) => {
   const classes = useStyles();
+  const [object, setObject] = useState(baseObject);
   const [detailsPanelExpanded, setDetailsPanelExpanded] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
   const { t } = useTranslation();
@@ -56,6 +58,10 @@ const FilePreview = ({
 
   useEffect(() => {
     getFileInfo();
+
+    if (!object.dealId && !object.proposalCID) {
+      fetchDealId(object, true).then((dealId) => setObject({ ...object, ...dealId }));
+    }
   }, []);
 
   const onInfo = () => {
@@ -126,6 +132,11 @@ FilePreview.propTypes = {
     name: PropTypes.string,
     ext: PropTypes.string,
     uuid: PropTypes.string,
+    dealId: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
+    proposalCID: PropTypes.string,
   }).isRequired,
 };
 

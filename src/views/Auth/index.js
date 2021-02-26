@@ -39,6 +39,9 @@ const Auth = () => {
     loading: passwordlessLoading,
   } = useAuth0Passwordless();
 
+  const PRIVACY_POLICY_URL = 'https://space.storage/privacy-policy/';
+  const TERMS_OF_SERVICE_URL = 'https://space.storage/terms-of-service/';
+
   const [showSplash, setShowSplash] = React.useState(false);
 
   const currentView = match.params[0];
@@ -48,11 +51,16 @@ const Auth = () => {
       type: AUTH_ACTION_TYPES.ON_RESET,
     });
 
-    const { redirect_to: redirectTo } = queryString.parse(location.search);
+    const {
+      redirect_to: redirectTo,
+      temp_key: tempKey,
+    } = queryString.parse(location.search);
+
     const { error, isSent } = await sendPasswordlessEmail({
       email,
       from: currentView,
       redirectTo,
+      tempKey,
     });
 
     if (error) {
@@ -69,6 +77,7 @@ const Auth = () => {
         state: {
           email,
           from: currentView,
+          tempKey,
         },
         search: location.search,
       });
@@ -81,10 +90,13 @@ const Auth = () => {
    * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
    */
   const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    const { temp_key: tempKey } = queryString.parse(location.search);
+
     setShowSplash(true);
     if (keyNotExists) {
       dispatch(signup({
         torusRes,
+        tempKey,
       }));
       return;
     }
@@ -123,6 +135,7 @@ const Auth = () => {
       if (!isInitializing) {
         const getTorusRes = async () => {
           const { hash, stateFields } = getLoginPayload();
+          const { tempKey } = stateFields;
 
           try {
             const torusRes = await torusTriggerLogin({
@@ -143,7 +156,7 @@ const Auth = () => {
               return;
             }
 
-            dispatch(signup({ torusRes }));
+            dispatch(signup({ torusRes, tempKey }));
           } catch (error) {
             setShowSplash(false);
 
@@ -185,7 +198,7 @@ const Auth = () => {
             color="inherit"
             className={classes.linkButton}
             target="_blank"
-            href="/privacy-policy"
+            href={PRIVACY_POLICY_URL}
           >
             {`${t('modules.signup.agreenment.privacy')}`}
           </ButtonBase>
@@ -195,7 +208,7 @@ const Auth = () => {
             color="inherit"
             className={classes.linkButton}
             target="_blank"
-            href="/terms-of-service"
+            href={TERMS_OF_SERVICE_URL}
           >
             {t('modules.signup.agreenment.terms')}
           </ButtonBase>

@@ -5,11 +5,13 @@ import {
   DELETE_OBJECT,
   FILE_PREVIEW,
 } from '@shared/components/Modal/actions';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { downloadFile } from '@events/objects';
 import { useHistory } from 'react-router-dom';
 import copy from 'copy-to-clipboard';
 import { downloadFromUrl } from '@utils';
+import { openToast } from '@shared/components/Toast/actions';
 
 export const openAction = ({
   clickedItem,
@@ -42,18 +44,36 @@ export const shareAction = ({
 export const copyLinkAction = ({
   clickedItem,
   dispatch,
+  t,
 }) => {
-  // If we do not have a link to copy, we open the share modal
-  shareAction({
-    clickedItem,
-    dispatch,
-  });
+  const fileUrl = `${window.location.origin}/file/${clickedItem.uuid}`;
+
+  copy(fileUrl);
+  dispatch(openToast({
+    message: t('modals.sharingModal.shareLink.linkCopied'),
+  }));
 };
 
 export const copyIPFSHashAction = ({
+  t,
+  dispatch,
   clickedItem,
 }) => {
   copy(clickedItem.ipfsHash);
+  dispatch(openToast({
+    message: t('common.ipfsCopied'),
+  }));
+};
+
+export const copyDealIdAction = ({
+  t,
+  dispatch,
+  clickedItem,
+}) => {
+  copy(clickedItem.dealId);
+  dispatch(openToast({
+    message: t('common.dealIdCopied'),
+  }));
 };
 
 export const previewAction = ({
@@ -88,6 +108,7 @@ const useMenuItemOnClick = ({
   clickedItem,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const history = useHistory();
   const downloads = useSelector((state) => state.downloads);
 
@@ -124,6 +145,7 @@ const useMenuItemOnClick = ({
         copyLinkAction({
           clickedItem,
           dispatch,
+          t,
         });
         break;
       case CONTEXT_OPTION_IDS.download:
@@ -132,9 +154,18 @@ const useMenuItemOnClick = ({
           downloads,
         });
         break;
+      case CONTEXT_OPTION_IDS.copyDealId:
+        copyDealIdAction({
+          t,
+          dispatch,
+          clickedItem,
+        });
+        break;
       case CONTEXT_OPTION_IDS.copyIPFSHash:
       default:
         copyIPFSHashAction({
+          t,
+          dispatch,
           clickedItem,
         });
         break;

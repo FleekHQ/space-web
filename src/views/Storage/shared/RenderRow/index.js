@@ -68,15 +68,12 @@ const RenderRow = ({
         </div>
       );
     }
-    if (row.ext === 'folder') return <div className={classes.iconContainer} />;
     if (row.isAvailableInSpace) {
       return (
         <div className={classes.iconContainer}>
           <FontAwesomeIcon
             icon={faCheckCircle}
-            className={classnames(classes.checkIcon, {
-              [classes.notAvailableLocally]: !row.isLocallyAvailable,
-            })}
+            className={classnames(classes.checkIcon)}
           />
         </div>
       );
@@ -113,6 +110,16 @@ const RenderRow = ({
       </Typography>
     );
   };
+
+  let isShared = false;
+  const members = get(row, 'members', []) || [];
+  const isFolder = get(row, 'type') === 'folder';
+
+  if (isFolder) {
+    isShared = members.length > 2;
+  } else {
+    isShared = members.length > 0;
+  }
 
   return (
     <TableRow
@@ -159,7 +166,7 @@ const RenderRow = ({
         tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
-        isShared={row.members.length > 1}
+        isShared={isShared}
         isUploading={row.isUploading}
         onNameClick={rowDoubleClickHandler}
       />

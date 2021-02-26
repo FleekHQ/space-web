@@ -20,7 +20,9 @@ import {
   FileTable,
   HeaderNav,
   FilesErrors,
+  WelcomeMessages,
 } from '../shared/components';
+import EmptyState from './components/EmptyState';
 
 const SharedWithMeView = () => {
   const classes = useStyles();
@@ -74,12 +76,14 @@ const SharedWithMeView = () => {
               disableRowOffset
               bucket="shared-with-me"
               baseRedirectUrl="/shared"
+              EmptyState={EmptyState}
               fetchDir={fetchSharedObjects}
               renderRow={SharedRenderRow}
               type="shared"
             />
             <Downloads />
           </div>
+          <WelcomeMessages />
         </div>
         <DetailsPanel />
       </Box>

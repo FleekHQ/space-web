@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import TopBar from '@ui/Preview/components/TopBar';
 import { useTranslation } from 'react-i18next';
 import FilePreviewer from '@ui/FilePreviewer';
@@ -12,6 +12,8 @@ import { CONTEXT_OPTION_IDS } from '@ui/ContextMenu';
 import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fetchDealId } from '@events/filecoin';
+import queryString from 'query-string';
 
 import Splash from '../Splash';
 import PreviewDetailsPanel from './components/DetailsPanel';
@@ -34,13 +36,30 @@ const FilePreview = () => {
   const { t } = useTranslation();
   const [loadingSdk, setLoadingSdk] = React.useState(true);
   const history = useHistory();
+  const location = useLocation();
   const menuItemOnClick = useMenuItemOnClick({
     clickedItem: file,
   });
 
   const redirectToSignin = () => {
     const redirectRoute = `/file/${uuid}`;
-    history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+    const { temp_key: tempKey } = queryString.parse(location.search);
+
+    const queryParams = {
+      redirect_route: redirectRoute,
+      temp_key: tempKey,
+    };
+
+    const search = queryString.stringify(queryParams);
+
+    history.push({
+      pathname: tempKey ? '/signup' : '/signin',
+      search: `?${search}`,
+    });
+  };
+
+  const redirectHome = () => {
+    history.push('/home');
   };
 
   const getFileInfo = async () => {
@@ -57,15 +76,11 @@ const FilePreview = () => {
         redirectToSignin();
         return;
       }
-      // if there is a user, we show an error
-      // eslint-disable-next-line no-console
-      console.error(e);
+      redirectHome();
     }
   };
 
-  const initSdk = async () => {
-    let sdkUnsubscribe;
-
+  const initUser = async () => {
     // If there is no user, we generate a temporary user in order to
     // to interact with the SDK, but we don't
     if (!user) {
@@ -73,16 +88,22 @@ const FilePreview = () => {
       const identity = await users.createIdentity();
       await users.authenticate(identity);
     }
+  };
+
+  const initSdk = async () => {
+    let sdkUnsubscribe;
 
     if (sdk.isStarting) {
-      sdkUnsubscribe = sdk.onListen('ready', (error) => {
+      sdkUnsubscribe = sdk.onListen('ready', async (error) => {
         if (!error) {
+          await initUser();
           setLoadingSdk(false);
           sdkUnsubscribe();
         }
       });
     } else {
       // SDK is already started
+      initUser();
       setLoadingSdk(false);
     }
 
@@ -103,6 +124,12 @@ const FilePreview = () => {
     }
   }, [loadingSdk]);
 
+  useEffect(() => {
+    if (file?.bucket && file?.fullKey) {
+      fetchDealId(file).then((dealId) => setFile({ ...file, ...dealId }));
+    }
+  }, [file?.fullKey]);
+
   const i18n = {
     signin: t('preview.signIn'),
   };
@@ -113,7 +140,9 @@ const FilePreview = () => {
 
   const getMenuItems = () => {
     const menuOptions = getContextMenuItems({ object: file, t });
-    return menuOptions.filter((item) => item.id !== CONTEXT_OPTION_IDS.preview);
+    return menuOptions
+      .filter((item) => item.id !== CONTEXT_OPTION_IDS.preview)
+      .filter((item) => item.id !== CONTEXT_OPTION_IDS.share);
   };
 
   if (!file) {
@@ -173,6 +202,7 @@ const FilePreview = () => {
             showTitle
             onClose={() => setDetailsPanelExpanded(false)}
             disablePreview
+            disableShare
           />
         </>
       )}

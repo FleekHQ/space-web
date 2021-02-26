@@ -9,7 +9,8 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
   },
   image: {
-    width: '100%',
+    maxWidth: '100%',
+    maxHeight: '100%',
   },
   iframe: {
     width: '100%',

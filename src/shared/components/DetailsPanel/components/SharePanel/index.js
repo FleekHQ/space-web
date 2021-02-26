@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import ContextMenu from '@ui/ContextMenu';
+import Popper from '@material-ui/core/Popper';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@terminal-packages/space-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/pro-light-svg-icons/faAngleDown';
-import ContextMenu from '@ui/ContextMenu';
-import Popper from '@material-ui/core/Popper';
 import useMenuItemOnClick, {
   shareAction,
 } from '@utils/use-menu-item-on-click';
+import { getDealId } from '@events/filecoin';
 import { getIdentitiesByAddress } from '@events';
 
 import { VIEW_MODES } from '../../constants';
@@ -23,6 +24,7 @@ const SharePanel = (props) => {
   const {
     members,
     viewMode,
+    disableShare,
     selectedObject,
   } = props;
 
@@ -38,7 +40,7 @@ const SharePanel = (props) => {
 
   const [contextState, setContextState] = React.useState(initialContextState);
 
-  const copyMenuItems = getCopyMenuItems(t);
+  const copyMenuItems = getCopyMenuItems(t, selectedObject);
 
   const handleContextClose = () => {
     setContextState(initialContextState);
@@ -52,6 +54,8 @@ const SharePanel = (props) => {
   const handleContextMenuOpen = (event) => {
     event.preventDefault();
 
+    getDealId(selectedObject);
+
     const copyButton = document.getElementById('copy-button');
     const boundaries = copyButton.getBoundingClientRect();
 
@@ -60,6 +64,8 @@ const SharePanel = (props) => {
       mouseY: boundaries.top + boundaries.height + 3,
     });
   };
+
+  const membersAddresses = members.map((m) => m.address);
 
   React.useEffect(() => {
     const addresses = members.slice(1).reduce((addrs, member) => {
@@ -73,14 +79,14 @@ const SharePanel = (props) => {
     if (addresses.length > 0) {
       getIdentitiesByAddress({ addresses });
     }
-  }, [members]);
+  }, [...membersAddresses]);
 
   return (
     <div className={classes.root}>
       <Button
         fullWidth
         variant="primary"
-        disabled
+        disabled={disableShare}
         onClick={() => {
           shareAction({
             clickedItem: selectedObject,
@@ -147,6 +153,7 @@ const SharePanel = (props) => {
 
 SharePanel.defaultProps = {
   members: [],
+  disableShare: false,
 };
 
 SharePanel.propTypes = {
@@ -159,6 +166,7 @@ SharePanel.propTypes = {
   selectedObject: PropTypes.shape({
     key: PropTypes.string,
   }).isRequired,
+  disableShare: PropTypes.bool,
 };
 
 export default SharePanel;

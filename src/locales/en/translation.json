@@ -32,6 +32,8 @@
     "comingSoon": "Coming Soon!",
     "goBack": "Go Back",
     "delete": "Delete",
+    "ipfsCopied": "IPFS Hash Copied",
+    "dealIdCopied": "Deal ID Copied",
     "access": {
       "edit": {
         "title": "Can edit",
@@ -109,7 +111,7 @@
   "navigation": {
     "storage": "Storage",
     "files": "My Space",
-    "shared-by": "Shared"
+    "shared-by": "Shared with me"
   },
   "createNewMenu": {
     "fileUpload": "File Upload",
@@ -161,7 +163,13 @@
       "sharedBy": {
         "mostRecentShared": "Most Recently Shared",
         "viewAll": "View All",
-        "emptyList": "No shared files"
+        "emptyList": "No shared files",
+        "fileTable": {
+          "empty": {
+            "title": "Hmm, you don't have any files shared with you yet",
+            "message": "When someone shares a file with you it will appear here"
+          }
+        }
       },
       "detailsPanel": {
         "title": "Details Panel",
@@ -178,7 +186,7 @@
       "recover": "Recover Account",
       "link": "Don't have an account?",
       "errors": {
-        "magicLink": "The email entered does not match our records. Sign up to create one.",
+        "magicLink": "The email entered is invalid or not registered. Sign up, or try again.",
         "torus": "There was an error with torus integration",
         "noData": "There is no data from torus",
         "timeout": "Websocket Timeout",
@@ -300,6 +308,8 @@
     },
     "sharingModal": {
       "to": "To",
+      "search": "Searching...",
+      "notFound": "We couldn't find any space account.",
       "inputPlaceholder": "Enter Name or Email",
       "shareVia": "Share via Username (Recommended)",
       "linkTitle": "Share a link instead",
@@ -523,6 +533,10 @@
     "integrations": {
       "title": "Add Space to your local drive",
       "description": "Browse files in Space from your computer (not just from the app)."
+    },
+    "beta": {
+      "title": "Welcome to Space's early Beta!",
+      "description": "This app is in development and in a testing phase. During this stage, be mindful about storing sensitive files on the platform. Thanks for testing, share your feedback!"
     }
   },
   "addBackupSignIn": {
@@ -544,7 +558,11 @@
     "share": "Share",
     "delete": "Delete",
     "getLink": "Get link",
-    "download": "Download"
+    "copyLink": "Copy link",
+    "download": "Download",
+    "copyIpfsHash": "Copy IPFS Hash",
+    "copyDealId": "Copy Deal ID",
+    "dealIdPending": "Deal ID Pending"
   },
   "hoverMenu": {
     "retry": "Retry",

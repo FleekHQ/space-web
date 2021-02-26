@@ -95,4 +95,8 @@ export default makeStyles((theme) => ({
     overflow: 'auto',
     paddingBottom: 27,
   },
+  editProfileBtn: {
+    padding: 0,
+    width: 'fit-content',
+  },
 }));

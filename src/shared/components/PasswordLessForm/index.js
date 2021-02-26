@@ -5,10 +5,9 @@ import { useTranslation } from 'react-i18next';
 import Box from '@material-ui/core/Box';
 import Button from '@terminal-packages/space-ui/core/Button';
 import RainbowField from '@ui/RainbowField';
+import { checkIsEmail } from '@utils';
 
 import useStyles from './styles';
-
-const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const PasswordLessForm = ({
   onSubmit,
@@ -57,7 +56,7 @@ const PasswordLessForm = ({
         classes={{
           disabled: classes.btnDisabled,
         }}
-        disabled={isLoading || email.length === 0 || !EMAIL_REGEX.test(email)}
+        disabled={isLoading || email.length === 0 || !checkIsEmail(email)}
       >
         {submitBtnText}
       </Button>

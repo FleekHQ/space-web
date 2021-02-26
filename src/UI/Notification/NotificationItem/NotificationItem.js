@@ -134,7 +134,7 @@ NotificationItem.defaultProps = {
   description: '',
   className: null,
   files: [],
-  timestamp: '',
+  timestamp: 0,
   onAccept: () => {},
   onReject: () => {},
   status: 'PENDING',

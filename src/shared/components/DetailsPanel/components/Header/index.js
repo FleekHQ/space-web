@@ -14,6 +14,7 @@ import { faShare } from '@fortawesome/pro-regular-svg-icons/faShare';
 import { faEllipsisV } from '@fortawesome/pro-regular-svg-icons/faEllipsisV';
 import { faTimes } from '@fortawesome/pro-light-svg-icons/faTimes';
 import ContextMenu from '@ui/ContextMenu';
+import { getDealId } from '@events/filecoin';
 import { getContextMenuItems } from '@utils';
 import useMenuItemOnClick, {
   previewAction,
@@ -32,6 +33,7 @@ const DetailsPanelHeader = ({
   onClose,
   mapContextMenuItems,
   disablePreview,
+  disableShare,
 }) => {
   const classes = useStyles({ viewMode });
   const { t } = useTranslation();
@@ -59,6 +61,10 @@ const DetailsPanelHeader = ({
 
   const handleContextMenuOpen = (event) => {
     event.preventDefault();
+
+    if (objects.length === 1 && objects[0].type === 'file') {
+      getDealId(objects[0]);
+    }
 
     setContextState({
       mouseX: event.clientX - 170,
@@ -135,22 +141,20 @@ const DetailsPanelHeader = ({
                       )}
                     />
                   </ButtonBase>
-                  <ButtonBase disabled>
+                  <ButtonBase>
                     <FontAwesomeIcon
                       icon={faLink}
-                      className={classnames(
-                        classes.actionIcon,
-                        classes.disabledIcon,
-                      )}
+                      className={classes.actionIcon}
                       onClick={() => {
                         copyLinkAction({
                           clickedItem: objects[0],
                           dispatch,
+                          t,
                         });
                       }}
                     />
                   </ButtonBase>
-                  <ButtonBase disabled>
+                  <ButtonBase disabled={disableShare}>
                     <FontAwesomeIcon
                       onClick={() => {
                         shareAction({
@@ -161,7 +165,7 @@ const DetailsPanelHeader = ({
                       icon={faShare}
                       className={classnames(
                         classes.actionIcon,
-                        classes.disabledIcon,
+                        disableShare && classes.disabledIcon,
                       )}
                     />
                   </ButtonBase>
@@ -205,6 +209,7 @@ DetailsPanelHeader.defaultProps = {
   onClose: () => {},
   mapContextMenuItems: (items) => items,
   disablePreview: false,
+  disableShare: false,
 };
 
 DetailsPanelHeader.propTypes = {
@@ -225,6 +230,7 @@ DetailsPanelHeader.propTypes = {
   onClose: PropTypes.func,
   mapContextMenuItems: PropTypes.func,
   disablePreview: PropTypes.bool,
+  disableShare: PropTypes.bool,
 };
 
 export default DetailsPanelHeader;

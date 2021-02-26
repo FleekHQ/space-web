@@ -14,6 +14,7 @@ import Table, { TableCell, TableRow } from '@ui/Table';
 import ContextMenu from '@ui/ContextMenu';
 import { useTranslation } from 'react-i18next';
 import { getTabulations, getContextMenuItems } from '@utils';
+import { getDealId } from '@events/filecoin';
 
 import useMenuItemOnClick, { openAction } from '@utils/use-menu-item-on-click';
 
@@ -184,6 +185,7 @@ const ObjectsTable = ({
   const handleRowRightClick = ({ row }) => (event) => {
     event.preventDefault();
 
+    getDealId(row);
     setContextState({
       mouseX: event.clientX - 2,
       mouseY: window.innerHeight - event.clientY < 150

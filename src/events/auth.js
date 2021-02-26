@@ -124,6 +124,14 @@ export const signup = (payload) => async (dispatch) => {
       },
     });
 
+    const storage = await sdk.getStorage();
+
+    if (payload.tempKey) {
+      await storage.syncFromTempKey(payload.tempKey);
+    }
+
+    await storage.initMailbox();
+
     dispatch({
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
       user: {

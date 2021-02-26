@@ -2,21 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@ui/Typography';
+import { getShortAddress } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 
 import useStyles from './styles';
+
+const checkAddress = (text) => /^0x.*/.test(text);
 
 const Collaborator = (props) => {
   const {
     mainText,
     imageSrc,
     secondaryText,
+    onSelect,
+    address,
   } = props;
   const classes = useStyles();
+  const isMainTextAddress = checkAddress(mainText);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onClick={onSelect} aria-hidden="true">
       <div className={classes.imageContainer}>
         {imageSrc ? (
           <img
@@ -41,7 +47,7 @@ const Collaborator = (props) => {
             fontSize={14}
             fontWeight={500}
           >
-            {mainText}
+            {(isMainTextAddress ? getShortAddress(mainText) : mainText) || getShortAddress(address)}
           </Box>
         </Typography>
         {secondaryText && (
@@ -62,12 +68,16 @@ Collaborator.defaultProps = {
   imageSrc: null,
   mainText: null,
   secondaryText: null,
+  onSelect: () => null,
+  address: null,
 };
 
 Collaborator.propTypes = {
   imageSrc: PropTypes.string,
   mainText: PropTypes.string,
   secondaryText: PropTypes.string,
+  onSelect: PropTypes.func,
+  address: PropTypes.string,
 };
 
 export default Collaborator;

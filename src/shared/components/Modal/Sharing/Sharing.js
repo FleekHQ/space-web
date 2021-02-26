@@ -10,15 +10,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentlyMembers } from '@events/identities';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { openToast } from '@shared/components/Toast/actions';
-import { shareFiles, generatePublicFileLink } from '@events/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
+import { shareFiles, setFileAccess } from '@events';
 import { openModal, SHARE_PROGRESS_TOAST } from '@shared/components/Modal/actions';
 
 import useStyles from './styles';
 import getOptions, { getShareLinkOptions } from './options';
 import {
   getCollaboratorsInfo,
+  mapMemberToCollaborator,
+  getIdentitiesFromMembers,
   mapIdentitiesToCollaborators,
+  getRecentlySharedIdentities,
 } from './helpers';
 import {
   Header,
@@ -26,6 +29,8 @@ import {
   MemberInput,
   CollaboratorList,
 } from './components';
+
+import useIdentitiesByNameOrEmail from './use-identities-by-name-email';
 
 /* eslint-disable react/jsx-props-no-spreading */
 const SharingModal = (props) => {
@@ -38,35 +43,64 @@ const SharingModal = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const fileMembers = get(selectedObjects, '[0].members', []);
+
+  const {
+    loading,
+    identities,
+    selectedIdentities,
+    onSelectIdentity,
+    onRemoveSelectedIdentity,
+    onChangeSearchIdentityTerm,
+  } = useIdentitiesByNameOrEmail(fileMembers);
 
   const {
     user,
-    identities,
     publicFileLink,
+    reduxIdentities,
   } = useSelector((s) => ({
     user: s.user,
-    identities: Object.values(s.identities.identities),
     publicFileLink: s.publicFileLink,
+    reduxIdentities: Object.values(s.identities.identities),
   }));
 
+  const currentFileMembers = selectedObjects[0].members;
+  const [
+    memberIdentities,
+    members,
+  ] = getIdentitiesFromMembers(currentFileMembers, reduxIdentities);
+  const memberCollaborators = mapIdentitiesToCollaborators(memberIdentities, false);
+  const currentCollaborators = [...memberCollaborators, ...mapMemberToCollaborator(members)];
+
+  const recentlySharedIdentities = getRecentlySharedIdentities(reduxIdentities);
+  const recentlySharedCollaborators = mapIdentitiesToCollaborators(recentlySharedIdentities);
+
   const collaborators = getCollaboratorsInfo(
-    get(selectedObjects, '[0].members', []) || [],
+    // get(selectedObjects, '[0].members', []) || [],
     user,
-    identities,
+    selectedIdentities,
+    currentCollaborators,
   );
 
-  const [usernames, setUsernames] = useState([]);
-  const [shareLinkOptions, setShareLinkOptions] = useState(getShareLinkOptions(t));
+  const [shareLinkOptions, setShareLinkOptions] = useState(
+    getShareLinkOptions({ t, selectedObject: selectedObjects[0] }),
+  );
 
   const selectedShareLinkOption = shareLinkOptions.find(
     (option) => option.selected,
   ) || shareLinkOptions[0];
 
-  // TODO: call SDK event to change type of sharing link
-  const onShareLinkOptionClick = (option) => setShareLinkOptions(shareLinkOptions.map((opt) => ({
-    ...opt,
-    selected: opt.id === option.id,
-  })));
+  const onShareLinkOptionClick = (option) => {
+    setFileAccess({
+      path: `/${selectedObjects[0].key}`,
+      bucket: selectedObjects[0].bucket,
+      allowAccess: option.id === 'public',
+    });
+    setShareLinkOptions(shareLinkOptions.map((opt) => ({
+      ...opt,
+      selected: opt.id === option.id,
+    })));
+  };
 
   const { error } = publicFileLink;
 
@@ -75,6 +109,8 @@ const SharingModal = (props) => {
       shareVia: t('modals.sharingModal.shareVia'),
       to: t('modals.sharingModal.to'),
       placeholder: t('modals.sharingModal.inputPlaceholder'),
+      search: t('modals.sharingModal.search'),
+      notFound: t('modals.sharingModal.notFound'),
     },
     collaboratorList: {
       owner: t('common.owner'),
@@ -87,36 +123,27 @@ const SharingModal = (props) => {
     console.log('onChangeUserPermissions', ...args);
   };
 
-  const onChangeInputPermissions = (...args) => {
-    console.log('onChangeInputPermissions', ...args);
-  };
-
-  /* eslint-disable no-unused-vars */
-  /* eslint-disable no-underscore-dangle */
   const onShare = (event) => {
     event.preventDefault();
     const notificationId = `${new Date().getTime()}`;
 
-    const { _usernames, _publicKeys } = usernames.reduce((acc, _user) => {
-      if (_user.publicKey) {
-        acc._publicKeys.push(_user.publicKey);
-      } else {
-        acc._usernames.push(_user.username);
-      }
-
-      return acc;
-    }, { _usernames: [], _publicKeys: [] });
-
-    shareFiles({
+    dispatch(shareFiles({
       notificationId,
-      usernames: _usernames,
-      publicKeys: _publicKeys,
-      paths: selectedObjects.map((obj) => ({
-        path: obj.key,
-        dbId: obj.dbId,
-        bucket: obj.sourceBucket || obj.bucket,
+      senderName: user.displayName,
+      origin: window.location.origin,
+      paths: [{
+        dbId: selectedObjects[0].dbId,
+        bucket: selectedObjects[0].bucket,
+        path: `/${selectedObjects[0].key}`,
+        fileName: selectedObjects[0].name,
+        uuid: selectedObjects[0].uuid,
+      }],
+      publicKeys: selectedIdentities.map((identity) => ({
+        id: identity.uuid,
+        pk: identity.publicKey || '',
+        email: identity.email || identity.mainText,
       })),
-    });
+    }));
 
     dispatch({
       type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY,
@@ -127,17 +154,6 @@ const SharingModal = (props) => {
     });
     dispatch(openModal(SHARE_PROGRESS_TOAST, { notificationId }));
     closeModal();
-  };
-
-  const onSave = (password) => {
-    const payload = {
-      password,
-      dbId: get(selectedObjects, '[0].dbId', ''),
-      bucket: get(selectedObjects, '[0].sourceBucket', ''),
-      itemPaths: selectedObjects.map((obj) => obj.key),
-    };
-
-    generatePublicFileLink(payload);
   };
 
   React.useEffect(() => {
@@ -173,13 +189,13 @@ const SharingModal = (props) => {
           {get(selectedObjects, '[0].name', '')}
         </Header>
         <MemberInput
-          options={getOptions(t)}
+          loading={loading}
           i18n={i18n.memberInput}
           className={classes.memberInput}
-          onChange={onChangeInputPermissions}
-          setUsernames={setUsernames}
-          usernames={usernames}
-          collaborators={mapIdentitiesToCollaborators(identities)}
+          identities={identities}
+          onSelectIdentity={onSelectIdentity}
+          onChangeSearchIdentityTerm={onChangeSearchIdentityTerm}
+          recentlySharedCollaborators={recentlySharedCollaborators}
         />
         <CollaboratorList
           i18n={i18n.collaboratorList}
@@ -188,7 +204,8 @@ const SharingModal = (props) => {
           className={classes.collaboratorList}
           onChangePermissions={onChangeUserPermissions}
           onShare={onShare}
-          hasUsers={usernames.length > 0}
+          hasUsers={selectedIdentities.length > 0}
+          onRemoveSelectedIdentity={onRemoveSelectedIdentity}
         />
       </Paper>
       <Paper
@@ -206,7 +223,7 @@ const SharingModal = (props) => {
           }}
           icon={selectedShareLinkOption.id}
           onOptionClick={onShareLinkOptionClick}
-          url={get(publicFileLink, 'linkInfo.link', 'space.app-documents/techdocsv2.docx')}
+          url={`${window.location.origin}/file/${selectedObjects[0].uuid}`}
         />
       </Paper>
       {error && (
@@ -231,6 +248,7 @@ SharingModal.propTypes = {
     key: PropTypes.string,
     ext: PropTypes.string,
     dbId: PropTypes.string,
+    uuid: PropTypes.string,
     name: PropTypes.string,
     bucket: PropTypes.string,
     sourceBucket: PropTypes.string,

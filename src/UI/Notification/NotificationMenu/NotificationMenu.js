@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@ui/Typography';
 import Menu from '@material-ui/core/Menu';
 import ListItem from '@material-ui/core/ListItem';
+import { NOTIFICATION_TYPES } from '@utils/notification-presenter';
 
 import useStyles from './styles';
 import ShareNotificationItem from '../NotificationItem';
@@ -27,7 +28,7 @@ const NotificationMenu = (props) => {
 
   const getNotificationItem = (item) => {
     switch (item.type) {
-      case 'share-invite':
+      case NOTIFICATION_TYPES.fileShareInvitation:
         return (
           <ShareNotificationItem
             key={item.id}

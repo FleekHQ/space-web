@@ -26,17 +26,40 @@ export default (t, withRemoveOption = false) => {
   ];
 };
 
-export const getShareLinkOptions = (t) => [
-  {
-    id: 'private',
-    title: t('modals.sharingModal.shareLink.private'),
-    description: t('modals.sharingModal.shareLink.privateDescription'),
-    selected: true,
-  },
-  {
-    id: 'public',
-    title: t('modals.sharingModal.shareLink.public'),
-    description: t('modals.sharingModal.shareLink.publicDescription'),
-    selected: false,
-  },
-];
+/**
+ * @typedef {Object} Member
+ * @property {number} role
+ * @property {string} address
+ * @property {string} publicKey
+ *
+ * @typedef {Object} SelectedObject
+ * @property {string} id
+ * @property {string} path
+ * @property {string} name
+ * @property {Array.<Member>} members
+ *
+ * Get share link options and set file public or noot
+ * @param {Object} opts
+ * @param {Function} opts.t
+ * @param {SelectedObject} opts.selectedObject
+ */
+export const getShareLinkOptions = ({ t, selectedObject }) => {
+  const isPublic = !!selectedObject.members.find((m) => (
+    m.publicKey === '*' && m.role === 2
+  ));
+
+  return [
+    {
+      id: 'private',
+      title: t('modals.sharingModal.shareLink.private'),
+      description: t('modals.sharingModal.shareLink.privateDescription'),
+      selected: !isPublic,
+    },
+    {
+      id: 'public',
+      title: t('modals.sharingModal.shareLink.public'),
+      description: t('modals.sharingModal.shareLink.publicDescription'),
+      selected: isPublic,
+    },
+  ];
+};

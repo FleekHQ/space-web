@@ -94,15 +94,15 @@ const StorageDetailsPanel = () => {
                   [
                     user,
                     ...selectedObjects[0].members.filter((member) => (
-                      member.address !== user.address
+                      member.address !== user.address && member.address.length
                     )),
                   ].map((member) => {
                     const m = { ...member };
 
                     m.username = m.displayName;
 
-                    if (!m.username || (m.username && m.username.length === 0)) {
-                      m.username = getShortAddress(m.address);
+                    if (!m.displayName || (m.displayName && m.displayName.length === 0)) {
+                      m.displayName = getShortAddress(m.address);
                     }
 
                     return m;
