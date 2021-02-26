@@ -1,24 +1,37 @@
+import { sdk, apiClient } from '@clients';
 import { UPDATE_OBJECT } from '@reducers/storage';
 import store from '../store';
 
-export const getDealId = (object) => {
+export const getDealId = async (object) => {
   if (object.dealId && object.proposalCID) return;
+  if (!object.ipfsHash || object.ipfsHash === '') return;
 
-  // TODO: replace setTimeout by client endpoint call
-  setTimeout(() => {
+  try {
+    const users = await sdk.getUsers();
+    const spaceUser = users.list()[0];
+
+    const { data } = await apiClient.filecoin.fetchDealStatus({
+      token: spaceUser.token,
+      hash: object.ipfsHash,
+    });
+
     store.dispatch({
       type: UPDATE_OBJECT,
       payload: {
         bucket: object.bucket,
         fullKey: object.fullKey,
-        dealId: 123456,
-        proposalCID: 'bafyreifcmqw6fu274ishpggr2cucsdn6ystqdnlpgaa2ndcw4x5sd4pzvm',
+        ...(data.dealId && data.dealId !== 0 && { dealId: data.dealId }),
+        ...(data.proposalCid && { proposalCID: data.proposalCid }),
       },
     });
-  }, 5000);
+  } catch (error) {
+    /* eslint-disable-next-line no-console */
+    console.error('Error fetching dealID', error);
+  }
 };
 
-export const fetchDealId = (object, updateStore = false) => new Promise((resolve) => {
+/* eslint-disable no-async-promise-executor */
+export const fetchDealId = async (object, updateStore = false) => new Promise(async (resolve) => {
   if (object.dealId && object.proposalCID) {
     resolve({
       dealId: object.dealId,
@@ -26,14 +39,26 @@ export const fetchDealId = (object, updateStore = false) => new Promise((resolve
     });
   }
 
-  // TODO: replace setTimeout by client endpoint call
-  setTimeout(() => {
-    const filecoinInfo = {
-      dealId: 123456,
-      proposalCID: 'bafyreifcmqw6fu274ishpggr2cucsdn6ystqdnlpgaa2ndcw4x5sd4pzvm',
-    };
+  if (!object.ipfsHash || object.ipfsHash === '') {
+    resolve({
+      dealId: null,
+      proposalCID: null,
+    });
+  }
 
-    resolve(filecoinInfo);
+  try {
+    const users = await sdk.getUsers();
+    const spaceUser = users.list()[0];
+
+    const { data } = await apiClient.filecoin.fetchDealStatus({
+      token: spaceUser.token,
+      hash: object.ipfsHash,
+    });
+
+    const filecoinInfo = {
+      dealId: data.dealId && data.dealId > 0 ? data.dealId : null,
+      proposalCID: data.proposalCid,
+    };
 
     if (updateStore) {
       store.dispatch({
@@ -41,5 +66,11 @@ export const fetchDealId = (object, updateStore = false) => new Promise((resolve
         payload: { bucket: object.bucket, fullKey: object.fullKey, ...filecoinInfo },
       });
     }
-  }, 5000);
+
+    resolve(filecoinInfo);
+  } catch (error) {
+    /* eslint-disable-next-line no-console */
+    console.error('error fetchig dealID', error);
+    resolve({ dealId: null, proposalCID: null });
+  }
 });

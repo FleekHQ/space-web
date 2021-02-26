@@ -114,7 +114,7 @@ const FilePreview = () => {
     if (file?.bucket && file?.fullKey) {
       fetchDealId(file).then((dealId) => setFile({ ...file, ...dealId }));
     }
-  }, [file]);
+  }, [file?.fullKey]);
 
   const i18n = {
     signin: t('preview.signIn'),
