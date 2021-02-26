@@ -33,7 +33,7 @@ const SharePanel = ({
         <Avatar
           size={21}
           imgUrl={null}
-          username={collaborator.username}
+          username={collaborator.displayName}
           className={classNames(classes.avatar, classes.greyBG)}
         >
           <FontAwesomeIcon
@@ -48,7 +48,7 @@ const SharePanel = ({
         size={21}
         className={classes.avatar}
         imgUrl={collaborator.avatarUrl}
-        username={collaborator.username}
+        username={collaborator.displayName}
       />
     );
   };
@@ -130,7 +130,7 @@ const SharePanel = ({
 
             if (newArray.length) {
               // eslint-disable-next-line no-param-reassign
-              newArray[newArray.length - 1].username = t('detailsPanel.share.group', { number: index - state.maxCollaborators + 2 });
+              newArray[newArray.length - 1].displayName = t('detailsPanel.share.group', { number: index - state.maxCollaborators + 2 });
             }
 
             return newArray;
@@ -149,7 +149,7 @@ const SharePanel = ({
                 variant="body1"
                 className={classes.username}
               >
-                {collaborator.username}
+                {collaborator.displayName}
               </Typography>
               {index === 0 && (
                 <Typography className={classes.ownerLabel}>
@@ -173,6 +173,7 @@ SharePanel.propTypes = {
     address: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     publicKey: PropTypes.string.isRequired,
+    displayName: PropTypes.string.isRequired,
   }).isRequired),
   viewMode: PropTypes.string.isRequired,
 };
