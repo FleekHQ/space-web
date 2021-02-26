@@ -9,6 +9,7 @@ const ErrorMessage = ({ message }) => (
   <Box
     pl="10px"
     pr="14px"
+    mb="-33px"
     bottom={0}
     border={1}
     height={33}
