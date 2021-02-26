@@ -21,6 +21,7 @@ import {
   mapMemberToCollaborator,
   getIdentitiesFromMembers,
   mapIdentitiesToCollaborators,
+  getRecentlySharedIdentities,
 } from './helpers';
 import {
   Header,
@@ -67,8 +68,11 @@ const SharingModal = (props) => {
     memberIdentities,
     members,
   ] = getIdentitiesFromMembers(currentFileMembers, reduxIdentities);
-  const memberCollaborators = mapIdentitiesToCollaborators(memberIdentities);
+  const memberCollaborators = mapIdentitiesToCollaborators(memberIdentities, false);
   const currentCollaborators = [...memberCollaborators, ...mapMemberToCollaborator(members)];
+
+  const recentlySharedIdentities = getRecentlySharedIdentities(reduxIdentities);
+  const recentlySharedCollaborators = mapIdentitiesToCollaborators(recentlySharedIdentities);
 
   const collaborators = getCollaboratorsInfo(
     // get(selectedObjects, '[0].members', []) || [],
@@ -190,6 +194,7 @@ const SharingModal = (props) => {
           identities={identities}
           onSelectIdentity={onSelectIdentity}
           onChangeSearchIdentityTerm={onChangeSearchIdentityTerm}
+          recentlySharedCollaborators={recentlySharedCollaborators}
         />
         <CollaboratorList
           i18n={i18n.collaboratorList}
