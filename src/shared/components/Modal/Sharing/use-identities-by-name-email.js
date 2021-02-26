@@ -110,6 +110,7 @@ export default function useIdentitiesByNameOrEmail(fileMembers = []) {
             username: identity.username || '',
             mainText: isEmail ? identity.email || searchTerm : identity.displayName,
             secondaryText: isEmail ? identity.displayName : identity.email || searchTerm,
+            ...(identity.email && { email: identity.email }),
           }))
           .filter((identity) => {
             const selectedIdentityIndex = state

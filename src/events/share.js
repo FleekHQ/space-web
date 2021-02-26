@@ -1,5 +1,5 @@
 import { sdk, apiClient } from '@clients';
-
+import { checkIsEmail } from '@utils';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 // import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
@@ -46,7 +46,11 @@ export const shareFiles = (payload) => async (dispatch) => {
     const users = await sdk.getUsers();
     const spaceUser = users.list()[0];
     const shareViaPublicKeyPayload = {
-      paths: payload.paths.map((path) => ({ bucket: path.bucket, path: path.path })),
+      paths: payload.paths.map((path) => ({
+        bucket: path.bucket,
+        path: path.path,
+        dbId: path.dbId,
+      })),
       publicKeys: payload.publicKeys.map((key) => ({ id: key.id, pk: key.pk })),
     };
     const { publicKeys } = await storage.shareViaPublicKey(shareViaPublicKeyPayload);
@@ -54,17 +58,21 @@ export const shareFiles = (payload) => async (dispatch) => {
     payload.publicKeys.forEach((publicKey, index) => {
       const fileLink = `${origin}/file/${payload.paths[0].uuid}`;
       const invitationLink = publicKeys[index].type === 'temp' ? `${fileLink}?temp_key=${publicKeys[index].tempKey}` : fileLink;
-      const emailPromise = apiClient.share.shareByEmail({
-        token: spaceUser.token,
-        data: {
-          invitationLink,
-          senderName: payload.senderName,
-          fileName: payload.paths[0].fileName,
-        },
-        type: 'shareInvitation',
-        toAddresses: [publicKey.email],
-      });
-      emailPromises.push(emailPromise);
+
+      if (checkIsEmail(publicKey.email)) {
+        const emailPromise = apiClient.share.shareByEmail({
+          token: spaceUser.token,
+          data: {
+            invitationLink,
+            senderName: payload.senderName,
+            fileName: payload.paths[0].fileName,
+          },
+          type: 'shareInvitation',
+          toAddresses: [publicKey.email],
+        });
+
+        emailPromises.push(emailPromise);
+      }
     });
 
     Promise.all(emailPromises)

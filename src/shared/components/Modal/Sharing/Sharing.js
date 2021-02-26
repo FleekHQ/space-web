@@ -141,7 +141,7 @@ const SharingModal = (props) => {
       publicKeys: selectedIdentities.map((identity) => ({
         id: identity.uuid,
         pk: identity.publicKey || '',
-        email: identity.mainText,
+        email: identity.email || identity.mainText,
       })),
     }));
 
