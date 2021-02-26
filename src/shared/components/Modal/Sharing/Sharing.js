@@ -43,6 +43,7 @@ const SharingModal = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const fileMembers = get(selectedObjects, '[0].members', []);
 
   const {
     loading,
@@ -51,7 +52,7 @@ const SharingModal = (props) => {
     onSelectIdentity,
     onRemoveSelectedIdentity,
     onChangeSearchIdentityTerm,
-  } = useIdentitiesByNameOrEmail();
+  } = useIdentitiesByNameOrEmail(fileMembers);
 
   const {
     user,
