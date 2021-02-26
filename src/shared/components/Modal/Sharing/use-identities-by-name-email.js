@@ -26,7 +26,7 @@ import { apiClient } from '@clients';
 /**
  * Use identities by name or email hook
  */
-export default function useIdentitiesByNameOrEmail() {
+export default function useIdentitiesByNameOrEmail(fileMembers = []) {
   /**
    * @type {[UseIdentitiesByNameOrEmailState, SetIdentitiesByNameOrEmailState]} useIdentitiesByNameOrEmail
    */
@@ -64,8 +64,12 @@ export default function useIdentitiesByNameOrEmail() {
     onSelectIdentity: (identity) => {
       setState((prevState) => {
         const isIdentityAlreadySelected = prevState.selectedIdentities.findIndex((item) => item.mainText === identity.mainText) > -1;
+        const identityIsAlreadyMember = fileMembers.findIndex((member) => {
+          if (member.publicKey && identity.publicKey) return member.publicKey === identity.publicKey;
+          return false;
+        }) > -1;
 
-        if (isIdentityAlreadySelected) return prevState;
+        if (isIdentityAlreadySelected || identityIsAlreadyMember) return prevState;
 
         return {
           ...prevState,

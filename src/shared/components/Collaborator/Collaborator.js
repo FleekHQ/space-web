@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@ui/Typography';
+import { getShortAddress } from '@utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 
@@ -13,6 +14,7 @@ const Collaborator = (props) => {
     imageSrc,
     secondaryText,
     onSelect,
+    publicKey,
   } = props;
   const classes = useStyles();
 
@@ -42,7 +44,7 @@ const Collaborator = (props) => {
             fontSize={14}
             fontWeight={500}
           >
-            {mainText}
+            {mainText || getShortAddress(publicKey)}
           </Box>
         </Typography>
         {secondaryText && (
@@ -64,6 +66,7 @@ Collaborator.defaultProps = {
   mainText: null,
   secondaryText: null,
   onSelect: () => null,
+  publicKey: null,
 };
 
 Collaborator.propTypes = {
@@ -71,6 +74,7 @@ Collaborator.propTypes = {
   mainText: PropTypes.string,
   secondaryText: PropTypes.string,
   onSelect: PropTypes.func,
+  publicKey: PropTypes.string,
 };
 
 export default Collaborator;
