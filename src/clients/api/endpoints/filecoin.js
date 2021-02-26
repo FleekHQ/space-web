@@ -35,6 +35,7 @@ function fetchDealStatus(payload) {
  * @typedef {Object} archiveHashPayload
  * @property {string} token - Auth token.
  * @property {string} hash - file ipfs hash
+ * @property {number} size - size of file in bytes
  * @property {string} publicKey - public key of user
  *
  * @this {import('../client.js')}

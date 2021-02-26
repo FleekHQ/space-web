@@ -146,6 +146,7 @@ export const addItems = ({
             hash: get(data, 'entry.ipfsHash'),
             publicKey: pubKey,
             token: spaceUser.token,
+            size: get(data, 'entry.sizeInBytes', 0),
           }).then().catch((error) => {
             /* eslint-disable-next-line no-console */
             console.error('Error archiving hash', error);
