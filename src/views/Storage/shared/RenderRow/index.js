@@ -68,15 +68,12 @@ const RenderRow = ({
         </div>
       );
     }
-    if (row.ext === 'folder') return <div className={classes.iconContainer} />;
     if (row.isAvailableInSpace) {
       return (
         <div className={classes.iconContainer}>
           <FontAwesomeIcon
             icon={faCheckCircle}
-            className={classnames(classes.checkIcon, {
-              [classes.notAvailableLocally]: !row.isLocallyAvailable,
-            })}
+            className={classnames(classes.checkIcon)}
           />
         </div>
       );
