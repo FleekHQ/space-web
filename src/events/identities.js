@@ -1,4 +1,5 @@
-import { apiClient } from '@clients';
+import { sdk, apiClient } from '@clients';
+
 import { IDENTITIES_ACTION_TYPES } from '@reducers/identities';
 
 import store from '../store';
@@ -18,7 +19,16 @@ export const getIdentitiesByAddress = async (payload) => {
       addresses: payload.addresses,
     });
     const identitiesArray = Array.isArray(data.data) ? data.data : [data.data];
-    const identities = identitiesArray.filter((identity) => identity !== null);
+    const identities = identitiesArray.reduce((filteredIdentities, identity) => {
+      if (identity !== null) {
+        const undefinedRecentlyShared = payload.recentlyShared === undefined;
+        const recentlyShared = undefinedRecentlyShared ? false : payload.recentlyShared;
+
+        filteredIdentities.push({ ...identity, recentlyShared });
+      }
+
+      return filteredIdentities;
+    }, []);
 
     store.dispatch({
       identities,
@@ -30,7 +40,20 @@ export const getIdentitiesByAddress = async (payload) => {
   }
 };
 
-export const fetchRecentlyMembers = () => {
+export const fetchRecentlyMembers = async () => {
+  store.dispatch({
+    type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES,
+  });
+
+  try {
+    const storage = await sdk.getStorage();
+    const res = await storage.getRecentlySharedWith();
+    const addresses = res.members.map((member) => member.address);
+
+    getIdentitiesByAddress({ addresses, recentlyShared: true });
+  } catch (error) {
+    console.error('Error when trying to get the identities recently shared with:', error);
+  }
 };
 
 export default registerIdentitiesEvents;
