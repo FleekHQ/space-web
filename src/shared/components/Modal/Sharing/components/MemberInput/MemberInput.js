@@ -55,7 +55,7 @@ const MemberInput = (props) => {
         inputValue={searchTerm}
         loadingText={i18n.search}
         noOptionsText={i18n.notFound}
-        options={recentlySharedCollaborators}
+        options={[...identities, ...recentlySharedCollaborators]}
         getOptionLabel={(option) => option.mainText}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
@@ -99,20 +99,14 @@ const MemberInput = (props) => {
             mainText={option.mainText}
             secondaryText={option.secondaryText}
             onSelect={() => {
-              if (
-                (option.add && checkIsEmail(searchTerm))
-                || checkIsEmail(option.mainText)
-                || checkIsEmail(option.secondaryText)
-              ) {
-                if (option.add) {
-                  onSelectIdentity({
-                    publicKey: '',
-                    secondaryText: '',
-                    mainText: option.email,
-                    id: (new Date()).getMilliseconds(),
-                  });
-                }
-              } else {
+              if (option.add && checkIsEmail(searchTerm)) {
+                onSelectIdentity({
+                  publicKey: '',
+                  secondaryText: '',
+                  mainText: option.email,
+                  id: (new Date()).getMilliseconds(),
+                });
+              } else if (option.publicKey) {
                 onSelectIdentity(option);
                 setSearchTerm('');
               }
