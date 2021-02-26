@@ -18,6 +18,9 @@ import useStyles from './styles';
 import getOptions, { getShareLinkOptions } from './options';
 import {
   getCollaboratorsInfo,
+  mapMemberToCollaborator,
+  getIdentitiesFromMembers,
+  mapIdentitiesToCollaborators,
 } from './helpers';
 import {
   Header,
@@ -39,6 +42,7 @@ const SharingModal = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const {
     loading,
     identities,
@@ -51,15 +55,26 @@ const SharingModal = (props) => {
   const {
     user,
     publicFileLink,
+    reduxIdentities,
   } = useSelector((s) => ({
     user: s.user,
     publicFileLink: s.publicFileLink,
+    reduxIdentities: Object.values(s.identities.identities),
   }));
+
+  const currentFileMembers = selectedObjects[0].members;
+  const [
+    memberIdentities,
+    members,
+  ] = getIdentitiesFromMembers(currentFileMembers, reduxIdentities);
+  const memberCollaborators = mapIdentitiesToCollaborators(memberIdentities);
+  const currentCollaborators = [...memberCollaborators, ...mapMemberToCollaborator(members)];
 
   const collaborators = getCollaboratorsInfo(
     // get(selectedObjects, '[0].members', []) || [],
     user,
     selectedIdentities,
+    currentCollaborators,
   );
 
   const [shareLinkOptions, setShareLinkOptions] = useState(
