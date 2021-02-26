@@ -8,6 +8,8 @@ import { faUser } from '@fortawesome/pro-regular-svg-icons/faUser';
 
 import useStyles from './styles';
 
+const checkAddress = (text) => /^0x.*/.test(text);
+
 const Collaborator = (props) => {
   const {
     mainText,
@@ -17,6 +19,7 @@ const Collaborator = (props) => {
     address,
   } = props;
   const classes = useStyles();
+  const isMainTextAddress = checkAddress(mainText);
 
   return (
     <div className={classes.root} onClick={onSelect} aria-hidden="true">
@@ -44,7 +47,7 @@ const Collaborator = (props) => {
             fontSize={14}
             fontWeight={500}
           >
-            {mainText || getShortAddress(address)}
+            {(isMainTextAddress ? getShortAddress(mainText) : mainText) || getShortAddress(address)}
           </Box>
         </Typography>
         {secondaryText && (
