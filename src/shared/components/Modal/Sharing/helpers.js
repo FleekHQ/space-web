@@ -18,15 +18,18 @@ export const getCollaboratorsInfo = (owner, selectedIdentities, members) => {
   ];
 };
 
-export const mapIdentitiesToCollaborators = (identities = []) => identities.map((identity) => ({
-  id: identity.publicKey,
-  mainText: identity.displayName,
-  secondaryText: identity.email,
-  username: identity.displayName,
-  publicKey: identity.publicKey,
-  ...(identity.avatarUrl && { imageSrc: identity.avatarUrl }),
-  deletable: false,
-}));
+/* TO-DO: Remove deletable once sdk supports deleting file collaborators */
+export const mapIdentitiesToCollaborators = (identities = [], deletable = true) => (
+  identities.map((identity) => ({
+    id: identity.publicKey,
+    mainText: identity.displayName,
+    secondaryText: identity.email,
+    username: identity.displayName,
+    publicKey: identity.publicKey,
+    ...(identity.avatarUrl && { imageSrc: identity.avatarUrl }),
+    deletable,
+  }))
+);
 
 export const mapMemberToCollaborator = (members) => members.map((member) => ({
   id: member.publicKey,
@@ -60,3 +63,15 @@ export const getIdentitiesFromMembers = (members, identities) => {
 
   return [memberIdentities, membersWithoutIdentities];
 };
+
+export const getRecentlySharedIdentities = (identities) => (
+  identities.reduce((recentlySharedIdentities, identity) => {
+    const { recentlyShared } = identity;
+
+    if (recentlyShared !== undefined && recentlyShared) {
+      recentlySharedIdentities.push(identity);
+    }
+
+    return recentlySharedIdentities;
+  }, [])
+);
