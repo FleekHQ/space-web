@@ -65,6 +65,8 @@ const SharePanel = (props) => {
     });
   };
 
+  const membersAddresses = members.map((m) => m.address);
+
   React.useEffect(() => {
     const addresses = members.slice(1).reduce((addrs, member) => {
       if (!state.identities[member.publicKey]) {
@@ -77,7 +79,7 @@ const SharePanel = (props) => {
     if (addresses.length > 0) {
       getIdentitiesByAddress({ addresses });
     }
-  }, [members]);
+  }, [...membersAddresses]);
 
   return (
     <div className={classes.root}>

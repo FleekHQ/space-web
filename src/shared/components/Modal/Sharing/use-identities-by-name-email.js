@@ -62,11 +62,17 @@ export default function useIdentitiesByNameOrEmail() {
      * @returns {void}
      */
     onSelectIdentity: (identity) => {
-      setState((prevState) => ({
-        ...prevState,
-        identities: [],
-        selectedIdentities: [...prevState.selectedIdentities, identity],
-      }));
+      setState((prevState) => {
+        const isIdentityAlreadySelected = prevState.selectedIdentities.findIndex((item) => item.mainText === identity.mainText) > -1;
+
+        if (isIdentityAlreadySelected) return prevState;
+
+        return {
+          ...prevState,
+          identities: [],
+          selectedIdentities: [...prevState.selectedIdentities, identity],
+        };
+      });
     },
     /**
      * Search identity by term, could be displayName or email
