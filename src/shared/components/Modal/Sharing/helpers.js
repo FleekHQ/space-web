@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-export const getCollaboratorsInfo = (owner, selectedIdentities, members) => {
+export const getCollaboratorsInfo = (owner, selectedIdentities, members = []) => {
   const ownerAvatar = get(owner, 'avatarUrl');
   const ownerId = get(owner, 'publicKey', 'owner');
 
@@ -14,7 +14,7 @@ export const getCollaboratorsInfo = (owner, selectedIdentities, members) => {
       ...(ownerAvatar && { imageSrc: ownerAvatar }),
     },
     ...selectedIdentities,
-    ...members,
+    ...members.filter((member) => member.id !== '*'),
   ];
 };
 

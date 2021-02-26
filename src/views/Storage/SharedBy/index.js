@@ -20,6 +20,7 @@ import {
   FileTable,
   HeaderNav,
   FilesErrors,
+  WelcomeMessages,
 } from '../shared/components';
 import EmptyState from './components/EmptyState';
 
@@ -82,6 +83,7 @@ const SharedWithMeView = () => {
             />
             <Downloads />
           </div>
+          <WelcomeMessages />
         </div>
         <DetailsPanel />
       </Box>
