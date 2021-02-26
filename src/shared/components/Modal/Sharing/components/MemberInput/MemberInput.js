@@ -18,6 +18,7 @@ const MemberInput = (props) => {
     identities,
     onSelectIdentity,
     onChangeSearchIdentityTerm,
+    recentlySharedCollaborators,
   } = props;
 
   const classes = useStyles();
@@ -54,7 +55,7 @@ const MemberInput = (props) => {
         inputValue={searchTerm}
         loadingText={i18n.search}
         noOptionsText={i18n.notFound}
-        options={identities}
+        options={recentlySharedCollaborators}
         getOptionLabel={(option) => option.mainText}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
@@ -110,9 +111,9 @@ const MemberInput = (props) => {
                     mainText: option.email,
                     id: (new Date()).getMilliseconds(),
                   });
-                } else {
-                  onSelectIdentity(option);
                 }
+              } else {
+                onSelectIdentity(option);
                 setSearchTerm('');
               }
             }}
@@ -127,6 +128,7 @@ MemberInput.defaultProps = {
   className: null,
   identities: [],
   loading: false,
+  recentlySharedCollaborators: [],
 };
 
 MemberInput.propTypes = {
@@ -149,6 +151,14 @@ MemberInput.propTypes = {
   })),
   onSelectIdentity: PropTypes.func.isRequired,
   onChangeSearchIdentityTerm: PropTypes.func.isRequired,
+  recentlySharedCollaborators: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    isOwner: PropTypes.bool,
+    avatar: PropTypes.string,
+    mainText: PropTypes.string,
+    secondaryText: PropTypes.string,
+    permissionsId: PropTypes.string,
+  })),
 };
 
 export default MemberInput;
