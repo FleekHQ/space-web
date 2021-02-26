@@ -114,6 +114,16 @@ const RenderRow = ({
     );
   };
 
+  let isShared = false;
+  const members = get(row, 'members', []) || [];
+  const isFolder = get(row, 'type') === 'folder';
+
+  if (isFolder) {
+    isShared = members.length > 2;
+  } else {
+    isShared = members.length > 0;
+  }
+
   return (
     <TableRow
       hover
@@ -159,7 +169,7 @@ const RenderRow = ({
         tabulations={disableOffset ? 0 : getTabulations(row.key, location)}
         name={row.name}
         selected={!!row.selected}
-        isShared={row.members.length > 1}
+        isShared={isShared}
         isUploading={row.isUploading}
         onNameClick={rowDoubleClickHandler}
       />
