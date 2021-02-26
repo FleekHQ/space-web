@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import path from 'path';
+import classnames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import FolderNavButton from '@ui/FolderNavButton';
@@ -143,7 +144,10 @@ const HeaderNav = () => {
               hideResults();
             }}
             classes={{
-              root: classes.rootSearchBar,
+              root: classnames(
+                classes.rootSearchBar,
+                classes.hide,
+              ),
               resultContainer: classes.resultContainer,
             }}
           />
