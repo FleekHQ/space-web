@@ -133,7 +133,7 @@ const SharingModal = (props) => {
       origin: window.location.origin,
       paths: [{
         dbId: selectedObjects[0].dbId,
-        bucket: selectedObjects[0].bucket,
+        bucket: 'personal',
         path: `/${selectedObjects[0].key}`,
         fileName: selectedObjects[0].name,
         uuid: selectedObjects[0].uuid,
