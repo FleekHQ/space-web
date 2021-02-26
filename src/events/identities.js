@@ -17,7 +17,9 @@ export const getIdentitiesByAddress = async (payload) => {
       token: '',
       addresses: payload.addresses,
     });
-    const identities = Array.isArray(data.data) ? data.data : [data.data];
+    const identitiesArray = Array.isArray(data.data) ? data.data : [data.data];
+    const identities = identitiesArray.filter((identity) => identity !== null);
+
     store.dispatch({
       identities,
       type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES_SUCCESS,

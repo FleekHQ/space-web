@@ -7,7 +7,7 @@ export default makeStyles({
     right: 10,
     left: 10,
     margin: 'auto',
-    maxWidth: 559,
+    maxWidth: 570,
     '& > div': {
       margin: '10px 0',
     },

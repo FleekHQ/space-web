@@ -1,5 +1,4 @@
 const createErrorObject = ({
-  targetPath,
   sourcePath,
   bucket,
   isDir,
@@ -7,9 +6,7 @@ const createErrorObject = ({
 }) => {
   const splitSourcePath = sourcePath.split('/');
   const filename = splitSourcePath[splitSourcePath.length - 1];
-  const folderPath = targetPath === '' ? '' : `/${targetPath}`;
-  const fullKey = `${bucket}${folderPath}/${filename}`;
-  const splitFullKey = fullKey.split('/');
+  const fullKey = `${bucket}/${sourcePath}`.replace('//', '/');
   const timestamp = new Date().getTime();
 
   const getFileExtension = () => {
@@ -21,7 +18,7 @@ const createErrorObject = ({
   };
 
   return ({
-    key: targetPath === '' ? filename : splitFullKey.slice(1, splitFullKey.length - 1).join('/'),
+    key: sourcePath,
     ext: getFileExtension(),
     dbId: undefined,
     type: isDir ? 'folder' : 'file',

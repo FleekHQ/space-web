@@ -28,6 +28,7 @@ const CollaboratorList = (props) => {
       id,
       isOwner,
       permissionsId,
+      deletable = true,
       ...collaboratorProps
     } = collaborator;
 
@@ -39,14 +40,14 @@ const CollaboratorList = (props) => {
           <Typography variant="body2" className={classes.ownerLabel}>
             {i18n.owner}
           </Typography>
-        ) : (
+        ) : (deletable && (
           <IconButton
             className={classes.removeBtn}
             onClick={() => onRemoveSelectedIdentity(collaborator)}
           >
             <FontAwesomeIcon icon={faTimes} />
           </IconButton>
-        )}
+        ))}
       </div>
     );
   });

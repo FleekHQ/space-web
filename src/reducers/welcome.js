@@ -12,6 +12,7 @@ try {
     hideBackup: false,
     hideUsername: false,
     hideIntegration: false,
+    hideBeta: false,
   };
 }
 

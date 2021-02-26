@@ -94,6 +94,8 @@ export const fetchSharedObjects = async (seek = '', limit = 100) => {
         const { files = [] } = response;
         const mappedEntries = files.map((file) => ({
           ...file.entry,
+          sourceBucket: file.entry.bucket,
+          bucket: 'shared-with-me',
           sharedBy: file.sharedBy,
         }));
         const entries = flatEntries(mappedEntries);

@@ -4,6 +4,7 @@ export default makeStyles({
   root: {
     display: 'flex',
     alignItems: 'center',
+    flex: 1,
   },
   imageContainer: {
     minWidth: 30,

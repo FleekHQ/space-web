@@ -55,13 +55,7 @@ export const handleFilesInvitation = async (payload) => {
 
   try {
     const storage = await sdk.getStorage();
-    await storage.handleFileInvitation({
-      invitation: {
-        invitationID: payload.invitationID,
-        accept: payload.accept,
-      },
-    });
-    fetchSharedObjects();
+    await storage.handleFileInvitation(payload.invitationID, payload.accept);
 
     store.dispatch({
       type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
@@ -70,6 +64,7 @@ export const handleFilesInvitation = async (payload) => {
     });
 
     if (payload.accept) {
+      fetchSharedObjects();
       payload.history.push('/shared');
     }
   } catch (e) {
@@ -95,11 +90,18 @@ export const handleFilesInvitation = async (payload) => {
   }
 };
 
-export const setNotificationsLastSeenAt = (payload) => {
-  store.dispatch({
-    type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
-    lastSeenAt: payload.timestamp,
-  });
+export const setNotificationsLastSeenAt = async (payload) => {
+  try {
+    store.dispatch({
+      type: NOTIFICATIONS_ACTION_TYPES.SET_NOTIFICATIONS_LAST_SEEN_AT,
+      lastSeenAt: payload.timestamp,
+    });
+
+    const storage = await sdk.getStorage();
+    await storage.setNotificationsLastSeenAt(payload.timestamp);
+  } catch (e) {
+    console.error('Failed to setNotificationsLastSeenAt', e);
+  }
 };
 
 export default registerNotificationEvents;

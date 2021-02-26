@@ -533,6 +533,10 @@
     "integrations": {
       "title": "Add Space to your local drive",
       "description": "Browse files in Space from your computer (not just from the app)."
+    },
+    "beta": {
+      "title": "Welcome to Space's early Beta!",
+      "description": "This app is in development and in a testing phase. During this stage, be mindful about storing sensitive files on the platform. Thanks for testing, share your feedback!"
     }
   },
   "addBackupSignIn": {

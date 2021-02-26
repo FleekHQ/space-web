@@ -7,6 +7,7 @@ import {
   getIdentitiesByAddress,
 } from '@events';
 import { getAddressByPublicKey } from '@utils';
+import { NOTIFICATION_TYPES } from '@utils/notification-presenter';
 import {
   NotificationMenu,
   NotificationButton,
@@ -33,9 +34,10 @@ const Notifications = () => {
 
   useEffect(() => {
     const addresses = notifications.data.notifications.reduce((addrs, notification) => {
-      const { invitationValue } = notification;
-      if (invitationValue && !identities[invitationValue.inviterPublicKey]) {
-        const address = getAddressByPublicKey(invitationValue.inviterPublicKey);
+      const { type, relatedObject } = notification;
+      const isInvitation = NOTIFICATION_TYPES.fileShareInvitation === type;
+      if (isInvitation && relatedObject && !identities[relatedObject.inviterPublicKey]) {
+        const address = getAddressByPublicKey(relatedObject.inviterPublicKey);
         if (!addrs.includes(address)) {
           return addrs.concat(address);
         }

@@ -1,4 +1,5 @@
-import { sdk } from '@clients';
+import get from 'lodash/get';
+import { sdk, apiClient } from '@clients';
 
 import { objectPresenter, createErrorObject, normalizePath } from '@utils';
 import {
@@ -12,8 +13,14 @@ import {
   openModal, UPLOAD_PROGRESS_TOAST,
 } from '@shared/components/Modal/actions';
 
+import store from '../store';
+
 const registerAddItemsSubscribeEvents = () => {
 };
+
+const notAllowedFiles = [
+  '.ds_store',
+];
 
 /**
  * @typedef {Object} SourcePaths
@@ -28,13 +35,20 @@ const registerAddItemsSubscribeEvents = () => {
  */
 export const addItems = ({
   targetPath,
-  sourcePaths,
   bucket = 'personal',
+  sourcePaths: baseSourcePaths,
 }) => async (dispatch) => {
   const storage = await sdk.getStorage();
+  const users = await sdk.getUsers();
+  const spaceUser = users.list()[0];
   const modalId = dispatch(openModal(UPLOAD_PROGRESS_TOAST));
+  const pubKey = get(store.getState(), 'user.publicKey');
 
   window.onbeforeunload = () => false;
+
+  const sourcePaths = baseSourcePaths.filter(
+    (file) => !notAllowedFiles.includes(file.name.toLocaleLowerCase()),
+  );
 
   dispatch({
     type: INIT_UPLOAD_STATE,
@@ -61,16 +75,6 @@ export const addItems = ({
 
     window.onbeforeunload = null;
 
-    dispatch({
-      type: SET_UPLOAD_ERROR_STATE,
-      payload: {
-        id: modalId,
-        error: {
-          message: 'Upload error',
-        },
-      },
-    });
-
     if (data.files && Array.isArray(data.files)) {
       data.files.forEach((file) => {
         const currentFile = sourcePaths.find((f) => f.path === file.path);
@@ -91,7 +95,7 @@ export const addItems = ({
       return;
     }
 
-    const currentFile = sourcePaths.find((f) => f.path === data.path);
+    const currentFile = sourcePaths.find((f) => f.path === normalizePath(data.path));
     const errorObject = createErrorObject({
       bucket,
       targetPath,
@@ -99,6 +103,27 @@ export const addItems = ({
       size: currentFile.size,
       sourcePath: currentFile.path,
     });
+
+    totalCompletedFiles += 1;
+
+    dispatch({
+      type: SET_UPLOAD_SUCCESS_STATE,
+      payload: {
+        id: modalId,
+        payload: {
+          result: {
+            bucketPath: bucket,
+            sourcePath: currentFile.path,
+            error: null,
+          },
+          totalBytes: currentFile.size,
+          completedBytes: currentFile.size,
+          completedFiles: totalCompletedFiles,
+          totalFiles: sourcePaths.length,
+        },
+      },
+    });
+
     dispatch({
       payload: errorObject,
       type: UPDATE_OR_ADD_OBJECT,
@@ -113,6 +138,19 @@ export const addItems = ({
         totalCompletedFiles += 1;
         const lastDot = currentFile.name.lastIndexOf('.');
         const ext = currentFile.name.substring(lastDot + 1);
+
+        const isDir = get(data, 'entry.isDir', false);
+
+        if (!isDir) {
+          apiClient.filecoin.archiveHash({
+            hash: get(data, 'entry.ipfsHash'),
+            publicKey: pubKey,
+            token: spaceUser.token,
+          }).then().catch((error) => {
+            /* eslint-disable-next-line no-console */
+            console.error('Error archiving hash', error);
+          });
+        }
 
         dispatch({
           type: SET_UPLOAD_SUCCESS_STATE,
