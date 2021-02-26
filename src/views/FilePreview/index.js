@@ -53,7 +53,7 @@ const FilePreview = () => {
     const search = queryString.stringify(queryParams);
 
     history.push({
-      pathname: '/signin',
+      pathname: tempKey ? '/signup' : '/signin',
       search: `?${search}`,
     });
   };
