@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import TopBar from '@ui/Preview/components/TopBar';
 import { useTranslation } from 'react-i18next';
 import FilePreviewer from '@ui/FilePreviewer';
@@ -13,6 +13,7 @@ import useMenuItemOnClick from '@utils/use-menu-item-on-click';
 import { faSpinnerThird } from '@fortawesome/pro-duotone-svg-icons/faSpinnerThird';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fetchDealId } from '@events/filecoin';
+import queryString from 'query-string';
 
 import Splash from '../Splash';
 import PreviewDetailsPanel from './components/DetailsPanel';
@@ -35,13 +36,26 @@ const FilePreview = () => {
   const { t } = useTranslation();
   const [loadingSdk, setLoadingSdk] = React.useState(true);
   const history = useHistory();
+  const location = useLocation();
   const menuItemOnClick = useMenuItemOnClick({
     clickedItem: file,
   });
 
   const redirectToSignin = () => {
     const redirectRoute = `/file/${uuid}`;
-    history.push(`/signin?redirect_to=${encodeURIComponent(redirectRoute)}`);
+    const { temp_key: tempKey } = queryString.parse(location.search);
+
+    const queryParams = {
+      redirect_route: redirectRoute,
+      temp_key: tempKey,
+    };
+
+    const search = queryString.stringify(queryParams);
+
+    history.push({
+      pathname: '/signin',
+      search: `?${search}`,
+    });
   };
 
   const redirectHome = () => {

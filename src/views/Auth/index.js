@@ -51,11 +51,16 @@ const Auth = () => {
       type: AUTH_ACTION_TYPES.ON_RESET,
     });
 
-    const { redirect_to: redirectTo } = queryString.parse(location.search);
+    const {
+      redirect_to: redirectTo,
+      temp_key: tempKey,
+    } = queryString.parse(location.search);
+
     const { error, isSent } = await sendPasswordlessEmail({
       email,
       from: currentView,
       redirectTo,
+      tempKey,
     });
 
     if (error) {
@@ -72,6 +77,7 @@ const Auth = () => {
         state: {
           email,
           from: currentView,
+          tempKey,
         },
         search: location.search,
       });
@@ -84,10 +90,13 @@ const Auth = () => {
    * @param {import('../../../utils/use-torus-sdk').TorusRes} payload.torusRes
    */
   const handleThirdPartyAuthSuccess = ({ torusRes, keyNotExists }) => {
+    const { temp_key: tempKey } = queryString.parse(location.search);
+
     setShowSplash(true);
     if (keyNotExists) {
       dispatch(signup({
         torusRes,
+        tempKey,
       }));
       return;
     }
@@ -126,6 +135,7 @@ const Auth = () => {
       if (!isInitializing) {
         const getTorusRes = async () => {
           const { hash, stateFields } = getLoginPayload();
+          const { tempKey } = stateFields;
 
           try {
             const torusRes = await torusTriggerLogin({
@@ -146,7 +156,7 @@ const Auth = () => {
               return;
             }
 
-            dispatch(signup({ torusRes }));
+            dispatch(signup({ torusRes, tempKey }));
           } catch (error) {
             setShowSplash(false);
 
