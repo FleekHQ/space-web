@@ -161,9 +161,6 @@ const SharingModal = (props) => {
     };
   }, []);
 
-  React.useEffect(() => {
-  }, []);
-
   return (
     <BaseModal
       onClose={closeModal}
