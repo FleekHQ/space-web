@@ -48,10 +48,12 @@ export const fetchRecentlyMembers = async () => {
   try {
     const storage = await sdk.getStorage();
     const res = await storage.getRecentlySharedWith();
+
     const addresses = res.members.map((member) => member.address);
 
     getIdentitiesByAddress({ addresses, recentlyShared: true });
   } catch (error) {
+    /* eslint-disable-next-line no-console */
     console.error('Error when trying to get the identities recently shared with:', error);
   }
 };
