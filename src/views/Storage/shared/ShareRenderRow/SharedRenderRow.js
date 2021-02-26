@@ -75,6 +75,7 @@ const ShareRenderRow = ({
         name={row.name}
         selected={!!row.selected}
         isShared={row.members.length > 0}
+        onNameClick={handleDoubleRowClick({ row })}
       />
       <MemberCell
         username={sharedByIdentity.displayName}
