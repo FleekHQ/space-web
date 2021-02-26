@@ -36,4 +36,7 @@ export default makeStyles((theme) => ({
       color: '#666666',
     },
   },
+  hide: {
+    visibility: 'hidden',
+  },
 }));
