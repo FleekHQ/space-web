@@ -26,6 +26,7 @@ export const mapIdentitiesToCollaborators = (identities = [], deletable = true) 
     secondaryText: identity.email,
     username: identity.displayName,
     publicKey: identity.publicKey,
+    address: identity.address,
     ...(identity.avatarUrl && { imageSrc: identity.avatarUrl }),
     deletable,
   }))

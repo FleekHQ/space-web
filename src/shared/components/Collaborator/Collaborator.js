@@ -14,7 +14,7 @@ const Collaborator = (props) => {
     imageSrc,
     secondaryText,
     onSelect,
-    publicKey,
+    address,
   } = props;
   const classes = useStyles();
 
@@ -44,7 +44,7 @@ const Collaborator = (props) => {
             fontSize={14}
             fontWeight={500}
           >
-            {mainText || getShortAddress(publicKey)}
+            {mainText || getShortAddress(address)}
           </Box>
         </Typography>
         {secondaryText && (
@@ -66,7 +66,7 @@ Collaborator.defaultProps = {
   mainText: null,
   secondaryText: null,
   onSelect: () => null,
-  publicKey: null,
+  address: null,
 };
 
 Collaborator.propTypes = {
@@ -74,7 +74,7 @@ Collaborator.propTypes = {
   mainText: PropTypes.string,
   secondaryText: PropTypes.string,
   onSelect: PropTypes.func,
-  publicKey: PropTypes.string,
+  address: PropTypes.string,
 };
 
 export default Collaborator;
