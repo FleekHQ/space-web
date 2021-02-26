@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-export const getCollaboratorsInfo = (owner, selectedIdentities) => {
+export const getCollaboratorsInfo = (owner, selectedIdentities, members) => {
   const ownerAvatar = get(owner, 'avatarUrl');
   const ownerId = get(owner, 'publicKey', 'owner');
 
@@ -14,6 +14,7 @@ export const getCollaboratorsInfo = (owner, selectedIdentities) => {
       ...(ownerAvatar && { imageSrc: ownerAvatar }),
     },
     ...selectedIdentities,
+    ...members,
   ];
 };
 
@@ -24,4 +25,38 @@ export const mapIdentitiesToCollaborators = (identities = []) => identities.map(
   username: identity.displayName,
   publicKey: identity.publicKey,
   ...(identity.avatarUrl && { imageSrc: identity.avatarUrl }),
+  deletable: false,
 }));
+
+export const mapMemberToCollaborator = (members) => members.map((member) => ({
+  id: member.publicKey,
+  mainText: member.address,
+  deletable: false,
+}));
+
+export const getIdentitiesFromMembers = (members, identities) => {
+  const memberIdentities = [];
+  const membersWithoutIdentities = [];
+  const memberAddresses = members.map((member) => member.address);
+  const reducedMemberIdentities = identities.reduce((filteredIdentities, identity) => {
+    if (memberAddresses.includes(identity.address)) {
+      filteredIdentities.push(identity);
+    }
+
+    return filteredIdentities;
+  }, []);
+
+  members.forEach((member) => {
+    const identity = reducedMemberIdentities.filter((currentIdentity) => (
+      member.address === currentIdentity.address
+    ));
+
+    if (identity.length > 0) {
+      memberIdentities.push(identity[0]);
+    } else {
+      membersWithoutIdentities.push(member);
+    }
+  });
+
+  return [memberIdentities, membersWithoutIdentities];
+};
