@@ -93,7 +93,8 @@ const SharingModal = (props) => {
   const onShareLinkOptionClick = (option) => {
     setFileAccess({
       path: `/${selectedObjects[0].key}`,
-      bucket: selectedObjects[0].bucket,
+      bucket: selectedObjects[0].sourceBucket,
+      dbId: selectedObjects[0].dbId,
       allowAccess: option.id === 'public',
     });
     setShareLinkOptions(shareLinkOptions.map((opt) => ({
@@ -133,7 +134,7 @@ const SharingModal = (props) => {
       origin: window.location.origin,
       paths: [{
         dbId: selectedObjects[0].dbId,
-        bucket: selectedObjects[0].bucket,
+        bucket: selectedObjects[0].sourceBucket,
         path: `/${selectedObjects[0].key}`,
         fileName: selectedObjects[0].name,
         uuid: selectedObjects[0].uuid,

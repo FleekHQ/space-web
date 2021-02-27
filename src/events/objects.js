@@ -318,6 +318,7 @@ export const setFileAccess = async (payload) => {
       path: payload.path,
       bucket: payload.bucket,
       allowAccess: payload.allowAccess,
+      dbId: payload.dbId,
     });
   } catch (error) {
     // eslint-disable-next-line no-console
