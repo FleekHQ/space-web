@@ -39,4 +39,10 @@ export default makeStyles((theme) => ({
   hide: {
     visibility: 'hidden',
   },
+  beta: {
+    fontSize: 8,
+    marginLeft: 5,
+    fontWeight: 600,
+    marginBottom: 2,
+  },
 }));
