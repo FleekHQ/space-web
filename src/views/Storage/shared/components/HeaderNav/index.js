@@ -104,8 +104,14 @@ const HeaderNav = () => {
 
   return (
     <div className={classes.root}>
+
       <Box width={219} display="flex" alignItems="center">
-        <img width={73} src={`${process.env.PUBLIC_URL}/assets/images/space-logo-black.svg`} alt="space-logo" />
+        <Box display="flex" alignItems="flex-end">
+          <img width={73} src={`${process.env.PUBLIC_URL}/assets/images/space-logo-black.svg`} alt="space-logo" />
+          <Typography variant="caption" className={classes.beta}>
+            {t('common.beta')}
+          </Typography>
+        </Box>
       </Box>
       <Box flex={1} display="flex" alignItems="center">
         <FolderNavButton

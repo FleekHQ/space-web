@@ -34,6 +34,7 @@
     "delete": "Delete",
     "ipfsCopied": "IPFS Hash Copied",
     "dealIdCopied": "Deal ID Copied",
+    "beta": "BETA",
     "access": {
       "edit": {
         "title": "Can edit",
