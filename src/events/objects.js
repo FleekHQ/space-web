@@ -13,6 +13,7 @@ import {
   SET_LOADING_STATE,
   SET_OPEN_ERROR_BUCKET,
   UPDATE_OBJECT,
+  CHANGE_OBJECT_ACCESS,
 } from '@reducers/storage';
 import { DOWNLOAD_ACTION_TYPES } from '@reducers/downloads';
 import { SEARCH_ACTION_TYPES } from '@reducers/search';
@@ -312,13 +313,30 @@ export const downloadFile = async (payload) => {
  * @param {boolean} payload.allowAccess
  */
 export const setFileAccess = async (payload) => {
+  const {
+    dbId,
+    path,
+    bucket,
+    fullKey,
+    allowAccess,
+  } = payload;
+
   try {
     const storage = await sdk.getStorage();
     await storage.setFilePublicAccess({
-      path: payload.path,
-      bucket: payload.bucket,
-      allowAccess: payload.allowAccess,
-      dbId: payload.dbId,
+      path,
+      bucket,
+      allowAccess,
+      dbId,
+    });
+
+    store.dispatch({
+      type: CHANGE_OBJECT_ACCESS,
+      payload: {
+        bucket,
+        fullKey,
+        allowAccess,
+      },
     });
   } catch (error) {
     // eslint-disable-next-line no-console
