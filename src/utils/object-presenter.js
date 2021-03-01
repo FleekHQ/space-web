@@ -18,7 +18,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
   const size = parseInt(get(obj, 'sizeInBytes', 0), 10);
   const bytesSize = formatBytes(size);
 
-  const members = get(obj, 'members', []);
+  const members = get(obj, 'members', []) || [];
   const backupCount = get(obj, 'backupCount', 0);
   const isLocallyAvailable = get(obj, 'isLocallyAvailable', false);
   const sourceBucket = get(obj, 'sourceBucket');
@@ -28,6 +28,8 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
   const sourcePath = get(obj, 'sourcePath', '');
   const uuid = get(obj, 'uuid');
   const isUploading = get(obj, 'isUploading', false);
+
+  const isPublic = members.findIndex((member) => member.publicKey === '*') > -1;
 
   return {
     key,
@@ -40,6 +42,7 @@ const objectPresenter = (obj = {}, isRootDir = false) => {
     bucket,
     members,
     created,
+    isPublic,
     bytesSize,
     error: false,
     lastModified,

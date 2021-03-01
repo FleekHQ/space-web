@@ -96,6 +96,7 @@ const SharingModal = (props) => {
       bucket: selectedObjects[0].sourceBucket,
       dbId: selectedObjects[0].dbId,
       allowAccess: option.id === 'public',
+      fullKey: selectedObjects[0].fullKey,
     });
     setShareLinkOptions(shareLinkOptions.map((opt) => ({
       ...opt,
@@ -253,6 +254,7 @@ SharingModal.propTypes = {
     name: PropTypes.string,
     bucket: PropTypes.string,
     sourceBucket: PropTypes.string,
+    fullKey: PropTypes.string,
     members: PropTypes.arrayOf(PropTypes.shape({
       address: PropTypes.string,
       publicKey: PropTypes.string,
