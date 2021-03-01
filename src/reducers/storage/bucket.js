@@ -16,6 +16,7 @@ export const SET_ERROR_BUCKET = 'SET_ERROR_BUCKET';
 export const SET_OPEN_ERROR_BUCKET = 'SET_OPEN_ERROR_BUCKET';
 export const UPDATE_SHARE_AMOUNT_OBJECTS = 'UPDATE_SHARE_AMOUNT_OBJECTS';
 export const DESELECT_ALL_OBJECTS = 'DESELECT_ALL_OBJECTS';
+export const CHANGE_OBJECT_ACCESS = 'CHANGE_OBJECT_ACCESS';
 
 const DEFAULT_STATE = {
   membersList: [],
@@ -162,6 +163,35 @@ export default (state = DEFAULT_STATE, action) => {
           return {
             ...obj,
             ...action.payload,
+          };
+        }
+
+        return obj;
+      });
+
+      return {
+        ...state,
+        objects: updatedObjects,
+      };
+    }
+
+    case CHANGE_OBJECT_ACCESS: {
+      const updatedObjects = state.objects.map((obj) => {
+        if (obj.fullKey === action.payload.fullKey) {
+          let members = [...obj.members];
+
+          if (action.payload.allowAccess) {
+            const isPublic = members.findIndex((member) => member.publicKey === '*') > -1;
+            members = [
+              ...(!isPublic && [{ publicKey: '*', address: '', role: 2 }]),
+            ];
+          } else {
+            members = members.filter((member) => member.publicKey !== '*');
+          }
+
+          return {
+            ...obj,
+            members,
           };
         }
 
