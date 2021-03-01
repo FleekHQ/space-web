@@ -319,15 +319,16 @@ export const setFileAccess = async (payload) => {
     bucket,
     fullKey,
     allowAccess,
+    sourceBucket,
   } = payload;
 
   try {
     const storage = await sdk.getStorage();
     await storage.setFilePublicAccess({
       path,
-      bucket,
-      allowAccess,
       dbId,
+      allowAccess,
+      bucket: sourceBucket,
     });
 
     store.dispatch({
