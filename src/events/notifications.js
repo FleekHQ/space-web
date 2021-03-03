@@ -4,6 +4,8 @@
 import { sdk } from '@clients';
 import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
 import { notificationPresenter } from '@utils';
+import * as Sentry from '@sentry/react';
+
 import { fetchSharedObjects } from './objects';
 
 import store from '../store';
@@ -39,6 +41,7 @@ export const fetchNotifications = async (payload) => {
       },
     });
   } catch (e) {
+    Sentry.captureException(e);
     store.dispatch({
       type: NOTIFICATIONS_ACTION_TYPES.ON_FETCH_NOTIFICATIONS_ERROR,
       error: e,
@@ -68,6 +71,7 @@ export const handleFilesInvitation = async (payload) => {
       payload.history.push('/shared');
     }
   } catch (e) {
+    Sentry.captureException(e);
     store.dispatch({
       type: NOTIFICATIONS_ACTION_TYPES.ON_UPDATE_INVITATION_STATUS,
       status: 'PENDING',
@@ -100,6 +104,7 @@ export const setNotificationsLastSeenAt = async (payload) => {
     const storage = await sdk.getStorage();
     await storage.setNotificationsLastSeenAt(payload.timestamp);
   } catch (e) {
+    Sentry.captureException(e);
     console.error('Failed to setNotificationsLastSeenAt', e);
   }
 };

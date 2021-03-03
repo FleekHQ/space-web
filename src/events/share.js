@@ -2,6 +2,7 @@ import { sdk, apiClient } from '@clients';
 import { checkIsEmail } from '@utils';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
+import * as Sentry from '@sentry/react';
 // import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
 // import { UPDATE_SHARE_AMOUNT_OBJECTS } from '@reducers/storage/bucket';
 
@@ -93,6 +94,7 @@ export const shareFiles = (payload) => async (dispatch) => {
         });
       });
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error(`Error when trying to share a file by public key: ${error.message}`);
 
