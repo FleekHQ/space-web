@@ -26,6 +26,7 @@ export default (state = DEFAULT_STATE, action) => {
         ...state,
         isAuthenticating: false,
         authenticatingError: action.error,
+        link: action.link,
       };
     }
     case AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS: {
