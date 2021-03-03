@@ -31,7 +31,7 @@
     "@spacehq/sdk": "^0.0.29",
     "@terminal-packages/space-ui": "^0.3.17",
     "@toruslabs/torus-direct-web-sdk": "^3.5.7",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "chokidar": "^3.4.0",
     "classnames": "^2.2.6",
