@@ -1,5 +1,6 @@
 import { objectPresenter } from '@utils';
 import { sdk } from '@clients';
+import * as Sentry from '@sentry/react';
 
 import store from '../store';
 import { CREATE_FOLDER_ACTION_TYPES } from '../reducers/create-folder';
@@ -50,6 +51,7 @@ export const createFolder = async (payload) => {
       }),
     });
   } catch (error) {
+    Sentry.captureException(error);
     console.error('Error creating a new folder', error);
 
     store.dispatch({

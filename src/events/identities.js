@@ -1,4 +1,5 @@
 import { sdk, apiClient } from '@clients';
+import * as Sentry from '@sentry/react';
 
 import { IDENTITIES_ACTION_TYPES } from '@reducers/identities';
 
@@ -35,6 +36,7 @@ export const getIdentitiesByAddress = async (payload) => {
       type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES_SUCCESS,
     });
   } catch (e) {
+    Sentry.captureException(e);
     /* eslint-disable-next-line no-console */
     console.error('Error when trying to get the identities by address:', e);
   }
@@ -53,6 +55,7 @@ export const fetchRecentlyMembers = async () => {
 
     getIdentitiesByAddress({ addresses, recentlyShared: true });
   } catch (error) {
+    Sentry.captureException(error);
     /* eslint-disable-next-line no-console */
     console.error('Error when trying to get the identities recently shared with:', error);
   }

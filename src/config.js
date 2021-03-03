@@ -20,6 +20,9 @@ const {
 } = process.env;
 
 export default {
+  sentry: {
+    dsn: 'https://ce70e1f4b0d444ca91fa7c0181805e7b@o385630.ingest.sentry.io/5657966',
+  },
   textileHubAddress: REACT_APP_TEXTILE_HUB_ADDRESS,
   vault: {
     serviceUrl: REACT_APP_VAULT_SERVICE_URL,

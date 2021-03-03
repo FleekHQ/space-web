@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { sdk, apiClient } from '@clients';
+import * as Sentry from '@sentry/react';
 
 import store from '../store';
 import { USER_ACTION_TYPES } from '../reducers/user';
@@ -33,6 +34,7 @@ export const uploadProfilePic = async (payload) => {
       type: USER_ACTION_TYPES.ON_UPDATE_AVATAR_SUCCESS,
     });
   } catch (error) {
+    Sentry.captureException(error);
     console.error(error);
 
     store.dispatch({
@@ -58,6 +60,7 @@ export const updateIdentity = async (payload) => {
       type: USER_ACTION_TYPES.UPDATE_USER,
     });
   } catch (error) {
+    Sentry.captureException(error);
     console.error(error);
 
     store.dispatch({
@@ -92,6 +95,7 @@ export const getLinkedAddresses = () => async (dispatch) => {
       type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_SUCCESS,
     });
   } catch (error) {
+    Sentry.captureException(error);
     console.error('GET_LINKED_ADDRESSES_ERROR_EVENT', error);
 
     dispatch({
@@ -147,6 +151,7 @@ export const addLinkedAddress = (payload) => async (dispatch) => {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     console.error('ADD_LINKED_ADDRESS_ERROR_EVENT', error);
     let message = error.message || '';
 
