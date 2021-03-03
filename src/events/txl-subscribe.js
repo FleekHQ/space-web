@@ -1,4 +1,6 @@
 import { sdk } from '@clients';
+import * as Sentry from '@sentry/react';
+
 import { listDirectory } from './objects';
 
 const registerTxlSubscribeEvents = async () => {
@@ -13,6 +15,10 @@ const registerTxlSubscribeEvents = async () => {
   };
 
   response.on('data', handler);
+
+  response.on('error', (data) => {
+    Sentry.captureException(data.error);
+  });
 
   return () => {
     response.off('data', handler);

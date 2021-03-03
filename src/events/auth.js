@@ -1,4 +1,5 @@
 import { sdk, apiClient } from '@clients';
+import * as Sentry from '@sentry/react';
 
 import { AUTH_ACTION_TYPES } from '../reducers/auth';
 import { USER_ACTION_TYPES } from '../reducers/user';
@@ -27,6 +28,7 @@ export const signout = (user) => async (dispatch) => {
       type: USER_ACTION_TYPES.ON_USER_LOGOUT,
     });
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error(`Error when trying remove identity: ${error.message}`);
   }
@@ -65,6 +67,7 @@ export const signin = (payload) => async (dispatch) => {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error('SIGNIN_ERROR_EVENT', error);
 
@@ -140,6 +143,7 @@ export const signup = (payload) => async (dispatch) => {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error('SIGNUP_ERROR_EVENT', error);
 

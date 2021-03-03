@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import { sdk, apiClient } from '@clients';
+import * as Sentry from '@sentry/react';
 
 import { objectPresenter, createErrorObject, normalizePath } from '@utils';
 import {
@@ -72,6 +73,7 @@ export const addItems = ({
   uploadResponse.on('error', (data) => {
     // eslint-disable-next-line no-console
     console.error('SUBSCRIBE_ERROR_EVENT', data);
+    Sentry.captureException(data.error);
 
     window.onbeforeunload = null;
 

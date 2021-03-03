@@ -19,6 +19,7 @@ import { DOWNLOAD_ACTION_TYPES } from '@reducers/downloads';
 import { SEARCH_ACTION_TYPES } from '@reducers/search';
 import { OPEN_PUBLIC_FILE_ACTION_TYPES } from '@reducers/open-public-file';
 import { DELETE_OBJECT_ACTION_TYPES } from '@reducers/delete-object';
+import * as Sentry from '@sentry/react';
 
 import store from '../store';
 
@@ -66,6 +67,7 @@ export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
       await Promise.all(fetchSubDirs);
     }
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error(error);
     store.dispatch({
@@ -118,6 +120,7 @@ export const fetchSharedObjects = async (seek = '', limit = 100) => {
         type: SET_LOADING_STATE_BUCKET,
       });
     }).catch((error) => {
+      Sentry.captureException(error);
       /* eslint-disable-next-line no-console */
       console.error('Failed to get shared files', error);
       store.dispatch({
@@ -295,6 +298,7 @@ export const downloadFile = async (payload) => {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     store.dispatch({
       type: DOWNLOAD_ACTION_TYPES.ERROR_DOWNLOAD,
       payload: {
@@ -340,6 +344,7 @@ export const setFileAccess = async (payload) => {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     // eslint-disable-next-line no-console
     console.error(`Error when trying to change file access type: ${error.message}`);
   }

@@ -1,5 +1,7 @@
 import { sdk, apiClient } from '@clients';
 import { UPDATE_OBJECT } from '@reducers/storage';
+import * as Sentry from '@sentry/react';
+
 import store from '../store';
 
 export const getDealId = async (object) => {
@@ -25,6 +27,7 @@ export const getDealId = async (object) => {
       },
     });
   } catch (error) {
+    Sentry.captureException(error);
     /* eslint-disable-next-line no-console */
     console.error('Error fetching dealID', error);
   }
@@ -69,6 +72,7 @@ export const fetchDealId = async (object, updateStore = false) => new Promise(as
 
     resolve(filecoinInfo);
   } catch (error) {
+    Sentry.captureException(error);
     /* eslint-disable-next-line no-console */
     console.error('error fetchig dealID', error);
     resolve({ dealId: null, proposalCID: null });
