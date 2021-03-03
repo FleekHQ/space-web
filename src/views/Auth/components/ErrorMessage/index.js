@@ -17,7 +17,7 @@ const ErrorMessage = ({ message, link }) => {
         {message}
         {
           link !== undefined && (
-            <span>
+            <Box component="span">
               <span> </span>
               <Link
                 to={`/${link.to}`}
@@ -25,7 +25,7 @@ const ErrorMessage = ({ message, link }) => {
               >
                 {link.message}
               </Link>
-            </span>
+            </Box>
           )
         }
       </Box>
