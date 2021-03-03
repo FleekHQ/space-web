@@ -18,7 +18,7 @@ const ErrorMessage = ({ message, link }) => {
         {
           link !== undefined && (
             <Box component="span">
-              <span>&#32;</span>
+              &nbsp;
               <Link
                 to={`/${link.to}`}
                 className={classes.link}
