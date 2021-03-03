@@ -66,6 +66,10 @@ const Auth = () => {
     if (error) {
       dispatch({
         error: `modules.${match.params[0]}.errors.magicLink`,
+        link: {
+          to: 'signin',
+          message: t(`modules.${match.params[0]}.signIn`),
+        },
         type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_ERROR,
       });
       return;
@@ -283,6 +287,7 @@ const Auth = () => {
               state.authenticatingError && (
                 <ErrorMessage
                   message={t(state.authenticatingError, { defaultValue: t('modules.signup.errors.generic') })}
+                  link={state.link}
                 />
               )
             }
