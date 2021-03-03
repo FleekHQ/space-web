@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as Sentry from '@sentry/react';
 import SigninOptions from '@terminal-packages/space-ui/core/SigninOptions';
 import Box from '@material-ui/core/Box';
 import config from '@config';
@@ -52,6 +53,7 @@ const SocialNetworksAuth = ({
       });
 
       onError('noData');
+      Sentry.captureException(new Error('no data from torus response'));
     } catch (error) {
       setState({
         loading: false,
@@ -64,6 +66,7 @@ const SocialNetworksAuth = ({
       }
 
       onError('torus');
+      Sentry.captureException(error);
     }
   };
 

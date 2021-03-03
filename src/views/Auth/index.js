@@ -1,5 +1,6 @@
 import React from 'react';
 import config from '@config';
+import * as Sentry from '@sentry/react';
 import Box from '@material-ui/core/Box';
 import { signin, signup } from '@events';
 import { useTranslation } from 'react-i18next';
@@ -163,6 +164,7 @@ const Auth = () => {
             dispatch(signup({ torusRes, tempKey }));
           } catch (error) {
             setShowSplash(false);
+            Sentry.captureException(error);
 
             let errorKey = 'torus';
             if (error.message.includes('Duplicate token found')) {
