@@ -1,6 +1,7 @@
 import React from 'react';
 import config from '@config';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 import Box from '@material-ui/core/Box';
 import { signin, signup } from '@events';
 import { useTranslation } from 'react-i18next';
@@ -165,6 +166,9 @@ const Auth = () => {
           } catch (error) {
             setShowSplash(false);
             Sentry.captureException(error);
+            LogRocket.captureException(error, {
+              tags: { event: 'auth', method: currentView },
+            });
 
             let errorKey = 'torus';
             if (error.message.includes('Duplicate token found')) {
@@ -262,7 +266,7 @@ const Auth = () => {
                 submitBtnText={t(`modules.${currentView}.title`)}
                 defaultEmail={
                   location.state
-                  && location.state.email ? location.state.email : undefined
+                    && location.state.email ? location.state.email : undefined
                 }
                 onSubmit={handlePasswordLessFormSubmit}
               />
