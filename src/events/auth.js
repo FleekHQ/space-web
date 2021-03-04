@@ -1,8 +1,11 @@
 import { sdk, apiClient } from '@clients';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 
 import { AUTH_ACTION_TYPES } from '../reducers/auth';
 import { USER_ACTION_TYPES } from '../reducers/user';
+
+const EVENT_NAME = 'auth';
 
 const registerAuthEvents = () => {
 };
@@ -28,7 +31,12 @@ export const signout = (user) => async (dispatch) => {
       type: USER_ACTION_TYPES.ON_USER_LOGOUT,
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'signout' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     // eslint-disable-next-line no-console
     console.error(`Error when trying remove identity: ${error.message}`);
   }
@@ -67,7 +75,12 @@ export const signin = (payload) => async (dispatch) => {
       },
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'signin' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     // eslint-disable-next-line no-console
     console.error('SIGNIN_ERROR_EVENT', error);
 
@@ -143,7 +156,12 @@ export const signup = (payload) => async (dispatch) => {
       },
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'signup' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     // eslint-disable-next-line no-console
     console.error('SIGNUP_ERROR_EVENT', error);
 

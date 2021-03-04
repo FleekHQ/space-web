@@ -1,9 +1,12 @@
 import { objectPresenter } from '@utils';
 import { sdk } from '@clients';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 
 import store from '../store';
 import { CREATE_FOLDER_ACTION_TYPES } from '../reducers/create-folder';
+
+const EVENT_NAME = 'folder';
 
 /* eslint-disable no-console, import/prefer-default-export */
 /**
@@ -51,7 +54,13 @@ export const createFolder = async (payload) => {
       }),
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'createFolder' },
+      extra: { ...payload },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     console.error('Error creating a new folder', error);
 
     store.dispatch({

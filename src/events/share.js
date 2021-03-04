@@ -3,10 +3,11 @@ import { checkIsEmail } from '@utils';
 import { SHARE_TYPES } from '@reducers/details-panel/share';
 import { PUBLIC_LINK_ACTION_TYPES } from '@reducers/public-file-link';
 import * as Sentry from '@sentry/react';
-// import { ERROR_MODAL_TOAST, OPEN_MODAL } from '@shared/components/Modal/actions';
-// import { UPDATE_SHARE_AMOUNT_OBJECTS } from '@reducers/storage/bucket';
+import LogRocket from 'logrocket';
 
 import store from '../store';
+
+const EVENT_NAME = 'share';
 
 const registerObjectsEvents = () => {
 };
@@ -84,6 +85,12 @@ export const shareFiles = (payload) => async (dispatch) => {
         });
       })
       .catch((e) => {
+        const errorInfo = {
+          tags: { event: EVENT_NAME, method: 'shareFiles' },
+        };
+
+        Sentry.captureException(e, errorInfo);
+        LogRocket.captureException(e, errorInfo);
         // eslint-disable-next-line no-console
         console.error('Failed to send share emails', e);
 
@@ -94,7 +101,12 @@ export const shareFiles = (payload) => async (dispatch) => {
         });
       });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'shareFiles' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     // eslint-disable-next-line no-console
     console.error(`Error when trying to share a file by public key: ${error.message}`);
 

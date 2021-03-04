@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LogRocket from 'logrocket';
 import * as Sentry from '@sentry/react';
 import SigninOptions from '@terminal-packages/space-ui/core/SigninOptions';
 import Box from '@material-ui/core/Box';
@@ -28,6 +29,7 @@ const SocialNetworksAuth = ({
   });
 
   const handleTorusTriggerLogin = async (provider) => {
+    const EVENT_NAME = 'torusTriggerLogin';
     setState({
       loading: true,
       torusRes: null,
@@ -53,7 +55,11 @@ const SocialNetworksAuth = ({
       });
 
       onError('noData');
-      Sentry.captureException(new Error('no data from torus response'));
+      const noDataErr = new Error('no data from torus response');
+      Sentry.captureException(noDataErr);
+      LogRocket.captureException(noDataErr, {
+        tags: { event: EVENT_NAME },
+      });
     } catch (error) {
       setState({
         loading: false,
@@ -67,6 +73,9 @@ const SocialNetworksAuth = ({
 
       onError('torus');
       Sentry.captureException(error);
+      LogRocket.captureException(error, {
+        tags: { event: EVENT_NAME },
+      });
     }
   };
 

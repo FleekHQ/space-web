@@ -1,7 +1,10 @@
 import { sdk } from '@clients';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 
 import { listDirectory } from './objects';
+
+const EVENT_NAME = 'txl-subscribe';
 
 const registerTxlSubscribeEvents = async () => {
   const storage = await sdk.getStorage();
@@ -17,7 +20,12 @@ const registerTxlSubscribeEvents = async () => {
   response.on('data', handler);
 
   response.on('error', (data) => {
-    Sentry.captureException(data.error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'registerTxlSubscribeEvents' },
+    };
+
+    Sentry.captureException(data.error, errorInfo);
+    LogRocket.captureException(data.error, errorInfo);
   });
 
   return () => {
