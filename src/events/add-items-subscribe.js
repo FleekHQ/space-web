@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import { sdk, apiClient } from '@clients';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 
 import { objectPresenter, createErrorObject, normalizePath } from '@utils';
 import {
@@ -15,6 +16,8 @@ import {
 } from '@shared/components/Modal/actions';
 
 import store from '../store';
+
+const EVENT_NAME = 'add-items-subscribe';
 
 const registerAddItemsSubscribeEvents = () => {
 };
@@ -73,7 +76,13 @@ export const addItems = ({
   uploadResponse.on('error', (data) => {
     // eslint-disable-next-line no-console
     console.error('SUBSCRIBE_ERROR_EVENT', data);
-    Sentry.captureException(data.error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'addItems' },
+      extra: { path: data.path, status: data.status, bucket: data.bucket },
+    };
+
+    Sentry.captureException(data.error, errorInfo);
+    LogRocket.captureException(data.error, errorInfo);
 
     window.onbeforeunload = null;
 
