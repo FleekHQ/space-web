@@ -53,6 +53,10 @@ export const fetchRecentlyMembers = async () => {
 
     const addresses = res.members.map((member) => member.address);
 
+    if (addresses.length === 0) {
+      return;
+    }
+
     getIdentitiesByAddress({ addresses, recentlyShared: true });
   } catch (error) {
     Sentry.captureException(error);
