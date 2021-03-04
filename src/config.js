@@ -20,6 +20,12 @@ const {
 } = process.env;
 
 export default {
+  logRocket: {
+    projectId: 'fleek/space-web-ewvkz',
+    scrubHeaders: [
+      'authorization',
+    ],
+  },
   sentry: {
     dsn: 'https://ce70e1f4b0d444ca91fa7c0181805e7b@o385630.ingest.sentry.io/5657966',
   },

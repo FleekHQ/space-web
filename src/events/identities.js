@@ -1,9 +1,12 @@
 import { sdk, apiClient } from '@clients';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 
 import { IDENTITIES_ACTION_TYPES } from '@reducers/identities';
 
 import store from '../store';
+
+const EVENT_NAME = 'identities';
 
 const registerIdentitiesEvents = () => {
 };
@@ -36,7 +39,13 @@ export const getIdentitiesByAddress = async (payload) => {
       type: IDENTITIES_ACTION_TYPES.ON_GET_IDENTITIES_SUCCESS,
     });
   } catch (e) {
-    Sentry.captureException(e);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'getIdentitiesByAddress' },
+      extra: { ...payload },
+    };
+
+    Sentry.captureException(e, errorInfo);
+    LogRocket.captureException(e, errorInfo);
     /* eslint-disable-next-line no-console */
     console.error('Error when trying to get the identities by address:', e);
   }
@@ -55,7 +64,12 @@ export const fetchRecentlyMembers = async () => {
 
     getIdentitiesByAddress({ addresses, recentlyShared: true });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'fetchRecentlyMembers' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     /* eslint-disable-next-line no-console */
     console.error('Error when trying to get the identities recently shared with:', error);
   }

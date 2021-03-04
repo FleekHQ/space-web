@@ -1,4 +1,5 @@
 import pick from 'lodash/pick';
+import LogRocket from 'logrocket';
 
 import { AUTH_ACTION_TYPES } from './auth';
 
@@ -23,6 +24,11 @@ const USER_KEY = '_u';
 
 try {
   user = JSON.parse(window.localStorage.getItem(USER_KEY));
+  if (user && user.address) {
+    LogRocket.identify(user.address, {
+      ...user,
+    });
+  }
 } catch (error) {
   user = null;
 }
@@ -33,6 +39,10 @@ const writeUser = (state, userInfo) => {
     ...(state),
     ...userInfo,
   };
+
+  LogRocket.identify(newUserState.address, {
+    ...newUserState,
+  });
 
   window.localStorage.setItem(
     USER_KEY,

@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 import { sdk, apiClient } from '@clients';
 import * as Sentry from '@sentry/react';
+import LogRocket from 'logrocket';
 
 import store from '../store';
 import { USER_ACTION_TYPES } from '../reducers/user';
 import { DELETE_ACCOUNT_ACTION_TYPES } from '../reducers/delete-account';
 import { LINKED_ADDRESSES_ACTION_TYPES } from '../reducers/linked-addresses';
+
+const EVENT_NAME = 'account';
 
 const registerAccountEvents = () => {
 };
@@ -34,7 +37,12 @@ export const uploadProfilePic = async (payload) => {
       type: USER_ACTION_TYPES.ON_UPDATE_AVATAR_SUCCESS,
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'uploadProfilePic' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     console.error(error);
 
     store.dispatch({
@@ -60,7 +68,13 @@ export const updateIdentity = async (payload) => {
       type: USER_ACTION_TYPES.UPDATE_USER,
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'updateIdentity' },
+      extra: { ...payload },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     console.error(error);
 
     store.dispatch({
@@ -95,7 +109,12 @@ export const getLinkedAddresses = () => async (dispatch) => {
       type: LINKED_ADDRESSES_ACTION_TYPES.ON_GET_LINKED_ADDRESSES_SUCCESS,
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'getLinkedAddresses' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     console.error('GET_LINKED_ADDRESSES_ERROR_EVENT', error);
 
     dispatch({
@@ -151,7 +170,12 @@ export const addLinkedAddress = (payload) => async (dispatch) => {
       },
     });
   } catch (error) {
-    Sentry.captureException(error);
+    const errorInfo = {
+      tags: { event: EVENT_NAME, method: 'addLinkedAddress' },
+    };
+
+    Sentry.captureException(error, errorInfo);
+    LogRocket.captureException(error, errorInfo);
     console.error('ADD_LINKED_ADDRESS_ERROR_EVENT', error);
     let message = error.message || '';
 
