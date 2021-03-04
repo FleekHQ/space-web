@@ -23,7 +23,7 @@ export default {
   logRocket: {
     projectId: 'fleek/space-web-ewvkz',
     scrubHeaders: [
-      'authorization',
+      'Authorization',
     ],
   },
   sentry: {
