@@ -520,6 +520,18 @@
         "public": "People I share or accept files from",
         "private": "Nobody (Keep it Private)"
       }
+    },
+    "moveFiles": {
+      "preparation": "Getting files ready to be moved...",
+      "loading": "Moving <0>{{fileCount}}</0>",
+      "error": "An error has ocurred when trying to move <0>{{fileCount}}</0>",
+      "success": "Succesfully moved <0>{{fileCount}}</0>",
+      "readingFilesError": "Error while trying to get information from the files",
+      "fileNumber": "{{count}} file",
+      "fileNumber_plural": "{{count}} files",
+      "folderNumber": "{{count}} folder",
+      "folderNumber_plural": "{{count}} folders",
+      "and": "and"
     }
   },
   "welcome": {

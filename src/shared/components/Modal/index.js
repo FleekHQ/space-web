@@ -18,6 +18,8 @@ import DeleteObject from './DeleteObject';
 import DeleteObjectSuccess from './DeleteObjectSuccess';
 import EditProfile from './EditProfile';
 import FilePreview from './FilePreview';
+import MovingProgressModal from './MovingProgress';
+
 import useStyles from './styles';
 
 import {
@@ -39,6 +41,7 @@ import {
   DELETE_OBJECT_SUCCESS,
   EDIT_PROFILE,
   FILE_PREVIEW,
+  MOVE_PROGRESS_TOAST,
 } from './actions';
 
 const MODALS = {
@@ -59,6 +62,7 @@ const MODALS = {
   [DELETE_OBJECT_SUCCESS]: DeleteObjectSuccess,
   [EDIT_PROFILE]: EditProfile,
   [FILE_PREVIEW]: FilePreview,
+  [MOVE_PROGRESS_TOAST]: MovingProgressModal,
 };
 
 const getModalsComponents = (modals, dispatch) => modals.map(({ id, type, props }) => {

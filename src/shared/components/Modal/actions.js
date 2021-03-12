@@ -22,6 +22,7 @@ export const DELETE_OBJECT = 'DELETE_OBJECT';
 export const DELETE_OBJECT_SUCCESS = 'DELETE_OBJECT_SUCCESS';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const FILE_PREVIEW = 'FILE_PREVIEW';
+export const MOVE_PROGRESS_TOAST = 'MOVE_PROGRESS_TOAST';
 
 /* Action creators */
 export const openModal = (modalType, props = {}) => (dispatch) => {
