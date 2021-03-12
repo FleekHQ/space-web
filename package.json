@@ -30,7 +30,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@sentry/react": "^6.2.1",
     "@sentry/tracing": "^6.2.1",
-    "@spacehq/sdk": "^0.0.29",
+    "@spacehq/sdk": "^0.0.30",
     "@terminal-packages/space-ui": "^0.3.17",
     "@toruslabs/torus-direct-web-sdk": "^3.5.7",
     "axios": "^0.21.1",
