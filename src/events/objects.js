@@ -20,6 +20,7 @@ import { DOWNLOAD_ACTION_TYPES } from '@reducers/downloads';
 import { SEARCH_ACTION_TYPES } from '@reducers/search';
 import { OPEN_PUBLIC_FILE_ACTION_TYPES } from '@reducers/open-public-file';
 import { DELETE_OBJECT_ACTION_TYPES } from '@reducers/delete-object';
+import { MOVE_TYPES } from '@reducers/details-panel/move';
 import * as Sentry from '@sentry/react';
 
 import store from '../store';
@@ -35,8 +36,9 @@ const flatEntries = (entries = []) => entries.reduce((acc, entry) => [
   entry,
 ], []);
 
-export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
+export const listDirectory = async (path, bucket, fetchSubFolders = true, deepFetch = false) => {
   const storage = await sdk.getStorage();
+  let newObjects = [];
 
   try {
     const { items } = await storage.listDirectory({
@@ -47,6 +49,7 @@ export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
 
     const entries = flatEntries(items);
     const objects = entries.map((entry) => objectPresenter(entry, false));
+    newObjects.push(...objects);
 
     store.dispatch({
       payload: {
@@ -65,9 +68,10 @@ export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
       const fetchSubDirs = entries
         .filter((entry) => entry.isDir)
         .map((entry) => entry.path.replace(/^\//, ''))
-        .map((subDir) => listDirectory(subDir, bucket, false));
+        .map((subDir) => listDirectory(subDir, bucket, deepFetch, deepFetch));
 
-      await Promise.all(fetchSubDirs);
+      const fetchedSubdirs = await Promise.all(fetchSubDirs);
+      newObjects.push(...fetchedSubdirs);
     }
   } catch (error) {
     const errorInfo = {
@@ -83,7 +87,11 @@ export const listDirectory = async (path, bucket, fetchSubFolders = true) => {
       payload: { bucket, error },
       type: SET_ERROR_BUCKET,
     });
+
+    newObjects = false;
   }
+
+  return Array.isArray(newObjects) ? newObjects.flat() : newObjects;
 };
 
 const registerObjectsEvents = () => {
@@ -374,6 +382,57 @@ export const setFileAccess = async (payload) => {
     // eslint-disable-next-line no-console
     console.error(`Error when trying to change file access type: ${error.message}`);
   }
+};
+
+export const moveObjects = async (payload) => {
+  const {
+    sourceArr,
+    destArr,
+    bucket,
+    notificationId,
+  } = payload;
+
+  let res = null;
+  try {
+    const storage = await sdk.getStorage();
+    const moveResponse = await storage.movePaths(bucket, sourceArr, destArr);
+
+    res = await new Promise((resolve) => {
+      moveResponse.once('done', (data) => {
+        store.dispatch({
+          type: MOVE_TYPES.ON_MOVE_FILES_SUCCESS,
+          payload: {
+            notificationId,
+          },
+        });
+
+        resolve(true);
+      });
+
+      moveResponse.on('error', (err) => {
+        store.dispatch({
+          type: MOVE_TYPES.ON_MOVE_FILES_ERROR,
+          payload: {
+            notificationId,
+            error: 'error-moving-files',
+          },
+        });
+
+        resolve(false);
+      });
+    });
+  } catch (error) {
+    res = new Promise((resolve) => resolve(false));
+    store.dispatch({
+      type: MOVE_TYPES.ON_MOVE_FILES_ERROR,
+      payload: {
+        notificationId,
+        error: 'error-moving-files',
+      },
+    });
+  }
+
+  return res;
 };
 
 export default registerObjectsEvents;
