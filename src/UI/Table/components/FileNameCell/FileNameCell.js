@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useLayoutEffect, useRef, useState } from 'react';
+import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +10,7 @@ import FileIcon from '@terminal-packages/space-ui/core/FileIcon';
 import { faChevronDown } from '@fortawesome/pro-light-svg-icons/faChevronDown';
 import { faChevronRight } from '@fortawesome/pro-light-svg-icons/faChevronRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import RootRef from '@material-ui/core/RootRef';
 import PeopleIcon from './PeopleIcon';
 import useStyles from './styles';
 import TableCell from '../TableCell';
@@ -17,6 +20,7 @@ const FileNameCell = (props) => {
     ext,
     src,
     name,
+    rowIndex,
     expanded,
     isShared,
     selected,
@@ -24,6 +28,7 @@ const FileNameCell = (props) => {
     arrowOnClick,
     onNameClick,
     isUploading,
+    rowKey,
     ...tableCellProps
   } = props;
 
@@ -31,6 +36,14 @@ const FileNameCell = (props) => {
   const textNode = useRef(null);
   const [isTooltip, setIsTooltip] = useState(false);
   const isFolder = ext === 'folder';
+
+  const [, drag] = useDrag(() => ({
+    item: {
+      type: (isFolder ? 'folder' : 'file'),
+      rowIndex,
+      rowKey,
+    },
+  }), []);
 
   useLayoutEffect(() => {
     if (textNode.current) {
@@ -55,60 +68,61 @@ const FileNameCell = (props) => {
   );
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <TableCell {...tableCellProps}>
-      <div className={classes.container}>
-        <div className={classes.tabulations} />
-        <div className={classes.arrowContainer}>
-          {isFolder && (
-            <ButtonBase
-              disableRipple
-              className={classnames(classes.arrowButton, {
-                [classes.uploading]: isUploading,
-              })}
-              onClick={(e) => {
-                e.stopPropagation();
-                arrowOnClick();
-              }}
-              onDoubleClick={(e) => e.stopPropagation()}
-            >
-              <FontAwesomeIcon
-                icon={expanded ? faChevronDown : faChevronRight}
-                className={classes.arrow}
-              />
-            </ButtonBase>
-          )}
-        </div>
-        <div
-          className={classnames(classes.iconContainer, {
-            [classes.uploading]: isUploading,
-          })}
-        >
-          <FileIcon
-            src={src}
-            ext={ext}
-          />
-          {isFolder && isShared && <PeopleIcon color="#5A93BF" className={classes.sharedFolder} />}
-        </div>
-        {isTooltip ? (
-          <Tooltip
-            arrow
-            interactive
-            placement="top"
-            classes={{
-              popper: classes.popperRoot,
-              tooltip: classes.tooltipRoot,
-              arrow: classes.tooltipArrow,
-            }}
-            title={<Typography color="inherit" variant="body2">{name}</Typography>}
+    <RootRef rootRef={drag}>
+      <TableCell {...tableCellProps}>
+        <div className={classes.container}>
+          <div className={classes.tabulations} />
+          <div className={classes.arrowContainer}>
+            {isFolder && (
+              <ButtonBase
+                disableRipple
+                className={classnames(classes.arrowButton, {
+                  [classes.uploading]: isUploading,
+                })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  arrowOnClick();
+                }}
+                onDoubleClick={(e) => e.stopPropagation()}
+              >
+                <FontAwesomeIcon
+                  icon={expanded ? faChevronDown : faChevronRight}
+                  className={classes.arrow}
+                />
+              </ButtonBase>
+            )}
+          </div>
+          <div
+            className={classnames(classes.iconContainer, {
+              [classes.uploading]: isUploading,
+            })}
           >
-            {nameComponent}
-          </Tooltip>
-        ) : nameComponent}
+            <FileIcon
+              src={src}
+              ext={ext}
+            />
+            {isFolder && isShared && <PeopleIcon color="#5A93BF" className={classes.sharedFolder} />}
+          </div>
+          {isTooltip ? (
+            <Tooltip
+              arrow
+              interactive
+              placement="top"
+              classes={{
+                popper: classes.popperRoot,
+                tooltip: classes.tooltipRoot,
+                arrow: classes.tooltipArrow,
+              }}
+              title={<Typography color="inherit" variant="body2">{name}</Typography>}
+            >
+              {nameComponent}
+            </Tooltip>
+          ) : nameComponent}
 
-        {(isShared && !isFolder) && <PeopleIcon color="#7F8185" className={classes.icon} />}
-      </div>
-    </TableCell>
+          {(isShared && !isFolder) && <PeopleIcon color="#7F8185" className={classes.icon} />}
+        </div>
+      </TableCell>
+    </RootRef>
   );
 };
 
@@ -123,6 +137,7 @@ FileNameCell.defaultProps = {
   arrowOnClick: () => {},
   onNameClick: () => {},
   isUploading: false,
+  rowKey: '',
 };
 
 FileNameCell.propTypes = {
@@ -136,6 +151,8 @@ FileNameCell.propTypes = {
   arrowOnClick: PropTypes.func,
   onNameClick: PropTypes.func,
   isUploading: PropTypes.bool,
+  rowKey: PropTypes.string,
+  rowIndex: PropTypes.number.isRequired,
 };
 
 export default FileNameCell;

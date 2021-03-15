@@ -6,3 +6,4 @@ export { default as IconsCell } from './IconsCell';
 export { default as IconsTooltip } from './IconsTooltip';
 export { default as LoadingCell } from './LoadingCell';
 export { default as MemberCell } from './MemberCell';
+export { default as DroppableTableRow } from './DroppableTableRow';
