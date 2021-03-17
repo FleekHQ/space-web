@@ -15,6 +15,7 @@ import bucketReducer, {
   UPDATE_OR_ADD_OBJECT,
   UPDATE_SHARE_AMOUNT_OBJECTS,
   DESELECT_ALL_OBJECTS,
+  MOVE_OBJECTS,
   CHANGE_OBJECT_ACCESS,
 } from './bucket';
 
@@ -169,7 +170,8 @@ export default (state = DEFAULT_STATE, action) => {
     case UPDATE_SHARE_AMOUNT_OBJECTS:
     case CHANGE_OBJECT_ACCESS:
     case CREATE_FOLDER_ACTION_TYPES.ON_SUBMIT_SUCCESS:
-    case DESELECT_ALL_OBJECTS: {
+    case DESELECT_ALL_OBJECTS:
+    case MOVE_OBJECTS: {
       let bucket = null;
 
       if (Array.isArray(action.payload)) {

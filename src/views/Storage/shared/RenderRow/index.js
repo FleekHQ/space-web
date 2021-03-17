@@ -8,10 +8,15 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
 import { useLocation, matchPath } from 'react-router-dom';
-import { TableCell, FileNameCell, TableRow } from '@ui/Table';
 import { formatBytes, getTabulations, useDoubleClick } from '@utils';
 import getHoverMenuItems from '@shared/components/ObjectsTable/utils/get-hover-menu';
 import hoverMenuItemOnClick from '@shared/components/ObjectsTable/utils/hover-menu-on-click';
+import {
+  TableCell,
+  FileNameCell,
+  TableRow,
+  DroppableTableRow,
+} from '@ui/Table';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/pro-solid-svg-icons/faCheckCircle';
@@ -120,12 +125,15 @@ const RenderRow = ({
   } else {
     isShared = members.length > 0;
   }
+  const RowComponent = isFolder ? DroppableTableRow : TableRow;
 
   return (
-    <TableRow
+    <RowComponent
       hover
       key={row.id}
       data-key={row.fullKey}
+      rowKey={row.key}
+      rowSrc={`file:${row.key}`}
       className={classnames(rowClasses.row, {
         [rowClasses.selectedAndUploading]: (
           (row.isUploading && row.selected)
@@ -135,6 +143,9 @@ const RenderRow = ({
       })}
       onContextMenu={handleRowRightClick({ row })}
       onClick={onClick}
+      rowIndex={rowIndex}
+      arrowOnClick={arrowOnClick}
+      bucket={row.bucket}
       component={
         ({ children, ...rowProps }) => (
           <tr
@@ -159,6 +170,7 @@ const RenderRow = ({
       }
     >
       <FileNameCell
+        rowKey={row.key}
         ext={row.ext}
         src={`file:${row.key}`}
         arrowOnClick={arrowOnClick}
@@ -169,6 +181,7 @@ const RenderRow = ({
         isShared={isShared}
         isUploading={row.isUploading}
         onNameClick={rowDoubleClickHandler}
+        rowIndex={rowIndex}
       />
       <TableCell className={classes.iconSizeContainer}>
         {getSizeIcon()}
@@ -186,7 +199,7 @@ const RenderRow = ({
       <TableCell>
         {getLastModifiedCell()}
       </TableCell>
-    </TableRow>
+    </RowComponent>
   );
 };
 
@@ -212,6 +225,7 @@ RenderRow.propTypes = {
     members: PropTypes.array,
     isUploading: PropTypes.bool,
     error: PropTypes.bool,
+    bucket: PropTypes.string,
   }).isRequired,
   disableOffset: PropTypes.bool,
   arrowOnClick: PropTypes.func,
