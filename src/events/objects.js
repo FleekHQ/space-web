@@ -312,6 +312,8 @@ export const downloadFile = async (payload) => {
 
     downloadFromUrl(url, payload.filename);
 
+    window.analytics.track('File downloaded');
+
     store.dispatch({
       type: DOWNLOAD_ACTION_TYPES.UPDATE_DOWNLOAD_LINK,
       payload: {
@@ -362,6 +364,10 @@ export const setFileAccess = async (payload) => {
       allowAccess,
       bucket: sourceBucket,
     });
+
+    if (allowAccess) {
+      window.analytics.track('Public link activated');
+    }
 
     store.dispatch({
       type: CHANGE_OBJECT_ACCESS,
