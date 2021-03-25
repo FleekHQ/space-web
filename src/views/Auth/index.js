@@ -123,6 +123,8 @@ const Auth = () => {
 
   React.useEffect(() => {
     if (state.isAuthenticated) {
+      window.analytics.track(currentView);
+
       if (location.hash) {
         const { stateFields } = getLoginPayload();
         if (stateFields.redirectTo) {

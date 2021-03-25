@@ -153,6 +153,11 @@ export const addItems = ({
         const isDir = get(data, 'entry.isDir', false);
 
         if (!isDir) {
+          window.analytics.track('File uploaded', {
+            extension: ext,
+            size: get(data, 'entry.sizeInBytes', 0),
+          });
+
           apiClient.filecoin.archiveHash({
             hash: get(data, 'entry.ipfsHash'),
             publicKey: pubKey,
