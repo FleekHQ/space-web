@@ -79,6 +79,8 @@ export const shareFiles = (payload) => async (dispatch) => {
 
     Promise.all(emailPromises)
       .then(() => {
+        window.analytics.track('Shared privately');
+
         dispatch({
           notificationId: payload.notificationId,
           type: SHARE_TYPES.ON_SHARE_FILE_BY_PUBLIC_KEY_SUCCESS,

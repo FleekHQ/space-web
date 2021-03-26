@@ -67,6 +67,7 @@ export const signin = (payload) => async (dispatch) => {
       backupType,
     );
 
+    window.analytics.track('Signin');
     dispatch({
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
       user: {
@@ -148,6 +149,7 @@ export const signup = (payload) => async (dispatch) => {
 
     await storage.initMailbox();
 
+    window.analytics.track('Signup');
     dispatch({
       type: AUTH_ACTION_TYPES.ON_AUTHENTICATION_SUCCESS,
       user: {

@@ -160,7 +160,10 @@ const FilePreview = () => {
     );
   }
 
-  const onDownload = () => downloadFromUrl(fileUrl, file.name);
+  const onDownload = () => {
+    window.analytics.track('Shared file downloaded');
+    downloadFromUrl(fileUrl, file.name);
+  };
 
   return (
     <div className={classes.container}>
